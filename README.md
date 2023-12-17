@@ -6,12 +6,17 @@ This repository contains low level design (LLD) resources to improve object orie
 - [SOLID Principles in Code](https://medium.com/android-news/solid-principles-the-definitive-guide-75e30a284dea)
 
 ## Low Level Design Interview Problems
-### Easy
-### Medium
-### Hard
+- [Design Parking Lot]
+- [Design Splitwise]
+- [Design Tik Tok Toe Game]
+- [Design Car Rental System]
+- [Design Bookmyshow]
+- [Design Pub Sub System]
+- [Design Coffee Vending Machine]
 
 ## Books
 - [Head First Design Patterns](https://www.amazon.com/Head-First-Design-Patterns-Object-Oriented/dp/149207800X/)
+- [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/B08X8ZXT15)
 
 ## Courses
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
