@@ -1,7 +1,7 @@
 # awesome-low-low-design
 This repository contains low level design (LLD) resources to improve object oriented design (OOD) skills and prepare for interviews.
 
-## Design Principles
+## Fundamental Concepts
 - [Basics of OOPS](concepts/OOPS.md)
 - [SOLID Principles in Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [SOLID Principles in Code](https://medium.com/android-news/solid-principles-the-definitive-guide-75e30a284dea)
@@ -9,7 +9,9 @@ This repository contains low level design (LLD) resources to improve object orie
 - [YAGNI Principle](concepts/YAGNI.md)
 
 ## Design Patterns
-
+- [Refactoring Guru - Catalog of Design Patterns](https://refactoring.guru/design-patterns/catalog)
+- [Fireship - 10 Design Patterns in 10 Minutes](https://www.youtube.com/watch?v=tv-_1er1mWI&pp=ygUPZGVzaWduIHBhdHRlcm5z)
+- [Design Pattern Playlist](https://www.youtube.com/watch?v=v9ejT8FO-7I&list=PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc)
 
 ## Low Level Design Interview Problems
 - [Design Parking Lot]
