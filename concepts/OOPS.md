@@ -9,7 +9,7 @@ These principles not only help in creating structured and reusable code but also
 ### Inheritance
 nheritance allows one class to inherit the properties and methods of another class. It's a way to form a hierarchy between classes, promoting code reusability.
 #### Example:
-```
+```java
 class Vehicle {
     public void startEngine() {
         System.out.println("Engine started");
@@ -39,7 +39,7 @@ Car can use the startEngine method from Vehicle, demonstrating inheritance.
 Polymorphism allows objects of different classes to be treated as objects of a common superclass. It’s the ability of multiple object types to implement the same functionality, which can be achieved either by method overloading or method overriding.
 
 #### Example:
-```
+```java
 class Bird {
     public void sing() {
         System.out.println("Bird is singing");
@@ -65,7 +65,7 @@ Here, `Sparrow` overrides the sing method of `Bird`. Despite referring to Sparro
 Abstraction is the concept of hiding complex implementation details and showing only the necessary features of an object. It can be achieved using abstract classes and interfaces.
 
 #### Example:
-```
+```java
 abstract class Animal {
     abstract void makeSound();
 
@@ -95,7 +95,7 @@ public class Main {
 ### Encapsulation
 Encapsulation is the technique of bundling data (variables) and methods that act on the data into a single unit, often called a class, and restricting access to some of the object’s components.
 
-```
+```java
 class BankAccount {
     private double balance;
 

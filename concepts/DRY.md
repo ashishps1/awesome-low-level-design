@@ -18,7 +18,7 @@ This principle, at its core, is simple yet powerful:
 #### Example 1: Avoiding Repetitive Code Blocks
 
 Non-DRY Code:
-```
+```java
 public void processDayData() {
     // process morning data
     extractData();
@@ -39,7 +39,7 @@ public void processDayData() {
 
 DRY Code:
 
-```
+```java
 public void processDayData() {
     processData("morning");
     processData("afternoon");
@@ -56,7 +56,7 @@ In the DRY version, the repetitive tasks of data extraction, transformation, and
 
 #### Example 2: Using Functions to Encapsulate Logic
 Non-DRY Code:
-```
+```python
 total_price = price * quantity
 if total_price > 500:
     discount = total_price * 0.1
@@ -69,7 +69,7 @@ if total_price > 500:
     final_price = total_price - discount
 ```
 DRY Code:
-```
+```python
 def calculate_final_price(price, quantity):
     total_price = price * quantity
     discount = total_price * 0.1 if total_price > 500 else 0
