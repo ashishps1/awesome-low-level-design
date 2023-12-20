@@ -1,3 +1,8 @@
+# Designing Stack Overflow
+Stack Overflow is a widely-used question-and-answer platform for programmers, known for its community-driven approach to solving coding problems. 
+
+In this blog post, we'll delve into the object-oriented design of a simplified version of Stack Overflow, covering everything from requirements to a complete Java implementation.
+
 ## Requirements
 - User Management: Users can register, log in, and manage their profiles.
 - Question Handling: Users can post, view, and search for questions.

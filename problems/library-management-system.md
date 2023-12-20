@@ -1,8 +1,7 @@
-# Designing a Library Management System:
+# Designing a Library Management System
 
 This contains the object-oriented design and implementation of a Library Management System (LMS) using Java.
 
-## Introduction
 The LMS is designed to manage library operations, including book inventory, member subscriptions, and book lending processes, using Java's object-oriented features.
 
 ## System Requirements

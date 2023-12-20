@@ -1,6 +1,8 @@
 # Designing a Parking Lot System
 
-This explores the low-level design of a parking lot system, a common problem in object-oriented design. We'll cover essential components and functionalities, breaking down requirements, use cases, and providing a Java implementation.
+This explores the low-level design of a parking lot system, a common problem in object-oriented design. 
+
+We'll cover essential components and functionalities, breaking down requirements, use cases, and providing a Java implementation.
 
 ## Understanding the Requirements
 A parking lot system manages vehicles parking in and out, with different parking spot sizes and rates. Key requirements include:

@@ -1,6 +1,8 @@
-# Designing a Logging Framework: An Object-Oriented Approach in Java
+# Designing a Logging Framework
 
-In this blog post, we will explore the design and development of a Logging Framework in Java, using object-oriented programming principles. A Logging Framework is crucial for effective monitoring, debugging, and auditing of applications.
+In this blog post, we will explore the design and development of a Logging Framework in Java, using object-oriented programming principles. 
+
+A Logging Framework is crucial for effective monitoring, debugging, and auditing of applications.
 
 ## System Requirements
 

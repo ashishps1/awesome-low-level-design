@@ -1,6 +1,8 @@
-# Designing a Tic Tac Toe Game: An Object-Oriented Approach in Java
+# Designing a Tic Tac Toe Game
 
-This blog post explores the design and implementation of a Tic Tac Toe game using object-oriented principles in Java. It's a classic game that provides a great opportunity to apply fundamental OOP concepts.
+This blog post explores the design and implementation of a Tic Tac Toe game using object-oriented principles in Java. 
+
+It's a classic game that provides a great opportunity to apply fundamental OOP concepts.
 
 ## System Requirements
 

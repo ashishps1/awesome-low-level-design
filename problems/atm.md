@@ -1,9 +1,6 @@
-# Designing an ATM System: Object-Oriented Approach in Java
+# Designing an ATM System
 
-This comprehensive guide covers the design and implementation of an Automated Teller Machine (ATM) system using object-oriented programming in Java.
-
-## Introduction
-We explore the object-oriented design of an ATM system, demonstrating how Java can be used to create a functional and efficient system.
+This guide covers the design and implementation of an Automated Teller Machine (ATM) system using object-oriented programming in Java.
 
 ## System Requirements
 Our ATM system is designed to handle:

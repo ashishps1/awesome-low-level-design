@@ -1,4 +1,4 @@
-# Designing a Coffee Vending Machine: An Object-Oriented Approach in Java
+# Designing a Coffee Vending Machine
 
 This blog post explores the object-oriented design and implementation of a Coffee Vending Machine using Java, a project that demonstrates managing coffee selections, inventory, and customer interactions.
 

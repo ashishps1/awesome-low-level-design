@@ -1,8 +1,7 @@
 # Designing a Pub-Sub System in Java
 
-This README explores the design and implementation of a basic Publish-Subscribe (Pub-Sub) system using Java, following object-oriented design principles.
+This blog explores the design and implementation of a basic Publish-Subscribe (Pub-Sub) system using Java, following object-oriented design principles.
 
-## Introduction
 The Pub-Sub model is a widely used pattern in messaging systems, allowing for scalable and decoupled communication. This guide outlines the design and implementation of such a system.
 
 ## Understanding the Requirements

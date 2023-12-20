@@ -1,4 +1,4 @@
-# Designing an Elevator System: Object-Oriented Approach in Java
+# Designing an Elevator System
 
 This blog post explores the design and implementation of an Elevator System using object-oriented principles in Java, focusing on functionality, scalability, and user interaction.
 
