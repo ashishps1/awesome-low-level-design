@@ -1,4 +1,4 @@
-# awesome-low-low-design
+# awesome-low-level-design
 This repository contains low level design (LLD) resources to improve object oriented design (OOD) skills and prepare for interviews.
 
 ## Fundamental Concepts
