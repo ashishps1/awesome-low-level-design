@@ -29,7 +29,7 @@ This repository contains low level design (LLD) resources to improve object orie
 - [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
 ### Medium
 - [Design Pub Sub System](problems/pub-sub-system.md)
-- [Design Tik Tok Toe Game](problems/tik-tok-toe.md)
+- [Design Tic Tac Toe Game](problems/tic-tac-toe.md)
 - [Design Car Rental System](problems/car-rental-system.md)
 - [Design an ATM](problems/atm.md)
 - [Design Hotel Management System](problems/hotel-management-system.md)
