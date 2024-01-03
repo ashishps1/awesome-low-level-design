@@ -1,4 +1,4 @@
-# Designing an Elevator System
+# Designing a Car Rental System
 
 In this blog post, we will explore the object-oriented design and implementation of a Car Rental System (CRS) using Java. 
 
