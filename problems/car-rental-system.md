@@ -1,6 +1,6 @@
 # Designing a Car Rental System
 
-In this blog post, we will explore the object-oriented design and implementation of a Car Rental System (CRS) using Java. 
+In this article, we will explore the object-oriented design and implementation of a Car Rental System (CRS) using Java. 
 
 This system will handle the renting of cars to customers, managing car inventory, and tracking rentals.
 
@@ -20,10 +20,7 @@ The CRS should support:
 3. **Tracking Rentals:** View current and past rental records.
 4. **Managing Car Inventory:** Add, update, and remove cars from the inventory.
 
-## UML/Class Diagrams
-
-Key classes in the system include:
-
+## Key Classes:
 - `CarRentalSystem`: Manages the overall operations of the car rental system.
 - `Car`: Represents a car in the system.
 - `Rental`: Manages details about a car rental.

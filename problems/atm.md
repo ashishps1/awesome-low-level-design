@@ -1,6 +1,6 @@
 # Designing an ATM System
 
-This guide covers the design and implementation of an Automated Teller Machine (ATM) system using object-oriented programming in Java.
+This article covers the design and implementation of an Automated Teller Machine (ATM) system using object-oriented programming in Java.
 
 ## System Requirements
 Our ATM system is designed to handle:
@@ -15,8 +15,7 @@ Our ATM system is designed to handle:
 - **Performing Transactions:** Withdrawals, deposits, balance inquiries.
 - **Printing Transaction Receipts** (optional for this implementation)
 
-## UML/Class Diagrams
-Key classes include 
+## Key Classes:
 - `ATM`: The main class to interact with users.
 - `Account`: To manage account details.
 - `Bank`: Represents the bank system that verifies transactions.

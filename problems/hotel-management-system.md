@@ -1,6 +1,6 @@
 # Designing a Hotel Management System
 
-In this blog post, we will explore the design and implementation of a Hotel Management System (HMS) using object-oriented principles in Java. 
+In this article, we will explore the design and implementation of a Hotel Management System (HMS) using object-oriented principles in Java. 
 
 The HMS is designed to streamline hotel operations including room booking, customer management, and service provision.
 
@@ -20,10 +20,7 @@ The HMS will facilitate:
 3. **Ordering Room Services:** Placing orders for room-related services.
 4. **Generating Bills:** Calculating and producing bills for customers.
 
-## UML/Class Diagrams
-
-Key classes in our design:
-
+## Key Classes:
 - `Hotel`: Manages the overall hotel operations.
 - `Room`: Represents individual rooms in the hotel.
 - `Customer`: Manages information about customers.

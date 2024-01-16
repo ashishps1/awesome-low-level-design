@@ -1,6 +1,6 @@
 # Designing an Elevator System
 
-This blog post explores the design and implementation of an Elevator System using object-oriented principles in Java, focusing on functionality, scalability, and user interaction.
+This article explores the design and implementation of an Elevator System using object-oriented principles in Java, focusing on functionality, scalability, and user interaction.
 
 ## System Requirements
 
@@ -17,10 +17,7 @@ The Elevator System is designed to:
 2. **Transporting Passengers:** Elevators carry passengers to their desired floors.
 3. **Managing Idle Elevators:** Efficiently allocate available elevators.
 
-## UML/Class Diagrams
-
-Key classes in the system include:
-
+## Key Classes:
 - `ElevatorSystem`: Manages multiple elevators.
 - `Elevator`: Represents an individual elevator.
 - `ElevatorControlPanel`: Interface for users to interact with an elevator.

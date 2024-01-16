@@ -1,6 +1,6 @@
 # Designing an Online Shopping System Like Amazon
 
-In this blog post, we will explore the object-oriented design and implementation of a Restaurant Management System using Java. 
+In this article, we will explore the object-oriented design and implementation of a Restaurant Management System using Java. 
 
 This system will handle various aspects such as table reservations, order processing, and kitchen management.
 
@@ -20,10 +20,7 @@ The Online Shopping System should:
 3. **Managing Inventory**
 4. **Generating and Processing Bills**
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `RestaurantManagementSystem`: Manages the entire system.
 - `Table`: Represents a dining table in the restaurant.
 - `Order`: Manages a customer's food order.

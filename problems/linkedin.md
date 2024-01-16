@@ -1,6 +1,6 @@
 # Designing a Professional Networking Platform like LinkedIn
 
-In this blog post, we delve into the object-oriented design and implementation of a professional networking platform like LinkedIn, using Java. 
+In this article, we delve into the object-oriented design and implementation of a professional networking platform like LinkedIn, using Java. 
 
 The focus is on user profiles, connections, job postings, and feed interactions.
 
@@ -20,10 +20,7 @@ The platform should facilitate:
 3. **Posting and Applying for Jobs**
 4. **Viewing and Creating Posts in the Feed**
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `LinkedInSystem`: Manages the overall system operations.
 - `User`: Represents a user profile.
 - `Connection`: Manages user connections.

@@ -1,6 +1,6 @@
 # Designing a Cricket Information System
 
-In this blog post, we're going to explore the object-oriented design and implementation of a cricket information system, similar to Cricinfo, using Java. 
+In this article, we're going to explore the object-oriented design and implementation of a cricket information system, similar to Cricinfo, using Java. 
 
 This system will focus on delivering real-time cricket match updates, managing player statistics, and maintaining team information.
 
@@ -13,17 +13,14 @@ The system needs to:
 3. **Track Statistics:** Keep records of player and team statistics.
 4. **Schedule Matches:** Organize and update upcoming cricket matches and series.
 
-## Core Use Cases
+## Core Use Cases:
 
 1. **Updating Match Details:** Real-time updates of match scores and events.
 2. **Managing Player/Team Profiles:** Adding and updating profiles of players and teams.
 3. **Viewing Statistics:** Accessing statistical data of players and teams.
 4. **Scheduling Matches:** Planning and updating upcoming matches and series.
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `CricketSystem` : Central system managing all functionalities.
 - `Match`: Represents a cricket match.
 - `Player`: Represents a cricket player.

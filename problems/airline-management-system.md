@@ -1,6 +1,6 @@
 # Designing an Airline Management System
 
-This blog delves into the object-oriented design and implementation of an Airline Management System using Java. 
+This article delves into the object-oriented design and implementation of an Airline Management System using Java. 
 
 This system will handle various aspects of airline operations including managing flights, passengers, crew, and aircraft.
 
@@ -20,10 +20,7 @@ The Airline Management System should:
 3. **Assigning Crew to Flights**
 4. **Managing Aircraft**
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `AirlineManagementSystem`: Manages the entire system.
 - `Flight`: Represents a flight.
 - `Passenger`: Represents a passenger.

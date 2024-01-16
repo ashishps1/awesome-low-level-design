@@ -1,6 +1,6 @@
 # Designing a Logging Framework
 
-In this blog post, we will explore the design and development of a Logging Framework in Java, using object-oriented programming principles. 
+In this article, we will explore the design and development of a Logging Framework in Java, using object-oriented programming principles. 
 
 A Logging Framework is crucial for effective monitoring, debugging, and auditing of applications.
 
@@ -19,10 +19,7 @@ The Logging Framework should:
 2. **Configuring Loggers:** Setup loggers with varying settings and outputs.
 3. **Managing Log Output:** Direct messages to appropriate destinations based on configurations.
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `Logger`: Main interface for logging messages.
 - `LogLevel`: Enum representing log levels.
 - `LogDestination`: Interface for different log output destinations.

@@ -1,6 +1,6 @@
 # Designing an Online Shopping System Like Amazon
 
-In this blog post, we're going to design and implement an Online Shopping System resembling Amazon, using Java. 
+In this article, we're going to design and implement an Online Shopping System resembling Amazon, using Java. 
 
 This system will cover product listings, user accounts, shopping carts, and order processing.
 
@@ -20,10 +20,7 @@ The Online Shopping System should:
 3. **Handling Shopping Carts**
 4. **Processing Orders**
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `OnlineShoppingSystem`: Manages the overall system.
 - `Product`: Represents a product in the catalog.
 - `User`: Represents a user of the system.

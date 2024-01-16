@@ -1,6 +1,6 @@
 # Designing a Tic Tac Toe Game
 
-This blog post explores the design and implementation of a Tic Tac Toe game using object-oriented principles in Java. 
+This article explores the design and implementation of a Tic Tac Toe game using object-oriented principles in Java. 
 
 It's a classic game that provides a great opportunity to apply fundamental OOP concepts.
 
@@ -18,10 +18,7 @@ The Tic Tac Toe game will:
 2. **Checking Game Status:** After each move, check if the game is won, drawn, or still ongoing.
 3. **Resetting the Game:** Clear the board for a new round.
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `TicTacToe`: Manages the overall game.
 - `Board`: Represents the game board.
 - `Player`: Enum to represent the players (X and O).

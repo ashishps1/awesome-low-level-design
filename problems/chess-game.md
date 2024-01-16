@@ -1,6 +1,6 @@
 # Designing a Chess Game
 
-In this blog post, we explore the object-oriented design and implementation of a Chess game using Java. 
+In this article, we explore the object-oriented design and implementation of a Chess game using Java. 
 
 Chess offers an excellent platform to apply object-oriented programming principles due to its complex rules and variety of pieces.
 
@@ -20,10 +20,7 @@ The Chess game should:
 3. **Checking Game Status:** Detect check, checkmate, or stalemate.
 4. **Ending the Game:** Conclude the game based on the outcome.
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `ChessGame`: Manages overall gameplay.
 - `Board`: Represents the chessboard.
 - `Piece`: Abstract class for different types of chess pieces.

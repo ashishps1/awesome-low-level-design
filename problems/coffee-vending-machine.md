@@ -1,6 +1,6 @@
 # Designing a Coffee Vending Machine
 
-This blog post explores the object-oriented design and implementation of a Coffee Vending Machine using Java, a project that demonstrates managing coffee selections, inventory, and customer interactions.
+This article explores the object-oriented design and implementation of a Coffee Vending Machine using Java, a project that demonstrates managing coffee selections, inventory, and customer interactions.
 
 ## System Requirements
 
@@ -18,10 +18,7 @@ The Coffee Vending Machine is designed to:
 3. **Dispensing Coffee:** Prepare and dispense the chosen coffee.
 4. **Processing Payment:** Handle the transaction for the coffee purchase.
 
-## UML/Class Diagrams
-
-Key Classes Involved:
-
+## Key Classes:
 - `CoffeeVendingMachine`: Central class managing the vending machine.
 - `Coffee`: Enum representing different types of coffee.
 - `Ingredient`: Manages individual ingredients.

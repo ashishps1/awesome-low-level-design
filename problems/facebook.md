@@ -1,6 +1,6 @@
 # Designing a Social Network Like Facebook
 
-This blog post explores designing and implementing a social network platform similar to Facebook using Java. 
+This article explores designing and implementing a social network platform similar to Facebook using Java. 
 
 We focus on user profiles, friendships, posting updates, and generating a feed of posts.
 
@@ -20,10 +20,7 @@ The Social Network platform should support:
 3. **Creating Posts**
 4. **Viewing the Feed**
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `SocialNetworkSystem`: Manages the overall operations.
 - `User`: Represents a user on the network.
 - `Post`: Represents a user's post.

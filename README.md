@@ -27,6 +27,8 @@ This repository contains low level design (LLD) resources to improve object orie
 - [Design Stack Overflow](problems/stack-overflow.md)
 - [Design Logging Framework](problems/logging-framework.md)
 - [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
+- [Design Traffic Signal Control System](problems/traffic-signal.md)
+- [Design a Task Management System](problems/task-management-system.md)
 ### Medium
 - [Design Pub Sub System](problems/pub-sub-system.md)
 - [Design Tic Tac Toe Game](problems/tic-tac-toe.md)
@@ -39,6 +41,10 @@ This repository contains low level design (LLD) resources to improve object orie
 - [Design a Library Management System](problems/library-management-system.md)
 - [Design Restaurant Management System](problems/restaurant-management-system.md)
 - [Design Airline Management System](problems/airline-management-system.md)
+- [Design a Digital Wallet System](problems/digital-wallet-system.md)
+- [Design an Online Auction System](problems/online-auction-system.md)
+- [Design a Vehicle Rental System:](problems/vehicle-rental-system.md)
+- [Design a Concert Ticket Booking System](problems/vehicle-rental-system.md)
 ### Hard
 - [Design Movie Ticket Booking System](https://www.youtube.com/watch?v=CC7DwkQOsS0&list=PLAC2AM9O1C5KioUMeH9qIjbAV_RMmX8rd&index=8)
 - [Design Splitwise](https://workat.tech/machine-coding/editorial/how-to-design-splitwise-machine-coding-ayvnfo1tfst6)
@@ -47,6 +53,10 @@ This repository contains low level design (LLD) resources to improve object orie
 - [Design Online Stock Brokerage System](problems/online-stock-brokerage-system.md)
 - [Design CricInfo](https://www.youtube.com/watch?v=VDqwCo6lhkY&list=PLAC2AM9O1C5KioUMeH9qIjbAV_RMmX8rd&index=6)
 - [Design Chess Game](problems/chess-game.md)
+- [Design Ride-Sharing Service (like Uber)](problems/ride-sharing-service.md)
+- [Design Online Food Delivery Service (like Swiggy)](problems/food-delivery-service.md)
+- [Design Music Streaming Service (like Spotify)](problems/music-streaming-service.md)
+- [Design University Course Registration System](problems/course-registration-system.md)
 
 ## Books
 - [Head First Design Patterns](https://www.amazon.com/Head-First-Design-Patterns-Object-Oriented/dp/149207800X/)

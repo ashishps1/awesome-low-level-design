@@ -1,6 +1,6 @@
 # Designing an Online Stock Brokerage System
 
-In this blog post, we'll examine the object-oriented design and implementation of an Online Stock Brokerage System using Java. 
+In this article, we'll examine the object-oriented design and implementation of an Online Stock Brokerage System using Java. 
 
 This system simulates key functionalities of stock trading platforms, enabling users to engage in buying and selling stocks, manage their portfolios, and stay updated with stock prices.
 
@@ -20,10 +20,7 @@ The Stock Brokerage System needs to:
 3. **Managing Portfolio**
 4. **Viewing Stock Prices**
 
-## UML/Class Diagrams
-
-Key Classes:
-
+## Key Classes:
 - `StockBrokerageSystem`: Manages the entire system.
 - `User`: Represents a system user.
 - `Stock`: Represents a stock in the market.
