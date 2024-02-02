@@ -45,6 +45,7 @@ This repository contains low level design (LLD) resources to improve object orie
 - [Design an Online Auction System](problems/online-auction-system.md)
 - [Design a Vehicle Rental System:](problems/vehicle-rental-system.md)
 - [Design a Concert Ticket Booking System](problems/vehicle-rental-system.md)
+- [Design a Cache using LRU Eviction Policy](problems/lru-cache.md)
 ### Hard
 - [Design Movie Ticket Booking System](https://www.youtube.com/watch?v=CC7DwkQOsS0&list=PLAC2AM9O1C5KioUMeH9qIjbAV_RMmX8rd&index=8)
 - [Design Splitwise](https://workat.tech/machine-coding/editorial/how-to-design-splitwise-machine-coding-ayvnfo1tfst6)
