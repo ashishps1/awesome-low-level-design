@@ -67,5 +67,5 @@ This repository contains low level design (LLD) resources to improve object orie
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 - [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 
-## LLD Solution Blogs Website
+## Additional Resources
 - [LLD Coding](http://lldcoding.com)
