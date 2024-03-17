@@ -8,8 +8,8 @@ This repository contains low level design (LLD) resources to improve object orie
 
 ## Fundamental Concepts
 - [Basics of OOPS](concepts/OOPS.md)
-- [SOLID Principles in Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
-- [SOLID Principles in Code](https://medium.com/android-news/solid-principles-the-definitive-guide-75e30a284dea)
+- [SOLID Principles with Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
+- [SOLID Principles with Code](https://newsletter.ashishps.com/p/solid-principles-explained-with-code)
 - [DRY Principle](concepts/DRY.md)
 - [YAGNI Principle](concepts/YAGNI.md)
 - [KISS Principle](concepts/KISS.md)
