@@ -1,4 +1,4 @@
-# Designing an Online Shopping System Like Amazon
+# Designing an restaurant-management-system 
 
 In this article, we will explore the object-oriented design and implementation of a Restaurant Management System using Java. 
 
