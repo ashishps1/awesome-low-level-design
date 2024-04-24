@@ -7,7 +7,7 @@ It’s built on four main principles: Inheritance, Polymorphism, Abstraction, an
 These principles not only help in creating structured and reusable code but also make it easier to understand, maintain, and modify.
 
 ### Inheritance
-nheritance allows one class to inherit the properties and methods of another class. It's a way to form a hierarchy between classes, promoting code reusability.
+Inheritance allows one class to inherit the properties and methods of another class. It's a way to form a hierarchy between classes, promoting code reusability.
 #### Example:
 ```java
 class Vehicle {
