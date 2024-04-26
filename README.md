@@ -4,7 +4,7 @@
 <p align="center">
   <a href="https://www.linkedin.com/in/ashishps1/">LinkedIn</a> | <a href="https://www.youtube.com/@ashishps_1/videos">YouTube</a> | <a href="https://twitter.com/ashishps_1">X</a> | <a href="https://newsletter.ashishps.com/">Newsletter</a>
 </p>
-This repository contains low level design (LLD) resources to improve object oriented design (OOD) skills and prepare for interviews.
+Learn Low Level Design (LLD) and prepare for interviews using free resources.
 
 ## Fundamental Concepts
 - [Basics of OOPS](concepts/OOPS.md)
