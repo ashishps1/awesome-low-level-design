@@ -7,9 +7,15 @@
 Learn Low Level Design (LLD) and prepare for interviews using free resources.
 
 ## Fundamental Concepts
+<<<<<<< HEAD
 - [Basics of OOPS](concepts/OOPS.md)
 - [SOLID Principles with Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [SOLID Principles with Code](https://newsletter.ashishps.com/p/solid-principles-explained-with-code)
+=======
+- [Basics OOP Concepts](https://newsletter.ashishps.com/p/basic-oop-concepts-explained-with-code)
+- [SOLID Principles in Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
+- [SOLID Principles in Code](https://medium.com/android-news/solid-principles-the-definitive-guide-75e30a284dea)
+>>>>>>> ce0cfe5 (updated basic oop concept link)
 - [DRY Principle](concepts/DRY.md)
 - [YAGNI Principle](concepts/YAGNI.md)
 - [KISS Principle](concepts/KISS.md)
