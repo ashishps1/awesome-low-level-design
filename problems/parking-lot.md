@@ -109,11 +109,11 @@ public class FeeCalculator {
 ### ParkingLot Class
 ```java
 class ParkingLot {
-    private List<ParkingSpot> parkingSpots;
+    private List<ParkingFloor> parkingFloors;
     private List<ParkingTicket> issuedTickets;
 
     public ParkingLot() {
-        this.parkingSpots = new ArrayList<>();
+        this.parkingFloors = new ArrayList<>();
         this.issuedTickets = new ArrayList<>();
     }
 
