@@ -64,6 +64,9 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Design Music Streaming Service (like Spotify)](problems/music-streaming-service.md)
 - [Design University Course Registration System](problems/course-registration-system.md)
 
+## 📇 Courses
+- [Grokking the Low Level Design Interview Using OOD Principles](https://www.educative.io/courses/grokking-the-low-level-design-interview-using-ood-principles?aff=BZyO)
+
 ## Books
 - [Head First Design Patterns](https://www.amazon.com/Head-First-Design-Patterns-Object-Oriented/dp/149207800X/)
 - [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/B08X8ZXT15)
