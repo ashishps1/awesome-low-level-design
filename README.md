@@ -72,6 +72,5 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 ## Courses
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 - [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
-
-## Additional Resources
-- [LLD Coding](http://lldcoding.com)
+---
+### If you found this repository helpful, you can support my work [here](https://buymeacoffee.com/ashishps).
