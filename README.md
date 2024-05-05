@@ -13,11 +13,13 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [DRY Principle](concepts/DRY.md)
 - [YAGNI Principle](concepts/YAGNI.md)
 - [KISS Principle](concepts/KISS.md)
+- [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
 ## Design Patterns
 - [Refactoring Guru - Catalog of Design Patterns](https://refactoring.guru/design-patterns/catalog)
 - [Fireship - 10 Design Patterns in 10 Minutes](https://www.youtube.com/watch?v=tv-_1er1mWI&pp=ygUPZGVzaWduIHBhdHRlcm5z)
 - [Design Pattern Playlist](https://www.youtube.com/watch?v=v9ejT8FO-7I&list=PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc)
+- [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 - [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
 
 ## UML
@@ -71,9 +73,5 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Head First Design Patterns](https://www.amazon.com/Head-First-Design-Patterns-Object-Oriented/dp/149207800X/)
 - [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/B08X8ZXT15)
 - [Refactoring: Improving the Design of Existing Code](https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature/dp/0134757599/)
-
-## Courses
-- [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
-- [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 ---
 ### If you found this repository helpful, you can show your support by [buying me a coffee](https://buymeacoffee.com/ashishps).
