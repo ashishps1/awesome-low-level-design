@@ -11,8 +11,8 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [SOLID Principles with Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [SOLID Principles with Code](https://newsletter.ashishps.com/p/solid-principles-explained-with-code)
 - [DRY Principle](https://newsletter.ashishps.com/p/082450d8-0e7b-4447-a8dc-b7308e45f048)
-- [YAGNI Principle](concepts/YAGNI.md)
-- [KISS Principle](concepts/KISS.md)
+- [YAGNI Principle](https://newsletter.ashishps.com/p/8c3c7da7-885b-4a9c-a6e4-70ee02de4772)
+- [KISS Principle](https://newsletter.ashishps.com/p/21b57678-b351-4ed4-b390-3b6308af2f7d)
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
 ## Design Patterns
