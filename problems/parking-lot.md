@@ -31,11 +31,11 @@ Here's a simplified version of Java code:
 ### Vehicle Class
 ```java
 abstract class Vehicle {
-    private String licenseNumber;
+    private String registrationNumber;
     protected VehicleType type;
     
-    public Vehicle(String licensePlate, VehicleType type) {
-        this.licensePlate = licensePlate;
+    public Vehicle(String registrationNumber, VehicleType type) {
+        this.registrationNumber = registrationNumber;
         this.type = type;
     }
 
