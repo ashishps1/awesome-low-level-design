@@ -58,7 +58,9 @@ public class User {
     }
 
     // Getters and setters...
-}```
+}
+```
+
 ### Song Class
 Represents an individual music track.
 ```java
