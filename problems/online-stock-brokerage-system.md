@@ -1,160 +1,25 @@
 # Designing an Online Stock Brokerage System
 
-In this article, we'll examine the object-oriented design and implementation of an Online Stock Brokerage System using Java. 
-
-This system simulates key functionalities of stock trading platforms, enabling users to engage in buying and selling stocks, manage their portfolios, and stay updated with stock prices.
-
-## System Requirements
-
-The Stock Brokerage System needs to:
-
-1. **User Account Management:** Manage user registrations and profiles.
-2. **Stock Trading:** Enable stock buying and selling.
-3. **Portfolio Management:** Allow users to manage their stock holdings.
-4. **Stock Price Feed:** Provide real-time stock price updates.
-
-## Core Use Cases
-
-1. **Registering and Managing User Accounts**
-2. **Buying and Selling Stocks**
-3. **Managing Portfolio**
-4. **Viewing Stock Prices**
-
-## Key Classes:
-- `StockBrokerageSystem`: Manages the entire system.
-- `User`: Represents a system user.
-- `Stock`: Represents a stock in the market.
-- `Portfolio`: Manages a user's stock holdings.
-- `Trade`: Handles stock trade transactions.
+## Requirements
+1. The online stock brokerage system should allow users to create and manage their trading accounts.
+2. Users should be able to buy and sell stocks, as well as view their portfolio and transaction history.
+3. The system should provide real-time stock quotes and market data to users.
+4. The system should handle order placement, execution, and settlement processes.
+5. The system should enforce various business rules and validations, such as checking account balances and stock availability.
+6. The system should handle concurrent user requests and ensure data consistency and integrity.
+7. The system should be scalable and able to handle a large number of users and transactions.
+8. The system should be secure and protect sensitive user information.
 
 ## Java Implementation
+[Full Code](../solutions/java/src/onlinestockbrokeragesystem/)
 
-### User Class
-Manages user account information.
-
-```java
-import java.util.UUID;
-
-public class User {
-    private String userId;
-    private String name;
-    private Portfolio portfolio;
-
-    public User(String name) {
-        this.userId = UUID.randomUUID().toString();
-        this.name = name;
-        this.portfolio = new Portfolio();
-    }
-
-    public void executeTrade(Stock stock, int quantity, TradeType tradeType, StockBrokerageSystem system) {
-        system.executeTrade(new Trade(this, stock, quantity, tradeType));
-    }
-
-    // Getters and setters...
-}
-```
-### Stock Class
-Represents a stock in the market.
-```java
-public class Stock {
-    private String symbol;
-    private double price;
-
-    public Stock(String symbol, double price) {
-        this.symbol = symbol;
-        this.price = price;
-    }
-
-    public void updatePrice(double newPrice) {
-        this.price = newPrice;
-    }
-
-    // Getters and setters...
-}
-```
-### Portfolio Class
-Manages a user's stock holdings.
-```java
-import java.util.HashMap;
-import java.util.Map;
-
-public class Portfolio {
-    private Map<Stock, Integer> holdings;
-
-    public Portfolio() {
-        this.holdings = new HashMap<>();
-    }
-
-    public void addStock(Stock stock, int quantity) {
-        holdings.put(stock, holdings.getOrDefault(stock, 0) + quantity);
-    }
-
-    public void removeStock(Stock stock, int quantity) {
-        int currentQuantity = holdings.getOrDefault(stock, 0);
-        if (currentQuantity >= quantity) {
-            holdings.put(stock, currentQuantity - quantity);
-        }
-    }
-
-    // Getters and setters...
-}
-```
-### Trade Class
-Represents a stock trade transaction.
-```java
-public class Trade {
-    private User user;
-    private Stock stock;
-    private int quantity;
-    private TradeType tradeType;
-
-    public Trade(User user, Stock stock, int quantity, TradeType tradeType) {
-        this.user = user;
-        this.stock = stock;
-        this.quantity = quantity;
-        this.tradeType = tradeType;
-    }
-
-    // Getters and setters...
-}
-
-enum TradeType {
-    BUY, SELL
-}
-```
-### StockBrokerageSystem Class
-Main class managing the brokerage system.
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-public class StockBrokerageSystem {
-    private List<User> users;
-    private List<Stock> stocks;
-
-    public StockBrokerageSystem() {
-        this.users = new ArrayList<>();
-        this.stocks = new ArrayList<>();
-    }
-
-    public void executeTrade(Trade trade) {
-        if (trade.getTradeType() == TradeType.BUY) {
-            processBuyTrade(trade);
-        } else if (trade.getTradeType() == TradeType.SELL) {
-            processSellTrade(trade);
-        }
-    }
-
-    private void processBuyTrade(Trade trade) {
-        // Logic to process a buy trade
-        trade.getUser().getPortfolio().addStock(trade.getStock(), trade.getQuantity());
-    }
-
-    private void processSellTrade(Trade trade) {
-        // Logic to process a sell trade
-        trade.getUser().getPortfolio().removeStock(trade.getStock(), trade.getQuantity());
-    }
-
-    // Other necessary methods...
-}
-```
+1. The User class represents a user of the stock brokerage system, with properties such as user ID, name, and email.
+2. The Account class represents a user's trading account, with properties like account ID, associated user, and balance. It provides methods for depositing and withdrawing funds.
+3. The Stock class represents a stock that can be traded, with properties such as symbol, name, and price. It provides a method for updating the stock price.
+4. The Order class is an abstract base class representing an order placed by a user. It contains common properties such as order ID, associated account, stock, quantity, price, and order status. The execute() method is declared as abstract, to be implemented by concrete order classes.
+5. The BuyOrder and SellOrder classes are concrete implementations of the Order class, representing buy and sell orders respectively. They provide the implementation for the execute() method specific to each order type.
+6. The OrderStatus enum represents the possible statuses of an order, such as PENDING, EXECUTED, or REJECTED.
+7. The Portfolio class represents a user's portfolio, which holds the stocks owned by the user. It provides methods for adding and removing stocks from the portfolio.
+8. The StockBroker class is the central component of the stock brokerage system. It follows the Singleton pattern to ensure a single instance of the stock broker. It manages user accounts, stocks, and order processing. It provides methods for creating accounts, adding stocks, placing orders, and processing orders.
+9. The InsufficientFundsException and InsufficientStockException classes are custom exceptions used to handle insufficient funds and insufficient stock scenarios respectively.
+10. The StockBrokerageSystem class serves as the entry point of the application and demonstrates the usage of the stock brokerage system.

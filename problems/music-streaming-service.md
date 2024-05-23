@@ -1,177 +1,22 @@
 # Designing an Online Music Streaming Service Like Spotify
 
-This article focuses on developing an object-oriented design for an Online Music Streaming Service similar to Spotify using Java. 
+## Requirements
+1. The music streaming service should allow users to browse and search for songs, albums, and artists.
+2. Users should be able to create and manage playlists.
+3. The system should support user authentication and authorization.
+4. Users should be able to play, pause, skip, and seek within songs.
+5. The system should recommend songs and playlists based on user preferences and listening history.
+6. The system should handle concurrent requests and ensure smooth streaming experience for multiple users.
+7. The system should be scalable and handle a large volume of songs and users.
+8. The system should be extensible to support additional features such as social sharing and offline playback.
 
-The system aims to deliver a comprehensive music streaming experience.
-
-## System Requirements
-
-The Online Music Streaming Service should:
-
-1. **User Account Management**: Manage user registrations, profiles, and subscriptions.
-2. **Music Library Management**: Maintain a library of songs, artists, and albums.
-3. **Streaming and Playback**: Enable streaming of music and manage playback settings.
-4. **Playlist Management**: Allow users to create and manage personalized playlists.
-5. **User Recommendation System**: Offer music suggestions based on preferences and listening history.
-
-## Core Use Cases
-
-1. **Registering and Managing User Accounts**
-2. **Browsing and Streaming Music**
-3. **Creating and Editing Playlists**
-4. **Recommending Music**
-5. **Handling Subscriptions and Payments**
-
-## UML/Class Diagrams
-
-Key Classes:
-
-- `MusicStreamingService`: Manages the system.
-- `User`: Represents a subscriber.
-- `Song`: Represents an individual music track.
-- `Playlist`: Manages a collection of songs.
-- `Subscription`: Handles subscription details.
-
-## Java Implementation
-
-### User Class
-
-Manages user account information and preferences.
-
-```java
-public class User {
-    private String userId;
-    private String name;
-    private Subscription subscription;
-    private List<Playlist> playlists;
-
-    public User(String userId, String name) {
-        this.userId = userId;
-        this.name = name;
-        this.playlists = new ArrayList<>();
-        this.subscription = new Subscription();
-    }
-
-    public void createPlaylist(String playlistName) {
-        Playlist newPlaylist = new Playlist(playlistName);
-        playlists.add(newPlaylist);
-    }
-
-    // Getters and setters...
-}```
-### Song Class
-Represents an individual music track.
-```java
-public class Song {
-    private String songId;
-    private String title;
-    private String artist;
-    private String album;
-    private double duration;
-
-    public Song(String songId, String title, String artist, String album, double duration) {
-        this.songId = songId;
-        this.title = title;
-        this.artist = artist;
-        this.album = album;
-        this.duration = duration;
-    }
-
-    // Getters and setters...
-}
-```
-### Playlist Class
-Manages a collection of songs.
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-public class Playlist {
-    private String name;
-    private List<Song> songs;
-
-    public Playlist(String name) {
-        this.name = name;
-        this.songs = new ArrayList<>();
-    }
-
-    public void addSong(Song song) {
-        songs.add(song);
-    }
-
-    // Getters and setters...
-}
-```
-### Subscription Class
-Handles user subscription details.
-```java
-public class Subscription {
-    private SubscriptionType type;
-    private double price;
-
-    public Subscription() {
-        this.type = SubscriptionType.FREE;
-        this.price = 0.0;
-    }
-
-    public void upgradeSubscription(SubscriptionType newType) {
-        this.type = newType;
-        // Set price based on subscription type
-    }
-
-    // Getters and setters...
-}
-
-enum SubscriptionType {
-    FREE, PREMIUM
-}
-```
-### MusicStreamingService Class
-```java
-public class MusicStreamingService {
-    private List<User> users;
-    private List<Song> songs;
-
-    public MusicStreamingService() {
-        this.users = new ArrayList<>();
-        this.songs = new ArrayList<>();
-    }
-
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public void addSong(Song song) {
-        songs.add(song);
-    }
-
-    public List<Song> searchSongs(String title) {
-        // Implement search logic to find songs by title
-        List<Song> foundSongs = new ArrayList<>();
-        for (Song song : songs) {
-            if (song.getTitle().equalsIgnoreCase(title)) {
-                foundSongs.add(song);
-            }
-        }
-        return foundSongs;
-    }
-
-    public void subscribeUser(String userId, SubscriptionType subscriptionType) {
-        User user = findUserById(userId);
-        if (user != null) {
-            user.getSubscription().upgradeSubscription(subscriptionType);
-        }
-    }
-
-    private User findUserById(String userId) {
-        for (User user : users) {
-            if (user.getUserId().equals(userId)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    // Other necessary methods...
-}
-```
+### Java Implementation
+[Full Code](../solutions/java/src/musicstreamingservice/)
+1. The Song, Album, and Artist classes represent the basic entities in the music streaming service, with properties such as ID, title, artist, album, duration, and relationships between them.
+2. The User class represents a user of the music streaming service, with properties like ID, username, password, and a list of playlists.
+3. The Playlist class represents a user-created playlist, containing a list of songs.
+4. The MusicLibrary class serves as a central repository for storing and managing songs, albums, and artists. It follows the Singleton pattern to ensure a single instance of the music library.
+5. The UserManager class handles user registration, login, and other user-related operations. It also follows the Singleton pattern.
+6. The MusicPlayer class represents the music playback functionality, allowing users to play, pause, skip, and seek within songs.
+7. The MusicRecommender class generates song recommendations based on user preferences and listening history. It follows the Singleton pattern.
+8. The MusicStreamingService class is the main entry point of the music streaming service. It initializes the necessary components, handles user requests, and manages the overall functionality of the service.

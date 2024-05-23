@@ -1,104 +1,19 @@
 # Designing an Elevator System
 
-This article explores the design and implementation of an Elevator System using object-oriented principles in Java, focusing on functionality, scalability, and user interaction.
+## Requirements
+1. The elevator system should consist of multiple elevators serving multiple floors.
+2. Each elevator should have a capacity limit and should not exceed it.
+3. Users should be able to request an elevator from any floor and select a destination floor.
+4. The elevator system should efficiently handle user requests and optimize the movement of elevators to minimize waiting time.
+5. The system should prioritize requests based on the direction of travel and the proximity of the elevators to the requested floor.
+6. The elevators should be able to handle multiple requests concurrently and process them in an optimal order.
+7. The system should ensure thread safety and prevent race conditions when multiple threads interact with the elevators.
 
-## System Requirements
+### Java Implementation
+[Full Code](../solutions/java/src/elevatorsystem/)
 
-The Elevator System is designed to:
-
-1. **Handle Multiple Requests:** Manage requests from different floors efficiently.
-2. **Optimize Elevator Movement:** Allocate elevators based on requests to improve efficiency.
-3. **Track Elevator Status:** Monitor the state and position of each elevator.
-4. **Incorporate Safety Features:** Ensure key safety mechanisms are in place.
-
-## Core Use Cases
-
-1. **Requesting an Elevator:** Users can call elevators to their current floor.
-2. **Transporting Passengers:** Elevators carry passengers to their desired floors.
-3. **Managing Idle Elevators:** Efficiently allocate available elevators.
-
-## Key Classes:
-- `ElevatorSystem`: Manages multiple elevators.
-- `Elevator`: Represents an individual elevator.
-- `ElevatorControlPanel`: Interface for users to interact with an elevator.
-
-## Java Implementation
-
-### Elevator Class
-
-This class represents an individual elevator.
-
-```java
-public class Elevator {
-    private int currentFloor;
-    private ElevatorState state;
-
-    public Elevator() {
-        this.currentFloor = 0; // Starting at ground floor
-        this.state = ElevatorState.IDLE;
-    }
-
-    public void moveToFloor(int floor) {
-        // Simulate elevator movement
-        this.currentFloor = floor;
-        this.state = ElevatorState.MOVING;
-        // Assume elevator reaches the floor instantly
-        this.state = ElevatorState.IDLE;
-    }
-
-    // Getters and setters...
-}
-```
-### ElevatorSystem Class
-```java
-import java.util.*;
-
-public class ElevatorSystem {
-    private List<Elevator> elevators;
-
-    public ElevatorSystem(int numberOfElevators) {
-        elevators = new ArrayList<>();
-        for (int i = 0; i < numberOfElevators; i++) {
-            elevators.add(new Elevator());
-        }
-    }
-
-    public void requestElevator(int floor) {
-        Elevator closestElevator = findClosestElevator(floor);
-        if (closestElevator != null) {
-            closestElevator.moveToFloor(floor);
-        }
-    }
-
-    private Elevator findClosestElevator(int floor) {
-        Elevator closest = null;
-        int minDistance = Integer.MAX_VALUE;
-        for (Elevator elevator : elevators) {
-            int distance = Math.abs(elevator.getCurrentFloor() - floor);
-            if (distance < minDistance && elevator.getState() == ElevatorState.IDLE) {
-                closest = elevator;
-                minDistance = distance;
-            }
-        }
-        return closest;
-    }
-
-    // Other necessary methods...
-}
-```
-### ElevatorControlPanel Class
-```java
-public class ElevatorControlPanel {
-    private Elevator elevator;
-
-    public ElevatorControlPanel(Elevator elevator) {
-        this.elevator = elevator;
-    }
-
-    public void goToFloor(int floor) {
-        elevator.moveToFloor(floor);
-    }
-
-    // Other necessary methods...
-}
-```
+1. The Direction enum represents the possible directions of elevator movement (UP or DOWN).
+2. The Request class represents a user request for an elevator, containing the source floor and destination floor.
+3. The Elevator class represents an individual elevator in the system. It has a capacity limit and maintains a list of 4. requests. The elevator processes requests concurrently and moves between floors based on the requests.
+4. The ElevatorController class manages multiple elevators and handles user requests. It finds the optimal elevator to serve a request based on the proximity of the elevators to the requested floor.
+5. The ElevatorSystem class is the entry point of the application and demonstrates the usage of the elevator system.

@@ -1,131 +1,21 @@
 # Designing a Car Rental System
 
-In this article, we will explore the object-oriented design and implementation of a Car Rental System (CRS) using Java. 
+## Requirements
+1. The car rental system should allow customers to browse and reserve available cars for specific dates.
+2. Each car should have details such as make, model, year, license plate number, and rental price per day.
+3. Customers should be able to search for cars based on various criteria, such as car type, price range, and availability.
+4. The system should handle reservations, including creating, modifying, and canceling reservations.
+5. The system should keep track of the availability of cars and update their status accordingly.
+6. The system should handle customer information, including name, contact details, and driver's license information.
+7. The system should handle payment processing for reservations.
+8. The system should be able to handle concurrent reservations and ensure data consistency.
 
-This system will handle the renting of cars to customers, managing car inventory, and tracking rentals.
-
-## System Requirements
-
-The CRS should support:
-
-1. **Car Inventory Management:** Keep track of available cars for rent.
-2. **Rental Process Management:** Handle the process of renting a car to a customer.
-3. **Rental Tracking:** Track ongoing and past rentals.
-4. **Customer Management:** Manage customer information.
-
-## Core Use Cases
-
-1. **Renting a Car:** Customers can rent available cars.
-2. **Returning a Car:** Handle the return process of rented cars.
-3. **Tracking Rentals:** View current and past rental records.
-4. **Managing Car Inventory:** Add, update, and remove cars from the inventory.
-
-## Key Classes:
-- `CarRentalSystem`: Manages the overall operations of the car rental system.
-- `Car`: Represents a car in the system.
-- `Rental`: Manages details about a car rental.
-- `Customer`: Stores information about customers.
-
-## Java Implementation
-
-### Car Class
-
-```java
-public class Car {
-    private String licensePlate;
-    private String make;
-    private boolean isAvailable;
-
-    public Car(String licensePlate, String make) {
-        this.licensePlate = licensePlate;
-        this.make = make;
-        this.isAvailable = true;
-    }
-
-    public void rentOut() {
-        isAvailable = false;
-    }
-
-    public void returnCar() {
-        isAvailable = true;
-    }
-
-    // Getters and setters...
-}
-```
-### Customer Class
-```java
-public class Customer {
-    private String customerId;
-    private String name;
-
-    public Customer(String customerId, String name) {
-        this.customerId = customerId;
-        this.name = name;
-    }
-
-    // Getters and setters...
-}
-```
-### Rental Class
-```java
-import java.time.LocalDate;
-
-public class Rental {
-    private Car car;
-    private Customer customer;
-    private LocalDate rentalDate;
-    private LocalDate returnDate;
-
-    public Rental(Car car, Customer customer, LocalDate rentalDate) {
-        this.car = car;
-        this.customer = customer;
-        this.rentalDate = rentalDate;
-        this.car.rentOut();
-    }
-
-    public void completeRental(LocalDate returnDate) {
-        this.returnDate = returnDate;
-        this.car.returnCar();
-    }
-
-    // Getters and setters...
-}
-```
-### CarRentalSystem Class
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-public class CarRentalSystem {
-    private List<Car> cars;
-    private List<Rental> rentals;
-
-    public CarRentalSystem() {
-        cars = new ArrayList<>();
-        rentals = new ArrayList<>();
-    }
-
-    public void addCar(Car car) {
-        cars.add(car);
-    }
-
-    public Rental rentCar(String licensePlate, Customer customer, LocalDate rentalDate) {
-        Car car = findAvailableCar(licensePlate);
-        if (car != null) {
-            Rental rental = new Rental(car, customer, rentalDate);
-            rentals.add(rental);
-            return rental;
-        }
-        return null;
-    }
-
-    private Car findAvailableCar(String licensePlate) {
-        return cars.stream()
-                   .filter(c -> c.getLicensePlate().equals(licensePlate) && c.isAvailable())
-                   .findFirst().orElse(null);
-    }
-
-    // Other necessary methods...
-}
-```
+### Java Implementation
+1. The Car class represents a car in the rental system, with properties such as make, model, year, license plate number, rental price per day, and availability status.
+2. The Customer class represents a customer, with properties like name, contact information, and driver's license number.
+3. The Reservation class represents a reservation made by a customer for a specific car and date range. It includes properties such as reservation ID, customer, car, start date, end date, and total price.
+4. The PaymentProcessor interface defines the contract for payment processing, and the CreditCardPaymentProcessor and PayPalPaymentProcessor classes are concrete implementations of the payment processor.
+5. The RentalSystem class is the core of the car rental system and follows the Singleton pattern to ensure a single instance of the rental system.
+6. The RentalSystem class uses concurrent data structures (ConcurrentHashMap) to handle concurrent access to cars and reservations.
+7. The RentalSystem class provides methods for adding and removing cars, searching for available cars based on criteria, making reservations, canceling reservations, and processing payments.
+8. The CarRentalSystem class serves as the entry point of the application and demonstrates the usage of the car rental system.

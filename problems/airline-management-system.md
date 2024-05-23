@@ -1,141 +1,23 @@
 # Designing an Airline Management System
 
-This article delves into the object-oriented design and implementation of an Airline Management System using Java. 
+## Requirements
+1. The airline management system should allow users to search for flights based on source, destination, and date.
+2. Users should be able to book flights, select seats, and make payments.
+3. The system should manage flight schedules, aircraft assignments, and crew assignments.
+4. The system should handle passenger information, including personal details and baggage information.
+5. The system should support different types of users, such as passengers, airline staff, and administrators.
+6. The system should be able to handle cancellations, refunds, and flight changes.
+7. The system should ensure data consistency and handle concurrent access to shared resources.
+8. The system should be scalable and extensible to accommodate future enhancements and new features.
 
-This system will handle various aspects of airline operations including managing flights, passengers, crew, and aircraft.
-
-## System Requirements
-
-The Airline Management System should:
-
-1. **Flight Management:** Create and schedule flights.
-2. **Passenger Management:** Manage passenger bookings and check-ins.
-3. **Crew Management:** Assign crew members to flights.
-4. **Aircraft Management:** Track aircraft and maintenance schedules.
-
-## Core Use Cases
-
-1. **Scheduling and Managing Flights**
-2. **Booking and Managing Passenger Seats**
-3. **Assigning Crew to Flights**
-4. **Managing Aircraft**
-
-## Key Classes:
-- `AirlineManagementSystem`: Manages the entire system.
-- `Flight`: Represents a flight.
-- `Passenger`: Represents a passenger.
-- `CrewMember`: Represents a flight crew member.
-- `Aircraft`: Represents an aircraft.
-
-## Java Implementation
-
-### Flight Class
-
-Represents a flight.
-
-```java
-import java.util.Date;
-
-public class Flight {
-    private String flightNumber;
-    private Aircraft aircraft;
-    private Date departureTime;
-    private String origin;
-    private String destination;
-
-    public Flight(String flightNumber, Aircraft aircraft, Date departureTime, String origin, String destination) {
-        this.flightNumber = flightNumber;
-        this.aircraft = aircraft;
-        this.departureTime = departureTime;
-        this.origin = origin;
-        this.destination = destination;
-    }
-
-    // Getters and setters...
-}
-```
-### Passenger Class
-Manages passenger information.
-```java
-public class Passenger {
-    private String name;
-    private String passportNumber;
-
-    public Passenger(String name, String passportNumber) {
-        this.name = name;
-        this.passportNumber = passportNumber;
-    }
-
-    // Getters and setters...
-}
-```
-### CrewMember Class
-Represents a crew member.
-```java
-public class CrewMember {
-    private String name;
-    private String employeeId;
-
-    public CrewMember(String name, String employeeId) {
-        this.name = name;
-        this.employeeId = employeeId;
-    }
-
-    // Getters and setters...
-}
-```
-### Aircraft Class
-Represents an aircraft.
-```java
-public class Aircraft {
-    private String registrationNumber;
-    private String model;
-    private int totalSeats;
-
-    public Aircraft(String registrationNumber, String model, int totalSeats) {
-        this.registrationNumber = registrationNumber;
-        this.model = model;
-        this.totalSeats = totalSeats;
-    }
-
-    // Getters and setters...
-}
-```
-### AirlineManagementSystem Class
-Manages overall airline operations.
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-public class AirlineManagementSystem {
-    private List<Flight> flights;
-    private List<Passenger> passengers;
-    private List<CrewMember> crewMembers;
-    private List<Aircraft> aircrafts;
-
-    public AirlineManagementSystem() {
-        this.flights = new ArrayList<>();
-        this.passengers = new ArrayList<>();
-        this.crewMembers = new ArrayList<>();
-        this.aircrafts = new ArrayList<>();
-    }
-
-    public void addFlight(Flight flight) {
-        flights.add(flight);
-    }
-
-    public void addPassenger(Passenger passenger) {
-        passengers.add(passenger);
-    }
-
-    public void addCrewMember(CrewMember crewMember) {
-        crewMembers.add(crewMember);
-    }
-
-    public void addAircraft(Aircraft aircraft) {
-        aircrafts.add(aircraft);
-    }
-
-    // Other necessary methods...
-}
-```
+### Java Implementation
+1. The Flight class represents a flight in the airline management system, with properties such as flight number, source, destination, departure time, arrival time, and available seats.
+2. The Aircraft class represents an aircraft, with properties like tail number, model, and total seats.
+3. The Passenger class represents a passenger, with properties such as ID, name, email, and phone number.
+4. The Booking class represents a booking made by a passenger for a specific flight and seat, with properties such as booking number, flight, passenger, seat, price, and booking status.
+5. The Seat class represents a seat on a flight, with properties like seat number, seat type, and seat status.
+6. The Payment class represents a payment made for a booking, with properties such as payment ID, payment method, amount, and payment status.
+7. The FlightSearch class provides functionality to search for flights based on source, destination, and date.
+8. The BookingManager class manages the creation and cancellation of bookings. It follows the Singleton pattern to ensure a single instance of the booking manager.
+9. The PaymentProcessor class handles the processing of payments. It follows the Singleton pattern to ensure a single instance of the payment processor.
+10. The AirlineManagementSystem class serves as the main entry point of the system, combining all the components and providing methods for flight management, booking, payment processing, and other operations.

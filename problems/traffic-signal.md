@@ -1,123 +1,17 @@
 # Designing a Traffic Signal Control System
 
-In this article, we will explore the object-oriented design and implementation of a Traffic Signal Control System using Java. 
+## Requirements
+1. The traffic signal system should control the flow of traffic at an intersection with multiple roads.
+2. The system should support different types of signals, such as red, yellow, and green.
+3. The duration of each signal should be configurable and adjustable based on traffic conditions.
+4. The system should handle the transition between signals smoothly, ensuring safe and efficient traffic flow.
+5. The system should be able to detect and handle emergency situations, such as an ambulance or fire truck approaching the intersection.
+6. The system should be scalable and extensible to support additional features and functionality.
 
-This system is crucial for managing traffic flow and ensuring safety at intersections.
-
-## System Requirements
-
-The Traffic Signal Control System should:
-
-1. **Signal Timing Management**: Control the timing of traffic lights.
-2. **Intersection Management**: Manage multiple traffic signals at an intersection.
-3. **Mode Configuration**: Support different traffic modes.
-4. **Emergency Override**: Allow manual control in emergencies.
-
-## Core Use Cases
-
-1. **Switching Signals**: Change signals from red to green and vice versa.
-2. **Timing Adjustment**: Modify the duration of each signal.
-3. **Mode Selection**: Choose operational modes.
-4. **Emergency Control**: Manual override for emergencies.
-
-## Key Classes:
-- `TrafficSignalSystem`: Manages the system.
-- `TrafficLight`: Represents an individual traffic light.
-- `IntersectionController`: Manages lights at an intersection.
-- `ControlPanel`: For manual control and emergency overrides.
-
-## Java Implementation
-
-### TrafficLight Class
-
-Represents an individual traffic light.
-
-```java
-public class TrafficLight {
-    private String id;
-    private LightState state;
-
-    public TrafficLight(String id) {
-        this.id = id;
-        this.state = LightState.RED;
-    }
-
-    public void changeState(LightState state) {
-        this.state = state;
-    }
-
-    // Getters and setters...
-}
-
-enum LightState {
-    RED, GREEN, YELLOW
-}
-```
-
-### IntersectionController Class
-Manages traffic lights at an intersection.
-
-```java
-import java.util.HashMap;
-import java.util.Map;
-
-public class IntersectionController {
-    private Map<String, TrafficLight> trafficLights;
-
-    public IntersectionController() {
-        this.trafficLights = new HashMap<>();
-    }
-
-    public void addTrafficLight(TrafficLight light) {
-        trafficLights.put(light.getId(), light);
-    }
-
-    public void changeSignal(String lightId, LightState state) {
-        if (trafficLights.containsKey(lightId)) {
-            trafficLights.get(lightId).changeState(state);
-        }
-    }
-
-    // Additional methods...
-}
-```
-### ControlPanel Class
-For manual control and emergencies.
-
-```java
-public class ControlPanel {
-    private IntersectionController controller;
-
-    public ControlPanel(IntersectionController controller) {
-        this.controller = controller;
-    }
-
-    public void overrideSignal(String lightId, LightState state) {
-        controller.changeSignal(lightId, state);
-    }
-
-    // Additional methods...
-}
-```
-
-### TrafficSignalSystem Class
-Main class managing the traffic signal system.
-
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-public class TrafficSignalSystem {
-    private List<IntersectionController> intersectionControllers;
-
-    public TrafficSignalSystem() {
-        this.intersectionControllers = new ArrayList<>();
-    }
-
-    public void addIntersectionController(IntersectionController controller) {
-        intersectionControllers.add(controller);
-    }
-
-    // Methods to update system configurations...
-}
-```
+### Java Implementation
+[Full Code](../solutions/java/src/trafficsignalsystem/)
+1. The Signal enum represents the different states of a traffic light: red, yellow, and green.
+2. The Road class represents a road in the traffic signal system, with properties such as ID, name, and an associated traffic light.
+3. The TrafficLight class represents a traffic light, with properties such as ID, current signal, and durations for each signal state. It provides methods to change the signal and notify observers (e.g., roads) about signal changes.
+4. The TrafficController class serves as the central controller for the traffic signal system. It follows the Singleton pattern to ensure a single instance of the controller. It manages the roads and their associated traffic lights, starts the traffic control process, and handles emergency situations.
+5. The TrafficSignalSystemDemo class is the main entry point of the application. It demonstrates the usage of the traffic signal system by creating roads, traffic lights, assigning traffic lights to roads, and starting the traffic control process.

@@ -1,104 +1,20 @@
 # Designing a Pub-Sub System in Java
 
-This article explores the design and implementation of a basic Publish-Subscribe (Pub-Sub) system using Java, following object-oriented design principles.
+## Requirements
+1. The Pub-Sub system should allow publishers to publish messages to specific topics.
+2. Subscribers should be able to subscribe to topics of interest and receive messages published to those topics.
+3. The system should support multiple publishers and subscribers.
+4. Messages should be delivered to all subscribers of a topic in real-time.
+5. The system should handle concurrent access and ensure thread safety.
+6. The Pub-Sub system should be scalable and efficient in terms of message delivery.
 
-The Pub-Sub model is a widely used pattern in messaging systems, allowing for scalable and decoupled communication. This guide outlines the design and implementation of such a system.
+### Java Implementation
+[Full Code](../solutions/java/src/pubsubsystem/)
 
-## Understanding the Requirements
-The system will enable:
-- Publishers to send messages to topics.
-- Subscribers to receive messages from topics they are subscribed to.
-- Scalability and decoupling between publishers and subscribers.
-
-## Core Use Cases
-- **Subscribing to Topics**: Users can subscribe to topics of interest.
-- **Publishing Messages**: Publishers can send messages to topics.
-- **Receiving Messages**: Subscribers receive messages from their subscribed topics.
-
-## Key Classes:
-- **Publisher Class**: Responsible for publishing messages.
-- **Subscriber Interface**: Interface for subscribers to receive messages.
-- **Topic Class**: Represents a topic in the system.
-- **PubSubService Class**: Manages the publication and subscription logic.
-
-## Java Implementation
-```java
-public class Topic {
-    private String name;
-
-    public Topic(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-}
-```
-```java
-public class Message {
-    private String content;
-    private Topic topic;
-
-    public Message(String content, Topic topic) {
-        this.content = content;
-        this.topic = topic;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Topic getTopic() {
-        return topic;
-    }
-}
-```
-```java
-public interface Subscriber {
-    void receive(Message message);
-}
-
-public class Publisher {
-    public void publish(Message message, PubSubService service) {
-        service.addMessageToQueue(message);
-    }
-}
-```
-```java
-import java.util.*;
-
-public class PubSubService {
-    private Queue<Message> messageQueue = new LinkedList<>();
-    private Map<String, List<Subscriber>> subscribersTopicMap = new HashMap<>();
-
-    public void addMessageToQueue(Message message) {
-        messageQueue.add(message);
-    }
-
-    public void addSubscriber(String topicName, Subscriber subscriber) {
-        if (!subscribersTopicMap.containsKey(topicName)) {
-            subscribersTopicMap.put(topicName, new ArrayList<>());
-        }
-        subscribersTopicMap.get(topicName).add(subscriber);
-    }
-
-    public void removeSubscriber(String topicName, Subscriber subscriber) {
-        if (subscribersTopicMap.containsKey(topicName)) {
-            subscribersTopicMap.get(topicName).remove(subscriber);
-        }
-    }
-
-    public void broadcast() {
-        while (!messageQueue.isEmpty()) {
-            Message message = messageQueue.poll();
-            String topicName = message.getTopic().getName();
-            List<Subscriber> subscribersOfTopic = subscribersTopicMap.getOrDefault(topicName, new ArrayList<>());
-            for (Subscriber subscriber : subscribersOfTopic) {
-                subscriber.receive(message);
-            }
-        }
-    }
-}
-```
-
+1. The Message class represents a message that can be published and received by subscribers. It contains the message content.
+2. The Topic class represents a topic to which messages can be published. It maintains a set of subscribers and provides methods to add and remove subscribers, as well as publish messages to all subscribers.
+3. The Subscriber interface defines the contract for subscribers. It declares the onMessage method that is invoked when a subscriber receives a message.
+4. The ConcreteSubscriber class is a concrete implementation of the Subscriber interface. It receives messages and prints them to the console.
+5. The Publisher class represents a publisher that publishes messages to a specific topic.
+6. The PubSubSystem class is the main class that manages topics, subscribers, and message publishing. It uses a ConcurrentHashMap to store topics and an ExecutorService to handle concurrent message publishing.
+7. The PubSubDemo class demonstrates the usage of the Pub-Sub system by creating topics, subscribers, and publishers, and publishing messages.

@@ -1,104 +1,19 @@
 # Designing an ATM System
 
-This article covers the design and implementation of an Automated Teller Machine (ATM) system using object-oriented programming in Java.
+## Requirements
+1. The ATM system should support basic operations such as balance inquiry, cash withdrawal, and cash deposit.
+2. Users should be able to authenticate themselves using a card and a PIN (Personal Identification Number).
+3. The system should interact with a bank's backend system to validate user accounts and perform transactions.
+4. The ATM should have a cash dispenser to dispense cash to users.
+5. The system should handle concurrent access and ensure data consistency.
+6. The ATM should have a user-friendly interface for users to interact with.
 
-## System Requirements
-Our ATM system is designed to handle:
-1. **Authentication:** Verifying user identity using a card number and PIN.
-2. **Account Management:** Managing different account types.
-3. **Balance Inquiry:** Checking the account balance.
-4. **Cash Withdrawal and Deposit:** Handling money transactions.
-5. **Transaction History:** Providing a record of past transactions.
-
-## Core Use Cases
-- **User Authentication**
-- **Performing Transactions:** Withdrawals, deposits, balance inquiries.
-- **Printing Transaction Receipts** (optional for this implementation)
-
-## Key Classes:
-- `ATM`: The main class to interact with users.
-- `Account`: To manage account details.
-- `Bank`: Represents the bank system that verifies transactions.
-- `CardReader`: To read user's card data.
-- `CashDispenser`: To manage cash dispensing.
-
-## Java Implementation
-### Account Class
-```java
-public class Account {
-    private String accountNumber;
-    private double balance;
-
-    public Account(String accountNumber, double initialBalance) {
-        this.accountNumber = accountNumber;
-        this.balance = initialBalance;
-    }
-
-    public boolean withdraw(double amount) {
-        if (amount > balance) {
-            return false; // Insufficient balance
-        }
-        balance -= amount;
-        return true;
-    }
-
-    public void deposit(double amount) {
-        balance += amount;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    // Other necessary methods...
-}
-```
-### 
-ATM Class
-```java
-public class ATM {
-    private Account currentAccount;
-    private Bank bank;
-
-    public ATM(Bank bank) {
-        this.bank = bank;
-    }
-
-    public boolean authenticateUser(String accountNumber, String pin) {
-        this.currentAccount = bank.verifyAccount(accountNumber, pin);
-        return currentAccount != null;
-    }
-
-    public double checkBalance() {
-        return currentAccount.getBalance();
-    }
-
-    public boolean withdraw(double amount) {
-        return currentAccount.withdraw(amount);
-    }
-
-    public void deposit(double amount) {
-        currentAccount.deposit(amount);
-    }
-
-    // Other necessary methods...
-}
-```
-### Bank Class
-```java
-public class Bank {
-    private Map<String, Account> accounts;
-
-    public Bank() {
-        accounts = new HashMap<>();
-        // Initialize with some accounts
-    }
-
-    public Account verifyAccount(String accountNumber, String pin) {
-        // Verify account based on accountNumber and PIN
-        // Return account if verified, else return null
-    }
-
-    // Other necessary methods...
-}
-```
+### Java Implementation
+[Full code](../solutions/java/src/atm/)
+1. The Card class represents an ATM card with a card number and PIN.
+2. The Account class represents a bank account with an account number and balance. It provides methods to debit and credit the account balance.
+3. The Transaction class is an abstract base class for different types of transactions, such as withdrawal and deposit. It is extended by WithdrawalTransaction and DepositTransaction classes.
+4. The BankingService class manages the bank accounts and processes transactions. It uses a thread-safe ConcurrentHashMap to store and retrieve account information.
+5. The CashDispenser class represents the ATM's cash dispenser and handles the dispensing of cash. It uses synchronization to ensure thread safety when dispensing cash.
+6. The ATM class serves as the main interface for ATM operations. It interacts with the BankingService and CashDispenser to perform user authentication, balance inquiry, cash withdrawal, and cash deposit.
+7. The ATMDriver class demonstrates the usage of the ATM system by creating sample accounts and performing ATM operations.

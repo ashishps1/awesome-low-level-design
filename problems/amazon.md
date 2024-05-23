@@ -1,164 +1,24 @@
 # Designing an Online Shopping System Like Amazon
 
-In this article, we're going to design and implement an Online Shopping System resembling Amazon, using Java. 
+## Requirements
+1. The online shopping service should allow users to browse products, add them to the shopping cart, and place orders.
+2. The system should support multiple product categories and provide search functionality.
+3. Users should be able to manage their profiles, view order history, and track order status.
+4. The system should handle inventory management and update product availability accordingly.
+5. The system should support multiple payment methods and ensure secure transactions.
+6. The system should handle concurrent user requests and ensure data consistency.
+7. The system should be scalable to handle a large number of products and users.
+8. The system should provide a user-friendly interface for a seamless shopping experience.
 
-This system will cover product listings, user accounts, shopping carts, and order processing.
+### Java Implementation
+[Full Code](../solutions/java/src/onlineshopping/)
 
-## System Requirements
-
-The Online Shopping System should:
-
-1. **Product Management:** Manage a catalog of products.
-2. **User Account Management:** Handle user registrations and logins.
-3. **Shopping Cart Management:** Allow users to add and remove products from their shopping cart.
-4. **Order Processing:** Process user orders and maintain order history.
-
-## Core Use Cases
-
-1. **Browsing Products**
-2. **Managing User Accounts**
-3. **Handling Shopping Carts**
-4. **Processing Orders**
-
-## Key Classes:
-- `OnlineShoppingSystem`: Manages the overall system.
-- `Product`: Represents a product in the catalog.
-- `User`: Represents a user of the system.
-- `ShoppingCart`: Manages the shopping cart.
-- `Order`: Represents a user's order.
-
-## Java Implementation
-
-### Product Class
-
-Represents a product in the store.
-
-```java
-public class Product {
-    private String productId;
-    private String name;
-    private double price;
-    private String description;
-
-    public Product(String productId, String name, double price, String description) {
-        this.productId = productId;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-    }
-
-    // Getters and setters...
-}
-```
-### User Class
-Handles user account information.
-```java
-public class User {
-    private String userId;
-    private String name;
-    private String email;
-    private ShoppingCart cart;
-    private List<Order> orderHistory;
-
-    public User(String userId, String name, String email) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.cart = new ShoppingCart(this);
-        this.orderHistory = new ArrayList<>();
-    }
-
-    public void addProductToCart(Product product, int quantity) {
-        cart.addProduct(product, quantity);
-    }
-
-    public Order checkout() {
-        Order order = cart.checkout();
-        orderHistory.add(order);
-        return order;
-    }
-
-    // Getters and setters...
-}
-```
-### ShoppingCart Class
-Manages shopping cart operations.
-```java
-import java.util.HashMap;
-import java.util.Map;
-
-public class ShoppingCart {
-    private User owner;
-    private Map<Product, Integer> items;
-
-    public ShoppingCart(User owner) {
-        this.owner = owner;
-        this.items = new HashMap<>();
-    }
-
-    public void addProduct(Product product, int quantity) {
-        items.put(product, items.getOrDefault(product, 0) + quantity);
-    }
-
-    public Order checkout() {
-        Order newOrder = new Order(this.owner, new HashMap<>(items));
-        items.clear();
-        return newOrder;
-    }
-
-    // Getters and setters...
-}
-```
-### Order Class
-Represents a user's order.
-```java
-import java.util.Map;
-
-public class Order {
-    private User user;
-    private Map<Product, Integer> orderedItems;
-    private OrderStatus status;
-
-    public Order(User user, Map<Product, Integer> orderedItems) {
-        this.user = user;
-        this.orderedItems = orderedItems;
-        this.status = OrderStatus.PROCESSING;
-    }
-
-    public void updateStatus(OrderStatus newStatus) {
-        this.status = newStatus;
-    }
-
-    // Getters and setters...
-}
-
-enum OrderStatus {
-    PROCESSING, SHIPPED, DELIVERED
-}
-```
-### OnlineShoppingSystem Class
-Main class for managing the online shopping platform.
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-public class OnlineShoppingSystem {
-    private List<Product> catalog;
-    private List<User> users;
-
-    public OnlineShoppingSystem() {
-        this.catalog = new ArrayList<>();
-        this.users = new ArrayList<>();
-    }
-
-    public void addProductToCatalog(Product product) {
-        catalog.add(product);
-    }
-
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    // Other necessary methods...
-}
-```
+1. The User class represents a user in the online shopping service, with properties such as ID, name, email, password, and a list of orders.
+2. The Product class represents a product available for purchase, with properties like ID, name, description, price, and quantity. It provides methods to update the quantity and check product availability.
+3. The Order class represents an order placed by a user, containing properties such as ID, user, order items, total amount, and order status. It calculates the total amount based on the order items.
+4. The OrderItem class represents an item within an order, consisting of the product and the quantity ordered.
+5. The OrderStatus enum represents the different statuses an order can have, such as pending, processing, shipped, delivered, or cancelled.
+6. The ShoppingCart class represents the user's shopping cart, allowing them to add, remove, and update item quantities. It maintains a map of product IDs and order items.
+7. The Payment interface defines the contract for processing payments, with a concrete implementation CreditCardPayment.
+8. The OnlineShoppingService class is the central component of the online shopping service. It follows the Singleton pattern to ensure only one instance of the service exists. It provides methods to register users, add products, search products, place orders, and retrieve order information. It handles concurrent access to shared resources using synchronization.
+9. The OnlineShoppingServiceDemo class demonstrates the usage of the online shopping service by registering users, adding products, searching for products, placing orders, and viewing order history.

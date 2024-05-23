@@ -1,113 +1,20 @@
 # Designing a Coffee Vending Machine
 
-This article explores the object-oriented design and implementation of a Coffee Vending Machine using Java, a project that demonstrates managing coffee selections, inventory, and customer interactions.
-
-## System Requirements
-
-The Coffee Vending Machine is designed to:
-
-1. **Offer Multiple Coffee Types:** Provide a selection of coffee types such as Espresso, Latte, and Cappuccino.
-2. **Manage Inventory:** Track ingredients like coffee, milk, sugar, and water.
-3. **Process Orders:** Handle customer coffee selections and dispense the correct beverage.
-4. **Payment Handling:** Manage simplified payment transactions for the coffee.
-
-## Core Use Cases
-
-1. **Selecting a Coffee Type:** Customers choose their preferred type of coffee.
-2. **Checking Ingredient Availability:** Ensure sufficient ingredients are available for the selected coffee.
-3. **Dispensing Coffee:** Prepare and dispense the chosen coffee.
-4. **Processing Payment:** Handle the transaction for the coffee purchase.
-
-## Key Classes:
-- `CoffeeVendingMachine`: Central class managing the vending machine.
-- `Coffee`: Enum representing different types of coffee.
-- `Ingredient`: Manages individual ingredients.
-- `Inventory`: Tracks all available ingredients.
-- `PaymentProcessor`: Handles payment transactions.
+## Requirements
+1. The coffee vending machine should support different types of coffee, such as espresso, cappuccino, and latte.
+2. Each type of coffee should have a specific price and recipe (ingredients and their quantities).
+3. The machine should have a menu to display the available coffee options and their prices.
+4. Users should be able to select a coffee type and make a payment.
+5. The machine should dispense the selected coffee and provide change if necessary.
+6. The machine should track the inventory of ingredients and notify when they are running low.
+7. The machine should handle multiple user requests concurrently and ensure thread safety.
 
 ## Java Implementation
-
-### Coffee Enum
-
-Represents different coffee types available.
-
-```java
-public enum Coffee {
-    ESPRESSO, LATTE, CAPPUCCINO
-}
-```
-### Ingredient Class
-```java
-public class Ingredient {
-    private String name;
-    private int quantity;
-
-    public Ingredient(String name, int quantity) {
-        this.name = name;
-        this.quantity = quantity;
-    }
-
-    public boolean useIngredient(int amount) {
-        // Method implementation
-    }
-
-    // Getters and setters...
-}
-```
-### Inventory Class
-```java
-import java.util.HashMap;
-import java.util.Map;
-
-public class Inventory {
-    private Map<String, Ingredient> ingredients;
-
-    public Inventory() {
-        ingredients = new HashMap<>();
-        // Initialize with default ingredients
-    }
-
-    public boolean checkIngredientAvailability(String ingredientName, int amount) {
-        Ingredient ingredient = ingredients.get(ingredientName);
-        return ingredient != null && ingredient.getQuantity() >= amount;
-    }
-
-    public void useIngredient(String ingredientName, int amount) {
-        if (checkIngredientAvailability(ingredientName, amount)) {
-            ingredients.get(ingredientName).useIngredient(amount);
-        }
-    }
-
-    // Methods to add or update ingredients...
-}
-```
-### CoffeeVendingMachine Class
-```java
-public class CoffeeVendingMachine {
-    private Inventory inventory;
-    private PaymentProcessor paymentProcessor;
-
-    public CoffeeVendingMachine() {
-        inventory = new Inventory();
-        paymentProcessor = new PaymentProcessor();
-    }
-
-    public Coffee makeCoffee(Coffee coffeeType) {
-        // Check if enough ingredients are available
-        // If available, dispense the coffee
-        // Handle payment
-        return coffeeType; // Assuming coffee is dispensed
-    }
-
-    // Other necessary methods...
-}
-```
-### PaymentProcessor Class
-```java
-public class PaymentProcessor {
-    public boolean processPayment(double amount) {
-        // Simulate payment processing
-        return true; // Assuming payment is successful
-    }
-}
-```
+[Full Code](../solutions/java/src/coffeevendingmachine/)
+1. The Coffee class represents a coffee type with its name, price, and recipe (ingredients and their quantities).
+2. The Ingredient class represents an ingredient used in making coffee, with its name and quantity. It provides a synchronized method to update the quantity.
+3. The Payment class represents a payment made by a user, with the amount paid.
+4. The CoffeeMachine class is the main class that manages the coffee vending machine. It follows the Singleton pattern to ensure a single instance of the machine.
+5. The CoffeeMachine class initializes the coffee menu and ingredients in its constructor. It provides methods to display the menu, select a coffee, dispense coffee, and update ingredient quantities.
+6. The hasEnoughIngredients method checks if there are sufficient ingredients to make a selected coffee, while the updateIngredients method updates the ingredient quantities after dispensing a coffee.
+7. The CoffeeVendingMachine class is the entry point of the application and demonstrates the usage of the coffee vending machine. It creates an instance of the machine, displays the menu, and simulates concurrent user requests using an ExecutorService.
