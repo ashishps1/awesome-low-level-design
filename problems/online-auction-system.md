@@ -15,6 +15,7 @@ This system allows for the creation and management of auctions, user participati
 
 ### Java Implementation
 [Java Code](../solutions/java/src/onlineauctionsystem/)
+
 1. The User class represents a user in the online auction system, with properties such as id, username, and email.
 2. The AuctionStatus enum defines the possible states of an auction listing, such as active and closed.
 3. The AuctionListing class represents an auction listing in the system, with properties like id, item name, description, starting price, duration, seller, current highest bid, and a list of bids.

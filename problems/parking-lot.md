@@ -10,6 +10,7 @@
 
 ### Java Implementation
 [Full Code](../solutions/java/src/parkinglot/)
+
 1. The ParkingLot class follows the Singleton pattern to ensure only one instance of the parking lot exists. It maintains a list of levels and provides methods to park and unpark vehicles.
 2. The Level class represents a level in the parking lot and contains a list of parking spots. It handles parking and unparking of vehicles within the level.
 3. The ParkingSpot class represents an individual parking spot and tracks the availability and the parked vehicle.

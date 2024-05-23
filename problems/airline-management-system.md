@@ -11,6 +11,8 @@
 8. The system should be scalable and extensible to accommodate future enhancements and new features.
 
 ### Java Implementation
+[Full Code](../solutions/java/src/airlinemanagementsystem/)
+
 1. The Flight class represents a flight in the airline management system, with properties such as flight number, source, destination, departure time, arrival time, and available seats.
 2. The Aircraft class represents an aircraft, with properties like tail number, model, and total seats.
 3. The Passenger class represents a passenger, with properties such as ID, name, email, and phone number.

@@ -11,6 +11,7 @@
 
 ## Java Implementation
 [Full Code](../solutions/java/src/coffeevendingmachine/)
+
 1. The Coffee class represents a coffee type with its name, price, and recipe (ingredients and their quantities).
 2. The Ingredient class represents an ingredient used in making coffee, with its name and quantity. It provides a synchronized method to update the quantity.
 3. The Payment class represents a payment made by a user, with the amount paid.

@@ -11,6 +11,7 @@
 
 ### Java Implementation
 [Full Code](../solutions/java/src/taskmanagementsystem/)
+
 1. The User class represents a user in the task management system, with properties such as id, name, and email.
 2. The TaskStatus enum defines the possible states of a task, such as pending, in progress, and completed.
 3. The Task class represents a task in the system, with properties like id, title, description, due date, priority, status, and assigned user.

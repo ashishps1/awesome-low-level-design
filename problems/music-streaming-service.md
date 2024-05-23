@@ -12,6 +12,7 @@
 
 ### Java Implementation
 [Full Code](../solutions/java/src/musicstreamingservice/)
+
 1. The Song, Album, and Artist classes represent the basic entities in the music streaming service, with properties such as ID, title, artist, album, duration, and relationships between them.
 2. The User class represents a user of the music streaming service, with properties like ID, username, password, and a list of playlists.
 3. The Playlist class represents a user-created playlist, containing a list of songs.

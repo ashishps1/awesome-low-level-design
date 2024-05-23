@@ -10,6 +10,7 @@
 
 ### Java Implementation
 [Full code](../solutions/java/src/atm/)
+
 1. The Card class represents an ATM card with a card number and PIN.
 2. The Account class represents a bank account with an account number and balance. It provides methods to debit and credit the account balance.
 3. The Transaction class is an abstract base class for different types of transactions, such as withdrawal and deposit. It is extended by WithdrawalTransaction and DepositTransaction classes.

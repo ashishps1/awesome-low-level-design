@@ -1,186 +1,27 @@
-# Designing an Online Shopping System Like Amazon
+# Designing Restaurant Management System
 
-In this article, we will explore the object-oriented design and implementation of a Restaurant Management System using Java. 
+## Requirements
+1. The restaurant management system should allow customers to place orders, view the menu, and make reservations.
+2. The system should manage the restaurant's inventory, including ingredients and menu items.
+3. The system should handle order processing, including order preparation, billing, and payment.
+4. The system should support multiple payment methods, such as cash, credit card, and mobile payments.
+5. The system should manage staff information, including roles, schedules, and performance tracking.
+6. The system should generate reports and analytics for management, such as sales reports and inventory analysis.
+7. The system should handle concurrent access and ensure data consistency.
 
-This system will handle various aspects such as table reservations, order processing, and kitchen management.
+### Java Implementation
+[Full Code](../solutions/java/src/restaurantmanagementsystem/)
 
-## System Requirements
-
-The Online Shopping System should:
-
-1. **Table Reservation Management:** Handle booking and management of tables.
-2. **Order Management:** Process food orders from customers.
-3. **Inventory Management:** Keep track of kitchen inventory and supplies.
-4. **Billing System:** Generate and manage customer bills.
-
-## Core Use Cases
-
-1. **Reserving Tables**
-2. **Placing and Processing Food Orders**
-3. **Managing Inventory**
-4. **Generating and Processing Bills**
-
-## Key Classes:
-- `RestaurantManagementSystem`: Manages the entire system.
-- `Table`: Represents a dining table in the restaurant.
-- `Order`: Manages a customer's food order.
-- `Inventory`: Keeps track of kitchen inventory.
-- `Bill`: Represents a customer's bill.
-
-## Java Implementation
-
-### Table Class
-Represents a dining table in the restaurant.
-```java
-public class Table {
-    private int tableId;
-    private int seatingCapacity;
-    private boolean isReserved;
-
-    public Table(int tableId, int seatingCapacity) {
-        this.tableId = tableId;
-        this.seatingCapacity = seatingCapacity;
-        this.isReserved = false;
-    }
-
-    public void reserveTable() {
-        isReserved = true;
-    }
-
-    public void releaseTable() {
-        isReserved = false;
-    }
-
-    // Getters and setters...
-}
-```
-### Order Class
-Manages a food order.
-```java
-import java.util.HashMap;
-import java.util.Map;
-
-public class Order {
-    private int orderId;
-    private Map<String, Integer> items; // Item name and quantity
-
-    public Order(int orderId) {
-        this.orderId = orderId;
-        this.items = new HashMap<>();
-    }
-
-    public void addItem(String itemName, int quantity) {
-        items.put(itemName, items.getOrDefault(itemName, 0) + quantity);
-    }
-
-    // Getters and setters...
-}
-```
-### Inventory Class
-Tracks kitchen inventory and supplies.
-```java
-import java.util.HashMap;
-import java.util.Map;
-
-public class Inventory {
-    private Map<String, Integer> stock;
-
-    public Inventory() {
-        this.stock = new HashMap<>();
-    }
-
-    public void updateStock(String itemName, int quantity) {
-        stock.put(itemName, quantity);
-    }
-
-    public boolean isItemAvailable(String itemName, int quantityNeeded) {
-        return stock.getOrDefault(itemName, 0) >= quantityNeeded;
-    }
-
-    public int getStock(String itemName) {
-        return stock.getOrDefault(itemName, 0);
-    }
-
-    // Getters and setters...
-}
-```
-### Bill Class
-Represents a customer's bill.
-```java
-public class Bill {
-    private int billId;
-    private Order order;
-    private double totalAmount;
-
-    public Bill(int billId, Order order) {
-        this.billId = billId;
-        this.order = order;
-        this.totalAmount = calculateTotal(order);
-    }
-
-    private double calculateTotal(Order order) {
-        // Calculate the total bill amount based on the order
-        // This could involve fetching prices for each item in the order
-        return 0.0; // Placeholder for total calculation
-    }
-
-    // Getters and setters...
-}
-```
-### RestaurantManagementSystem Class
-Main class that manages the restaurant operations.
-```java
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-public class RestaurantManagementSystem {
-    private List<Table> tables;
-    private Inventory inventory;
-
-    public RestaurantManagementSystem() {
-        this.tables = new ArrayList<>();
-        this.inventory = new Inventory();
-        // Initialize tables and inventory
-        initializeTables();
-    }
-
-    private void initializeTables() {
-        // Assuming the restaurant has 10 tables with varying seating capacities
-        for (int i = 1; i <= 10; i++) {
-            tables.add(new Table(i, i + 2)); // Example: Table ID 1 with 3 seats, etc.
-        }
-    }
-
-    public Table reserveTable(int tableId) {
-        // Find and reserve a table based on tableId
-        for (Table table : tables) {
-            if (table.getTableId() == tableId && !table.isReserved()) {
-                table.reserveTable();
-                return table;
-            }
-        }
-        return null; // No table available or invalid tableId
-    }
-
-    public Order placeOrder(int orderId, Map<String, Integer> items) {
-        // Place a new food order
-        Order newOrder = new Order(orderId);
-        for (Map.Entry<String, Integer> item : items.entrySet()) {
-            String itemName = item.getKey();
-            int quantity = item.getValue();
-
-            if (inventory.isItemAvailable(itemName, quantity)) {
-                newOrder.addItem(itemName, quantity);
-                inventory.updateStock(itemName, inventory.getStock(itemName) - quantity);
-            } else {
-                // Handle case where item is not available
-                System.out.println("Item not available: " + itemName);
-            }
-        }
-        return newOrder;
-    }
-
-    // Other necessary methods...
-}
-```
+1. The MenuItem class represents a menu item in the restaurant, with properties such as ID, name, description, price, and availability.
+2. The Order class represents an order placed by a customer, with properties such as ID, list of menu items, total amount, order status, and timestamp.
+3. The OrderStatus enum represents the different statuses an order can have, such as pending, preparing, ready, completed, or cancelled.
+4. The Reservation class represents a reservation made by a customer, with properties such as ID, customer name, contact number, party size, and reservation time.
+5. The Payment class represents a payment made for an order, with properties such as ID, amount, payment method, and payment status.
+6. The PaymentMethod enum represents the different payment methods supported by the restaurant, such as cash, credit card, or mobile payment.
+7. The PaymentStatus enum represents the status of a payment, which can be pending, completed, or failed.
+8. The Staff class represents a staff member of the restaurant, with properties such as ID, name, role, and contact number.
+9. The Restaurant class is the main class that manages the restaurant operations. It follows the Singleton pattern to ensure only one instance of the restaurant exists.
+10. The Restaurant class provides methods for managing menu items, placing orders, updating order status, making reservations, processing payments, and managing staff.
+11. Multi-threading is implemented using concurrent data structures (ConcurrentHashMap and CopyOnWriteArrayList) to handle concurrent access to shared data, such as orders and reservations.
+12. The notifyKitchen and notifyStaff methods are placeholders for notifying relevant staff about order updates and status changes.
+13. The RestaurantManagementDemo class demonstrates the usage of the restaurant management system by adding menu items, placing an order, making a reservation, processing a payment, updating order status, adding staff, and retrieving the menu.

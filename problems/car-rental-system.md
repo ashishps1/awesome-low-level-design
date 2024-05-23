@@ -11,6 +11,8 @@
 8. The system should be able to handle concurrent reservations and ensure data consistency.
 
 ### Java Implementation
+[Full Code](../solutions/java/src/carrentalsystem/)
+
 1. The Car class represents a car in the rental system, with properties such as make, model, year, license plate number, rental price per day, and availability status.
 2. The Customer class represents a customer, with properties like name, contact information, and driver's license number.
 3. The Reservation class represents a reservation made by a customer for a specific car and date range. It includes properties such as reservation ID, customer, car, start date, end date, and total price.

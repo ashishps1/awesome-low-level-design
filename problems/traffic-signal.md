@@ -10,6 +10,7 @@
 
 ### Java Implementation
 [Full Code](../solutions/java/src/trafficsignalsystem/)
+
 1. The Signal enum represents the different states of a traffic light: red, yellow, and green.
 2. The Road class represents a road in the traffic signal system, with properties such as ID, name, and an associated traffic light.
 3. The TrafficLight class represents a traffic light, with properties such as ID, current signal, and durations for each signal state. It provides methods to change the signal and notify observers (e.g., roads) about signal changes.

@@ -10,6 +10,7 @@
 
 ### Java Implementation
 [Full Code](../solutions/java/src/loggingframework/)
+
 1. The LogLevel enum defines the different log levels supported by the logging framework.
 2. The LogMessage class represents a log message with a timestamp, log level, and message content.
 3. The LogAppender interface defines the contract for appending log messages to different output destinations.
