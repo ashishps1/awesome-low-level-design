@@ -1,4 +1,4 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.seat;
 
 public class Seat {
     private final String seatNumber;

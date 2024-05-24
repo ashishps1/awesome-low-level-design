@@ -1,4 +1,8 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.booking;
+
+import airlinemanagementsystem.flight.Flight;
+import airlinemanagementsystem.Passenger;
+import airlinemanagementsystem.seat.Seat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -45,7 +45,7 @@ public class FoodDeliveryServiceDemo {
         System.out.println("Order status updated: " + order.getStatus());
 
         // Cancel an order
-        Order order2 = deliveryService.placeOrder(customer2.getId(), restaurant2.getId(), Arrays.asList(new OrderItem(restaurant2Menu.get(0), 1)));
+        Order order2 = deliveryService.placeOrder(customer2.getId(), restaurant2.getId(), List.of(new OrderItem(restaurant2Menu.get(0), 1)));
         System.out.println("Order placed: " + order2.getId());
         deliveryService.cancelOrder(order2.getId());
         System.out.println("Order cancelled: " + order2.getId());

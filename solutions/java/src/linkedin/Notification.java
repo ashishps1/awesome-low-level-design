@@ -3,11 +3,11 @@ package linkedin;
 import java.sql.Timestamp;
 
 public class Notification {
-    private String id;
-    private User user;
-    private NotificationType type;
-    private String content;
-    private Timestamp timestamp;
+    private final String id;
+    private final User user;
+    private final NotificationType type;
+    private final String content;
+    private final Timestamp timestamp;
 
     public Notification(String id, User user, NotificationType type, String content, Timestamp timestamp) {
         this.id = id;

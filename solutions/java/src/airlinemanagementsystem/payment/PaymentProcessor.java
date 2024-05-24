@@ -1,4 +1,4 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.payment;
 
 public class PaymentProcessor {
     private static PaymentProcessor instance;

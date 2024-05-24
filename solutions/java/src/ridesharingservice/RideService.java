@@ -7,10 +7,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class RideService {
     private static RideService instance;
-    private Map<Integer, Passenger> passengers;
-    private Map<Integer, Driver> drivers;
-    private Map<Integer, Ride> rides;
-    private Queue<Ride> requestedRides;
+    private final Map<Integer, Passenger> passengers;
+    private final Map<Integer, Driver> drivers;
+    private final Map<Integer, Ride> rides;
+    private final Queue<Ride> requestedRides;
 
     private RideService() {
         passengers = new ConcurrentHashMap<>();

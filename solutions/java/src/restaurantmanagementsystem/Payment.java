@@ -1,10 +1,10 @@
 package restaurantmanagementsystem;
 
 public class Payment {
-    private int id;
-    private double amount;
-    private PaymentMethod method;
-    private PaymentStatus status;
+    private final int id;
+    private final double amount;
+    private final PaymentMethod method;
+    private final PaymentStatus status;
 
     public Payment(int id, double amount, PaymentMethod method, PaymentStatus status) {
         this.id = id;

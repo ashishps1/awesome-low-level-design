@@ -1,10 +1,10 @@
 package restaurantmanagementsystem;
 
 public class Staff {
-    private int id;
-    private String name;
-    private String role;
-    private String contactNumber;
+    private final int id;
+    private final String name;
+    private final String role;
+    private final String contactNumber;
 
     public Staff(int id, String name, String role, String contactNumber) {
         this.id = id;

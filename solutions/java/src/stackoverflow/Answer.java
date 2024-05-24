@@ -3,11 +3,11 @@ package stackoverflow;
 import java.util.List;
 
 public class Answer {
-    private int id;
-    private String body;
-    private User author;
-    private Question question;
-    private List<Comment> comments;
+    private final int id;
+    private final String body;
+    private final User author;
+    private final Question question;
+    private final List<Comment> comments;
     private int voteCount;
 
     public Answer(int id, String body, User author, Question question, List<Comment> comments, int voteCount) {

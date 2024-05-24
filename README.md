@@ -30,7 +30,7 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 ## Low Level Design Interview Problems
 ### Easy
 - [Design Parking Lot](problems/parking-lot.md)
-- [Design a Vending Machine](https://medium.com/swlh/vending-machine-design-a-state-design-pattern-approach-5b7e1a026cd2)
+- [Design a Vending Machine](problems/vending-machine.md)
 - [Design Stack Overflow](problems/stack-overflow.md)
 - [Design Logging Framework](problems/logging-framework.md)
 - [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
@@ -53,12 +53,12 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Design a Concert Ticket Booking System](problems/concert-ticketing-system.md)
 - [Design a Cache using LRU Eviction Policy](problems/lru-cache.md)
 ### Hard
-- [Design Movie Ticket Booking System](https://www.youtube.com/watch?v=CC7DwkQOsS0&list=PLAC2AM9O1C5KioUMeH9qIjbAV_RMmX8rd&index=8)
-- [Design Splitwise](https://workat.tech/machine-coding/editorial/how-to-design-splitwise-machine-coding-ayvnfo1tfst6)
-- [Design a Snake and Ladder game](https://workat.tech/machine-coding/editorial/how-to-design-snake-and-ladder-machine-coding-ehskk9c40x2w)
+- [Design Movie Ticket Booking System](problems/movie-ticket-booking-system.md)
+- [Design Splitwise](problems/splitwise.md)
+- [Design a Snake and Ladder game](problems/snake-and-ladder.md)
 - [Design Online Shopping System like Amazon](problems/online-shopping-service.md)
 - [Design Online Stock Brokerage System](problems/online-stock-brokerage-system.md)
-- [Design CricInfo](https://www.youtube.com/watch?v=VDqwCo6lhkY&list=PLAC2AM9O1C5KioUMeH9qIjbAV_RMmX8rd&index=6)
+- [Design CricInfo](problems/cricinfo.md)
 - [Design Chess Game](problems/chess-game.md)
 - [Design Ride-Sharing Service (like Uber)](problems/ride-sharing-service.md)
 - [Design Online Food Delivery Service (like Swiggy)](problems/food-delivery-service.md)

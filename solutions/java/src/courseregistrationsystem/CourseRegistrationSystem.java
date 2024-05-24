@@ -9,9 +9,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CourseRegistrationSystem {
     private static CourseRegistrationSystem instance;
-    private Map<String, Course> courses;
-    private Map<Integer, Student> students;
-    private List<Registration> registrations;
+    private final Map<String, Course> courses;
+    private final Map<Integer, Student> students;
+    private final List<Registration> registrations;
 
     private CourseRegistrationSystem() {
         courses = new ConcurrentHashMap<>();

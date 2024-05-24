@@ -80,6 +80,6 @@ public class ConcertTicketBookingSystem {
     }
 
     private String generateBookingId() {
-        return "BKG" + UUID.randomUUID().toString();
+        return "BKG" + UUID.randomUUID();
     }
 }

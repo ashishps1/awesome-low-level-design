@@ -1,4 +1,4 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.seat;
 
 public enum SeatType {
     ECONOMY,

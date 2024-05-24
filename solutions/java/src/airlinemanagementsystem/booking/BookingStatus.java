@@ -1,4 +1,4 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.booking;
 
 public enum BookingStatus {
     CONFIRMED,

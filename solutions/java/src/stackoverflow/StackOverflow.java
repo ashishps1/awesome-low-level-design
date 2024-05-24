@@ -7,9 +7,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class StackOverflow {
     private static StackOverflow instance;
-    private Map<Integer, User> users;
-    private Map<Integer, Question> questions;
-    private Map<String, List<Question>> taggedQuestions;
+    private final Map<Integer, User> users;
+    private final Map<Integer, Question> questions;
+    private final Map<String, List<Question>> taggedQuestions;
 
     private StackOverflow() {
         users = new ConcurrentHashMap<>();

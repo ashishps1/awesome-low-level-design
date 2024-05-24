@@ -1,11 +1,11 @@
 package ridesharingservice;
 
 public class Ride {
-    private int id;
-    private Passenger passenger;
+    private final int id;
+    private final Passenger passenger;
     private Driver driver;
-    private Location source;
-    private Location destination;
+    private final Location source;
+    private final Location destination;
     private RideStatus status;
     private double fare;
 

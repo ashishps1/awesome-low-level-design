@@ -4,14 +4,14 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Post {
-    private String id;
-    private String userId;
-    private String content;
-    private List<String> imageUrls;
-    private List<String> videoUrls;
-    private Timestamp timestamp;
-    private List<String> likes;
-    private List<Comment> comments;
+    private final String id;
+    private final String userId;
+    private final String content;
+    private final List<String> imageUrls;
+    private final List<String> videoUrls;
+    private final Timestamp timestamp;
+    private final List<String> likes;
+    private final List<Comment> comments;
 
     public Post(String id, String userId, String content, List<String> imageUrls, List<String> videoUrls, Timestamp timestamp, List<String> likes, List<Comment> comments) {
         this.id = id;

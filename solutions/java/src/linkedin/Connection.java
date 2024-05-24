@@ -3,8 +3,8 @@ package linkedin;
 import java.sql.Timestamp;
 
 public class Connection {
-    private User user;
-    private Timestamp connectionDate;
+    private final User user;
+    private final Timestamp connectionDate;
 
     public Connection(User user, Timestamp connectionDate) {
         this.user = user;

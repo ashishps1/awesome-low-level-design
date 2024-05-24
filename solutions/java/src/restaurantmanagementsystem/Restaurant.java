@@ -8,11 +8,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Restaurant {
     private static Restaurant instance;
-    private List<MenuItem> menu;
-    private Map<Integer, Order> orders;
-    private List<Reservation> reservations;
-    private Map<Integer, Payment> payments;
-    private List<Staff> staff;
+    private final List<MenuItem> menu;
+    private final Map<Integer, Order> orders;
+    private final List<Reservation> reservations;
+    private final Map<Integer, Payment> payments;
+    private final List<Staff> staff;
 
     private Restaurant() {
         menu = new CopyOnWriteArrayList<>();

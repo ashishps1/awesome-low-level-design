@@ -49,11 +49,7 @@ public class Board {
         if (grid[0][0] != '-' && grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]) {
             return true;
         }
-        if (grid[0][2] != '-' && grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0]) {
-            return true;
-        }
-
-        return false;
+        return grid[0][2] != '-' && grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0];
     }
 
     public void printBoard() {

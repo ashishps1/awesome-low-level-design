@@ -1,4 +1,4 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.flight;
 
 import java.time.LocalDate;
 import java.util.List;

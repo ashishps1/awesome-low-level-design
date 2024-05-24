@@ -1,4 +1,4 @@
-# Designing a Cricket Information System
+# Designing a Cricket Information System like CricInfo
 
 ## Requirements
 1. The Cricinfo system should provide information about cricket matches, teams, players, and live scores.

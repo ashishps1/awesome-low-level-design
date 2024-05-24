@@ -3,10 +3,10 @@ package courseregistrationsystem;
 import java.util.List;
 
 public class Student {
-    private int id;
-    private String name;
-    private String email;
-    private List<Course> registeredCourses;
+    private final int id;
+    private final String name;
+    private final String email;
+    private final List<Course> registeredCourses;
 
     public Student(int id, String name, String email, List<Course> registeredCourses) {
         this.id = id;

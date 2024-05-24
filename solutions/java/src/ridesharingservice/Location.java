@@ -1,8 +1,8 @@
 package ridesharingservice;
 
 public class Location {
-    private double latitude;
-    private double longitude;
+    private final double latitude;
+    private final double longitude;
 
     public Location(double latitude, double longitude) {
         this.latitude = latitude;

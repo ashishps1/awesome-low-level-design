@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SocialNetworkingServiceDemo {
-    public static void run() {SocialNetworkingService socialNetworkingService = SocialNetworkingService.getInstance();
+    public static void run() {
+        SocialNetworkingService socialNetworkingService = SocialNetworkingService.getInstance();
 
         // User registration
         User user1 = new User("1", "John Doe", "john@example.com", "password", "profile1.jpg", "I love coding!", new ArrayList<>(), new ArrayList<>());

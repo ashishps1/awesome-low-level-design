@@ -8,7 +8,7 @@ public class Elevator {
     private final int capacity;
     private int currentFloor;
     private Direction currentDirection;
-    private List<Request> requests;
+    private final List<Request> requests;
 
     public Elevator(int id, int capacity) {
         this.id = id;

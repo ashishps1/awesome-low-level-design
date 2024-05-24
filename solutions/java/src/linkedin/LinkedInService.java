@@ -10,9 +10,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LinkedInService {
     private static LinkedInService instance;
-    private Map<String, User> users;
-    private Map<String, JobPosting> jobPostings;
-    private Map<String, List<Notification>> notifications;
+    private final Map<String, User> users;
+    private final Map<String, JobPosting> jobPostings;
+    private final Map<String, List<Notification>> notifications;
 
     private LinkedInService() {
         users = new ConcurrentHashMap<>();

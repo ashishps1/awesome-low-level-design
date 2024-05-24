@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Order {
-    private int id;
-    private List<MenuItem> items;
-    private double totalAmount;
+    private final int id;
+    private final List<MenuItem> items;
+    private final double totalAmount;
     private OrderStatus status;
-    private Timestamp timestamp;
+    private final Timestamp timestamp;
 
     public Order(int id, List<MenuItem> items, double totalAmount, OrderStatus status, Timestamp timestamp) {
         this.id = id;

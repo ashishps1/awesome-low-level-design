@@ -3,11 +3,11 @@ package socialnetworkingservice;
 import java.sql.Timestamp;
 
 public class Comment {
-    private String id;
-    private String userId;
-    private String postId;
-    private String content;
-    private Timestamp timestamp;
+    private final String id;
+    private final String userId;
+    private final String postId;
+    private final String content;
+    private final Timestamp timestamp;
 
     public Comment(String id, String userId, String postId, String content, Timestamp timestamp) {
         this.id = id;

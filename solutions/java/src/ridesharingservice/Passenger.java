@@ -1,10 +1,10 @@
 package ridesharingservice;
 
 public class Passenger {
-    private int id;
-    private String name;
-    private String contact;
-    private Location location;
+    private final int id;
+    private final String name;
+    private final String contact;
+    private final Location location;
 
     public Passenger(int id, String name, String contact, Location location) {
         this.id = id;

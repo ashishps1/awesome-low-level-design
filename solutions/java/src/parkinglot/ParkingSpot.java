@@ -1,8 +1,8 @@
 package parkinglot;
 
 public class ParkingSpot {
-    private int spotNumber;
-    private VehicleType vehicleType;
+    private final int spotNumber;
+    private final VehicleType vehicleType;
     private Vehicle parkedVehicle;
 
     public ParkingSpot(int spotNumber) {

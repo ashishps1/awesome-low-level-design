@@ -3,14 +3,14 @@ package linkedin;
 import java.util.List;
 
 public class User {
-    private String id;
-    private String name;
-    private String email;
-    private String password;
+    private final String id;
+    private final String name;
+    private final String email;
+    private final String password;
     private Profile profile;
-    private List<Connection> connections;
-    private List<Message> inbox;
-    private List<Message> sentMessages;
+    private final List<Connection> connections;
+    private final List<Message> inbox;
+    private final List<Message> sentMessages;
 
     public User(String id, String name, String email, String password, Profile profile, List<Connection> connections, List<Message> inbox, List<Message> sentMessages) {
         this.id = id;

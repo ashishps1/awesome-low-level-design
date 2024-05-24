@@ -1,4 +1,6 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.flight;
+
+import airlinemanagementsystem.seat.Seat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

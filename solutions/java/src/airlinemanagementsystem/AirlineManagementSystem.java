@@ -1,5 +1,13 @@
 package airlinemanagementsystem;
 
+import airlinemanagementsystem.booking.Booking;
+import airlinemanagementsystem.booking.BookingManager;
+import airlinemanagementsystem.flight.Flight;
+import airlinemanagementsystem.flight.FlightSearch;
+import airlinemanagementsystem.payment.Payment;
+import airlinemanagementsystem.payment.PaymentProcessor;
+import airlinemanagementsystem.seat.Seat;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

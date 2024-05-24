@@ -4,12 +4,12 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class JobPosting {
-    private String id;
-    private String title;
-    private String description;
-    private List<String> requirements;
-    private String location;
-    private Timestamp postDate;
+    private final String id;
+    private final String title;
+    private final String description;
+    private final List<String> requirements;
+    private final String location;
+    private final Timestamp postDate;
 
     public JobPosting(String id, String title, String description, List<String> requirements, String location, Timestamp postDate) {
         this.id = id;

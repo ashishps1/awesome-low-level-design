@@ -3,11 +3,11 @@ package socialnetworkingservice;
 import java.sql.Timestamp;
 
 public class Notification {
-    private String id;
-    private String userId;
-    private NotificationType type;
-    private String content;
-    private Timestamp timestamp;
+    private final String id;
+    private final String userId;
+    private final NotificationType type;
+    private final String content;
+    private final Timestamp timestamp;
 
     public Notification(String id, String userId, NotificationType type, String content, Timestamp timestamp) {
         this.id = id;

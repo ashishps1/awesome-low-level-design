@@ -1,4 +1,4 @@
-package airlinemanagementsystem;
+package airlinemanagementsystem.payment;
 
 public class Payment {
     private final String paymentId;

@@ -3,14 +3,14 @@ package socialnetworkingservice;
 import java.util.List;
 
 public class User {
-    private String id;
-    private String name;
-    private String email;
-    private String password;
-    private String profilePicture;
-    private String bio;
-    private List<String> friends;
-    private List<Post> posts;
+    private final String id;
+    private final String name;
+    private final String email;
+    private final String password;
+    private final String profilePicture;
+    private final String bio;
+    private final List<String> friends;
+    private final List<Post> posts;
 
     public User(String id, String name, String email, String password, String profilePicture, String bio, List<String> friends, List<Post> posts) {
         this.id = id;

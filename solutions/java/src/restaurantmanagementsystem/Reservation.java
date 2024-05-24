@@ -3,11 +3,11 @@ package restaurantmanagementsystem;
 import java.sql.Timestamp;
 
 public class Reservation {
-    private int id;
-    private String customerName;
-    private String contactNumber;
-    private int partySize;
-    private Timestamp reservationTime;
+    private final int id;
+    private final String customerName;
+    private final String contactNumber;
+    private final int partySize;
+    private final Timestamp reservationTime;
 
     public Reservation(int id, String customerName, String contactNumber, int partySize, Timestamp reservationTime) {
         this.id = id;

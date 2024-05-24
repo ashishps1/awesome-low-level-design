@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ParkingLot {
     private static ParkingLot instance;
-    private List<Level> levels;
+    private final List<Level> levels;
 
     private ParkingLot() {
         levels = new ArrayList<>();

@@ -3,9 +3,9 @@ package courseregistrationsystem;
 import java.sql.Timestamp;
 
 public class Registration {
-    private Student student;
-    private Course course;
-    private Timestamp registrationTime;
+    private final Student student;
+    private final Course course;
+    private final Timestamp registrationTime;
 
     public Registration(Student student, Course course, Timestamp registrationTime) {
         this.student = student;

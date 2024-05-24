@@ -13,6 +13,7 @@ import librarymanagementsystem.LibraryManagementSystemDemo;
 import linkedin.LinkedInDemo;
 import loggingframework.LoggingFrameworkDemo;
 import lrucache.LRUCacheDemo;
+import movieticketbookingsystem.MovieTicketBookingDemo;
 import onlineauctionsystem.AuctionSystemDemo;
 import onlineshopping.OnlineShoppingServiceDemo;
 import onlinestockbrokeragesystem.StockBrokerageSystemDemo;
@@ -20,14 +21,19 @@ import parkinglot.ParkingLotDemo;
 import pubsubsystem.PubSubDemo;
 import restaurantmanagementsystem.RestaurantManagementDemo;
 import ridesharingservice.RideSharingServiceDemo;
+import snakeandladdergame.SnakeAndLadderDemo;
 import socialnetworkingservice.SocialNetworkingServiceDemo;
+import splitwise.SplitwiseDemo;
 import stackoverflow.StackOverflowDemo;
 import taskmanagementsystem.TaskManagementSystemDemo;
 import tictactoe.TicTacToeDemo;
 import trafficsignalsystem.TrafficSignalSystemDemo;
+import vendingmachine.VendingMachineDemo;
 
-public class Main {
+public class LLDRunner {
     public static void main(String[] args) {
+        // Uncomment the LLD problem you want to run with sample input defined in the corresponding Demo class.
+
 //        ParkingLotDemo.run();
 //        ATMDemo.run();
 //        PubSubDemo.run();
@@ -55,5 +61,9 @@ public class Main {
 //        RideSharingServiceDemo.run();
 //        SocialNetworkingServiceDemo.run();
 //        LinkedInDemo.run();
+//        SplitwiseDemo.run();
+//        SnakeAndLadderDemo.run();
+//        MovieTicketBookingDemo.run();
+        VendingMachineDemo.run();
     }
 }

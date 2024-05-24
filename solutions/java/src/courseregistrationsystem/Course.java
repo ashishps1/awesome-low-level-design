@@ -1,10 +1,10 @@
 package courseregistrationsystem;
 
 public class Course {
-    private String code;
-    private String name;
-    private String instructor;
-    private int maxCapacity;
+    private final String code;
+    private final String name;
+    private final String instructor;
+    private final int maxCapacity;
     private int enrolledStudents;
 
     public Course(String code, String name, String instructor, int maxCapacity, int enrolledStudents) {

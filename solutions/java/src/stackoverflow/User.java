@@ -1,10 +1,10 @@
 package stackoverflow;
 
 public class User {
-    private int id;
-    private String username;
-    private String password;
-    private String email;
+    private final int id;
+    private final String username;
+    private final String password;
+    private final String email;
     private int reputation;
 
     public User(int id, String username, String password, String email, int reputation) {

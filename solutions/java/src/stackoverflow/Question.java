@@ -3,13 +3,13 @@ package stackoverflow;
 import java.util.List;
 
 public class Question {
-    private int id;
-    private String title;
-    private String body;
-    private User author;
-    private List<Answer> answers;
-    private List<Comment> comments;
-    private List<Tag> tags;
+    private final int id;
+    private final String title;
+    private final String body;
+    private final User author;
+    private final List<Answer> answers;
+    private final List<Comment> comments;
+    private final List<Tag> tags;
     private int voteCount;
 
     public Question(int id, String title, String body, User author, List<Answer> answers, List<Comment> comments, List<Tag> tags, int voteCount) {
