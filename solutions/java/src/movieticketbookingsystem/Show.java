@@ -1,5 +1,7 @@
 package movieticketbookingsystem;
 
+import movieticketbookingsystem.seat.Seat;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 

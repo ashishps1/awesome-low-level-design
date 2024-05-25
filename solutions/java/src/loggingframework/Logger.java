@@ -1,5 +1,7 @@
 package loggingframework;
 
+import loggingframework.logappender.ConsoleAppender;
+
 public class Logger {
     private static final Logger instance = new Logger();
     private LoggerConfig config;

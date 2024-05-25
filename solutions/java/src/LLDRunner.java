@@ -64,6 +64,6 @@ public class LLDRunner {
 //        SplitwiseDemo.run();
 //        SnakeAndLadderDemo.run();
 //        MovieTicketBookingDemo.run();
-        VendingMachineDemo.run();
+//        VendingMachineDemo.run();
     }
 }

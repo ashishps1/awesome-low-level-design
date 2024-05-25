@@ -1,5 +1,8 @@
 package onlineshopping;
 
+import onlineshopping.payment.CreditCardPayment;
+import onlineshopping.payment.Payment;
+
 import java.util.List;
 
 public class OnlineShoppingServiceDemo {

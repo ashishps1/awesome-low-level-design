@@ -1,5 +1,8 @@
 package hotelmanagement;
 
+import hotelmanagement.payment.CreditCardPayment;
+import hotelmanagement.payment.Payment;
+
 import java.time.LocalDate;
 
 public class HotelManagementSystemDemo {

@@ -1,5 +1,9 @@
 package fooddeliveryservice;
 
+import fooddeliveryservice.order.Order;
+import fooddeliveryservice.order.OrderItem;
+import fooddeliveryservice.order.OrderStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

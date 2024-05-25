@@ -1,5 +1,8 @@
 package parkinglot;
 
+import parkinglot.vehicletype.Vehicle;
+import parkinglot.vehicletype.VehicleType;
+
 public class ParkingSpot {
     private final int spotNumber;
     private final VehicleType vehicleType;

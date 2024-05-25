@@ -1,7 +1,10 @@
 package fooddeliveryservice;
 
+import fooddeliveryservice.order.Order;
+import fooddeliveryservice.order.OrderItem;
+import fooddeliveryservice.order.OrderStatus;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FoodDeliveryServiceDemo {

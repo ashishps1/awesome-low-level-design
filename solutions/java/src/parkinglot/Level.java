@@ -1,5 +1,7 @@
 package parkinglot;
 
+import parkinglot.vehicletype.Vehicle;
+
 import java.util.ArrayList;
 import java.util.List;
 

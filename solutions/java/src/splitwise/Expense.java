@@ -1,5 +1,7 @@
 package splitwise;
 
+import splitwise.splittype.Split;
+
 import java.util.ArrayList;
 import java.util.List;
 

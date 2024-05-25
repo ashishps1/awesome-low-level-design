@@ -1,5 +1,7 @@
 package loggingframework;
 
+import loggingframework.logappender.FileAppender;
+
 public class LoggingFrameworkDemo {
     public static void run() {
         Logger logger = Logger.getInstance();

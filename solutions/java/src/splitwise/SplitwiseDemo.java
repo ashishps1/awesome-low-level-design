@@ -1,5 +1,8 @@
 package splitwise;
 
+import splitwise.splittype.EqualSplit;
+import splitwise.splittype.PercentSplit;
+
 import java.util.Arrays;
 import java.util.Map;
 

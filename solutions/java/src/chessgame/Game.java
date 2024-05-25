@@ -1,5 +1,7 @@
 package chessgame;
 
+import chessgame.pieces.Piece;
+
 import java.util.Scanner;
 
 public class Game {

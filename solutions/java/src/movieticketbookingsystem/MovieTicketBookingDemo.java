@@ -1,5 +1,10 @@
 package movieticketbookingsystem;
 
+import movieticketbookingsystem.booking.Booking;
+import movieticketbookingsystem.seat.Seat;
+import movieticketbookingsystem.seat.SeatStatus;
+import movieticketbookingsystem.seat.SeatType;
+
 import java.time.LocalDateTime;
 import java.util.*;
 

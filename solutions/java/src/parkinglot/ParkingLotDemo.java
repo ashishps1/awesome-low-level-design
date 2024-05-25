@@ -1,5 +1,10 @@
 package parkinglot;
 
+import parkinglot.vehicletype.Car;
+import parkinglot.vehicletype.Motorcycle;
+import parkinglot.vehicletype.Truck;
+import parkinglot.vehicletype.Vehicle;
+
 public class ParkingLotDemo {
     public static void run() {
         ParkingLot parkingLot = ParkingLot.getInstance();

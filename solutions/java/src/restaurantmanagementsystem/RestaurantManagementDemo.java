@@ -1,5 +1,9 @@
 package restaurantmanagementsystem;
 
+import restaurantmanagementsystem.payment.Payment;
+import restaurantmanagementsystem.payment.PaymentMethod;
+import restaurantmanagementsystem.payment.PaymentStatus;
+
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;

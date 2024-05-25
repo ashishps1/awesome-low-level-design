@@ -1,5 +1,7 @@
 package chessgame;
 
+import chessgame.pieces.Piece;
+
 public class Move {
     private final Piece piece;
     private final int destRow;

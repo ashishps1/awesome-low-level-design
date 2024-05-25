@@ -1,5 +1,7 @@
 package chessgame;
 
+import chessgame.pieces.Piece;
+
 public class Player {
     private final Color color;
 
