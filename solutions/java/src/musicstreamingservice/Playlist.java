@@ -23,4 +23,12 @@ public class Playlist {
     public void removeSong(Song song) {
         songs.remove(song);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
 }

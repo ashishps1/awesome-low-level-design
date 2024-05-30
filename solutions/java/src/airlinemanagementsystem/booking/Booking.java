@@ -24,4 +24,8 @@ public class Booking {
     public void cancel() {
         status = BookingStatus.CANCELLED;
     }
+
+    public String getBookingNumber() {
+        return bookingNumber;
+    }
 }

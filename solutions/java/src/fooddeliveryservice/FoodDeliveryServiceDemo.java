@@ -41,7 +41,6 @@ public class FoodDeliveryServiceDemo {
         orderItems.add(new OrderItem(restaurant1Menu.get(0), 2));
         orderItems.add(new OrderItem(restaurant1Menu.get(1), 1));
         Order order = deliveryService.placeOrder(customer1.getId(), restaurant1.getId(), orderItems);
-        System.out.println("Order placed: " + order.getId());
 
         // Update order status
         deliveryService.updateOrderStatus(order.getId(), OrderStatus.CONFIRMED);
@@ -49,8 +48,6 @@ public class FoodDeliveryServiceDemo {
 
         // Cancel an order
         Order order2 = deliveryService.placeOrder(customer2.getId(), restaurant2.getId(), List.of(new OrderItem(restaurant2Menu.get(0), 1)));
-        System.out.println("Order placed: " + order2.getId());
         deliveryService.cancelOrder(order2.getId());
-        System.out.println("Order cancelled: " + order2.getId());
     }
 }

@@ -42,7 +42,8 @@ public class MovieTicketBookingDemo {
         }
 
         // Cancel booking
-        // bookingSystem.cancelBooking(booking.getId());
+        bookingSystem.cancelBooking(booking.getId());
+        System.out.println("Booking canceled. Booking ID: " + booking.getId());
     }
 
     private static Map<String, Seat> createSeats(int rows, int columns) {

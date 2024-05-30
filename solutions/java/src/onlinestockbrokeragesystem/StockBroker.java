@@ -64,6 +64,6 @@ public class StockBroker {
 
     private String generateAccountId() {
         int accountId = accountIdCounter.getAndIncrement();
-        return "A" + String.format("%09d", accountId);
+        return "A" + String.format("%03d", accountId);
     }
 }

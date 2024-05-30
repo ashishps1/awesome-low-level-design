@@ -35,6 +35,7 @@ public class Booking {
         if (status == BookingStatus.CONFIRMED) {
             status = BookingStatus.CANCELLED;
             seats.forEach(Seat::release);
+            System.out.printf("Booking %s cancelled\n", id);
             // Send booking cancellation notification to the user
             // ...
         }

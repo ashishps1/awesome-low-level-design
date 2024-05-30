@@ -33,20 +33,16 @@ public class ConcertTicketBookingSystemDemo {
         // Book tickets
         List<Seat> selectedSeats1 = selectSeats(concert1, 3);
         Booking booking1 = bookingSystem.bookTickets(user1, concert1, selectedSeats1);
-        System.out.println("Booking 1: " + booking1.getId() + " - " + booking1.getSeats().size() + " seats booked");
 
         List<Seat> selectedSeats2 = selectSeats(concert2, 2);
         Booking booking2 = bookingSystem.bookTickets(user2, concert2, selectedSeats2);
-        System.out.println("Booking 2: " + booking2.getId() + " - " + booking2.getSeats().size() + " seats booked");
 
         // Cancel booking
         bookingSystem.cancelBooking(booking1.getId());
-        System.out.println("Booking 1 cancelled");
 
         // Book tickets again
         List<Seat> selectedSeats3 = selectSeats(concert1, 2);
         Booking booking3 = bookingSystem.bookTickets(user2, concert1, selectedSeats3);
-        System.out.println("Booking 3: " + booking3.getId() + " - " + booking3.getSeats().size() + " seats booked");
     }
 
     private static List<Seat> generateSeats(int numberOfSeats) {
@@ -65,7 +61,7 @@ public class ConcertTicketBookingSystemDemo {
         List<Seat> availableSeats = concert.getSeats().stream()
                 .filter(seat -> seat.getStatus() == SeatStatus.AVAILABLE)
                 .limit(numberOfSeats)
-                .collect(Collectors.toList());
+                .toList();
         selectedSeats.addAll(availableSeats);
         return selectedSeats;
     }

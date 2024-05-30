@@ -11,10 +11,10 @@ public class TrafficSignalSystemDemo {
         Road road4 = new Road("R4", "Elm Street");
 
         // Create traffic lights
-        TrafficLight trafficLight1 = new TrafficLight("TL1", 30000, 5000, 60000);
-        TrafficLight trafficLight2 = new TrafficLight("TL2", 30000, 5000, 60000);
-        TrafficLight trafficLight3 = new TrafficLight("TL3", 30000, 5000, 60000);
-        TrafficLight trafficLight4 = new TrafficLight("TL4", 30000, 5000, 60000);
+        TrafficLight trafficLight1 = new TrafficLight("TL1", 6000, 3000, 9000);
+        TrafficLight trafficLight2 = new TrafficLight("TL2", 6000, 3000, 9000);
+        TrafficLight trafficLight3 = new TrafficLight("TL3", 6000, 3000, 9000);
+        TrafficLight trafficLight4 = new TrafficLight("TL4", 6000, 3000, 9000);
 
         // Assign traffic lights to roads
         road1.setTrafficLight(trafficLight1);

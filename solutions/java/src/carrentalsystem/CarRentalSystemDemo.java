@@ -14,14 +14,13 @@ public class CarRentalSystemDemo {
 
         // Create customers
         Customer customer1 = new Customer("John Doe", "john@example.com", "DL1234");
-        Customer customer2 = new Customer("Jane Smith", "jane@example.com", "DL5678");
 
         // Make reservations
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(3);
         List<Car> availableCars = rentalSystem.searchCars("Toyota", "Camry", startDate, endDate);
         if (!availableCars.isEmpty()) {
-            Car selectedCar = availableCars.get(0);
+            Car selectedCar = availableCars.getFirst();
             Reservation reservation = rentalSystem.makeReservation(customer1, selectedCar, startDate, endDate);
             if (reservation != null) {
                 boolean paymentSuccess = rentalSystem.processPayment(reservation);

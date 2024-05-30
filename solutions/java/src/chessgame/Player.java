@@ -26,7 +26,7 @@ public class Player {
             piece.setRow(destRow);
             piece.setCol(destCol);
         } else {
-            throw new IllegalArgumentException("Invalid move!");
+            throw new InvalidMoveException("Invalid move!");
         }
     }
 }

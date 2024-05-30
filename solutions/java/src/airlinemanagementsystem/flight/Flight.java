@@ -34,4 +34,16 @@ public class Flight {
     public LocalDateTime getDepartureTime() {
         return departureTime;
     }
+
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public List<Seat> getAvailableSeats() {
+        return availableSeats;
+    }
 }

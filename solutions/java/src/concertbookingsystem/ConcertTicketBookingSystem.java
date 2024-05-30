@@ -62,6 +62,8 @@ public class ConcertTicketBookingSystem {
             // Confirm booking
             booking.confirmBooking();
 
+            System.out.println("Booking " + booking.getId() + " - " + booking.getSeats().size() + " seats booked");
+
             return booking;
         }
     }

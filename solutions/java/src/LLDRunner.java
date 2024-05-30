@@ -1,3 +1,4 @@
+import airlinemanagementsystem.AirlineManagementSystemDemo;
 import atm.ATMDemo;
 import carrentalsystem.CarRentalSystemDemo;
 import chessgame.ChessGameDemo;
@@ -14,6 +15,7 @@ import linkedin.LinkedInDemo;
 import loggingframework.LoggingFrameworkDemo;
 import lrucache.LRUCacheDemo;
 import movieticketbookingsystem.MovieTicketBookingDemo;
+import musicstreamingservice.MusicStreamingServiceDemo;
 import onlineauctionsystem.AuctionSystemDemo;
 import onlineshopping.OnlineShoppingServiceDemo;
 import onlinestockbrokeragesystem.StockBrokerageSystemDemo;
@@ -34,36 +36,38 @@ public class LLDRunner {
     public static void main(String[] args) {
         // Uncomment the LLD problem you want to run with sample input defined in the corresponding Demo class.
 
-//        ParkingLotDemo.run();
+//        AirlineManagementSystemDemo.run();
 //        ATMDemo.run();
-//        PubSubDemo.run();
-//        ChessGameDemo.run();
-//        LoggingFrameworkDemo.run();
-//        ElevatorSystemDemo.run();
-//        CoffeeVendingMachineDemo.run();
-//        TicTacToeDemo.run();
-//        TaskManagementSystemDemo.run();
-//        AuctionSystemDemo.run();
-//        LibraryManagementSystemDemo.run();
 //        CarRentalSystemDemo.run();
-//        TrafficSignalSystemDemo.run();
-//        CricinfoDemo.run();
-//        StockBrokerageSystemDemo.run();
+//        ChessGameDemo.run();
+//        CoffeeVendingMachineDemo.run();
 //        ConcertTicketBookingSystemDemo.run();
+//        CourseRegistrationDemo.run();
+//        CricinfoDemo.run();
+//        DigitalWalletDemo.run();
+//        ElevatorSystemDemo.run();
 //        FoodDeliveryServiceDemo.run();
 //        HotelManagementSystemDemo.run();
-//        OnlineShoppingServiceDemo.run();
-//        DigitalWalletDemo.run();
+//        LibraryManagementSystemDemo.run();
+//        LinkedInDemo.run();
+//        LoggingFrameworkDemo.run();
 //        LRUCacheDemo.run();
-//        StackOverflowDemo.run();
-//        CourseRegistrationDemo.run();
+//        MovieTicketBookingDemo.run();
+//        MusicStreamingServiceDemo.run();
+//        AuctionSystemDemo.run();
+//        OnlineShoppingServiceDemo.run();
+//        StockBrokerageSystemDemo.run();
+//        ParkingLotDemo.run();
+//        PubSubDemo.run();
 //        RestaurantManagementDemo.run();
 //        RideSharingServiceDemo.run();
-//        SocialNetworkingServiceDemo.run();
-//        LinkedInDemo.run();
-//        SplitwiseDemo.run();
 //        SnakeAndLadderDemo.run();
-//        MovieTicketBookingDemo.run();
+//        SocialNetworkingServiceDemo.run();
+//        SplitwiseDemo.run();
+//        StackOverflowDemo.run();
+//        TaskManagementSystemDemo.run();
+//        TicTacToeDemo.run();
+//        TrafficSignalSystemDemo.run();
 //        VendingMachineDemo.run();
     }
 }

@@ -41,11 +41,7 @@ public class HotelManagementSystemDemo {
         System.out.println("Checked out: " + reservation1.getId());
 
         // Cancel a reservation
-        Reservation reservation2 = hotelManagementSystem.bookRoom(guest2, room2, checkInDate, checkOutDate);
-        if (reservation2 != null) {
-            System.out.println("Reservation created: " + reservation2.getId());
-            hotelManagementSystem.cancelReservation(reservation2.getId());
-            System.out.println("Reservation cancelled: " + reservation2.getId());
-        }
+        hotelManagementSystem.cancelReservation(reservation1.getId());
+        System.out.println("Reservation cancelled: " + reservation1.getId());
     }
 }

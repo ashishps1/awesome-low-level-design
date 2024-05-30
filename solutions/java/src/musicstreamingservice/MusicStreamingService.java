@@ -11,10 +11,21 @@ public class MusicStreamingService {
         musicLibrary = MusicLibrary.getInstance();
         userManager = UserManager.getInstance();
         musicRecommender = MusicRecommender.getInstance();
-
     }
 
     public void start() {
 
+    }
+
+    public MusicLibrary getMusicLibrary() {
+        return musicLibrary;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public MusicRecommender getMusicRecommender() {
+        return musicRecommender;
     }
 }

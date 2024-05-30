@@ -4,12 +4,12 @@ import chessgame.pieces.Piece;
 
 import java.util.Scanner;
 
-public class Game {
+public class ChessGame {
     private final Board board;
     private final Player[] players;
     private int currentPlayer;
 
-    public Game() {
+    public ChessGame() {
         board = new Board();
         players = new Player[]{new Player(Color.WHITE), new Player(Color.BLACK)};
         currentPlayer = 0;
@@ -25,7 +25,13 @@ public class Game {
             Move move = getPlayerMove(player);
 
             // Make the move on the board
-            player.makeMove(board, move);
+            try {
+                player.makeMove(board, move);
+            } catch (InvalidMoveException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Try again!");
+                continue;
+            }
 
             // Switch to the next player
             currentPlayer = (currentPlayer + 1) % 2;

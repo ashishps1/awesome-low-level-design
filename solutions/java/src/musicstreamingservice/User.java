@@ -35,4 +35,8 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
 }

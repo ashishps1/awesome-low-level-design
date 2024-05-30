@@ -65,6 +65,7 @@ public class FoodDeliveryService {
             }
             orders.put(order.getId(), order);
             notifyRestaurant(order);
+            System.out.println("Order placed: " + order.getId());
             return order;
         }
         return null;
@@ -87,6 +88,7 @@ public class FoodDeliveryService {
             order.setStatus(OrderStatus.CANCELLED);
             notifyCustomer(order);
             notifyRestaurant(order);
+            System.out.println("Order cancelled: " + order.getId());
         }
     }
 
