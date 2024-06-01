@@ -1,9 +1,9 @@
 package pubsubsystem;
 
-public class ConcreteSubscriber implements Subscriber {
+public class PrintSubscriber implements Subscriber {
     private final String name;
 
-    public ConcreteSubscriber(String name) {
+    public PrintSubscriber(String name) {
         this.name = name;
     }
 

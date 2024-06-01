@@ -20,7 +20,7 @@ import onlineauctionsystem.AuctionSystemDemo;
 import onlineshopping.OnlineShoppingServiceDemo;
 import onlinestockbrokeragesystem.StockBrokerageSystemDemo;
 import parkinglot.ParkingLotDemo;
-import pubsubsystem.PubSubDemo;
+import pubsubsystem.PubSubSystemDemo;
 import restaurantmanagementsystem.RestaurantManagementDemo;
 import ridesharingservice.RideSharingServiceDemo;
 import snakeandladdergame.SnakeAndLadderDemo;
@@ -58,7 +58,7 @@ public class LLDRunner {
 //        OnlineShoppingServiceDemo.run();
 //        StockBrokerageSystemDemo.run();
 //        ParkingLotDemo.run();
-//        PubSubDemo.run();
+//        PubSubSystemDemo.run();
 //        RestaurantManagementDemo.run();
 //        RideSharingServiceDemo.run();
 //        SnakeAndLadderDemo.run();
