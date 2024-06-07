@@ -2,17 +2,17 @@
   <img src="images/lld-repo-logo.png" width="350" height="200">
 </p>
 <p align="center">
-  <a href="https://www.linkedin.com/in/ashishps1/">LinkedIn</a> | <a href="https://www.youtube.com/@ashishps_1/videos">YouTube</a> | <a href="https://twitter.com/ashishps_1">X</a> | <a href="https://newsletter.ashishps.com/">Newsletter</a>
+  <a href="https://www.linkedin.com/in/ashishps1/">LinkedIn</a> | <a href="https://www.youtube.com/@ashishps_1/videos">YouTube</a> | <a href="https://twitter.com/ashishps_1">X</a> | <a href="https://algomaster.substack.com/">Newsletter</a>
 </p>
 Learn Low Level Design (LLD) and prepare for interviews using free resources.
 
 ## Fundamental Concepts
-- [Basics OOP Concepts](https://newsletter.ashishps.com/p/basic-oop-concepts-explained-with-code)
+- [Basics OOP Concepts](https://algomaster.substack.com/p/basic-oop-concepts-explained-with-code)
 - [SOLID Principles with Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
-- [SOLID Principles with Code](https://newsletter.ashishps.com/p/solid-principles-explained-with-code)
-- [DRY Principle](https://newsletter.ashishps.com/p/082450d8-0e7b-4447-a8dc-b7308e45f048)
-- [YAGNI Principle](https://newsletter.ashishps.com/p/8c3c7da7-885b-4a9c-a6e4-70ee02de4772)
-- [KISS Principle](https://newsletter.ashishps.com/p/21b57678-b351-4ed4-b390-3b6308af2f7d)
+- [SOLID Principles with Code](https://algomaster.substack.com/p/solid-principles-explained-with-code)
+- [DRY Principle](https://algomaster.substack.com/p/082450d8-0e7b-4447-a8dc-b7308e45f048)
+- [YAGNI Principle](https://algomaster.substack.com/p/8c3c7da7-885b-4a9c-a6e4-70ee02de4772)
+- [KISS Principle](https://algomaster.substack.com/p/21b57678-b351-4ed4-b390-3b6308af2f7d)
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
 ## Design Patterns
