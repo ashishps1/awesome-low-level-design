@@ -23,8 +23,11 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
 
 ## UML
-- [UML Class Diagram](https://blog.algomaster.io/p/a45165b9-61da-419f-a213-e5051614f24c)
-- [Derek Banas - UML Playlist](https://www.youtube.com/playlist?list=PLGLfVvz_LVvQ5G-LdJ8RLqe-ndo7QITYc)
+- [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
+- [Use Case Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/)
+- [Sequence Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-sequence-diagram/)
+- [Activity Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-activity-diagram/)
+- [State Machine Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-state-machine-diagram/)
 
 ## Low Level Design Interview Problems
 ### Easy
