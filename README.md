@@ -16,11 +16,23 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
 ## Design Patterns
-- [Refactoring Guru - Catalog of Design Patterns](https://refactoring.guru/design-patterns/catalog)
-- [Fireship - 10 Design Patterns in 10 Minutes](https://www.youtube.com/watch?v=tv-_1er1mWI&pp=ygUPZGVzaWduIHBhdHRlcm5z)
-- [Design Pattern Playlist](https://www.youtube.com/watch?v=v9ejT8FO-7I&list=PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc)
-- [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
-- [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
+### Creational Patterns
+- [Singleton](https://refactoring.guru/design-patterns/singleton)
+- [Factory Method](https://refactoring.guru/design-patterns/factory-method)
+- [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
+- [Builder](https://refactoring.guru/design-patterns/builder)
+### Structural Patterns
+- [Adapter](https://refactoring.guru/design-patterns/adapter)
+- [Facade](https://refactoring.guru/design-patterns/facade)
+- [Decorator](https://refactoring.guru/design-patterns/decorator)
+- [Composite](https://refactoring.guru/design-patterns/composite)
+### Behavioral Patterns
+- [Strategy](https://refactoring.guru/design-patterns/strategy)
+- [Iterator](https://refactoring.guru/design-patterns/iterator)
+- [Observer](https://refactoring.guru/design-patterns/observer)
+- [Template Method](https://refactoring.guru/design-patterns/template-method)
+- [Command](https://refactoring.guru/design-patterns/command)
+- [State](https://refactoring.guru/design-patterns/state)
 
 ## UML
 - [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
@@ -71,3 +83,7 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Head First Design Patterns](https://www.amazon.com/Head-First-Design-Patterns-Object-Oriented/dp/149207800X/)
 - [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/B08X8ZXT15)
 - [Refactoring: Improving the Design of Existing Code](https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature/dp/0134757599/)
+
+## Additional resources
+- [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
+- [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
