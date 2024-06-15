@@ -6,7 +6,7 @@
 </p>
 Learn Low Level Design (LLD) and prepare for interviews using free resources.
 
-## Fundamental Concepts
+## 📌 Fundamental Concepts
 - [Basics OOP Concepts](https://blog.algomaster.io/p/basic-oop-concepts-explained-with-code)
 - [SOLID Principles with Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [SOLID Principles with Code](https://blog.algomaster.io/p/solid-principles-explained-with-code)
@@ -15,7 +15,7 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [KISS Principle](https://blog.algomaster.io/p/21b57678-b351-4ed4-b390-3b6308af2f7d)
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
-## Design Patterns
+## ⚙️ Design Patterns
 ### Creational Patterns
 - [Singleton](https://blog.algomaster.io/p/5c049814-a3d6-4f73-b4c5-a831c503e897)
 - [Factory Method](https://refactoring.guru/design-patterns/factory-method)
@@ -34,14 +34,14 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Command](https://refactoring.guru/design-patterns/command)
 - [State](https://refactoring.guru/design-patterns/state)
 
-## UML
+## 🗂️ UML
 - [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
 - [Use Case Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/)
 - [Sequence Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-sequence-diagram/)
 - [Activity Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-activity-diagram/)
 - [State Machine Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-state-machine-diagram/)
 
-## Low Level Design Interview Problems
+## 💻 Low Level Design Interview Problems
 ### Easy
 - [Design Parking Lot](problems/parking-lot.md)
 - [Design a Vending Machine](problems/vending-machine.md)
@@ -79,7 +79,7 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 - [Design Music Streaming Service (like Spotify)](problems/music-streaming-service.md)
 - [Design University Course Registration System](problems/course-registration-system.md)
 
-## Books
+## 📚 Books
 - [Head First Design Patterns](https://www.amazon.com/Head-First-Design-Patterns-Object-Oriented/dp/149207800X/)
 - [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/B08X8ZXT15)
 - [Refactoring: Improving the Design of Existing Code](https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature/dp/0134757599/)
