@@ -17,7 +17,7 @@ Learn Low Level Design (LLD) and prepare for interviews using free resources.
 
 ## ⚙️ Design Patterns
 ### Creational Patterns
-- [Singleton](https://blog.algomaster.io/p/5c049814-a3d6-4f73-b4c5-a831c503e897)
+- [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)
 - [Factory Method](https://refactoring.guru/design-patterns/factory-method)
 - [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
 - [Builder](https://refactoring.guru/design-patterns/builder)
