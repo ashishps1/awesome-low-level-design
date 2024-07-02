@@ -84,3 +84,6 @@ class CricinfoDemo:
                 for ball in over.get_balls():
                     print(f"Ball {ball.get_ball_number()}: {ball.get_bowler()} to {ball.get_batsman()} - {ball.get_result()}")
                 print()
+
+if __name__ == "__main__":
+    CricinfoDemo.run()

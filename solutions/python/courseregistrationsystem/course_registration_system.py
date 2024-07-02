@@ -2,6 +2,7 @@ from typing import Dict, List
 from course import Course
 from student import Student
 from registration import Registration
+from datetime import datetime
 
 class CourseRegistrationSystem:
     instance = None

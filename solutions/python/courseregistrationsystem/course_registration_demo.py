@@ -40,3 +40,6 @@ class CourseRegistrationDemo:
         print("Registered Courses for Student 1:")
         for course in registered_courses:
             print(f"{course.get_code()} - {course.get_name()}")
+
+if __name__ == "__main__":
+    CourseRegistrationDemo.run()

@@ -54,3 +54,6 @@ class DigitalWalletDemo:
             print(f"Amount: {transaction.amount} {transaction.currency}")
             print(f"Timestamp: {transaction.timestamp}")
             print()
+
+if __name__ == "__main__":
+    DigitalWalletDemo.run()
