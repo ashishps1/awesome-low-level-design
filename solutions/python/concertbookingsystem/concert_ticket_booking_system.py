@@ -3,23 +3,20 @@ import uuid
 import datetime
 from concert import Concert
 from booking import Booking
-from seat import Seat, SeatStatus
+from seat import Seat, SeatStatus, SeatNotAvailableException
 from user import User
+from threading import Lock
 
 class ConcertTicketBookingSystem:
     _instance = None
-    _lock = object()
 
     def __new__(cls):
-        if not cls._instance:
-            with cls._lock:
-                if not cls._instance:
-                    cls._instance = super().__new__(cls)
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.concerts = {}
+            cls._instance.bookings = {}
+            cls._instance._lock = Lock()
         return cls._instance
-
-    def __init__(self):
-        self.concerts = {}
-        self.bookings = {}
 
     def add_concert(self, concert: Concert):
         self.concerts[concert.id] = concert
@@ -28,10 +25,12 @@ class ConcertTicketBookingSystem:
         return self.concerts.get(concert_id)
 
     def search_concerts(self, artist: str, venue: str, date_time: datetime) -> List[Concert]:
-        return [concert for concert in self.concerts.values()
-                if concert.artist.lower() == artist.lower() and
-                concert.venue.lower() == venue.lower() and
-                concert.date_time == date_time]
+        return [
+            concert for concert in self.concerts.values()
+            if concert.artist.lower() == artist.lower() and
+               concert.venue.lower() == venue.lower() and
+               concert.date_time == date_time
+        ]
 
     def book_tickets(self, user: User, concert: Concert, seats: List[Seat]) -> Booking:
         with self._lock:
@@ -53,6 +52,8 @@ class ConcertTicketBookingSystem:
             # Confirm booking
             booking.confirm_booking()
 
+            print(f"Booking {booking.id} - {len(booking.seats)} seats booked")
+
             return booking
 
     def cancel_booking(self, booking_id: str):
@@ -67,4 +68,4 @@ class ConcertTicketBookingSystem:
         pass
 
     def _generate_booking_id(self) -> str:
-        return "BKG" + str(uuid.uuid4())
+        return f"BKG{uuid.uuid4()}"

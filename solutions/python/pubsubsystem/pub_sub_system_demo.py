@@ -3,7 +3,7 @@ from message import Message
 from publisher import Publisher
 from pub_sub_system import PubSubSystem
 
-class PubSubDemo:
+class PubSubSystemDemo:
     @staticmethod
     def run():
         pub_sub_system = PubSubSystem()
@@ -43,4 +43,4 @@ class PubSubDemo:
         pub_sub_system.shutdown()
 
 if __name__ == "__main__":
-    PubSubDemo.run()
+    PubSubSystemDemo.run()

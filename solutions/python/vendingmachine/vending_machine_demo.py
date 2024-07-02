@@ -6,7 +6,7 @@ from note import Note
 class VendingMachineDemo:
     @staticmethod
     def run():
-        vending_machine = VendingMachine()
+        vending_machine = VendingMachine.get_instance()
 
         # Add products to the inventory
         coke = Product("Coke", 1.5)

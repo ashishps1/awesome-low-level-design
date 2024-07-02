@@ -1,44 +1,43 @@
-import threading
 import time
+from threading import Lock, Condition
+from request import Request
 from direction import Direction
 
 class Elevator:
-    def __init__(self, elevator_id, capacity):
-        self.id = elevator_id
+    def __init__(self, id: int, capacity: int):
+        self.id = id
         self.capacity = capacity
         self.current_floor = 1
         self.current_direction = Direction.UP
         self.requests = []
-        self.lock = threading.Lock()
-        self.condition = threading.Condition(self.lock)
+        self.lock = Lock()
+        self.condition = Condition(self.lock)
 
-    def add_request(self, request):
+    def add_request(self, request: Request):
         with self.lock:
             if len(self.requests) < self.capacity:
                 self.requests.append(request)
-                print(f"Elevator {self.id} added request: {request}")
-                with self.condition:
-                    self.condition.notify()
+                print(f"Elevator {self.id} added request: {request.source_floor} to {request.destination_floor}")
+                self.condition.notify_all()
 
-    def get_next_request(self):
+    def get_next_request(self) -> Request:
         with self.lock:
             while not self.requests:
-                with self.condition:
-                    self.condition.wait()
+                self.condition.wait()
             return self.requests.pop(0)
 
     def process_requests(self):
         while True:
             with self.lock:
-                while not self.requests:
-                    with self.condition:
-                        self.condition.wait()
-                request = self.get_next_request()
-                self._process_request(request)
+                while self.requests:
+                    request = self.get_next_request()
+                    self.process_request(request)
+                self.condition.wait()
 
-    def _process_request(self, request):
+    def process_request(self, request: Request):
         start_floor = self.current_floor
         end_floor = request.destination_floor
+
         if start_floor < end_floor:
             self.current_direction = Direction.UP
             for i in range(start_floor, end_floor + 1):
@@ -54,6 +53,3 @@ class Elevator:
 
     def run(self):
         self.process_requests()
-
-    def get_current_floor(self):
-        return self.current_floor

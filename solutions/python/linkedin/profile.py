@@ -1,46 +1,28 @@
 from typing import List
+from experience import Experience
+from education import Education
+from skill import Skill
 
 class Profile:
     def __init__(self):
-        self.profile_picture = None
-        self.headline = ""
-        self.summary = ""
-        self.experiences = []
-        self.educations = []
-        self.skills = []
+        self.profile_picture: str = ""
+        self.headline: str = ""
+        self.summary: str = ""
+        self.experiences: List[Experience] = []
+        self.educations: List[Education] = []
+        self.skills: List[Skill] = []
 
-    @property
-    def profile_picture(self):
-        return self._profile_picture
+    def set_summary(self, summary: str):
+        self.summary = summary
 
-    @profile_picture.setter
-    def profile_picture(self, value):
-        self._profile_picture = value
+    def set_headline(self, headline: str):
+        self.headline = headline
 
-    @property
-    def headline(self) -> str:
-        return self._headline
+    def add_experience(self, experience: Experience):
+        self.experiences.append(experience)
 
-    @headline.setter
-    def headline(self, value: str):
-        self._headline = value
+    def add_education(self, education: Education):
+        self.educations.append(education)
 
-    @property
-    def summary(self) -> str:
-        return self._summary
-
-    @summary.setter
-    def summary(self, value: str):
-        self._summary = value
-
-    @property
-    def experiences(self) -> List:
-        return self._experiences
-
-    @property
-    def educations(self) -> List:
-        return self._educations
-
-    @property
-    def skills(self) -> List:
-        return self._skills
+    def add_skill(self, skill: Skill):
+        self.skills.append(skill)

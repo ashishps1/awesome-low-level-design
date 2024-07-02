@@ -19,3 +19,6 @@ class User:
 
     def get_password(self):
         return self.password
+    
+    def get_playlists(self):
+        return self.playlists    

@@ -24,13 +24,13 @@ class AuctionSystemDemo:
         search_results = auction_system.search_auction_listings("Item")
         print("Search Results:")
         for listing in search_results:
-            print(listing.get_item_name())
+            print(listing.item_name)
 
         # Place bids
         bid1 = Bid("1", user2, 150.0)
         bid2 = Bid("2", user1, 200.0)
-        auction_system.place_bid(listing1.get_id(), bid1)
-        auction_system.place_bid(listing1.get_id(), bid2)
+        auction_system.place_bid(listing1.id, bid1)
+        auction_system.place_bid(listing1.id, bid2)
 
 if __name__ == "__main__":
     AuctionSystemDemo.run()

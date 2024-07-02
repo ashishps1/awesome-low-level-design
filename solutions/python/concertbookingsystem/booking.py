@@ -1,5 +1,8 @@
 from enum import Enum
 from typing import List
+from user import User
+from concert import Concert
+from seat import Seat
 
 class BookingStatus(Enum):
     PENDING = 1
@@ -7,16 +10,13 @@ class BookingStatus(Enum):
     CANCELLED = 3
 
 class Booking:
-    def __init__(self, booking_id: str, user, concert, seats: List['Seat']):
-        self.id = booking_id
+    def __init__(self, id: str, user: User, concert: Concert, seats: List[Seat]):
+        self.id = id
         self.user = user
         self.concert = concert
         self.seats = seats
-        self.total_price = self._calculate_total_price()
+        self.total_price = sum(seat.price for seat in seats)
         self.status = BookingStatus.PENDING
-
-    def _calculate_total_price(self) -> float:
-        return sum(seat.price for seat in self.seats)
 
     def confirm_booking(self):
         if self.status == BookingStatus.PENDING:
@@ -29,5 +29,6 @@ class Booking:
             self.status = BookingStatus.CANCELLED
             for seat in self.seats:
                 seat.release()
+            print(f"Booking {self.id} cancelled")
             # Send booking cancellation notification to the user
             # ...

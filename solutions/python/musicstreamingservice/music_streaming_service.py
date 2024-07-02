@@ -10,3 +10,12 @@ class MusicStreamingService:
 
     def start(self):
         pass
+
+    def get_music_library(self):
+        return self.music_library
+    
+    def get_user_manager(self):
+        return self.user_manager
+    
+    def get_music_recommender(self):
+        return self.music_recommender    
