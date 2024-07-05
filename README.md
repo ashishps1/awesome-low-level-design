@@ -22,6 +22,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Factory Method](https://refactoring.guru/design-patterns/factory-method)
 - [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
 - [Builder](https://refactoring.guru/design-patterns/builder)
+- [Prototype] (https://refactoring.guru/design-patterns/prototype)
 ### Structural Patterns
 - [Adapter](https://refactoring.guru/design-patterns/adapter)
 - [Facade](https://refactoring.guru/design-patterns/facade)
