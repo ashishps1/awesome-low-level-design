@@ -1,10 +1,4 @@
 class Tag:
-    def __init__(self, id, name):
-        self.id = id
+    def __init__(self, name: str):
+        self.id = id(self)
         self.name = name
-
-    def get_id(self):
-        return self.id
-
-    def get_name(self):
-        return self.name

@@ -1,37 +1,39 @@
-class Question:
-    def __init__(self, id, title, body, author, answers, comments, tags, vote_count):
-        self.id = id
-        self.title = title
-        self.body = body
+from typing import List
+from datetime import datetime
+from votable import Votable
+from commentable import Commentable
+from tag import Tag
+from comment import Comment
+from vote import Vote
+
+class Question(Votable, Commentable):
+    def __init__(self, author, title, content, tag_names):
+        self.id = id(self)
         self.author = author
-        self.answers = answers
-        self.comments = comments
-        self.tags = tags
-        self.vote_count = vote_count
+        self.title = title
+        self.content = content
+        self.creation_date = datetime.now()
+        self.answers = []
+        self.tags = [Tag(name) for name in tag_names]
+        self.votes = []
+        self.comments = []
 
-    def set_vote_count(self, vote_count):
-        self.vote_count = vote_count
+    def add_answer(self, answer):
+        if answer not in self.answers:
+            self.answers.append(answer)
 
-    def get_id(self):
-        return self.id
-
-    def get_title(self):
-        return self.title
-
-    def get_body(self):
-        return self.body
-
-    def get_author(self):
-        return self.author
-
-    def get_answers(self):
-        return self.answers
-
-    def get_comments(self):
-        return self.comments
-
-    def get_tags(self):
-        return self.tags
+    def vote(self, user, value):
+        if value not in [-1, 1]:
+            raise ValueError("Vote value must be either 1 or -1")
+        self.votes = [v for v in self.votes if v.user != user]
+        self.votes.append(Vote(user, value))
+        self.author.update_reputation(value * 5)  # +5 for upvote, -5 for downvote
 
     def get_vote_count(self):
-        return self.vote_count
+        return sum(v.value for v in self.votes)
+
+    def add_comment(self, comment):
+        self.comments.append(comment)
+
+    def get_comments(self) -> List['Comment']:
+        return self.comments.copy()

@@ -1,56 +1,83 @@
 from stack_overflow import StackOverflow
-from user import User
-from question import Question
-from answer import Answer
-from tag import Tag
 
 class StackOverflowDemo:
     @staticmethod
     def run():
-        stack_overflow = StackOverflow.get_instance()
+        system = StackOverflow()
 
-        # Register users
-        user1 = User(1, "john", "password123", "john@example.com", 0)
-        user2 = User(2, "jane", "password456", "jane@example.com", 0)
-        stack_overflow.register_user(user1)
-        stack_overflow.register_user(user2)
+        # Create users
+        alice = system.create_user("Alice", "alice@example.com")
+        bob = system.create_user("Bob", "bob@example.com")
+        charlie = system.create_user("Charlie", "charlie@example.com")
 
-        # User login
-        logged_in_user = stack_overflow.login_user("john", "password123")
-        if logged_in_user:
-            print("User logged in:", logged_in_user.get_username())
-        else:
-            print("Invalid username or password.")
+        # Alice asks a question
+        java_question = system.ask_question(alice, "What is polymorphism in Java?",
+                                            "Can someone explain polymorphism in Java with an example?",
+                                            ["java", "oop"])
 
-        # Post a question
-        question1 = Question(1, "What is Python?", "Please explain Python.", user1, [], [], [Tag(1, "python"), Tag(2, "programming")], 0)
-        stack_overflow.post_question(question1)
+        # Bob answers Alice's question
+        bob_answer = system.answer_question(bob, java_question,
+                                            "Polymorphism in Java is the ability of an object to take on many forms...")
 
-        # Post an answer
-        answer1 = Answer(1, "Python is an interpreted high-level programming language.", user2, question1, [], 0)
-        stack_overflow.post_answer(answer1)
+        # Charlie comments on the question
+        system.add_comment(charlie, java_question, "Great question! I'm also interested in learning about this.")
 
-        # Vote on the question
-        stack_overflow.vote_question(question1, 1)
+        # Alice comments on Bob's answer
+        system.add_comment(alice, bob_answer, "Thanks for the explanation! Could you provide a code example?")
 
-        # Search for questions
-        search_results = stack_overflow.search_questions("Python")
-        print("Search Results:")
-        for question in search_results:
-            print(question.get_title())
+        # Charlie votes on the question and answer
+        system.vote_question(charlie, java_question, 1)  # Upvote
+        system.vote_answer(charlie, bob_answer, 1)  # Upvote
 
-        # Get questions by tag
-        tagged_questions = stack_overflow.get_questions_by_tag("python")
-        print("Questions tagged with 'python':")
-        for question in tagged_questions:
-            print(question.get_title())
+        # Alice accepts Bob's answer
+        system.accept_answer(bob_answer)
 
-        # Get questions by user
-        user_questions = stack_overflow.get_questions_by_user(user1)
-        print("Questions posted by user1:")
-        for question in user_questions:
-            print(question.get_title())
+        # Bob asks another question
+        python_question = system.ask_question(bob, "How to use list comprehensions in Python?",
+                                            "I'm new to Python and I've heard about list comprehensions. Can someone explain how to use them?",
+                                            ["python", "list-comprehension"])
 
+        # Alice answers Bob's question
+        alice_answer = system.answer_question(alice, python_question,
+                                            "List comprehensions in Python provide a concise way to create lists...")
+
+        # Charlie votes on Bob's question and Alice's answer
+        system.vote_question(charlie, python_question, 1)  # Upvote
+        system.vote_answer(charlie, alice_answer, 1)  # Upvote
+
+        # Print out the current state
+        print(f"Question: {java_question.title}")
+        print(f"Asked by: {java_question.author.username}")
+        print(f"Tags: {', '.join(tag.name for tag in java_question.tags)}")
+        print(f"Votes: {java_question.get_vote_count()}")
+        print(f"Comments: {len(java_question.get_comments())}")
+        print(f"\nAnswer by {bob_answer.author.username}:")
+        print(bob_answer.content)
+        print(f"Votes: {bob_answer.get_vote_count()}")
+        print(f"Accepted: {bob_answer.is_accepted}")
+        print(f"Comments: {len(bob_answer.get_comments())}")
+
+        print("\nUser Reputations:")
+        print(f"Alice: {alice.reputation}")
+        print(f"Bob: {bob.reputation}")
+        print(f"Charlie: {charlie.reputation}")
+
+        # Demonstrate search functionality
+        print("\nSearch Results for 'java':")
+        search_results = system.search_questions("java")
+        for q in search_results:
+            print(q.title)
+
+        print("\nSearch Results for 'python':")
+        search_results = system.search_questions("python")
+        for q in search_results:
+            print(q.title)
+
+        # Demonstrate getting questions by user
+        print("\nBob's Questions:")
+        bob_questions = system.get_questions_by_user(bob)
+        for q in bob_questions:
+            print(q.title)
 
 if __name__ == "__main__":
     StackOverflowDemo.run()

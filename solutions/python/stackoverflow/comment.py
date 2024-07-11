@@ -1,8 +1,8 @@
-import datetime
+from datetime import datetime
 
 class Comment:
-    def __init__(self, id, text, author, created_at):
-        self.id = id
-        self.text = text
+    def __init__(self, author, content):
+        self.id = id(self)
         self.author = author
-        self.created_at = created_at
+        self.content = content
+        self.creation_date = datetime.now()
