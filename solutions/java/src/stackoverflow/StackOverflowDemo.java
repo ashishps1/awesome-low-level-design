@@ -1,59 +1,87 @@
 package stackoverflow;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class StackOverflowDemo {
     public static void run() {
-        StackOverflow stackOverflow = StackOverflow.getInstance();
+        StackOverflow system = new StackOverflow();
 
-        // Register users
-        User user1 = new User(1, "john", "password123", "john@example.com", 0);
-        User user2 = new User(2, "jane", "password456", "jane@example.com", 0);
-        stackOverflow.registerUser(user1);
-        stackOverflow.registerUser(user2);
+        // Create users
+        User alice = system.createUser("Alice", "alice@example.com");
+        User bob = system.createUser("Bob", "bob@example.com");
+        User charlie = system.createUser("Charlie", "charlie@example.com");
 
-        // User login
-        User loggedInUser = stackOverflow.loginUser("john", "password123");
-        if (loggedInUser != null) {
-            System.out.println("User logged in: " + loggedInUser.getUsername());
-        } else {
-            System.out.println("Invalid username or password.");
+        // Alice asks a question
+        Question javaQuestion = system.askQuestion(alice, "What is polymorphism in Java?",
+                "Can someone explain polymorphism in Java with an example?",
+                Arrays.asList("java", "oop"));
+
+        // Bob answers Alice's question
+        Answer bobAnswer = system.answerQuestion(bob, javaQuestion,
+                "Polymorphism in Java is the ability of an object to take on many forms...");
+
+        // Charlie comments on the question
+        system.addComment(charlie, javaQuestion, "Great question! I'm also interested in learning about this.");
+
+        // Alice comments on Bob's answer
+        system.addComment(alice, bobAnswer, "Thanks for the explanation! Could you provide a code example?");
+
+        // Charlie votes on the question and answer
+        system.voteQuestion(charlie, javaQuestion, 1);  // Upvote
+        system.voteAnswer(charlie, bobAnswer, 1);  // Upvote
+
+        // Alice accepts Bob's answer
+        system.acceptAnswer(bobAnswer);
+
+        // Bob asks another question
+        Question pythonQuestion = system.askQuestion(bob, "How to use list comprehensions in Python?",
+                "I'm new to Python and I've heard about list comprehensions. Can someone explain how to use them?",
+                Arrays.asList("python", "list-comprehension"));
+
+        // Alice answers Bob's question
+        Answer aliceAnswer = system.answerQuestion(alice, pythonQuestion,
+                "List comprehensions in Python provide a concise way to create lists...");
+
+        // Charlie votes on Bob's question and Alice's answer
+        system.voteQuestion(charlie, pythonQuestion, 1);  // Upvote
+        system.voteAnswer(charlie, aliceAnswer, 1);  // Upvote
+
+        // Print out the current state
+        System.out.println("Question: " + javaQuestion.getTitle());
+        System.out.println("Asked by: " + javaQuestion.getAuthor().getUsername());
+        System.out.println("Tags: " + javaQuestion.getTags().stream().map(Tag::getName).reduce((a, b) -> a + ", " + b).orElse(""));
+        System.out.println("Votes: " + javaQuestion.getVoteCount());
+        System.out.println("Comments: " + javaQuestion.getComments().size());
+        System.out.println("\nAnswer by " + bobAnswer.getAuthor().getUsername() + ":");
+        System.out.println(bobAnswer.getContent());
+        System.out.println("Votes: " + bobAnswer.getVoteCount());
+        System.out.println("Accepted: " + bobAnswer.isAccepted());
+        System.out.println("Comments: " + bobAnswer.getComments().size());
+
+        System.out.println("\nUser Reputations:");
+        System.out.println("Alice: " + alice.getReputation());
+        System.out.println("Bob: " + bob.getReputation());
+        System.out.println("Charlie: " + charlie.getReputation());
+
+        // Demonstrate search functionality
+        System.out.println("\nSearch Results for 'java':");
+        List<Question> searchResults = system.searchQuestions("java");
+        for (Question q : searchResults) {
+            System.out.println(q.getTitle());
         }
 
-        // Post a question
-        Question question1 = new Question(1, "What is Java?", "Please explain Java.", user1, new ArrayList<>(),
-                new ArrayList<>(), Arrays.asList(new Tag(1, "java"), new Tag(2, "programming")), 0);
-        stackOverflow.postQuestion(question1);
-
-        // Post an answer
-        Answer answer1 = new Answer(1, "Java is an object-oriented programming language.", user2, question1,
-                new ArrayList<>(), 0);
-        stackOverflow.postAnswer(answer1);
-
-        // Vote on the question
-        stackOverflow.voteQuestion(question1, 1);
-
-        // Search for questions
-        List<Question> searchResults = stackOverflow.searchQuestions("Java");
-        System.out.println("Search Results:");
-        for (Question question : searchResults) {
-            System.out.println(question.getTitle());
+        System.out.println("\nSearch Results for 'python':");
+        searchResults = system.searchQuestions("python");
+        for (Question q : searchResults) {
+            System.out.println(q.getTitle());
         }
 
-        // Get questions by tag
-        List<Question> taggedQuestions = stackOverflow.getQuestionsByTag("java");
-        System.out.println("Questions tagged with 'java':");
-        for (Question question : taggedQuestions) {
-            System.out.println(question.getTitle());
-        }
-
-        // Get questions by user
-        List<Question> userQuestions = stackOverflow.getQuestionsByUser(user1);
-        System.out.println("Questions posted by user1:");
-        for (Question question : userQuestions) {
-            System.out.println(question.getTitle());
+        // Demonstrate getting questions by user
+        System.out.println("\nBob's Questions:");
+        List<Question> bobQuestions = system.getQuestionsByUser(bob);
+        for (Question q : bobQuestions) {
+            System.out.println(q.getTitle());
         }
     }
 }

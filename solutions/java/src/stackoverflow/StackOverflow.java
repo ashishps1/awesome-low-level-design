@@ -1,100 +1,77 @@
 package stackoverflow;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class StackOverflow {
-    private static StackOverflow instance;
     private final Map<Integer, User> users;
     private final Map<Integer, Question> questions;
-    private final Map<String, List<Question>> taggedQuestions;
+    private final Map<Integer, Answer> answers;
+    private final Map<String, Tag> tags;
 
-    private StackOverflow() {
+    public StackOverflow() {
         users = new ConcurrentHashMap<>();
         questions = new ConcurrentHashMap<>();
-        taggedQuestions = new ConcurrentHashMap<>();
+        answers = new ConcurrentHashMap<>();
+        tags = new ConcurrentHashMap<>();
     }
 
-    public static synchronized StackOverflow getInstance() {
-        if (instance == null) {
-            instance = new StackOverflow();
-        }
-        return instance;
+    public User createUser(String username, String email) {
+        int id = users.size() + 1;
+        User user = new User(id, username, email);
+        users.put(id, user);
+        return user;
     }
 
-    public void registerUser(User user) {
-        users.put(user.getId(), user);
-    }
-
-    public User loginUser(String username, String password) {
-        for (User user : users.values()) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public void postQuestion(Question question) {
+    public Question askQuestion(User user, String title, String content, List<String> tags) {
+        Question question = user.askQuestion(title, content, tags);
         questions.put(question.getId(), question);
         for (Tag tag : question.getTags()) {
-            taggedQuestions.computeIfAbsent(tag.getName(), k -> new ArrayList<>()).add(question);
+            this.tags.putIfAbsent(tag.getName(), tag);
         }
+        return question;
     }
 
-    public void postAnswer(Answer answer) {
-        Question question = answer.getQuestion();
-        question.getAnswers().add(answer);
+    public Answer answerQuestion(User user, Question question, String content) {
+        Answer answer = user.answerQuestion(question, content);
+        answers.put(answer.getId(), answer);
+        return answer;
     }
 
-    public void postComment(Comment comment) {
-        // Add comment to the respective question or answer
-        // ...
+    public Comment addComment(User user, Commentable commentable, String content) {
+        return user.addComment(commentable, content);
     }
 
-    public void voteQuestion(Question question, int value) {
-        synchronized (question) {
-            question.setVoteCount(question.getVoteCount() + value);
-        }
-        updateUserReputation(question.getAuthor(), value);
+    public void voteQuestion(User user, Question question, int value) {
+        question.vote(user, value);
     }
 
-    public void voteAnswer(Answer answer, int value) {
-        synchronized (answer) {
-            answer.setVoteCount(answer.getVoteCount() + value);
-        }
-        updateUserReputation(answer.getAuthor(), value);
+    public void voteAnswer(User user, Answer answer, int value) {
+        answer.vote(user, value);
     }
 
-    private void updateUserReputation(User user, int value) {
-        synchronized (user) {
-            user.setReputation(user.getReputation() + value);
-        }
+    public void acceptAnswer(Answer answer) {
+        answer.markAsAccepted();
     }
 
     public List<Question> searchQuestions(String query) {
-        List<Question> results = new ArrayList<>();
-        for (Question question : questions.values()) {
-            if (question.getTitle().contains(query) || question.getBody().contains(query)) {
-                results.add(question);
-            }
-        }
-        return results;
-    }
-
-    public List<Question> getQuestionsByTag(String tagName) {
-        return taggedQuestions.getOrDefault(tagName, new ArrayList<>());
+        return questions.values().stream()
+                .filter(q -> q.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                        q.getContent().toLowerCase().contains(query.toLowerCase()) ||
+                        q.getTags().stream().anyMatch(t -> t.getName().equalsIgnoreCase(query)))
+                .collect(Collectors.toList());
     }
 
     public List<Question> getQuestionsByUser(User user) {
-        List<Question> results = new ArrayList<>();
-        for (Question question : questions.values()) {
-            if (question.getAuthor().equals(user)) {
-                results.add(question);
-            }
-        }
-        return results;
+        return user.getQuestions();
     }
+
+    // Getters
+    public User getUser(int id) { return users.get(id); }
+    public Question getQuestion(int id) { return questions.get(id); }
+    public Answer getAnswer(int id) { return answers.get(id); }
+    public Tag getTag(String name) { return tags.get(name); }
 }
