@@ -42,6 +42,8 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Activity Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-activity-diagram/)
 - [State Machine Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-state-machine-diagram/)
 
+### ✅ [How to Answer a LLD Interview Problem](https://blog.algomaster.io/p/how-to-answer-a-lld-interview-problem)
+
 ## 💻 Low Level Design Interview Problems
 ### Easy
 - [Design Parking Lot](problems/parking-lot.md)
@@ -80,7 +82,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Music Streaming Service (like Spotify)](problems/music-streaming-service.md)
 - [Design University Course Registration System](problems/course-registration-system.md)
 
-## 📇 Courses
+## 📇 Structured Courses
 - [Grokking the Low Level Design Interview Using OOD Principles](https://www.educative.io/courses/grokking-the-low-level-design-interview-using-ood-principles?aff=BZyO)
 
 ## 📚 Books
