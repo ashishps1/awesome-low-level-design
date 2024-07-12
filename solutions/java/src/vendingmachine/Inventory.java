@@ -27,6 +27,6 @@ public class Inventory {
     }
 
     public boolean isAvailable(Product product) {
-        return products.containsKey(product) && products.get(product) > 0;
+        return getQuantity(product) > 0;
     }
 }
