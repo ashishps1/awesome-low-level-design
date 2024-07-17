@@ -22,7 +22,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Factory Method](https://refactoring.guru/design-patterns/factory-method)
 - [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
 - [Builder](https://refactoring.guru/design-patterns/builder)
-- [Prototype] (https://refactoring.guru/design-patterns/prototype)
+- [Prototype](https://refactoring.guru/design-patterns/prototype)
 ### Structural Patterns
 - [Adapter](https://refactoring.guru/design-patterns/adapter)
 - [Facade](https://refactoring.guru/design-patterns/facade)
@@ -83,7 +83,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Music Streaming Service (like Spotify)](problems/music-streaming-service.md)
 - [Design University Course Registration System](problems/course-registration-system.md)
 
-## 📇 Structured Courses
+## 📇 Courses
 - [Grokking the Low Level Design Interview Using OOD Principles](https://www.educative.io/courses/grokking-the-low-level-design-interview-using-ood-principles?aff=BZyO)
 
 ## 📚 Books
