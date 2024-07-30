@@ -33,14 +33,7 @@ public class ReadyState implements VendingMachineState {
 
     @Override
     public void returnChange() {
-        double change = vendingMachine.getTotalPayment() - vendingMachine.getSelectedProduct().getPrice();
-        if (change > 0) {
-            System.out.println("Change returned: $" + change);
-            vendingMachine.resetPayment();
-        } else {
-            System.out.println("No change to return.");
-        }
-        vendingMachine.setState(vendingMachine.getIdleState());
+        System.out.println("Please make payment first.");
     }
 
     private void checkPaymentStatus() {
