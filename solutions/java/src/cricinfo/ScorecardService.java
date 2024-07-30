@@ -21,7 +21,7 @@ public class ScorecardService {
         return instance;
     }
 
-    public void createScorecard(Match match) {
+    public synchronized void createScorecard(Match match) {
         String scorecardId = generateScorecardId(match.getId());
         Scorecard scorecard = new Scorecard(scorecardId, match);
         scorecards.put(scorecardId, scorecard);
