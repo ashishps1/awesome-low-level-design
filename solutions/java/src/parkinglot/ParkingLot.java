@@ -27,9 +27,11 @@ public class ParkingLot {
     public boolean parkVehicle(Vehicle vehicle) {
         for (Level level : levels) {
             if (level.parkVehicle(vehicle)) {
+                System.out.println("Vehicle parked successfully.");
                 return true;
             }
         }
+        System.out.println("Could not park vehicle.");
         return false;
     }
 
