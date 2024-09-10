@@ -3,6 +3,7 @@ from threading import Lock, Condition
 from request import Request
 from direction import Direction
 
+
 class Elevator:
     def __init__(self, id: int, capacity: int):
         self.id = id
@@ -17,7 +18,9 @@ class Elevator:
         with self.lock:
             if len(self.requests) < self.capacity:
                 self.requests.append(request)
-                print(f"Elevator {self.id} added request: {request.source_floor} to {request.destination_floor}")
+                print(
+                    f"Elevator {self.id} added request: {request.source_floor} to {request.destination_floor}"
+                )
                 self.condition.notify_all()
 
     def get_next_request(self) -> Request:
@@ -28,11 +31,8 @@ class Elevator:
 
     def process_requests(self):
         while True:
-            with self.lock:
-                while self.requests:
-                    request = self.get_next_request()
-                    self.process_request(request)
-                self.condition.wait()
+            request = self.get_next_request()  # This will wait until there's a request
+            self.process_request(request)
 
     def process_request(self, request: Request):
         start_floor = self.current_floor
