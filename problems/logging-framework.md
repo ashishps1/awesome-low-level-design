@@ -11,6 +11,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/loggingframework/) 
 #### [Python Implementation](../solutions/python/loggingframework/)
+#### [Golang Implementation](../solutions/golang/logging-framework/)
 
 ## Classes, Interfaces and Enumerations
 1. The **LogLevel** enum defines the different log levels supported by the logging framework.
