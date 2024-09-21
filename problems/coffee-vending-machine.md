@@ -12,6 +12,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/coffeevendingmachine/) 
 #### [Python Implementation](../solutions/python/coffeevendingmachine/)
+#### [Golang Implementation](../solutions/golang/coffeeVendingMachine/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Coffee** class represents a coffee type with its name, price, and recipe (ingredients and their quantities).
