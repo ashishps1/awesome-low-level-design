@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ashishps1/awesome-low-level-design/parking-lot/vehicles"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/parking-lot/vehicles"
 	"time"
 )
 

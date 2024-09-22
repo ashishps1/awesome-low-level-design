@@ -2,7 +2,7 @@ package machine
 
 import (
 	"fmt"
-	"github.com/ashishps1/awesome-low-level-design/coffeeVendingMachine/enums"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/coffeeVendingMachine/enums"
 )
 
 type quantity struct {

@@ -1,9 +1,9 @@
 package machine
 
 import (
-	"github.com/ashishps1/awesome-low-level-design/coffeeVendingMachine/concreteCoffee"
-	"github.com/ashishps1/awesome-low-level-design/coffeeVendingMachine/enums"
-	"github.com/ashishps1/awesome-low-level-design/coffeeVendingMachine/interfaces"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/coffeeVendingMachine/concreteCoffee"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/coffeeVendingMachine/enums"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/coffeeVendingMachine/interfaces"
 )
 
 type CoffeeFactory struct {

@@ -1,6 +1,6 @@
 package main
 
-import "github.com/ashishps1/awesome-low-level-design/parking-lot/vehicles"
+import "github.com/ashishps1/awesome-low-level-design/solutions/golang/parking-lot/vehicles"
 
 type ParkingSpot struct {
 	SpotNo         int

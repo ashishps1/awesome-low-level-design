@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/ashishps1/awesome-low-level-design/logging-framework/enum"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/logging-framework/enum"
 	"time"
 )
 

@@ -1,6 +1,6 @@
 package interfaces
 
-import "github.com/ashishps1/awesome-low-level-design/coffeeVendingMachine/enums"
+import "github.com/ashishps1/awesome-low-level-design/solutions/golang/coffeeVendingMachine/enums"
 
 type Coffee interface {
 	Cost() int

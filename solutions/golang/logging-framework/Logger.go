@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/ashishps1/awesome-low-level-design/logging-framework/enum"
-	"github.com/ashishps1/awesome-low-level-design/logging-framework/interfaces"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/logging-framework/enum"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/logging-framework/interfaces"
 	"sync"
 )
 

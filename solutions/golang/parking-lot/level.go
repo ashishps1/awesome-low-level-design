@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/ashishps1/awesome-low-level-design/parking-lot/vehicles"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/parking-lot/vehicles"
 )
 
 type Level struct {

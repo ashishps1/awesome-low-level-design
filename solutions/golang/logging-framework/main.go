@@ -1,6 +1,6 @@
 package main
 
-import "github.com/ashishps1/awesome-low-level-design/logging-framework/enum"
+import "github.com/ashishps1/awesome-low-level-design/solutions/golang/logging-framework/enum"
 
 func main() {
 	logger := GetInstance()
