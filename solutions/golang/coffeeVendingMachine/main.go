@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/ashishps1/awesome-low-level-design/coffeeVendingMachine/enums"
-	"github.com/ashishps1/awesome-low-level-design/coffeeVendingMachine/machine"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/coffeeVendingMachine/enums"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/coffeeVendingMachine/machine"
 )
 
 func main() {

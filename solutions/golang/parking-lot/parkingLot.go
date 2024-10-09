@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/ashishps1/awesome-low-level-design/parking-lot/vehicles"
+	"github.com/ashishps1/awesome-low-level-design/solutions/golang/parking-lot/vehicles"
 	"sync"
 )
 
