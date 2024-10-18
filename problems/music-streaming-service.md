@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/musicstreamingservice/) 
 #### [Python Implementation](../solutions/python/musicstreamingservice/)
+#### [C# Implementation](../solutions/c#/MusicStreamingService/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Song**, **Album**, and **Artist** classes represent the basic entities in the music streaming service, with properties such as ID, title, artist, album, duration, and relationships between them.

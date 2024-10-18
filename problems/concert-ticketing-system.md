@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/concertbookingsystem/) 
 #### [Python Implementation](../solutions/python/concertbookingsystem/)
+#### [C# Implementation](../solutions/c#/ConcertBookingSystem/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Concert** class represents a concert event, with properties such as ID, artist, venue, date and time, and a list of seats.

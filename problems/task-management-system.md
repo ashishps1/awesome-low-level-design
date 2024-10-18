@@ -12,6 +12,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/taskmanagementsystem/) 
 #### [Python Implementation](../solutions/python/taskmanagementsystem/)
+#### [C# Implementation](../solutions/c#/TaskManagementSystem/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user in the task management system, with properties such as id, name, and email.

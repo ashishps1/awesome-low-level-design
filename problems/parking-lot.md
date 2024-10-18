@@ -11,6 +11,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/parkinglot/) 
 #### [Python Implementation](../solutions/python/parkinglot/)
+#### [C# Implementation](../solutions/c#/ParkingLot/)
 #### [Golang Implementation](../solutions/golang/parking-lot/)
 
 ## Classes, Interfaces and Enumerations

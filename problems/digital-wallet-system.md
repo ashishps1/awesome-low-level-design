@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/digitalwallet/) 
 #### [Python Implementation](../solutions/python/digitalwallet/)
+#### [C# Implementation](../solutions/c#/DigitalWallet/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user of the digital wallet, with properties such as ID, name, email, password, and a list of accounts.

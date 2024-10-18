@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/snakeandladdergame/) 
 #### [Python Implementation](../solutions/python/snakeandladdergame/)
+#### [C# Implementation](../solutions/c#/SnakeAndLadderGame/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Board** class represents the game board with a fixed size (e.g., 100 cells). It contains the positions of snakes and ladders and provides methods to initialize them and retrieve the new position after encountering a snake or ladder.

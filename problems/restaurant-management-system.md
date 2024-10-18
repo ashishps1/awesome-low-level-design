@@ -12,6 +12,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/restaurantmanagementsystem/) 
 #### [Python Implementation](../solutions/python/restaurantmanagementsystem/)
+#### [C# Implementation](../solutions/c#/RestaurantManagementSystem/)
 
 ## Classes, Interfaces and Enumerations
 1. The **MenuItem** class represents a menu item in the restaurant, with properties such as ID, name, description, price, and availability.

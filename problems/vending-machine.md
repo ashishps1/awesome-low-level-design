@@ -12,6 +12,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/vendingmachine/) 
 #### [Python Implementation](../solutions/python/vendingmachine/)
+#### [C# Implementation](../solutions/c#/VendingMachine/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Product** class represents a product in the vending machine, with properties such as name and price.

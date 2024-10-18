@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/ridesharingservice/) 
 #### [Python Implementation](../solutions/python/ridesharingservice/)
+#### [C# Implementation](../solutions/c#/RideSharingService/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Passenger** class represents a passenger in the ride sharing service, with properties such as ID, name, contact information, and location.

@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/carrentalsystem/) 
 #### [Python Implementation](../solutions/python/carrentalsystem/)
+#### [C# Implementation](../solutions/c#/CarRentalSystem/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Car** class represents a car in the rental system, with properties such as make, model, year, license plate number, rental price per day, and availability status.

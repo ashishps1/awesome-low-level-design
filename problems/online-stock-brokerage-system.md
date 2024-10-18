@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/onlinestockbrokeragesystem/) 
 #### [Python Implementation](../solutions/python/onlinestockbrokeragesystem/)
+#### [C# Implementation](../solutions/c#/OnlineStockBrokerageSystem/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user of the stock brokerage system, with properties such as user ID, name, and email.
