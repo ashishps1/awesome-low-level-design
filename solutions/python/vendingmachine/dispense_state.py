@@ -17,7 +17,6 @@ class DispenseState(VendingMachineState):
         print("Payment already made. Please collect the dispensed product.")
 
     def dispense_product(self):
-        self.vending_machine.set_state(self.vending_machine.ready_state)
         product = self.vending_machine.selected_product
         self.vending_machine.inventory.update_quantity(product, self.vending_machine.inventory.get_quantity(product) - 1)
         print(f"Product dispensed: {product.name}")

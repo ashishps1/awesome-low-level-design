@@ -24,13 +24,13 @@ class ReadyState(VendingMachineState):
         print("Please make payment first.")
 
     def return_change(self):
-        change = self.vending_machine.total_payment - self.vending_machine.selected_product.price
-        if change > 0:
-            print(f"Change returned: ${change:.2f}")
+        if self.vending_machine.total_payment > 0:
+            print(f"Returning inserted amount: ${self.vending_machine.total_payment:.2f}")
             self.vending_machine.reset_payment()
-        else:
-            print("No change to return.")
+            
+        self.vending_machine.reset_selected_product()
         self.vending_machine.set_state(self.vending_machine.idle_state)
+        print("Transaction cancelled. Returning to Idle State.")
 
     def check_payment_status(self):
         if self.vending_machine.total_payment >= self.vending_machine.selected_product.price:
