@@ -1,37 +1,19 @@
-package main
+package stackoverflow
 
 type User struct {
-	Name     string
-	Email    string
-	Rating   int
-	Answers  []Answer
-	Comments []Comment
-	Votes    []Vote
+	ID         int
+	Username   string
+	Email      string
+	Reputation int
 }
 
-func NewUser(name, email string) *User {
-	return &User{
-		Name:  name,
-		Email: email,
-	}
+func NewUser(id int, username, email string) *User {
+	return &User{ID: id, Username: username, Email: email, Reputation: 0}
 }
 
-func (u *User) AddAnswerToList(ans Answer) {
-	u.Answers = append(u.Answers, ans)
-}
-
-func (u *User) AddCommentToList(comment Comment) {
-	u.Comments = append(u.Comments, comment)
-}
-
-func (u *User) AddVoteToList(vote Vote) {
-	u.Votes = append(u.Votes, vote)
-}
-
-func (u *User) ManageRating(vote Vote) {
-	if vote.Value == 1 {
-		u.Rating += 10
-	} else {
-		u.Rating -= 10
+func (u *User) UpdateReputation(value int) {
+	u.Reputation += value
+	if u.Reputation < 0 {
+		u.Reputation = 0
 	}
 }

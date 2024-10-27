@@ -1,38 +1,53 @@
-package main
+package stackoverflow
+
+import "time"
 
 type Answer struct {
-	Title    string
-	Body     string
-	Votes    []Vote
-	Comments []Comment
-	Author   *User
+	ID           int
+	Content      string
+	Author       *User
+	Question     *Question
+	IsAccepted   bool
+	CreationDate time.Time
+	Comments     []*Comment
+	Votes        []*Vote
 }
 
-func NewAnswer(title, body string, user *User) *Answer {
+func NewAnswer(author *User, question *Question, content string) *Answer {
 	return &Answer{
-		Title:  title,
-		Body:   body,
-		Author: user,
+		ID:           generateID(),
+		Author:       author,
+		Question:     question,
+		Content:      content,
+		CreationDate: time.Now(),
 	}
 }
 
-func (a *Answer) addCommentToList(comment Comment) {
+func (a *Answer) AddComment(comment *Comment) {
 	a.Comments = append(a.Comments, comment)
 }
 
-func (a *Answer) addVoteToList(vote Vote) {
-	a.Votes = append(a.Votes, vote)
+func (a *Answer) GetComments() []*Comment {
+	return a.Comments
 }
 
-func (a *Answer) PostComment(user *User, body string) {
-	comment := NewComment(body)
-	a.addCommentToList(*comment)
-	user.AddCommentToList(*comment)
+func (a *Answer) Vote(user *User, value int) {
+	a.Votes = append(a.Votes, NewVote(user, value))
+	a.Author.UpdateReputation(value * 10)
 }
 
-func (a *Answer) AddVote(user *User, value int) {
-	vote := NewVote(value)
-	user.AddVoteToList(vote)
-	a.addVoteToList(vote)
-	a.Author.ManageRating(vote)
+func (a *Answer) GetVoteCount() int {
+	voteCount := 0
+	for _, vote := range a.Votes {
+		voteCount += vote.Value
+	}
+	return voteCount
+}
+
+func (a *Answer) MarkAsAccepted() {
+	if a.IsAccepted {
+		panic("Answer is already accepted")
+	}
+	a.IsAccepted = true
+	a.Author.UpdateReputation(15)
 }

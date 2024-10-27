@@ -1,11 +1,10 @@
-package main
+package stackoverflow
 
 type Vote struct {
+	User  *User
 	Value int
 }
 
-func NewVote(value int) Vote {
-	return Vote{
-		Value: value,
-	}
+func NewVote(user *User, value int) *Vote {
+	return &Vote{User: user, Value: value}
 }

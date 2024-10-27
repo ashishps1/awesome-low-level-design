@@ -1,11 +1,19 @@
-package main
+package stackoverflow
+
+import "time"
 
 type Comment struct {
-	Body string
+	ID           int
+	Content      string
+	Author       *User
+	CreationDate time.Time
 }
 
-func NewComment(body string) *Comment {
+func NewComment(author *User, content string) *Comment {
 	return &Comment{
-		Body: body,
+		ID:           generateID(),
+		Author:       author,
+		Content:      content,
+		CreationDate: time.Now(),
 	}
 }

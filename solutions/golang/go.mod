@@ -1,3 +1,3 @@
 module github.com/ashishps1/awesome-low-level-design/solutions/golang
 
-go 1.23.1
+go 1.23.2
