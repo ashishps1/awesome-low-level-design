@@ -17,6 +17,7 @@ This system allows for the creation and management of auctions, user participati
 #### [Java Implementation](../solutions/java/src/onlineauctionsystem/) 
 #### [Python Implementation](../solutions/python/onlineauctionsystem/)
 #### [C# Implementation](../solutions/c#/OnlineAuctionSystem/)
+#### [Go Implementation](../solutions/golang/onlineauctionsystem/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user in the online auction system, with properties such as id, username, and email.

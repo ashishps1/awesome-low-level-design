@@ -14,6 +14,7 @@
 #### [Java Implementation](../solutions/java/src/airlinemanagementsystem/) 
 #### [Python Implementation](../solutions/python/airlinemanagementsystem/)
 #### [C# Implementation](../solutions/c#/AirlineManagementSystem/)
+#### [Go Implementation](../solutions/golang/airlinemanagementsystem/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Flight** class represents a flight in the airline management system, with properties such as flight number, source, destination, departure time, arrival time, and available seats.

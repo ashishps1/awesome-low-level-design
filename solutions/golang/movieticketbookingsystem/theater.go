@@ -7,11 +7,11 @@ type Theater struct {
 	Shows    []*Show
 }
 
-func NewTheater(id, name, location string, shows []*Show) *Theater {
+func NewTheater(id, name, location string) *Theater {
 	return &Theater{
 		ID:       id,
 		Name:     name,
 		Location: location,
-		Shows:    shows,
+		Shows:    make([]*Show, 0),
 	}
 }

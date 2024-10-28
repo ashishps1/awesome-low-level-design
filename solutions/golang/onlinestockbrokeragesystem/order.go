@@ -2,17 +2,23 @@ package onlinestockbrokeragesystem
 
 type Order interface {
 	Execute() error
+	GetStatus() OrderStatus
+	SetStatus(status OrderStatus)
 }
 
 type BaseOrder struct {
-	orderId  string
-	account  *Account
-	stock    *Stock
-	quantity int
-	price    float64
-	status   OrderStatus
+	OrderID  string
+	Account  *Account
+	Stock    *Stock
+	Quantity int
+	Price    float64
+	Status   OrderStatus
+}
+
+func (o *BaseOrder) GetStatus() OrderStatus {
+	return o.Status
 }
 
 func (o *BaseOrder) SetStatus(status OrderStatus) {
-	o.status = status
+	o.Status = status
 }

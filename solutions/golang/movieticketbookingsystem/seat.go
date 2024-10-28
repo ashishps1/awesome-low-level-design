@@ -23,14 +23,18 @@ func NewSeat(id string, row, column int, seatType SeatType, price float64, statu
 	}
 }
 
+func (s *Seat) GetStatus() SeatStatus {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	return s.status
+}
+
 func (s *Seat) SetStatus(status SeatStatus) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.status = status
 }
 
-func (s *Seat) GetStatus() SeatStatus {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-	return s.status
+func (s *Seat) GetPrice() float64 {
+	return s.Price
 }

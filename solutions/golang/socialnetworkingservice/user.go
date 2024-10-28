@@ -1,5 +1,7 @@
 package socialnetworkingservice
 
+import "sync"
+
 type User struct {
 	ID             string
 	Name           string
@@ -7,8 +9,9 @@ type User struct {
 	Password       string
 	ProfilePicture string
 	Bio            string
-	Friends        []string
-	Posts          []*Post
+	friends        map[string]bool
+	posts          []*Post
+	mu             sync.RWMutex
 }
 
 func NewUser(id, name, email, password, profilePicture, bio string) *User {
@@ -19,7 +22,37 @@ func NewUser(id, name, email, password, profilePicture, bio string) *User {
 		Password:       password,
 		ProfilePicture: profilePicture,
 		Bio:            bio,
-		Friends:        []string{},
-		Posts:          []*Post{},
+		friends:        make(map[string]bool),
+		posts:          make([]*Post, 0),
 	}
+}
+
+func (u *User) AddFriend(friendID string) {
+	u.mu.Lock()
+	defer u.mu.Unlock()
+	u.friends[friendID] = true
+}
+
+func (u *User) AddPost(post *Post) {
+	u.mu.Lock()
+	defer u.mu.Unlock()
+	u.posts = append(u.posts, post)
+}
+
+func (u *User) GetFriends() []string {
+	u.mu.RLock()
+	defer u.mu.RUnlock()
+	friends := make([]string, 0, len(u.friends))
+	for friendID := range u.friends {
+		friends = append(friends, friendID)
+	}
+	return friends
+}
+
+func (u *User) GetPosts() []*Post {
+	u.mu.RLock()
+	defer u.mu.RUnlock()
+	posts := make([]*Post, len(u.posts))
+	copy(posts, u.posts)
+	return posts
 }

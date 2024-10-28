@@ -1,16 +1,21 @@
 package stackoverflow
 
-import "time"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 
 type Answer struct {
-	ID           int
+	ID           string
 	Content      string
 	Author       *User
 	Question     *Question
-	IsAccepted   bool
 	CreationDate time.Time
-	Comments     []*Comment
-	Votes        []*Vote
+	isAccepted   bool
+	comments     []*Comment
+	votes        []*Vote
+	mu           sync.RWMutex
 }
 
 func NewAnswer(author *User, question *Question, content string) *Answer {
@@ -20,34 +25,73 @@ func NewAnswer(author *User, question *Question, content string) *Answer {
 		Question:     question,
 		Content:      content,
 		CreationDate: time.Now(),
+		comments:     make([]*Comment, 0),
+		votes:        make([]*Vote, 0),
 	}
 }
 
-func (a *Answer) AddComment(comment *Comment) {
-	a.Comments = append(a.Comments, comment)
-}
+func (a *Answer) Vote(user *User, value int) error {
+	a.mu.Lock()
+	defer a.mu.Unlock()
 
-func (a *Answer) GetComments() []*Comment {
-	return a.Comments
-}
+	if value != 1 && value != -1 {
+		return fmt.Errorf("vote value must be either 1 or -1")
+	}
 
-func (a *Answer) Vote(user *User, value int) {
-	a.Votes = append(a.Votes, NewVote(user, value))
-	a.Author.UpdateReputation(value * 10)
+	// Remove existing vote from this user
+	for i, v := range a.votes {
+		if v.User.ID == user.ID {
+			a.votes = append(a.votes[:i], a.votes[i+1:]...)
+			break
+		}
+	}
+
+	a.votes = append(a.votes, &Vote{User: user, Value: value})
+	a.Author.UpdateReputation(value * 10) // +10 for upvote, -10 for downvote
+	return nil
 }
 
 func (a *Answer) GetVoteCount() int {
-	voteCount := 0
-	for _, vote := range a.Votes {
-		voteCount += vote.Value
+	a.mu.RLock()
+	defer a.mu.RUnlock()
+
+	count := 0
+	for _, vote := range a.votes {
+		count += vote.Value
 	}
-	return voteCount
+	return count
 }
 
-func (a *Answer) MarkAsAccepted() {
-	if a.IsAccepted {
-		panic("Answer is already accepted")
+func (a *Answer) AddComment(comment *Comment) error {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	a.comments = append(a.comments, comment)
+	return nil
+}
+
+func (a *Answer) GetComments() []*Comment {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
+	comments := make([]*Comment, len(a.comments))
+	copy(comments, a.comments)
+	return comments
+}
+
+func (a *Answer) MarkAsAccepted() error {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
+	if a.isAccepted {
+		return fmt.Errorf("answer is already accepted")
 	}
-	a.IsAccepted = true
-	a.Author.UpdateReputation(15)
+
+	a.isAccepted = true
+	a.Author.UpdateReputation(15) // +15 reputation for accepted answer
+	return nil
+}
+
+func (a *Answer) IsAccepted() bool {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
+	return a.isAccepted
 }

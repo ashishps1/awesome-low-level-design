@@ -1,21 +1,25 @@
 package onlinestockbrokeragesystem
 
-type InsufficientFundsException struct {
+type InsufficientFundsError struct {
 	message string
 }
 
-func (e *InsufficientFundsException) Error() string {
+func NewInsufficientFundsError(message string) *InsufficientFundsError {
+	return &InsufficientFundsError{message: message}
+}
+
+func (e *InsufficientFundsError) Error() string {
 	return e.message
 }
 
-type InsufficientStockException struct {
+type InsufficientStockError struct {
 	message string
 }
 
-func (e *InsufficientStockException) Error() string {
-	return e.message
+func NewInsufficientStockError(message string) *InsufficientStockError {
+	return &InsufficientStockError{message: message}
 }
 
-func NewInsufficientStockException(message string) *InsufficientStockException {
-	return &InsufficientStockException{message: message}
+func (e *InsufficientStockError) Error() string {
+	return e.message
 }

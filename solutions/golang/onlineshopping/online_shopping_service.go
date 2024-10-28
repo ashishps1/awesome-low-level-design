@@ -43,7 +43,7 @@ func (s *OnlineShoppingService) SearchProducts(keyword string) []*Product {
 	return results
 }
 
-func (s *OnlineShoppingService) PlaceOrder(user *User, cart *ShoppingCart, paymentMethod payment.Payment) (*Order, error) {
+func (s *OnlineShoppingService) PlaceOrder(user *User, cart *ShoppingCart, paymentMethod Payment) (*Order, error) {
 	var orderItems []OrderItem
 	for _, item := range cart.GetItems() {
 		product := item.Product

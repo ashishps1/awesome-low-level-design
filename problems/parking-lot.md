@@ -12,7 +12,7 @@
 #### [Java Implementation](../solutions/java/src/parkinglot/) 
 #### [Python Implementation](../solutions/python/parkinglot/)
 #### [C# Implementation](../solutions/c#/ParkingLot/)
-#### [Golang Implementation](../solutions/golang/parking-lot/)
+#### [Go Implementation](../solutions/golang/parkinglot/)
 
 ## Classes, Interfaces and Enumerations
 1. The **ParkingLot** class follows the Singleton pattern to ensure only one instance of the parking lot exists. It maintains a list of levels and provides methods to park and unpark vehicles.

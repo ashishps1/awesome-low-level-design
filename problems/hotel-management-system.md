@@ -14,6 +14,7 @@
 #### [Java Implementation](../solutions/java/src/hotelmanagement/) 
 #### [Python Implementation](../solutions/python/hotelmanagement/)
 #### [C# Implementation](../solutions/c#/HotelManagementSystem/)
+#### [Go Implementation](../solutions/golang/hotelmanagement/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Guest** class represents a guest of the hotel, with properties such as ID, name, email, and phone number.

@@ -1,37 +1,45 @@
 package onlinestockbrokeragesystem
 
+import "sync"
+
 type Account struct {
-	accountId string
-	user      *User
+	AccountID string
+	User      *User
 	balance   float64
-	portfolio *Portfolio
+	Portfolio *Portfolio
+	mu        sync.RWMutex
 }
 
-func NewAccount(accountId string, user *User, initialBalance float64) *Account {
-	return &Account{
-		accountId: accountId,
-		user:      user,
+func NewAccount(accountID string, user *User, initialBalance float64) *Account {
+	account := &Account{
+		AccountID: accountID,
+		User:      user,
 		balance:   initialBalance,
-		portfolio: NewPortfolio(),
 	}
+	account.Portfolio = NewPortfolio(account)
+	return account
 }
 
 func (a *Account) Deposit(amount float64) {
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	a.balance += amount
 }
 
 func (a *Account) Withdraw(amount float64) error {
-	if a.balance >= amount {
-		a.balance -= amount
-		return nil
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
+	if a.balance < amount {
+		return NewInsufficientFundsError("insufficient funds in account")
 	}
-	return &InsufficientFundsException{"Insufficient funds in the account."}
+
+	a.balance -= amount
+	return nil
 }
 
 func (a *Account) GetBalance() float64 {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
 	return a.balance
-}
-
-func (a *Account) GetPortfolio() *Portfolio {
-	return a.portfolio
 }

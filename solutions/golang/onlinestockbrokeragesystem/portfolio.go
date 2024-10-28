@@ -1,29 +1,53 @@
 package onlinestockbrokeragesystem
 
+import "sync"
+
 type Portfolio struct {
+	account  *Account
 	holdings map[string]int
+	mu       sync.RWMutex
 }
 
-func NewPortfolio() *Portfolio {
-	return &Portfolio{holdings: make(map[string]int)}
+func NewPortfolio(account *Account) *Portfolio {
+	return &Portfolio{
+		account:  account,
+		holdings: make(map[string]int),
+	}
 }
 
 func (p *Portfolio) AddStock(stock *Stock, quantity int) {
-	p.holdings[stock.symbol] += quantity
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	p.holdings[stock.Symbol] += quantity
 }
 
 func (p *Portfolio) RemoveStock(stock *Stock, quantity int) error {
-	currentQuantity, exists := p.holdings[stock.symbol]
-	if !exists || currentQuantity < quantity {
-		return NewInsufficientStockException("Insufficient stock quantity in the portfolio.")
+	p.mu.Lock()
+	defer p.mu.Unlock()
+
+	currentQuantity, exists := p.holdings[stock.Symbol]
+	if !exists {
+		return NewInsufficientStockError("stock not found in portfolio")
 	}
-	p.holdings[stock.symbol] -= quantity
-	if p.holdings[stock.symbol] == 0 {
-		delete(p.holdings, stock.symbol)
+
+	if currentQuantity < quantity {
+		return NewInsufficientStockError("insufficient stock quantity in portfolio")
+	}
+
+	p.holdings[stock.Symbol] -= quantity
+	if p.holdings[stock.Symbol] == 0 {
+		delete(p.holdings, stock.Symbol)
 	}
 	return nil
 }
 
 func (p *Portfolio) GetHoldings() map[string]int {
-	return p.holdings
+	p.mu.RLock()
+	defer p.mu.RUnlock()
+
+	holdings := make(map[string]int)
+	for symbol, quantity := range p.holdings {
+		holdings[symbol] = quantity
+	}
+	return holdings
 }

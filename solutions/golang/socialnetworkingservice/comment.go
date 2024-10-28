@@ -1,8 +1,6 @@
 package socialnetworkingservice
 
-import (
-	"time"
-)
+import "time"
 
 type Comment struct {
 	ID        string
@@ -12,11 +10,11 @@ type Comment struct {
 	Timestamp time.Time
 }
 
-func NewComment(id, userId, postId, content string) *Comment {
+func NewComment(id, userID, postID, content string) *Comment {
 	return &Comment{
 		ID:        id,
-		UserID:    userId,
-		PostID:    postId,
+		UserID:    userID,
+		PostID:    postID,
 		Content:   content,
 		Timestamp: time.Now(),
 	}

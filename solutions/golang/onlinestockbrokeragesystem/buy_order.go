@@ -1,33 +1,31 @@
 package onlinestockbrokeragesystem
 
 type BuyOrder struct {
-	*BaseOrder
+	BaseOrder
 }
 
-func NewBuyOrder(orderId string, account *Account, stock *Stock, quantity int, price float64) *BuyOrder {
+func NewBuyOrder(orderID string, account *Account, stock *Stock, quantity int, price float64) *BuyOrder {
 	return &BuyOrder{
-		BaseOrder: &BaseOrder{
-			orderId:  orderId,
-			account:  account,
-			stock:    stock,
-			quantity: quantity,
-			price:    price,
-			status:   Pending,
+		BaseOrder: BaseOrder{
+			OrderID:  orderID,
+			Account:  account,
+			Stock:    stock,
+			Quantity: quantity,
+			Price:    price,
+			Status:   OrderStatusPending,
 		},
 	}
 }
 
-func (b *BuyOrder) Execute() error {
-	totalCost := float64(b.quantity) * b.price
-	if b.account.GetBalance() >= totalCost {
-		if err := b.account.Withdraw(totalCost); err != nil {
-			b.SetStatus(Rejected)
-			return err
-		}
-		b.account.GetPortfolio().AddStock(b.stock, b.quantity)
-		b.SetStatus(Executed)
-		return nil
+func (o *BuyOrder) Execute() error {
+	totalCost := float64(o.Quantity) * o.Price
+
+	if err := o.Account.Withdraw(totalCost); err != nil {
+		o.Status = OrderStatusRejected
+		return err
 	}
-	b.SetStatus(Rejected)
-	return &InsufficientFundsException{"Insufficient funds to execute the buy order."}
+
+	o.Account.Portfolio.AddStock(o.Stock, o.Quantity)
+	o.Status = OrderStatusExecuted
+	return nil
 }

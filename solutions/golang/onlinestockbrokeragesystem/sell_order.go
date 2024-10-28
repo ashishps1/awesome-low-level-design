@@ -1,29 +1,30 @@
 package onlinestockbrokeragesystem
 
 type SellOrder struct {
-	*BaseOrder
+	BaseOrder
 }
 
-func NewSellOrder(orderId string, account *Account, stock *Stock, quantity int, price float64) *SellOrder {
+func NewSellOrder(orderID string, account *Account, stock *Stock, quantity int, price float64) *SellOrder {
 	return &SellOrder{
-		BaseOrder: &BaseOrder{
-			orderId:  orderId,
-			account:  account,
-			stock:    stock,
-			quantity: quantity,
-			price:    price,
-			status:   Pending,
+		BaseOrder: BaseOrder{
+			OrderID:  orderID,
+			Account:  account,
+			Stock:    stock,
+			Quantity: quantity,
+			Price:    price,
+			Status:   OrderStatusPending,
 		},
 	}
 }
 
-func (s *SellOrder) Execute() error {
-	if err := s.account.GetPortfolio().RemoveStock(s.stock, s.quantity); err != nil {
-		s.SetStatus(Rejected)
+func (o *SellOrder) Execute() error {
+	if err := o.Account.Portfolio.RemoveStock(o.Stock, o.Quantity); err != nil {
+		o.Status = OrderStatusRejected
 		return err
 	}
-	totalProceeds := float64(s.quantity) * s.price
-	s.account.Deposit(totalProceeds)
-	s.SetStatus(Executed)
+
+	totalProceeds := float64(o.Quantity) * o.Price
+	o.Account.Deposit(totalProceeds)
+	o.Status = OrderStatusExecuted
 	return nil
 }

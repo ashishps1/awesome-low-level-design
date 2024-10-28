@@ -32,6 +32,7 @@
 #### [Java Implementation](../solutions/java/src/socialnetworkingservice/) 
 #### [Python Implementation](../solutions/python/socialnetworkingservice/)
 #### [C# Implementation](../solutions/c#/SocialNetworkingService/)
+#### [Go Implementation](../solutions/golang/socialnetworkingservice/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user in the social networking system, containing properties such as ID, name, email, password, profile picture, bio, list of friends, and list of posts.

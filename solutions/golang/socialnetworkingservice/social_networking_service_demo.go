@@ -2,60 +2,95 @@ package socialnetworkingservice
 
 import (
 	"fmt"
+	"log"
 )
 
 func Run() {
-	service := GetSocialNetworkingService()
+	socialNetwork := GetSocialNetwork()
 
-	// User registration
+	// Create users
 	user1 := NewUser("1", "John Doe", "john@example.com", "password", "profile1.jpg", "I love coding!")
 	user2 := NewUser("2", "Jane Smith", "jane@example.com", "password", "profile2.jpg", "Exploring the world!")
-	service.RegisterUser(user1)
-	service.RegisterUser(user2)
 
-	// User login
-	loggedInUser := service.LoginUser("john@example.com", "password")
-	if loggedInUser != nil {
-		fmt.Println("User logged in:", loggedInUser.Name)
-	} else {
-		fmt.Println("Invalid email or password.")
+	// Register users
+	if err := socialNetwork.RegisterUser(user1); err != nil {
+		log.Printf("Failed to register user1: %v", err)
+		return
+	}
+	if err := socialNetwork.RegisterUser(user2); err != nil {
+		log.Printf("Failed to register user2: %v", err)
+		return
 	}
 
+	// Login
+	loggedInUser, err := socialNetwork.LoginUser("john@example.com", "password")
+	if err != nil {
+		log.Printf("Login failed: %v", err)
+		return
+	}
+	fmt.Printf("User logged in: %s\n", loggedInUser.Name)
+
 	// Send friend request
-	service.SendFriendRequest(user1.ID, user2.ID)
+	if err := socialNetwork.SendFriendRequest(user1.ID, user2.ID); err != nil {
+		log.Printf("Failed to send friend request: %v", err)
+		return
+	}
 
 	// Accept friend request
-	service.AcceptFriendRequest(user2.ID, user1.ID)
+	if err := socialNetwork.AcceptFriendRequest(user2.ID, user1.ID); err != nil {
+		log.Printf("Failed to accept friend request: %v", err)
+		return
+	}
 
 	// Create posts
-	post1 := NewPost("post1", user1.ID, "My first post!", []string{}, []string{}, []string{}, []Comment{})
-	post2 := NewPost("post2", user2.ID, "Having a great day!", []string{}, []string{}, []string{}, []Comment{})
-	service.CreatePost(post1)
-	service.CreatePost(post2)
+	post1 := NewPost("post1", user1.ID, "My first post!", []string{}, []string{})
+	post2 := NewPost("post2", user2.ID, "Having a great day!", []string{}, []string{})
 
-	// Like a post
-	service.LikePost(user2.ID, post1.ID)
+	if err := socialNetwork.CreatePost(post1); err != nil {
+		log.Printf("Failed to create post1: %v", err)
+		return
+	}
+	if err := socialNetwork.CreatePost(post2); err != nil {
+		log.Printf("Failed to create post2: %v", err)
+		return
+	}
 
-	// Comment on a post
+	// Like and comment
+	if err := socialNetwork.LikePost(user2.ID, post1.ID); err != nil {
+		log.Printf("Failed to like post: %v", err)
+		return
+	}
+
 	comment := NewComment("comment1", user2.ID, post1.ID, "Great post!")
-	service.CommentOnPost(comment)
+	if err := socialNetwork.CommentOnPost(comment); err != nil {
+		log.Printf("Failed to comment on post: %v", err)
+		return
+	}
 
 	// Get newsfeed
-	newsfeed := service.GetNewsfeed(user1.ID)
-	fmt.Println("Newsfeed:")
+	newsfeed, err := socialNetwork.GetNewsfeed(user1.ID)
+	if err != nil {
+		log.Printf("Failed to get newsfeed: %v", err)
+		return
+	}
+
+	fmt.Println("\nNewsfeed:")
 	for _, post := range newsfeed {
-		fmt.Println("Post:", post.Content)
-		fmt.Println("Likes:", len(post.Likes))
-		fmt.Println("Comments:", len(post.Comments))
-		fmt.Println()
+		fmt.Printf("Post: %s\n", post.Content)
+		fmt.Printf("Likes: %d\n", len(post.GetLikes()))
+		fmt.Printf("Comments: %d\n\n", len(post.GetComments()))
 	}
 
 	// Get notifications
-	notifications := service.GetNotifications(user1.ID)
+	notifications, err := socialNetwork.GetNotifications(user1.ID)
+	if err != nil {
+		log.Printf("Failed to get notifications: %v", err)
+		return
+	}
+
 	fmt.Println("Notifications:")
 	for _, notification := range notifications {
-		fmt.Println("Type:", notification.Type)
-		fmt.Println("Content:", notification.Content)
-		fmt.Println()
+		fmt.Printf("Type: %s\n", notification.Type)
+		fmt.Printf("Content: %s\n\n", notification.Content)
 	}
 }

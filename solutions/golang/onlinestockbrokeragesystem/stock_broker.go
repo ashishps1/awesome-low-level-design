@@ -1,57 +1,76 @@
 package onlinestockbrokeragesystem
 
 import (
-	"fmt"
-	"sync"
+    "fmt"
+    "sync"
+    "sync/atomic"
 )
 
 type StockBroker struct {
-	accounts         map[string]*Account
-	stocks           map[string]*Stock
-	orders           chan Order
-	accountIdCounter int
-	mu               sync.Mutex
+    accounts        map[string]*Account
+    stocks          map[string]*Stock
+    orderQueue      chan Order
+    accountIDCount  int64
+    mu             sync.RWMutex
 }
 
-var instance *StockBroker
-var once sync.Once
+var (
+    instance *StockBroker
+    once     sync.Once
+)
 
-func GetStockBrokerInstance() *StockBroker {
-	once.Do(func() {
-		instance = &StockBroker{
-			accounts: make(map[string]*Account),
-			stocks:   make(map[string]*Stock),
-			orders:   make(chan Order, 100),
-		}
-		go instance.processOrders()
-	})
-	return instance
+func GetStockBroker() *StockBroker {
+    once.Do(func() {
+        instance = &StockBroker{
+            accounts:   make(map[string]*Account),
+            stocks:    make(map[string]*Stock),
+            orderQueue: make(chan Order, 100), // Buffered channel for orders
+        }
+        go instance.processOrders() // Start order processing goroutine
+    })
+    return instance
 }
 
-func (s *StockBroker) CreateAccount(user *User, initialBalance float64) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	accountId := fmt.Sprintf("A%03d", s.accountIdCounter)
-	s.accountIdCounter++
-	s.accounts[accountId] = NewAccount(accountId, user, initialBalance)
+func (sb *StockBroker) CreateAccount(user *User, initialBalance float64) {
+    sb.mu.Lock()
+    defer sb.mu.Unlock()
+
+    accountID := sb.generateAccountID()
+    account := NewAccount(accountID, user, initialBalance)
+    sb.accounts[accountID] = account
 }
 
-func (s *StockBroker) GetAccount(accountId string) *Account {
-	return s.accounts[accountId]
+func (sb *StockBroker) GetAccount(accountID string) *Account {
+    sb.mu.RLock()
+    defer sb.mu.RUnlock()
+    return sb.accounts[accountID]
 }
 
-func (s *StockBroker) AddStock(stock *Stock) {
-	s.stocks[stock.symbol] = stock
+func (sb *StockBroker) AddStock(stock *Stock) {
+    sb.mu.Lock()
+    defer sb.mu.Unlock()
+    sb.stocks[stock.Symbol] = stock
 }
 
-func (s *StockBroker) PlaceOrder(order Order) {
-	s.orders <- order
+func (sb *StockBroker) GetStock(symbol string) *Stock {
+    sb.mu.RLock()
+    defer sb.mu.RUnlock()
+    return sb.stocks[symbol]
 }
 
-func (s *StockBroker) processOrders() {
-	for order := range s.orders {
-		if err := order.Execute(); err != nil {
-			fmt.Println("Order failed:", err)
-		}
-	}
+func (sb *StockBroker) PlaceOrder(order Order) {
+    sb.orderQueue <- order
+}
+
+func (sb *StockBroker) processOrders() {
+    for order := range sb.orderQueue {
+        if err := order.Execute(); err != nil {
+            fmt.Printf("Order failed: %v\n", err)
+        }
+    }
+}
+
+func (sb *StockBroker) generateAccountID() string {
+    id := atomic.AddInt64(&sb.accountIDCount, 1)
+    return fmt.Sprintf("A%03d", id)
 }

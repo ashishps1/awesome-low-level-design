@@ -2,154 +2,206 @@ package socialnetworkingservice
 
 import (
 	"fmt"
+	"sort"
 	"sync"
 	"time"
 )
 
-type SocialNetworkingService struct {
+type SocialNetwork struct {
 	users         map[string]*User
 	posts         map[string]*Post
-	notifications map[string][]Notification
-	mu            sync.Mutex
+	notifications map[string][]*Notification
+	mu            sync.RWMutex
 }
 
-var instance *SocialNetworkingService
-var once sync.Once
+var (
+	instance *SocialNetwork
+	once     sync.Once
+)
 
-func GetSocialNetworkingService() *SocialNetworkingService {
+func GetSocialNetwork() *SocialNetwork {
 	once.Do(func() {
-		instance = &SocialNetworkingService{
+		instance = &SocialNetwork{
 			users:         make(map[string]*User),
 			posts:         make(map[string]*Post),
-			notifications: make(map[string][]Notification),
+			notifications: make(map[string][]*Notification),
 		}
 	})
 	return instance
 }
 
-func (s *SocialNetworkingService) RegisterUser(user *User) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	s.users[user.ID] = user
+func (sn *SocialNetwork) RegisterUser(user *User) error {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+
+	if _, exists := sn.users[user.ID]; exists {
+		return fmt.Errorf("user with ID %s already exists", user.ID)
+	}
+	sn.users[user.ID] = user
+	return nil
 }
 
-func (s *SocialNetworkingService) LoginUser(email, password string) *User {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	for _, user := range s.users {
+func (sn *SocialNetwork) LoginUser(email, password string) (*User, error) {
+	sn.mu.RLock()
+	defer sn.mu.RUnlock()
+
+	for _, user := range sn.users {
 		if user.Email == email && user.Password == password {
-			return user
+			return user, nil
 		}
+	}
+	return nil, fmt.Errorf("invalid email or password")
+}
+
+func (sn *SocialNetwork) UpdateUserProfile(user *User) {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+	sn.users[user.ID] = user
+}
+
+func (sn *SocialNetwork) SendFriendRequest(senderID, receiverID string) error {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+
+	receiver, exists := sn.users[receiverID]
+	if !exists {
+		return fmt.Errorf("receiver not found")
+	} else {
+		fmt.Printf(receiver.ID)
+	}
+
+	notification := NewNotification(
+		fmt.Sprintf("notif-%d", time.Now().UnixNano()),
+		receiverID,
+		NotificationTypeFriendRequest,
+		fmt.Sprintf("Friend request from %s", senderID),
+	)
+
+	sn.addNotification(receiverID, notification)
+	return nil
+}
+
+func (sn *SocialNetwork) AcceptFriendRequest(userID, friendID string) error {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+
+	user, exists1 := sn.users[userID]
+	friend, exists2 := sn.users[friendID]
+
+	if !exists1 || !exists2 {
+		return fmt.Errorf("user or friend not found")
+	}
+
+	user.AddFriend(friendID)
+	friend.AddFriend(userID)
+
+	notification := NewNotification(
+		fmt.Sprintf("notif-%d", time.Now().UnixNano()),
+		friendID,
+		NotificationTypeFriendRequestAccepted,
+		fmt.Sprintf("Friend request accepted by %s", userID),
+	)
+
+	sn.addNotification(friendID, notification)
+	return nil
+}
+
+func (sn *SocialNetwork) CreatePost(post *Post) error {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+
+	user, exists := sn.users[post.UserID]
+	if !exists {
+		return fmt.Errorf("user not found")
+	}
+
+	sn.posts[post.ID] = post
+	user.AddPost(post)
+	return nil
+}
+
+func (sn *SocialNetwork) GetNewsfeed(userID string) ([]*Post, error) {
+	sn.mu.RLock()
+	defer sn.mu.RUnlock()
+
+	user, exists := sn.users[userID]
+	if !exists {
+		return nil, fmt.Errorf("user not found")
+	}
+
+	var newsfeed []*Post
+
+	// Add user's own posts
+	newsfeed = append(newsfeed, user.GetPosts()...)
+
+	// Add friends' posts
+	for friendID := range user.friends {
+		if friend, ok := sn.users[friendID]; ok {
+			newsfeed = append(newsfeed, friend.GetPosts()...)
+		}
+	}
+
+	// Sort by timestamp (newest first)
+	sort.Slice(newsfeed, func(i, j int) bool {
+		return newsfeed[i].Timestamp.After(newsfeed[j].Timestamp)
+	})
+
+	return newsfeed, nil
+}
+
+func (sn *SocialNetwork) LikePost(userID, postID string) error {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+
+	post, exists := sn.posts[postID]
+	if !exists {
+		return fmt.Errorf("post not found")
+	}
+
+	if added := post.AddLike(userID); added {
+		notification := NewNotification(
+			fmt.Sprintf("notif-%d", time.Now().UnixNano()),
+			post.UserID,
+			NotificationTypeLike,
+			fmt.Sprintf("Your post was liked by %s", userID),
+		)
+		sn.addNotification(post.UserID, notification)
 	}
 	return nil
 }
 
-func (s *SocialNetworkingService) SendFriendRequest(senderId, receiverId string) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	receiver := s.users[receiverId]
-	if receiver != nil {
-		notification := Notification{
-			ID:        generateUUID(),
-			UserID:    receiverId,
-			Type:      FriendRequest,
-			Content:   fmt.Sprintf("Friend request from %s", senderId),
-			Timestamp: time.Now(),
-		}
-		s.addNotification(receiverId, notification)
+func (sn *SocialNetwork) CommentOnPost(comment *Comment) error {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+
+	post, exists := sn.posts[comment.PostID]
+	if !exists {
+		return fmt.Errorf("post not found")
 	}
+
+	post.AddComment(comment)
+
+	notification := NewNotification(
+		fmt.Sprintf("notif-%d", time.Now().UnixNano()),
+		post.UserID,
+		NotificationTypeComment,
+		fmt.Sprintf("Your post received a comment from %s", comment.UserID),
+	)
+	sn.addNotification(post.UserID, notification)
+	return nil
 }
 
-func (s *SocialNetworkingService) AcceptFriendRequest(userId, friendId string) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	user := s.users[userId]
-	friend := s.users[friendId]
-	if user != nil && friend != nil {
-		user.Friends = append(user.Friends, friendId)
-		friend.Friends = append(friend.Friends, userId)
-		notification := Notification{
-			ID:        generateUUID(),
-			UserID:    friendId,
-			Type:      FriendRequestAccepted,
-			Content:   fmt.Sprintf("Friend request accepted by %s", userId),
-			Timestamp: time.Now(),
-		}
-		s.addNotification(friendId, notification)
+func (sn *SocialNetwork) GetNotifications(userID string) ([]*Notification, error) {
+	sn.mu.RLock()
+	defer sn.mu.RUnlock()
+
+	if _, exists := sn.users[userID]; !exists {
+		return nil, fmt.Errorf("user not found")
 	}
+
+	return sn.notifications[userID], nil
 }
 
-func (s *SocialNetworkingService) CreatePost(post *Post) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	s.posts[post.ID] = post
-	user := s.users[post.UserID]
-	if user != nil {
-		user.Posts = append(user.Posts, post)
-	}
-}
-
-func (s *SocialNetworkingService) GetNewsfeed(userId string) []*Post {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	var newsfeed []*Post
-	user := s.users[userId]
-	if user != nil {
-		for _, friendId := range user.Friends {
-			friend := s.users[friendId]
-			if friend != nil {
-				newsfeed = append(newsfeed, friend.Posts...)
-			}
-		}
-		newsfeed = append(newsfeed, user.Posts...)
-	}
-	return newsfeed
-}
-
-func (s *SocialNetworkingService) LikePost(userId, postId string) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	post := s.posts[postId]
-	if post != nil {
-		post.Likes = append(post.Likes, userId)
-		notification := Notification{
-			ID:        generateUUID(),
-			UserID:    post.UserID,
-			Type:      Like,
-			Content:   fmt.Sprintf("Your post was liked by %s", userId),
-			Timestamp: time.Now(),
-		}
-		s.addNotification(post.UserID, notification)
-	}
-}
-
-func (s *SocialNetworkingService) CommentOnPost(comment *Comment) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	post := s.posts[comment.PostID]
-	if post != nil {
-		post.Comments = append(post.Comments, *comment)
-		notification := Notification{
-			ID:        generateUUID(),
-			UserID:    post.UserID,
-			Type:      Comment,
-			Content:   fmt.Sprintf("Your post received a comment from %s", comment.UserID),
-			Timestamp: time.Now(),
-		}
-		s.addNotification(post.UserID, notification)
-	}
-}
-
-func (s *SocialNetworkingService) GetNotifications(userId string) []Notification {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	return s.notifications[userId]
-}
-
-func (s *SocialNetworkingService) addNotification(userId string, notification Notification) {
-	s.notifications[userId] = append(s.notifications[userId], notification)
-}
-
-func generateUUID() string {
-	return fmt.Sprintf("%d", time.Now().UnixNano()) // Placeholder for a UUID generator
+func (sn *SocialNetwork) addNotification(userID string, notification *Notification) {
+	sn.notifications[userID] = append(sn.notifications[userID], notification)
 }
