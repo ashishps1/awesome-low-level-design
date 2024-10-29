@@ -33,7 +33,7 @@ public class ParkingSpot {
         return vehicleType;
     }
 
-    public Vehicle getParkedVehicle() {
+    public synchronized Vehicle getParkedVehicle() {
         return parkedVehicle;
     }
 
