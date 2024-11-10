@@ -92,3 +92,4 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 ## Additional resources
 - [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 - [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
+- [Github - Complete DataStructure and Algorithms](https://github.com/dhanushkumar-amk/DATASTRUCTURES-AND-ALGORITHMS)
