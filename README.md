@@ -62,6 +62,8 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design an ATM](problems/atm.md)
 - [Design Hotel Management System](problems/hotel-management-system.md)
 - [Design LinkedIn](problems/linkedin.md)
+- [Design ThreadPool](problems/linkedin.md)
+- [Design Online Text Editor](problems/linkedin.md)
 - [Design a Social Network like Facebook](problems/social-networking-service.md)
 - [Design an Elevator System](problems/elevator-system.md)
 - [Design a Library Management System](problems/library-management-system.md)
