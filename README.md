@@ -8,6 +8,7 @@
 This repository contains resources to learn Low Level Design (LLD) / Object Oriented Design (OOD) and prepare for interviews.
 
 ## 📌 Fundamental Concepts
+
 - [Basics OOP Concepts](https://blog.algomaster.io/p/basic-oop-concepts-explained-with-code)
 - [SOLID Principles with Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [SOLID Principles with Code](https://blog.algomaster.io/p/solid-principles-explained-with-code)
@@ -16,27 +17,25 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [KISS Principle](https://blog.algomaster.io/p/21b57678-b351-4ed4-b390-3b6308af2f7d)
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
-## ⚙️ Design Patterns
-### Creational Patterns
-- [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)
-- [Factory Method](https://refactoring.guru/design-patterns/factory-method)
-- [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
-- [Builder](https://refactoring.guru/design-patterns/builder)
-- [Prototype](https://refactoring.guru/design-patterns/prototype)
-### Structural Patterns
-- [Adapter](https://refactoring.guru/design-patterns/adapter)
-- [Facade](https://refactoring.guru/design-patterns/facade)
-- [Decorator](https://refactoring.guru/design-patterns/decorator)
-- [Composite](https://refactoring.guru/design-patterns/composite)
-### Behavioral Patterns
-- [Strategy](https://refactoring.guru/design-patterns/strategy)
-- [Iterator](https://refactoring.guru/design-patterns/iterator)
-- [Observer](https://refactoring.guru/design-patterns/observer)
-- [Template Method](https://refactoring.guru/design-patterns/template-method)
-- [Command](https://refactoring.guru/design-patterns/command)
-- [State](https://refactoring.guru/design-patterns/state)
+# ⚙️ Design Patterns
+
+| **Creational Patterns**                                                       | **Structural Patterns**                                         | **Behavioral Patterns**                                                                     |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)            | [Adapter](https://refactoring.guru/design-patterns/adapter)     | [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility) |
+| [Factory Method](https://refactoring.guru/design-patterns/factory-method)     | [Bridge](https://refactoring.guru/design-patterns/bridge)       | [Command](https://refactoring.guru/design-patterns/command)                                 |
+| [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory) | [Composite](https://refactoring.guru/design-patterns/composite) | [Iterator](https://refactoring.guru/design-patterns/iterator)                               |
+| [Builder](https://refactoring.guru/design-patterns/builder)                   | [Decorator](https://refactoring.guru/design-patterns/decorator) | [Mediator](https://refactoring.guru/design-patterns/mediator)                               |
+| [Prototype](https://refactoring.guru/design-patterns/prototype)               | [Facade](https://refactoring.guru/design-patterns/facade)       | [Memento](https://refactoring.guru/design-patterns/memento)                                 |
+|                                                                               | [Flyweight](https://refactoring.guru/design-patterns/flyweight) | [Observer](https://refactoring.guru/design-patterns/observer)                               |
+|                                                                               | [Proxy](https://refactoring.guru/design-patterns/proxy)         | [State](https://refactoring.guru/design-patterns/state)                                     |
+|                                                                               |                                                                 | [Strategy](https://refactoring.guru/design-patterns/strategy)                               |
+|                                                                               |                                                                 | [Template Method](https://refactoring.guru/design-patterns/template-method)                 |
+|                                                                               |                                                                 | [Visitor](https://refactoring.guru/design-patterns/visitor)                                 |
+
+---
 
 ## 🗂️ UML
+
 - [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
 - [Use Case Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/)
 - [Sequence Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-sequence-diagram/)
@@ -44,10 +43,13 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [State Machine Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-state-machine-diagram/)
 
 ### ✅ [How to Answer a LLD Interview Problem](https://blog.algomaster.io/p/how-to-answer-a-lld-interview-problem)
+
 <img src="images/interview-template.png" width="350" height="250">
 
 ## 💻 Low Level Design Interview Problems
+
 ### Easy
+
 - [Design Parking Lot](problems/parking-lot.md)
 - [Design a Vending Machine](problems/vending-machine.md)
 - [Design Stack Overflow](problems/stack-overflow.md)
@@ -55,7 +57,9 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
 - [Design Traffic Signal Control System](problems/traffic-signal.md)
 - [Design a Task Management System](problems/task-management-system.md)
+
 ### Medium
+
 - [Design Pub Sub System](problems/pub-sub-system.md)
 - [Design Tic Tac Toe Game](problems/tic-tac-toe.md)
 - [Design Car Rental System](problems/car-rental-system.md)
@@ -71,7 +75,9 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design an Online Auction System](problems/online-auction-system.md)
 - [Design a Concert Ticket Booking System](problems/concert-ticketing-system.md)
 - [Design a Cache using LRU Eviction Policy](problems/lru-cache.md)
+
 ### Hard
+
 - [Design Movie Ticket Booking System](problems/movie-ticket-booking-system.md)
 - [Design Splitwise](problems/splitwise.md)
 - [Design a Snake and Ladder game](problems/snake-and-ladder.md)
@@ -85,10 +91,12 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design University Course Registration System](problems/course-registration-system.md)
 
 ## 📚 Books
+
 - [Head First Design Patterns](https://amzn.to/3AmTYEN)
 - [Clean Code](https://amzn.to/4hgxN3S)
 - [Refactoring: Improving the Design of Existing Code](https://amzn.to/3YyuH3Y)
 
 ## Additional resources
+
 - [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 - [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
