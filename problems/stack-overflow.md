@@ -12,7 +12,7 @@
 #### [Java Implementation](../solutions/java/src/stackoverflow/) 
 #### [Python Implementation](../solutions/python/stackoverflow/)
 #### [C# Implementation](../solutions/c#/StackOverflow/)
-#### [Go Implementation](../solutions/golang/stackoverflow/)
+#### [Go Implementation](../solutions/golang/stackOverFlow/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user of the Stack Overflow system, with properties such as id, username, email, and reputation.
