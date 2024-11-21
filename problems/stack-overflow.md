@@ -11,7 +11,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/stackoverflow/) 
 #### [Python Implementation](../solutions/python/stackoverflow/)
-#### [C# Implementation](../solutions/c#/StackOverflow/)
+#### [C# Implementation](../solutions/c%23/StackOverflow/)
 #### [Go Implementation](../solutions/golang/stackoverflow/)
 
 ## Classes, Interfaces and Enumerations

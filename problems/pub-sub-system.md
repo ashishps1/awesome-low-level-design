@@ -11,7 +11,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/pubsubsystem/) 
 #### [Python Implementation](../solutions/python/pubsubsystem/)
-#### [C# Implementation](../solutions/c#/PubSubSystem/)
+#### [C# Implementation](../solutions/c%23/PubSubSystem/)
 #### [Go Implementation](../solutions/golang/pubsubsystem/)
 
 ## Classes, Interfaces and Enumerations

@@ -13,7 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/hotelmanagement/) 
 #### [Python Implementation](../solutions/python/hotelmanagement/)
-#### [C# Implementation](../solutions/c#/HotelManagementSystem/)
+#### [C# Implementation](../solutions/c%23/HotelManagementSystem/)
 #### [Go Implementation](../solutions/golang/hotelmanagement/)
 
 ## Classes, Interfaces and Enumerations
