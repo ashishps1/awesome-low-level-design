@@ -12,7 +12,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/restaurantmanagementsystem/) 
 #### [Python Implementation](../solutions/python/restaurantmanagementsystem/)
-#### [C# Implementation](../solutions/c#/RestaurantManagementSystem/)
+#### [C# Implementation](../solutions/c%23/RestaurantManagementSystem/)
 #### [Go Implementation](../solutions/golang/restaurantmanagementsystem/)
 
 ## Classes, Interfaces and Enumerations

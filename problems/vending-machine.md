@@ -12,7 +12,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/vendingmachine/) 
 #### [Python Implementation](../solutions/python/vendingmachine/)
-#### [C# Implementation](../solutions/c#/VendingMachine/)
+#### [C# Implementation](../solutions/c%23/VendingMachine/)
 #### [Go Implementation](../solutions/golang/vending_machine/)
 
 ## Classes, Interfaces and Enumerations

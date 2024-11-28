@@ -13,7 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/carrentalsystem/) 
 #### [Python Implementation](../solutions/python/carrentalsystem/)
-#### [C# Implementation](../solutions/c#/CarRentalSystem/)
+#### [C# Implementation](../solutions/c%23/CarRentalSystem/)
 #### [Go Implementation](../solutions/golang/carrentalsystem/)
 
 ## Classes, Interfaces and Enumerations

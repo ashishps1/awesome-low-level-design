@@ -12,7 +12,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/courseregistrationsystem/) 
 #### [Python Implementation](../solutions/python/courseregistrationsystem/)
-#### [C# Implementation](../solutions/c#/CourseRegistrationSystem/)
+#### [C# Implementation](../solutions/c%23/CourseRegistrationSystem/)
 #### [Go Implementation](../solutions/golang/courseregistrationsystem/)
 
 ## Classes, Interfaces and Enumerations

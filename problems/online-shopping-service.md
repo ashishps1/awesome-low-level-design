@@ -13,7 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/onlineshopping/) 
 #### [Python Implementation](../solutions/python/onlineshopping/)
-#### [C# Implementation](../solutions/c#/OnlineShoppingService/)
+#### [C# Implementation](../solutions/c%23/OnlineShoppingService/)
 #### [Go Implementation](../solutions/golang/onlineshopping/)
 
 ## Classes, Interfaces and Enumerations
