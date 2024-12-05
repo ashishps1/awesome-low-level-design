@@ -17,7 +17,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [KISS Principle](https://blog.algomaster.io/p/21b57678-b351-4ed4-b390-3b6308af2f7d)
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
-# ⚙️ Design Patterns
+## ⚙️ Design Patterns
 
 | **Creational Patterns**                                                       | **Structural Patterns**                                         | **Behavioral Patterns**                                                                     |
 | ----------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
@@ -32,22 +32,17 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 |                                                                               |                                                                 | [Template Method](https://refactoring.guru/design-patterns/template-method)                 |
 |                                                                               |                                                                 | [Visitor](https://refactoring.guru/design-patterns/visitor)                                 |
 
----
-
 ## 🗂️ UML
-
 - [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
 - [Use Case Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/)
 - [Sequence Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-sequence-diagram/)
 - [Activity Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-activity-diagram/)
 - [State Machine Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-state-machine-diagram/)
 
-### ✅ [How to Answer a LLD Interview Problem](https://blog.algomaster.io/p/how-to-answer-a-lld-interview-problem)
-
+## ✅ [How to Answer a LLD Interview Problem](https://blog.algomaster.io/p/how-to-answer-a-lld-interview-problem)
 <img src="images/interview-template.png" width="350" height="250">
 
 ## 💻 Low Level Design Interview Problems
-
 ### Easy
 
 - [Design Parking Lot](problems/parking-lot.md)
