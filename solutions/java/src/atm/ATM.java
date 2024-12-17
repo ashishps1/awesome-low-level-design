@@ -26,6 +26,11 @@ public class ATM {
 
     public void withdrawCash(String accountNumber, double amount) {
         Account account = bankingService.getAccount(accountNumber);
+        // Check if sufficient balance is available
+        if (account != null && account.getBalance() < amount) {
+            System.out.println("Error: Insufficient balance.");
+            return;
+        }
         Transaction transaction = new WithdrawalTransaction(generateTransactionId(), account, amount);
         bankingService.processTransaction(transaction);
         cashDispenser.dispenseCash((int) amount);
