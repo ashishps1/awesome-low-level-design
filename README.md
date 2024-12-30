@@ -87,9 +87,13 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 
 ## 📚 Books
 
-- [Head First Design Patterns](https://amzn.to/3AmTYEN)
-- [Clean Code](https://amzn.to/4hgxN3S)
-- [Refactoring: Improving the Design of Existing Code](https://amzn.to/3YyuH3Y)
+- [Head First Design Patterns](https://www.amazon.in/dp/9385889753)
+- [Clean Code](https://www.amazon.in/dp/B001GSTOAM)
+- [Refactoring: Improving the Design of Existing Code](https://www.amazon.in/dp/0134757599)
+
+## 📩 Newsletter
+
+- [AlgoMaster Newsletter](https://blog.algomaster.io/)
 
 ## Additional resources
 
