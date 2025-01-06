@@ -1,5 +1,7 @@
 package snakeandladdergame
 
+import "sync"
+
 type GameManager struct {
 	Games []*SnakeAndLadderGame
 }
@@ -15,8 +17,9 @@ func GetGameManager() *GameManager {
 	return instance
 }
 
-func (gm *GameManager) StartNewGame(playerNames []string) {
+func (gm *GameManager) StartNewGame(wg *sync.WaitGroup, playerNames []string) {
 	game := NewSnakeAndLadderGame(playerNames)
 	gm.Games = append(gm.Games, game)
-	go game.Play()
+	wg.Add(1)
+	go game.Play(wg)
 }
