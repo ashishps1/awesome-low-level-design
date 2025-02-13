@@ -37,6 +37,10 @@ public class ATM {
     }
 
     public void depositCash(String accountNumber, double amount) {
+         if (account == null ) {
+            System.out.println("Account number doesn't exist, Create a new account =" + accountNumber);
+            return;
+        }
         Account account = bankingService.getAccount(accountNumber);
         Transaction transaction = new DepositTransaction(generateTransactionId(), account, amount);
         bankingService.processTransaction(transaction);
