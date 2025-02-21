@@ -9,8 +9,9 @@
 6. The Pub-Sub system should be scalable and efficient in terms of message delivery.
 
 ## Implementations
-#### [Java Implementation](../solutions/java/src/pubsubsystem/) 
+#### [Java Implementation](../solutions/java/src/pubsubsystem/)
 #### [Python Implementation](../solutions/python/pubsubsystem/)
+#### [C++ Implementation](../solutions/c++/pubsubsystem/)
 #### [C# Implementation](../solutions/c%23/PubSubSystem/)
 #### [Go Implementation](../solutions/golang/pubsubsystem/)
 

@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/digitalwallet/) 
 #### [Python Implementation](../solutions/python/digitalwallet/)
+#### [C++ Implementation](../solutions/c++/digitalwallet/)
 #### [C# Implementation](../solutions/c%23/DigitalWallet/)
 #### [Go Implementation](../solutions/golang/digitalwallet/)
 

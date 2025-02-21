@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/ridesharingservice/) 
 #### [Python Implementation](../solutions/python/ridesharingservice/)
+#### [C++ Implementation](../solutions/c++/ridesharingservice/)
 #### [C# Implementation](../solutions/c%23/RideSharingService/)
 #### [Go Implementation](../solutions/golang/ridesharingservice/)
 

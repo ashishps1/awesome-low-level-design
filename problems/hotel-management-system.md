@@ -13,6 +13,7 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/hotelmanagement/) 
 #### [Python Implementation](../solutions/python/hotelmanagement/)
+#### [C++ Implementation](../solutions/c++/hotelmanagement/)
 #### [C# Implementation](../solutions/c%23/HotelManagementSystem/)
 #### [Go Implementation](../solutions/golang/hotelmanagement/)
 
