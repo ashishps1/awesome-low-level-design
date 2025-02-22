@@ -1,8 +1,14 @@
 package snakeandladdergame
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"sync/atomic"
+	"time"
+)
 
 type SnakeAndLadderGame struct {
+	ID               int64
 	Board            *Board
 	Players          []*Player
 	Dice             *Dice
@@ -11,6 +17,7 @@ type SnakeAndLadderGame struct {
 
 func NewSnakeAndLadderGame(playerNames []string) *SnakeAndLadderGame {
 	game := &SnakeAndLadderGame{
+		ID:               generateID(),
 		Board:            NewBoard(),
 		Dice:             NewDice(),
 		Players:          []*Player{},
@@ -23,7 +30,7 @@ func NewSnakeAndLadderGame(playerNames []string) *SnakeAndLadderGame {
 	return game
 }
 
-func (g *SnakeAndLadderGame) Play() {
+func (g *SnakeAndLadderGame) Play(wg *sync.WaitGroup) {
 	for !g.isGameOver() {
 		player := g.Players[g.CurrentPlayerIdx]
 		roll := g.Dice.Roll()
@@ -31,16 +38,18 @@ func (g *SnakeAndLadderGame) Play() {
 
 		if newPosition <= g.Board.Size {
 			player.Position = g.Board.GetNewPosition(newPosition)
-			fmt.Printf("%s rolled a %d and moved to position %d\n", player.Name, roll, player.Position)
+			fmt.Printf("Game: %d :- %s rolled a %d and moved to position %d\n", g.ID, player.Name, roll, player.Position)
 		}
 
 		if player.Position == g.Board.Size {
-			fmt.Printf("%s wins!\n", player.Name)
+			fmt.Printf("For Game %d :- %s wins!\n", g.ID, player.Name)
 			break
 		}
 
 		g.CurrentPlayerIdx = (g.CurrentPlayerIdx + 1) % len(g.Players)
+		time.Sleep(10 * time.Millisecond) //To simulate the demo
 	}
+	wg.Done()
 }
 
 func (g *SnakeAndLadderGame) isGameOver() bool {
@@ -50,4 +59,10 @@ func (g *SnakeAndLadderGame) isGameOver() bool {
 		}
 	}
 	return false
+}
+
+var idCounter int64
+
+func generateID() int64 {
+	return atomic.AddInt64(&idCounter, 1)
 }
