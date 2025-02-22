@@ -53,7 +53,7 @@ Transaction* VendingMachine::purchaseProduct(const std::string& productId, int q
     if (!operational) return nullptr;
     
     Product* product = findProduct(productId);
-    if (!product || !product->isAvailable()) return nullptr;
+    if (!product || !product->isAvailable() || product->getQuantity()<quantity) return nullptr;
     
     double totalCost = product->getPrice() * quantity;
     if (payment < totalCost) return nullptr;
