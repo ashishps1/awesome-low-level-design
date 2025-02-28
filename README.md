@@ -43,7 +43,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 <img src="images/interview-template.png" width="350" height="250">
 
 ## 💻 Low Level Design Interview Problems
-### Easy
+### Easy Problems
 
 - [Design Parking Lot](problems/parking-lot.md)
 - [Design Stack Overflow](problems/stack-overflow.md)
@@ -53,7 +53,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
 - [Design a Task Management System](problems/task-management-system.md)
 
-### Medium
+### Medium Problems
 
 - [Design ATM](problems/atm.md)
 - [Design LinkedIn](problems/linkedin.md)
@@ -71,11 +71,11 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Restaurant Management System](problems/restaurant-management-system.md)
 - [Design a Concert Ticket Booking System](problems/concert-ticket-booking-system.md)
 
-### Hard
+### Hard Problems
 
-- [Design Chess Game](problems/chess-game.md)
-- [Design Splitwise](problems/splitwise.md)
 - [Design CricInfo](problems/cricinfo.md)
+- [Design Splitwise](problems/splitwise.md)
+- [Design Chess Game](problems/chess-game.md)
 - [Design a Snake and Ladder game](problems/snake-and-ladder.md)
 - [Design Ride-Sharing Service like Uber](problems/ride-sharing-service.md)
 - [Design Course Registration System](problems/course-registration-system.md)
@@ -99,3 +99,20 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 
 - [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 - [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
+
+## 🤝 Contributing
+
+Contributions are welcome! If you'd like to add a new problem, improve existing content, or fix errors:
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Submit a pull request
+
+Please make sure to update Readme files and documentation as appropriate.
+
+---
+
+<p align="center">
+  <i>If you find this resource helpful, please give it a star and share it with others!</i>
+</p>
