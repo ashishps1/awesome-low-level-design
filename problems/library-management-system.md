@@ -13,8 +13,8 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/librarymanagementsystem/) 
 #### [Python Implementation](../solutions/python/librarymanagementsystem/)
-#### [C++ Implementation](../solutions/c++/librarymanagementsystem/)
-#### [C# Implementation](../solutions/c%23/librarymanagementsystem/)
+#### [C++ Implementation](../solutions/cpp/librarymanagementsystem/)
+#### [C# Implementation](../solutions/csharp/librarymanagementsystem/)
 #### [Go Implementation](../solutions/golang/librarymanagementsystem/)
 
 ## Classes, Interfaces and Enumerations

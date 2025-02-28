@@ -13,8 +13,8 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/fooddeliveryservice/) 
 #### [Python Implementation](../solutions/python/fooddeliveryservice/)
-#### [C++ Implementation](../solutions/c++/fooddeliveryservice/)
-#### [C# Implementation](../solutions/c%23/fooddeliveryservice/)
+#### [C++ Implementation](../solutions/cpp/fooddeliveryservice/)
+#### [C# Implementation](../solutions/csharp/fooddeliveryservice/)
 #### [Go Implementation](../solutions/golang/fooddeliveryservice/)
 
 ## Classes, Interfaces and Enumerations

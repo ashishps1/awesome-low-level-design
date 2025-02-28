@@ -13,8 +13,8 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/airlinemanagementsystem/) 
 #### [Python Implementation](../solutions/python/airlinemanagementsystem/)
-#### [C++ Implementation](../solutions/c++/airlinemanagementsystem/)
-#### [C# Implementation](../solutions/c%23/airlinemanagementsystem/)
+#### [C++ Implementation](../solutions/cpp/airlinemanagementsystem/)
+#### [C# Implementation](../solutions/csharp/airlinemanagementsystem/)
 #### [Go Implementation](../solutions/golang/airlinemanagementsystem/)
 
 ## Classes, Interfaces and Enumerations

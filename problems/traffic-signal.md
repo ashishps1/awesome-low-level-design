@@ -11,8 +11,8 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/trafficsignalsystem/) 
 #### [Python Implementation](../solutions/python/trafficsignalsystem/)
-#### [C++ Implementation](../solutions/c++/trafficsignalsystem/)
-#### [C# Implementation](../solutions/c%23/trafficsignalsystem/)
+#### [C++ Implementation](../solutions/cpp/trafficsignalsystem/)
+#### [C# Implementation](../solutions/csharp/trafficsignalsystem/)
 #### [Go Implementation](../solutions/golang/trafficsignalsystem/)
 
 ## Classes, Interfaces and Enumerations

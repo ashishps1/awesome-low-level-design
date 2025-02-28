@@ -19,18 +19,18 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 
 ## ⚙️ Design Patterns
 
-| **Creational Patterns**                                                       | **Structural Patterns**                                         | **Behavioral Patterns**                                                                     |
-| ----------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)            | [Adapter](https://refactoring.guru/design-patterns/adapter)     | [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility) |
-| [Factory Method](https://refactoring.guru/design-patterns/factory-method)     | [Bridge](https://refactoring.guru/design-patterns/bridge)       | [Command](https://refactoring.guru/design-patterns/command)                                 |
-| [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory) | [Composite](https://refactoring.guru/design-patterns/composite) | [Iterator](https://refactoring.guru/design-patterns/iterator)                               |
-| [Builder](https://refactoring.guru/design-patterns/builder)                   | [Decorator](https://refactoring.guru/design-patterns/decorator) | [Mediator](https://refactoring.guru/design-patterns/mediator)                               |
-| [Prototype](https://refactoring.guru/design-patterns/prototype)               | [Facade](https://refactoring.guru/design-patterns/facade)       | [Memento](https://refactoring.guru/design-patterns/memento)                                 |
-|                                                                               | [Flyweight](https://refactoring.guru/design-patterns/flyweight) | [Observer](https://refactoring.guru/design-patterns/observer)                               |
-|                                                                               | [Proxy](https://refactoring.guru/design-patterns/proxy)         | [State](https://refactoring.guru/design-patterns/state)                                     |
-|                                                                               |                                                                 | [Strategy](https://refactoring.guru/design-patterns/strategy)                               |
-|                                                                               |                                                                 | [Template Method](https://refactoring.guru/design-patterns/template-method)                 |
-|                                                                               |                                                                 | [Visitor](https://refactoring.guru/design-patterns/visitor)                                 |
+| **Creational Patterns**                                                       | **Structural Patterns**                                         | **Behavioral Patterns**                                                               |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)            | [Adapter](https://refactoring.guru/design-patterns/adapter)     | [Iterator](https://refactoring.guru/design-patterns/iterator)                         |
+| [Factory Method](https://refactoring.guru/design-patterns/factory-method)     | [Bridge](https://refactoring.guru/design-patterns/bridge)       | [Observer](https://refactoring.guru/design-patterns/observer)                         |
+| [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory) | [Composite](https://refactoring.guru/design-patterns/composite) | [Strategy](https://refactoring.guru/design-patterns/strategy)                         |
+| [Builder](https://refactoring.guru/design-patterns/builder)                   | [Decorator](https://refactoring.guru/design-patterns/decorator) | [Command](https://refactoring.guru/design-patterns/command)                           |
+| [Prototype](https://refactoring.guru/design-patterns/prototype)               | [Facade](https://refactoring.guru/design-patterns/facade)       | [State](https://refactoring.guru/design-patterns/state)                               |
+|                                                                               | [Flyweight](https://refactoring.guru/design-patterns/flyweight) | [Template Method](https://refactoring.guru/design-patterns/template-method)           |
+|                                                                               | [Proxy](https://refactoring.guru/design-patterns/proxy)         | [Visitor](https://refactoring.guru/design-patterns/visitor)                           |
+|                                                                               |                                                                 | [Mediator](https://refactoring.guru/design-patterns/mediator)                         |
+|                                                                               |                                                                 | [Memento](https://refactoring.guru/design-patterns/memento)                           |
+|                                                                               |                                                                 | [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility) |
 
 ## 🗂️ UML
 - [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
@@ -46,44 +46,44 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 ### Easy
 
 - [Design Parking Lot](problems/parking-lot.md)
-- [Design a Vending Machine](problems/vending-machine.md)
 - [Design Stack Overflow](problems/stack-overflow.md)
+- [Design a Vending Machine](problems/vending-machine.md)
 - [Design Logging Framework](problems/logging-framework.md)
-- [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
 - [Design Traffic Signal Control System](problems/traffic-signal.md)
+- [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
 - [Design a Task Management System](problems/task-management-system.md)
 
 ### Medium
 
-- [Design Pub Sub System](problems/pub-sub-system.md)
-- [Design Tic Tac Toe Game](problems/tic-tac-toe.md)
-- [Design Car Rental System](problems/car-rental-system.md)
-- [Design an ATM](problems/atm.md)
-- [Design Hotel Management System](problems/hotel-management-system.md)
+- [Design ATM](problems/atm.md)
 - [Design LinkedIn](problems/linkedin.md)
-- [Design a Social Network like Facebook](problems/social-networking-service.md)
+- [Design LRU Cache](problems/lru-cache.md)
+- [Design Tic Tac Toe Game](problems/tic-tac-toe.md)
+- [Design Pub Sub System](problems/pub-sub-system.md)
 - [Design an Elevator System](problems/elevator-system.md)
-- [Design a Library Management System](problems/library-management-system.md)
-- [Design Restaurant Management System](problems/restaurant-management-system.md)
-- [Design Airline Management System](problems/airline-management-system.md)
-- [Design a Digital Wallet System](problems/digital-wallet-system.md)
+- [Design Car Rental System](problems/car-rental-system.md)
 - [Design an Online Auction System](problems/online-auction-system.md)
-- [Design a Concert Ticket Booking System](problems/concert-ticketing-system.md)
-- [Design a Cache using LRU Eviction Policy](problems/lru-cache.md)
+- [Design Hotel Management System](problems/hotel-management-system.md)
+- [Design a Digital Wallet Service](problems/digital-wallet-service.md)
+- [Design Airline Management System](problems/airline-management-system.md)
+- [Design a Library Management System](problems/library-management-system.md)
+- [Design a Social Network like Facebook](problems/social-networking-service.md)
+- [Design Restaurant Management System](problems/restaurant-management-system.md)
+- [Design a Concert Ticket Booking System](problems/concert-ticket-booking-system.md)
 
 ### Hard
 
-- [Design Movie Ticket Booking System](problems/movie-ticket-booking-system.md)
+- [Design Chess Game](problems/chess-game.md)
 - [Design Splitwise](problems/splitwise.md)
+- [Design CricInfo](problems/cricinfo.md)
 - [Design a Snake and Ladder game](problems/snake-and-ladder.md)
+- [Design Ride-Sharing Service like Uber](problems/ride-sharing-service.md)
+- [Design Course Registration System](problems/course-registration-system.md)
+- [Design Movie Ticket Booking System](problems/movie-ticket-booking-system.md)
 - [Design Online Shopping System like Amazon](problems/online-shopping-service.md)
 - [Design Online Stock Brokerage System](problems/online-stock-brokerage-system.md)
-- [Design CricInfo](problems/cricinfo.md)
-- [Design Chess Game](problems/chess-game.md)
-- [Design Ride-Sharing Service (like Uber)](problems/ride-sharing-service.md)
-- [Design Online Food Delivery Service (like Swiggy)](problems/food-delivery-service.md)
-- [Design Music Streaming Service (like Spotify)](problems/music-streaming-service.md)
-- [Design University Course Registration System](problems/course-registration-system.md)
+- [Design Music Streaming Service like Spotify](problems/music-streaming-service.md)
+- [Design Online Food Delivery Service like Swiggy](problems/food-delivery-service.md)
 
 ## 📚 Books
 

@@ -1,0 +1,15 @@
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/bin/Debug/net8.0/c#
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/bin/Debug/net8.0/c#.deps.json
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/bin/Debug/net8.0/c#.runtimeconfig.json
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/bin/Debug/net8.0/c#.dll
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/bin/Debug/net8.0/c#.pdb
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.AssemblyInfoInputs.cache
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.AssemblyInfo.cs
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.csproj.CoreCompileInputs.cache
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.sourcelink.json
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.dll
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/refint/c#.dll
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.pdb
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/c#.genruntimeconfig.cache
+/Users/ashishps/Documents/Github/awesome-low-level-design/solutions/c#/obj/Debug/net8.0/ref/c#.dll

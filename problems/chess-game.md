@@ -13,8 +13,8 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/chessgame/) 
 #### [Python Implementation](../solutions/python/chessgame/)
-#### [C++ Implementation](../solutions/c++/chessgame/)
-#### [C# Implementation](../solutions/c%23/chessgame/)
+#### [C++ Implementation](../solutions/cpp/chessgame/)
+#### [C# Implementation](../solutions/csharp/chessgame/)
 #### [Go Implementation](../solutions/golang/chessgame/)
 
 ## Classes, Interfaces and Enumerations

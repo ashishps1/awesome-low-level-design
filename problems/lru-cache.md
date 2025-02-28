@@ -11,8 +11,8 @@
 ## Implementations
 #### [Java Implementation](../solutions/java/src/lrucache/) 
 #### [Python Implementation](../solutions/python/lrucache/)
-#### [C++ Implementation](../solutions/c++/lrucache/)
-#### [C# Implementation](../solutions/c%23/lrucache/)
+#### [C++ Implementation](../solutions/cpp/lrucache/)
+#### [C# Implementation](../solutions/csharp/lrucache/)
 #### [Go Implementation](../solutions/golang/lrucache/)
 
 ## Classes, Interfaces and Enumerations
