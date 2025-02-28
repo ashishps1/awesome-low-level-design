@@ -12,7 +12,7 @@
 #### [Java Implementation](../solutions/java/src/atm/) 
 #### [Python Implementation](../solutions/python/atm/)
 #### [C++ Implementation](../solutions/c++/atm/)
-#### [C# Implementation](../solutions/c%23/ATM/)
+#### [C# Implementation](../solutions/c%23/atm/)
 #### [Go Implementation](../solutions/golang/atm/)
 
 ## Classes, Interfaces and Enumerations

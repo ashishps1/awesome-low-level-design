@@ -14,7 +14,7 @@
 #### [Java Implementation](../solutions/java/src/onlinestockbrokeragesystem/) 
 #### [Python Implementation](../solutions/python/onlinestockbrokeragesystem/)
 #### [C++ Implementation](../solutions/c++/onlinestockbrokeragesystem/)
-#### [C# Implementation](../solutions/c%23/OnlineStockBrokerageSystem/)
+#### [C# Implementation](../solutions/c%23/onlinestockbrokeragesystem/)
 #### [Go Implementation](../solutions/golang/onlinestockbrokeragesystem/)
 
 ## Classes, Interfaces and Enumerations

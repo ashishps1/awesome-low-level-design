@@ -17,7 +17,7 @@ This system allows for the creation and management of auctions, user participati
 #### [Java Implementation](../solutions/java/src/onlineauctionsystem/) 
 #### [Python Implementation](../solutions/python/onlineauctionsystem/)
 #### [C++ Implementation](../solutions/c++/onlineauctionsystem/)
-#### [C# Implementation](../solutions/c%23/OnlineAuctionSystem/)
+#### [C# Implementation](../solutions/c%23/onlineauctionsystem/)
 #### [Go Implementation](../solutions/golang/onlineauctionsystem/)
 
 ## Classes, Interfaces and Enumerations

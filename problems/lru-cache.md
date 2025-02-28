@@ -12,7 +12,7 @@
 #### [Java Implementation](../solutions/java/src/lrucache/) 
 #### [Python Implementation](../solutions/python/lrucache/)
 #### [C++ Implementation](../solutions/c++/lrucache/)
-#### [C# Implementation](../solutions/c%23/LRUCache/)
+#### [C# Implementation](../solutions/c%23/lrucache/)
 #### [Go Implementation](../solutions/golang/lrucache/)
 
 ## Classes, Interfaces and Enumerations

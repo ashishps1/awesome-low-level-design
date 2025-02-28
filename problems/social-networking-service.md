@@ -32,7 +32,7 @@
 #### [Java Implementation](../solutions/java/src/socialnetworkingservice/) 
 #### [Python Implementation](../solutions/python/socialnetworkingservice/)
 #### [C++ Implementation](../solutions/c++/socialnetworkingservice/)
-#### [C# Implementation](../solutions/c%23/SocialNetworkingService/)
+#### [C# Implementation](../solutions/c%23/socialnetworkingservice/)
 #### [Go Implementation](../solutions/golang/socialnetworkingservice/)
 
 ## Classes, Interfaces and Enumerations

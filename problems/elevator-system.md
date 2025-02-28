@@ -13,7 +13,7 @@
 #### [Java Implementation](../solutions/java/src/elevatorsystem/) 
 #### [Python Implementation](../solutions/python/elevatorsystem/)
 #### [C++ Implementation](../solutions/c++/elevatorsystem/)
-#### [C# Implementation](../solutions/c%23/ElevatorSystem/)
+#### [C# Implementation](../solutions/c%23/elevatorsystem/)
 #### [Go Implementation](../solutions/golang/elevatorsystem/)
 
 ## Classes, Interfaces and Enumerations

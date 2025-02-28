@@ -12,7 +12,7 @@
 #### [Java Implementation](../solutions/java/src/stackoverflow/) 
 #### [Python Implementation](../solutions/python/stackoverflow/)
 #### [C++ Implementation](../solutions/c++/stackoverflow/)
-#### [C# Implementation](../solutions/c%23/StackOverflow/)
+#### [C# Implementation](../solutions/c%23/stackoverflow/)
 #### [Go Implementation](../solutions/golang/stackoverflow/)
 
 ## Classes, Interfaces and Enumerations

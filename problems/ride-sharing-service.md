@@ -14,7 +14,7 @@
 #### [Java Implementation](../solutions/java/src/ridesharingservice/) 
 #### [Python Implementation](../solutions/python/ridesharingservice/)
 #### [C++ Implementation](../solutions/c++/ridesharingservice/)
-#### [C# Implementation](../solutions/c%23/RideSharingService/)
+#### [C# Implementation](../solutions/c%23/ridesharingservice/)
 #### [Go Implementation](../solutions/golang/ridesharingservice/)
 
 ## Classes, Interfaces and Enumerations

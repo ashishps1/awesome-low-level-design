@@ -13,7 +13,7 @@
 #### [Java Implementation](../solutions/java/src/tictactoe/) 
 #### [Python Implementation](../solutions/python/tictactoe/)
 #### [C++ Implementation](../solutions/c++/tictactoe/)
-#### [C# Implementation](../solutions/c%23/TicTacToe/)
+#### [C# Implementation](../solutions/c%23/tictactoe/)
 #### [Go Implementation](../solutions/golang/tictactoe/)
 
 ## Classes, Interfaces and Enumerations

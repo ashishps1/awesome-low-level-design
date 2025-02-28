@@ -14,7 +14,7 @@
 #### [Java Implementation](../solutions/java/src/digitalwallet/) 
 #### [Python Implementation](../solutions/python/digitalwallet/)
 #### [C++ Implementation](../solutions/c++/digitalwallet/)
-#### [C# Implementation](../solutions/c%23/DigitalWallet/)
+#### [C# Implementation](../solutions/c%23/digitalwallet/)
 #### [Go Implementation](../solutions/golang/digitalwallet/)
 
 ## Classes, Interfaces and Enumerations

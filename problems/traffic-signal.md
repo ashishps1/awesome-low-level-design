@@ -12,7 +12,7 @@
 #### [Java Implementation](../solutions/java/src/trafficsignalsystem/) 
 #### [Python Implementation](../solutions/python/trafficsignalsystem/)
 #### [C++ Implementation](../solutions/c++/trafficsignalsystem/)
-#### [C# Implementation](../solutions/c%23/TrafficSignalSystem/)
+#### [C# Implementation](../solutions/c%23/trafficsignalsystem/)
 #### [Go Implementation](../solutions/golang/trafficsignalsystem/)
 
 ## Classes, Interfaces and Enumerations

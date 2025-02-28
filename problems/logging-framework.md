@@ -12,7 +12,7 @@
 #### [Java Implementation](../solutions/java/src/loggingframework/) 
 #### [Python Implementation](../solutions/python/loggingframework/)
 #### [C++ Implementation](../solutions/c++/loggingframework/)
-#### [C# Implementation](../solutions/c%23/LoggingFramework/)
+#### [C# Implementation](../solutions/c%23/loggingframework/)
 #### [Go Implementation](../solutions/golang/loggingframework/)
 
 ## Classes, Interfaces and Enumerations
