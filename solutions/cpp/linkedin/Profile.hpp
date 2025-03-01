@@ -32,6 +32,8 @@ private:
 
 public:
     Profile(std::string name, std::string headline);
+
+    std::string getName() const;
     
     void setAbout(const std::string& about);
     void setLocation(const std::string& location);
