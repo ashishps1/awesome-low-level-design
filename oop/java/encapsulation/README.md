@@ -1,105 +1,238 @@
-# Chapter: Encapsulation
+# Encapsulation in Java
 
-Encapsulation is one of the four fundamental Object-Oriented Programming (OOP) concepts. It is the practice of bundling the data (variables) and methods (functions) that manipulate the data into a single unit called a class. This chapter will delve into the principles of encapsulation, its benefits, and practical implementation in Java.
+## Introduction
 
-## Objectives
+**Encapsulation** is one of the four fundamental principles of Object-Oriented Programming (OOP). It is the practice of **bundling data (variables) and methods** that operate on that data into a single unit (class) while restricting direct access to the internal details.
 
-By the end of this chapter, you should be able to:
+Encapsulation in Java is achieved using:
+1. **Access Modifiers** (`private`, `protected`, `public`)
+2. **Getters and Setters**
+3. **Data Hiding**
 
-1. Understand what encapsulation is and why it's important.
-2. Implement encapsulation in Java using access modifiers.
-3. Differentiate between private, public, protected, and default access levels.
-4. Create getter and setter methods to control data access.
-5. Appreciate the benefits encapsulation provides in maintaining a clean and maintainable codebase.
+Encapsulation helps in **data protection, modularity, and maintainability** of the code.
 
-## What is Encapsulation?
+---
 
-Encapsulation is often referred to as "data hiding." It restricts direct access to some of an object's components and can prevent the accidental modification of data. The primary goal is to reduce the complexity and increase the robustness of the code.
+## **What is Encapsulation?**
 
-### Key Principles of Encapsulation
+Encapsulation means **wrapping** the data (variables) and code (methods) together into a single unit (class). It restricts direct access to some of an object's components, which helps protect data integrity and prevents unintended modifications.
 
-- **Hide Internal State:** Keep instance variables hidden within a class. Use private or protected access modifiers.
-- **Control Access:** Provide public methods (getters and setters) to get or update the values of private variables.
-- **Improve Modularity:** Changes to the encapsulated code do not affect the rest of the system as long as the public interface remains the same.
+### **Key Benefits of Encapsulation**
+- **Data Hiding**: Prevents direct access to sensitive data.
+- **Increased Security**: Controls how data is accessed and modified.
+- **Improved Code Maintainability**: Allows changes without affecting other parts of the code.
+- **Better Modularity**: Organizes the code into logical components.
 
-## Implementing Encapsulation in Java
+---
 
-### Access Modifiers in Java
+## **Encapsulation Using Access Modifiers**
 
-Java provides four levels of access protection to control variable and method accessibility:
+Java provides **access modifiers** to enforce encapsulation:
+- **`private`**: Accessible only within the same class.
+- **`protected`**: Accessible within the same package and subclasses.
+- **`public`**: Accessible from anywhere.
 
-1. **Private:** The member is accessible only within its own class.
-2. **Default (Package-Private):** The member is accessible only within classes in the same package.
-3. **Protected:** The member is accessible within its own package and by subclasses.
-4. **Public:** The member is accessible from any other class.
-
-### Example: Implementing Encapsulation
-
-Consider a class `BankAccount`:
+### **Example: Encapsulation with Private Variables**
 
 ```java
-public class BankAccount {
-    // Private fields
-    private String accountNumber;
+// Class with encapsulated data
+class BankAccount {
+    private String accountHolder;
     private double balance;
 
     // Constructor
-    public BankAccount(String accountNumber, double initialBalance) {
-        this.accountNumber = accountNumber;
-        this.balance = initialBalance;
+    public BankAccount(String accountHolder, double balance) {
+        this.accountHolder = accountHolder;
+        this.balance = balance;
     }
 
-    // Public getter for accountNumber
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    // Public getter for balance
+    // Getter method to access balance
     public double getBalance() {
         return balance;
     }
 
-    // Public method to deposit an amount
+    // Setter method to modify balance
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
+            System.out.println("Deposited: " + amount);
+        } else {
+            System.out.println("Invalid deposit amount");
         }
     }
+}
 
-    // Public method to withdraw an amount
-    public boolean withdraw(double amount) {
-        if (amount > 0 && balance >= amount) {
-            balance -= amount;
-            return true;
-        }
-        return false;
+public class Main {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount("Alice", 1000);
+        System.out.println("Current Balance: " + account.getBalance());
+        account.deposit(500);
+        System.out.println("Updated Balance: " + account.getBalance());
     }
 }
 ```
 
-### Explanation
+### **Output:**
+```
+Current Balance: 1000.0
+Deposited: 500.0
+Updated Balance: 1500.0
+```
 
-- **Private Fields:** `accountNumber` and `balance` are private, restricting direct access from outside the class to ensure data integrity.
-- **Public Methods:** Methods like `deposit` and `withdraw` allow controlled access to modify the balance. These methods validate input, ensuring that the balance remains consistent and non-negative.
+**Why Use Encapsulation?**
+- Prevents unauthorized access to the data.
+- Allows controlled modifications through methods.
 
-## Benefits of Encapsulation
+---
 
-1. **Control of the Data:** The class controls how the data is accessed and modified, preventing unauthorized access and modification.
-2. **Flexibility and Maintenance:** Changes in implementation do not affect code that depends on the class, provided the interface remains the same. You can modify the encapsulated data if necessary without modifying any external code.
-3. **Increased Security:** By exposing only what is necessary through an interface, encapsulation protects the integrity of the object’s data.
-4. **Ease of Testing and Debugging:** Since data is accessed and modified via well-defined interfaces, it's easier to diagnose and fix any issues.
+## **Encapsulation Using Getters and Setters**
 
-## Conclusion
+Encapsulation ensures that **data cannot be directly accessed** but must be retrieved or modified through methods.
 
-Encapsulation is a powerful concept that improves the robustness and maintainability of your code. By adhering to this principle, you ensure that your classes are well-defined and their internal workings are hidden from the outside world, paving the way for a more secure, flexible, and easily maintainable software system. 
+### **Example: Getters and Setters in Java**
 
-Mastering encapsulation will also lay a solid foundation for understanding other advanced OOP concepts and design patterns.
+```java
+class Employee {
+    private String name;
+    private int age;
 
-## Exercises
+    // Getter method
+    public String getName() {
+        return name;
+    }
 
-1. **Practice Encapsulation:** Create a class `Person` with private fields `name`, `age`, and `email`. Implement appropriate getters and setters.
-2. **Modify BankAccount:** Add new functionality to restrict withdrawals from `BankAccount` based on a minimum balance requirement.
-3. **Data Validation:** Enhance the `Person` class to include validation in the setter methods, such as ensuring age is non-negative and email follows a basic format.
+    // Setter method
+    public void setName(String name) {
+        this.name = name;
+    }
 
-By engaging with these exercises, you will reinforce your understanding of encapsulation and become proficient at implementing it in your Java programs.
+    public int getAge() {
+        return age;
+    }
 
+    public void setAge(int age) {
+        if (age > 18) {
+            this.age = age;
+        } else {
+            System.out.println("Age must be greater than 18");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Employee emp = new Employee();
+        emp.setName("John Doe");
+        emp.setAge(25);
+        System.out.println("Employee Name: " + emp.getName());
+        System.out.println("Employee Age: " + emp.getAge());
+    }
+}
+```
+
+### **Output:**
+```
+Employee Name: John Doe
+Employee Age: 25
+```
+
+---
+
+## **Encapsulation and Data Hiding**
+
+Encapsulation helps **hide implementation details** while exposing only necessary methods.
+
+### **Example: Hiding Implementation Details**
+
+```java
+class Account {
+    private double balance;
+
+    public Account(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    private boolean validateWithdrawal(double amount) {
+        return amount > 0 && amount <= balance;
+    }
+
+    public void withdraw(double amount) {
+        if (validateWithdrawal(amount)) {
+            balance -= amount;
+            System.out.println("Withdrawal Successful: " + amount);
+        } else {
+            System.out.println("Insufficient balance or invalid amount");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Account myAccount = new Account(1000);
+        myAccount.withdraw(300);
+        System.out.println("Remaining Balance: " + myAccount.getBalance());
+    }
+}
+```
+
+### **Output:**
+```
+Withdrawal Successful: 300.0
+Remaining Balance: 700.0
+```
+
+**Why Hide Data?**
+- Prevents direct modification of important fields.
+- Ensures data integrity by validating inputs.
+
+---
+
+## **Encapsulation in Real-World Applications**
+
+Encapsulation is used in many real-world applications such as:
+1. **Banking Systems** - Ensuring account details are private.
+2. **Healthcare Applications** - Protecting patient records.
+3. **E-Commerce Platforms** - Hiding payment processing details.
+
+### **Example: Encapsulation in Payment Processing**
+
+```java
+class PaymentProcessor {
+    private String cardNumber;
+    private double amount;
+
+    public PaymentProcessor(String cardNumber, double amount) {
+        this.cardNumber = maskCardNumber(cardNumber);
+        this.amount = amount;
+    }
+
+    private String maskCardNumber(String cardNumber) {
+        return "****-****-****-" + cardNumber.substring(cardNumber.length() - 4);
+    }
+
+    public void processPayment() {
+        System.out.println("Processing payment of " + amount + " for card " + cardNumber);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        PaymentProcessor payment = new PaymentProcessor("1234567812345678", 250.00);
+        payment.processPayment();
+    }
+}
+```
+
+### **Output:**
+```
+Processing payment of 250.0 for card ****-****-****-5678
+```
+
+**Why Use Encapsulation in Payment Processing?**
+- Protects sensitive data (e.g., credit card numbers).
+- Hides unnecessary details from users.
+- Ensures secure transactions.

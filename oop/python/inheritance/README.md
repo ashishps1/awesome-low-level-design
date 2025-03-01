@@ -1,198 +1,236 @@
-# Chapter: Inheritance in Object-Oriented Programming
+# Inheritance in Python
 
-Welcome to this engaging tutorial on **Inheritance**, a core concept of Object-Oriented Programming (OOP). Inheritance helps create a new class by adopting the properties and behaviors of an existing class. This powerful feature helps in reducing redundancy, enhancing code reusability, and increasing the maintainability of code.
+## Introduction
 
-In this chapter, we will explore the following topics:
-- Introduction to Inheritance
-- Types of Inheritance in Python
-- Benefits of Using Inheritance
-- Overriding Methods
-- The `super()` Function
-- Practical Examples
-- Best Practices
+**Inheritance** is one of the core principles of Object-Oriented Programming (OOP). It allows a class (subclass or child class) to acquire the properties and behaviors of another class (superclass or parent class). This promotes **code reuse**, **scalability**, and **maintainability**.
 
-Let's get started!
+## **What is Inheritance?**
 
-## Introduction to Inheritance
+**Inheritance** is a mechanism where a child class derives properties and behaviors from a parent class. The child class can:
+- Use the attributes and methods of the parent class
+- Override parent class methods to provide a specific implementation
+- Add its own additional attributes and methods
 
-Inheritance is the mechanism by which one class (child class) can inherit the attributes and methods of another class (parent class). This creates a hierarchy between the classes, promoting code reuse and enabling polymorphism.
+### **Key Benefits of Inheritance**
+- **Code Reusability**: Avoids code duplication by reusing attributes and methods of the parent class.
+- **Improves Maintainability**: Reduces redundancy, making code easier to manage.
+- **Enhances Extensibility**: New functionality can be added easily without modifying existing code.
 
-### Syntax
+---
 
-```python
-class ParentClass:
-    # parent class code
+## **How to Implement Inheritance in Python**
 
-class ChildClass(ParentClass):
-    # child class code
-```
-
-Here, `ChildClass` inherits from `ParentClass`.
-
-## Types of Inheritance in Python
-
-Python supports several types of inheritance:
-
-1. **Single Inheritance**: A child class inherits from a single parent class.
-
-   ```python
-   class Animal:
-       pass
-
-   class Dog(Animal):
-       pass
-   ```
-
-2. **Multiple Inheritance**: A child class inherits from multiple parent classes.
-
-   ```python
-   class Flyer:
-       pass
-
-   class Singer:
-       pass
-
-   class Bird(Flyer, Singer):
-       pass
-   ```
-
-3. **Multilevel Inheritance**: A class is derived from a class which is also derived from another class.
-
-   ```python
-   class Vehicle:
-       pass
-
-   class Car(Vehicle):
-       pass
-
-   class SportsCar(Car):
-       pass
-   ```
-
-4. **Hierarchical Inheritance**: Multiple classes inherit from the same parent class.
-
-   ```python
-   class Vehicle:
-       pass
-
-   class Car(Vehicle):
-       pass
-
-   class Truck(Vehicle):
-       pass
-   ```
-
-5. **Hybrid Inheritance**: A combination of multiple types of inheritance.
-
-## Benefits of Using Inheritance
-
-- **Code Reusability**: Write once, use multiple times.
-- **Extensibility**: Easily extend the functionality of existing classes.
-- **Maintenance**: Changes are made in one place (the parent class), making maintenance easier.
-
-## Overriding Methods
-
-When a child class provides its version of a method that is already defined in its parent class, this is called method overriding.
-
-### Example:
+### **Step 1: Create a Parent Class**
+The parent class contains common attributes and methods.
 
 ```python
-class Animal:
-    def speak(self):
-        return "Some sound"
-
-class Dog(Animal):
-    def speak(self):
-        return "Bark"
-
-dog = Dog()
-print(dog.speak()) # Output: Bark
-```
-
-## The `super()` Function
-
-The `super()` function is used to call the methods from a parent class from within a child class. This is especially useful when overriding methods.
-
-### Example:
-
-```python
+# Parent class
 class Animal:
     def __init__(self, name):
         self.name = name
-
-    def speak(self):
-        return "Some sound"
-
-class Dog(Animal):
-    def __init__(self, name, breed):
-        super().__init__(name)
-        self.breed = breed
-
-    def speak(self):
-        sound = super().speak()
-        return f"{sound} Bark"
-
-dog = Dog("Buddy", "Golden Retriever")
-print(dog.name)  # Output: Buddy
-print(dog.speak())  # Output: Some sound Bark
+    
+    def eat(self):
+        print(f"{self.name} is eating...")
 ```
 
-## Practical Examples
-
-Let's look at a more detailed example incorporating all the concepts we've discussed.
-
-### A Simple Banking System
+### **Step 2: Create a Child Class using Parent Class**
+The child class inherits the properties and methods of the parent class.
 
 ```python
-class Account:
-    def __init__(self, owner, balance=0):
-        self.owner = owner
-        self.balance = balance
-
-    def deposit(self, amount):
-        self.balance += amount
-        print(f"{amount} has been added to your account.")
-
-    def withdraw(self, amount):
-        if amount <= self.balance:
-            self.balance -= amount
-            print(f"{amount} has been deducted from your account.")
-        else:
-            print("Insufficient funds!")
-
-    def __str__(self):
-        return f"Account owner: {self.owner}\nAccount balance: {self.balance}"
-
-class SavingsAccount(Account):
-    def __init__(self, owner, balance=0, interest_rate=0.01):
-        super().__init__(owner, balance)
-        self.interest_rate = interest_rate
-
-    def add_interest(self):
-        interest = self.balance * self.interest_rate
-        self.balance += interest
-        print(f"Interest of {interest} has been added to your account.")
-
-# Example usage
-john_account = SavingsAccount("John Doe", 1000)
-print(john_account)
-john_account.deposit(500)
-john_account.add_interest()
-print(john_account)
+# Child class
+class Dog(Animal):
+    def bark(self):
+        print(f"{self.name} is barking...")
 ```
 
-## Best Practices
+### **Step 3: Use the Child Class**
+Now, let's create an object and use the inherited methods.
 
-- **Use Inheritance for Resource Sharing**: Only when classes are strongly related.
-- **Avoid Deep Inheritance**: Excessive chaining of inheritance leads to increased complexity.
-- **Favour Composition Over Inheritance**: If the relationship between classes isn't strict.
-- **Be Cautious with Multiple Inheritance**: Use it judiciously due to the complex resolution order.
+```python
+# Using the child class
+if __name__ == "__main__":
+    my_dog = Dog("Buddy")
+    my_dog.eat()  # Inherited from Animal class
+    my_dog.bark()  # Defined in Dog class
+```
 
-Inheritance is a versatile tool that can lead to efficient and modular code. However, it's essential to use it judiciously to avoid unnecessary complexity. By following best practices, you can leverage inheritance to build clean, efficient, and maintainable systems.
+### **Output:**
+```
+Buddy is eating...
+Buddy is barking...
+```
 
-## Conclusion
+---
 
-Inheritance allows developers to create a hierarchy of classes that share functionality. By understanding and utilizing inheritance, you can increase code reusability and develop applications that are easier to maintain and extend. Keep practising and explore different patterns to fully leverage this powerful OOP concept!
+## **Types of Inheritance in Python**
 
-Happy Coding! 🎉
+Python supports different types of inheritance:
 
+### **1. Single Inheritance**
+A subclass inherits from one superclass.
+
+```python
+class Parent:
+    def show(self):
+        print("This is the parent class")
+
+class Child(Parent):
+    def display(self):
+        print("This is the child class")
+```
+
+### **2. Multilevel Inheritance**
+A subclass inherits from another subclass, forming a chain.
+
+```python
+class Grandparent:
+    def show(self):
+        print("Grandparent class")
+
+class Parent(Grandparent):
+    def display(self):
+        print("Parent class")
+
+class Child(Parent):
+    def print_info(self):
+        print("Child class")
+```
+
+### **3. Hierarchical Inheritance**
+A single parent class has multiple child classes.
+
+```python
+class Parent:
+    def show(self):
+        print("Parent class")
+
+class Child1(Parent):
+    def display(self):
+        print("Child1 class")
+
+class Child2(Parent):
+    def print_info(self):
+        print("Child2 class")
+```
+
+### **4. Multiple Inheritance**
+Unlike Java, Python **supports multiple inheritance**, allowing a subclass to inherit from multiple parent classes.
+
+```python
+class Parent1:
+    def show1(self):
+        print("Parent1 class")
+
+class Parent2:
+    def show2(self):
+        print("Parent2 class")
+
+class Child(Parent1, Parent2):
+    def display(self):
+        print("Child class")
+```
+
+---
+
+## **Method Overriding in Inheritance**
+
+Method overriding allows a child class to **redefine** a method from the parent class.
+
+```python
+class Animal:
+    def make_sound(self):
+        print("Animal makes a sound")
+
+class Dog(Animal):
+    def make_sound(self):
+        print("Dog barks")
+```
+
+### **Usage**
+```python
+if __name__ == "__main__":
+    my_animal = Dog()  # Polymorphism
+    my_animal.make_sound()
+```
+
+### **Output:**
+```
+Dog barks
+```
+
+---
+
+## **The `super()` Function in Inheritance**
+
+The `super()` function is used to **refer to the parent class**. It helps to:
+1. Call the parent class constructor.
+2. Access the parent class methods.
+
+```python
+class Animal:
+    def __init__(self):
+        print("Animal Constructor")
+    
+    def make_sound(self):
+        print("Animal makes a sound")
+
+class Dog(Animal):
+    def __init__(self):
+        super().__init__()  # Calls the parent class constructor
+        print("Dog Constructor")
+    
+    def make_sound(self):
+        super().make_sound()  # Calls parent method
+        print("Dog barks")
+```
+
+### **Usage**
+```python
+if __name__ == "__main__":
+    my_dog = Dog()
+    my_dog.make_sound()
+```
+
+### **Output:**
+```
+Animal Constructor
+Dog Constructor
+Animal makes a sound
+Dog barks
+```
+
+---
+
+## **Real-World Example: Employee Management System**
+
+```python
+class Employee:
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+    
+    def display_details(self):
+        print(f"Employee: {self.name}, Salary: {self.salary}")
+
+class Manager(Employee):
+    def __init__(self, name, salary, bonus):
+        super().__init__(name, salary)
+        self.bonus = bonus
+    
+    def display_details(self):
+        super().display_details()
+        print(f"Bonus: {self.bonus}")
+```
+
+### **Usage**
+```python
+if __name__ == "__main__":
+    manager = Manager("Alice", 70000, 10000)
+    manager.display_details()
+```
+
+### **Output:**
+```
+Employee: Alice, Salary: 70000
+Bonus: 10000
+```

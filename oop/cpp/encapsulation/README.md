@@ -1,105 +1,249 @@
-# Chapter: Encapsulation
+# Encapsulation in C++
 
-Encapsulation is one of the four fundamental principles of Object-Oriented Programming (OOP), alongside inheritance, polymorphism, and abstraction. Encapsulation refers to the bundling of data and methods that operate on the data within a single unit, typically a class in C++. It serves to protect the internal state of an object from unauthorized manipulation and misuse, enabling more modular and maintainable code.
+## Introduction
 
-## Objectives
+**Encapsulation** is one of the four fundamental principles of Object-Oriented Programming (OOP). It is the practice of **bundling data (variables) and methods** that operate on that data into a single unit (class) while restricting direct access to the internal details.
 
-By the end of this chapter, you should be able to:
+Encapsulation in C++ is achieved using:
+1. **Access Specifiers** (`private`, `protected`, `public`)
+2. **Getters and Setters**
+3. **Data Hiding**
 
-- Understand the concept of encapsulation and its importance in OOP.
-- Identify the components of encapsulation within C++ classes.
-- Implement encapsulation in C++ to restrict access to data.
-- Explain how encapsulation facilitates code maintenance and flexibility.
+Encapsulation helps in **data protection, modularity, and maintainability** of the code.
 
-## What is Encapsulation?
+## **What is Encapsulation?**
 
-Encapsulation is the practice of concealing the internal workings of an object and only exposing a limited interface to the rest of the program. This programming approach helps to:
+Encapsulation means **wrapping** the data (variables) and code (methods) together into a single unit (class). It restricts direct access to some of an object's components, which helps protect data integrity and prevents unintended modifications.
 
-1. **Hide Complexity:** Keep implementation details hidden from the user, reducing the complexity of interaction with objects.
-2. **Reduce System Fragility:** Protect the internal representation of an object from unintended interference or errors by other parts of the program.
-3. **Improve Modularity:** Increase the modularity of code, making it easier to maintain and modify.
+### **Key Benefits of Encapsulation**
+- **Data Hiding**: Prevents direct access to sensitive data.
+- **Increased Security**: Controls how data is accessed and modified.
+- **Improved Code Maintainability**: Allows changes without affecting other parts of the code.
+- **Better Modularity**: Organizes the code into logical components.
 
-## Key Components of Encapsulation
+---
 
-In C++, encapsulation is primarily achieved through:
+## **Encapsulation Using Access Specifiers**
 
-- **Classes and Objects:** Serve as the blueprint and instance for bundling data and associated methods.
-- **Access Specifiers:** Define how accessible certain class members are. C++ provides three primary access specifiers:
+C++ provides **access specifiers** to enforce encapsulation:
+- **`private`**: Accessible only within the same class.
+- **`protected`**: Accessible within the same class and derived classes.
+- **`public`**: Accessible from anywhere.
 
-  - **Public:** Members are accessible from outside the class.
-  - **Private:** Members are only accessible within the class itself.
-  - **Protected:** Members are accessible from the class and its derived classes.
-
-## Implementing Encapsulation in C++
-
-To effectively use encapsulation, class members that should not be accessed directly by other parts of the program are marked as `private` or `protected`. Public methods are provided to allow controlled access or modification of the private data.
-
-Here's an example demonstrating encapsulation in C++:
+### **Example: Encapsulation with Private Variables**
 
 ```cpp
 #include <iostream>
-#include <string>
+using namespace std;
 
+// Class with encapsulated data
 class BankAccount {
 private:
-    std::string ownerName;
+    string accountHolder;
     double balance;
 
 public:
-    BankAccount(std::string name, double initialBalance) : ownerName(name), balance(initialBalance) {}
-
-    // Public method to deposit money
-    void deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-        } else {
-            std::cout << "Deposit amount should be positive.\n";
-        }
+    // Constructor
+    BankAccount(string name, double bal) {
+        accountHolder = name;
+        balance = bal;
     }
 
-    // Public method to withdraw money
-    void withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-        } else {
-            std::cout << "Withdrawal amount is invalid or exceeds balance.\n";
-        }
-    }
-
-    // Public method to get balance
-    double getBalance() const {
+    // Getter method to access balance
+    double getBalance() {
         return balance;
     }
 
-    // Public method to get owner name
-    std::string getOwnerName() const {
-        return ownerName;
+    // Setter method to modify balance
+    void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            cout << "Deposited: " << amount << endl;
+        } else {
+            cout << "Invalid deposit amount" << endl;
+        }
     }
 };
 
 int main() {
-    BankAccount myAccount("John Doe", 1000.0);
-    myAccount.deposit(500.0);
-    myAccount.withdraw(200.0);
-    std::cout << "Account Balance: $" << myAccount.getBalance() << "\n";
+    BankAccount account("Alice", 1000);
+    cout << "Current Balance: " << account.getBalance() << endl;
+    account.deposit(500);
+    cout << "Updated Balance: " << account.getBalance() << endl;
     return 0;
 }
 ```
 
-### Explanation
+### **Output:**
+```
+Current Balance: 1000
+Deposited: 500
+Updated Balance: 1500
+```
 
-- **Private Members:** `ownerName` and `balance` are marked as private, meaning they cannot be accessed directly from outside the `BankAccount` class.
-- **Public Methods:** Functions like `deposit`, `withdraw`, `getBalance`, and `getOwnerName` control access to the private members. These methods apply necessary validation before modifying the internal state, ensuring data integrity.
+**Why Use Encapsulation?**
+- Prevents unauthorized access to the data.
+- Allows controlled modifications through methods.
 
-## Benefits of Encapsulation
+---
 
-- **Increased Control:** By providing controlled access, you can validate input, regulate how data react to external calls, and ensure data integrity.
-- **Flexibility and Maintenance:** Changes to the internal representation do not affect external code as long as the interface remains consistent.
-- **Reusability and Modularity:** Well-encapsulated objects can be more easily reused across different parts of a program and in different projects.
+## **Encapsulation Using Getters and Setters**
 
-## Conclusion
+Encapsulation ensures that **data cannot be directly accessed** but must be retrieved or modified through methods.
 
-Encapsulation is a cornerstone of robust, maintainable, and scalable software design in C++. By effectively using encapsulation, developers can safeguard their code from unintended interference, reduce complexity, and create systems that are easier to manage and evolve over time.
+### **Example: Getters and Setters in C++**
 
-Continue practicing by encapsulating different objects and experimenting with access levels to reinforce your understanding of how encapsulation works in C++. This will set a strong foundation for mastering other OOP principles and implementing advanced design patterns in your programs.
+```cpp
+#include <iostream>
+using namespace std;
 
+class Employee {
+private:
+    string name;
+    int age;
+
+public:
+    // Getter method
+    string getName() {
+        return name;
+    }
+
+    // Setter method
+    void setName(string newName) {
+        name = newName;
+    }
+
+    int getAge() {
+        return age;
+    }
+
+    void setAge(int newAge) {
+        if (newAge > 18) {
+            age = newAge;
+        } else {
+            cout << "Age must be greater than 18" << endl;
+        }
+    }
+};
+
+int main() {
+    Employee emp;
+    emp.setName("John Doe");
+    emp.setAge(25);
+    cout << "Employee Name: " << emp.getName() << endl;
+    cout << "Employee Age: " << emp.getAge() << endl;
+    return 0;
+}
+```
+
+### **Output:**
+```
+Employee Name: John Doe
+Employee Age: 25
+```
+
+---
+
+## **Encapsulation and Data Hiding**
+
+Encapsulation helps **hide implementation details** while exposing only necessary methods.
+
+### **Example: Hiding Implementation Details**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Account {
+private:
+    double balance;
+
+    bool validateWithdrawal(double amount) {
+        return amount > 0 && amount <= balance;
+    }
+
+public:
+    Account(double initialBalance) {
+        balance = initialBalance;
+    }
+
+    void withdraw(double amount) {
+        if (validateWithdrawal(amount)) {
+            balance -= amount;
+            cout << "Withdrawal Successful: " << amount << endl;
+        } else {
+            cout << "Insufficient balance or invalid amount" << endl;
+        }
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+
+int main() {
+    Account myAccount(1000);
+    myAccount.withdraw(300);
+    cout << "Remaining Balance: " << myAccount.getBalance() << endl;
+    return 0;
+}
+```
+
+### **Output:**
+```
+Withdrawal Successful: 300
+Remaining Balance: 700
+```
+
+**Why Hide Data?**
+- Prevents direct modification of important fields.
+- Ensures data integrity by validating inputs.
+
+---
+
+## **Encapsulation in Real-World Applications**
+
+Encapsulation is used in many real-world applications such as:
+1. **Banking Systems** - Ensuring account details are private.
+2. **Healthcare Applications** - Protecting patient records.
+3. **E-Commerce Platforms** - Hiding payment processing details.
+
+### **Example: Encapsulation in Payment Processing**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class PaymentProcessor {
+private:
+    string cardNumber;
+    double amount;
+
+    string maskCardNumber(string cardNumber) {
+        return "****-****-****-" + cardNumber.substr(cardNumber.length() - 4);
+    }
+
+public:
+    PaymentProcessor(string card, double amt) : cardNumber(card), amount(amt) {}
+
+    void processPayment() {
+        cout << "Processing payment of " << amount << " for card " << maskCardNumber(cardNumber) << endl;
+    }
+};
+
+int main() {
+    PaymentProcessor payment("1234567812345678", 250.00);
+    payment.processPayment();
+    return 0;
+}
+```
+
+### **Output:**
+```
+Processing payment of 250 for card ****-****-****-5678
+```
+
+**Why Use Encapsulation in Payment Processing?**
+- Protects sensitive data (e.g., credit card numbers).
+- Hides unnecessary details from users.
+- Ensures secure transactions.

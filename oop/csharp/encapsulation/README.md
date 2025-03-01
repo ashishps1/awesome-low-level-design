@@ -1,125 +1,193 @@
-# Chapter: Encapsulation in Object-Oriented Programming
+# Encapsulation in C#
 
-Encapsulation is one of the fundamental principles of object-oriented programming (OOP). It is a powerful concept that bundles the data and the methods that operate on the data into a single unit called a class. This chapter will explore encapsulation in detail, specifically focused on the C# programming language. By the end of this lesson, you'll understand how to implement encapsulation in your C# programs to promote modularity, maintainability, and security.
+## Introduction
 
-## Table of Contents
-1. [What is Encapsulation?](#what-is-encapsulation)
-2. [Benefits of Encapsulation](#benefits-of-encapsulation)
-3. [Encapsulation in C#](#encapsulation-in-c)
-   - [Access Modifiers](#access-modifiers)
-   - [Properties](#properties)
-4. [Implementing Encapsulation](#implementing-encapsulation)
-   - [Example: Encapsulation in a `Person` Class](#example-encapsulation-in-a-person-class)
-5. [Common Pitfalls and Best Practices](#common-pitfalls-and-best-practices)
-6. [Conclusion](#conclusion)
-7. [Further Reading](#further-reading)
+**Encapsulation** is one of the four fundamental principles of **Object-Oriented Programming (OOP)**. It is the practice of **bundling data (fields) and methods** that operate on that data into a single unit (**class**) while **restricting direct access** to the internal details.
 
-## What is Encapsulation?
+Encapsulation in C# is achieved using:
+1. **Access Modifiers** (`private`, `protected`, `public`)
+2. **Properties (Getters and Setters)**
+3. **Data Hiding**
 
-Encapsulation is the technique of restricting direct access to some of an object’s components and ensuring that its internal representation is hidden from the outside. It translates to containing all significant data (fields) and functions (methods) inside a class, guarding them to protect the integrity of the object.
+Encapsulation helps in **data protection, modularity, and maintainability** of the code.
 
-## Benefits of Encapsulation
+## **What is Encapsulation?**
 
-- **Enhanced Security:** By restricting access to certain parts of an object, encapsulation protects an object from unintended interference and misuse, making the program more secure.
-- **Improved Modularity:** Encapsulation allows you to create modules or classes with specific functionalities, making your program easier to manage.
-- **Ease of Maintenance:** Since the internal implementation of a class is hidden, it can be changed without affecting other parts of the program.
-- **Increased Flexibility:** Encapsulation allows for controlled modification and reading of a class's data, which provides flexibility whenever changes are required.
+Encapsulation means **wrapping** the data (fields) and code (methods) together into a single unit (class). It restricts direct access to some of an object's components, ensuring **data integrity and security**.
 
-## Encapsulation in C#
+### **Key Benefits of Encapsulation**
+- **Data Hiding**: Prevents direct access to sensitive data.
+- **Increased Security**: Controls how data is accessed and modified.
+- **Improved Code Maintainability**: Allows changes without affecting other parts of the code.
+- **Better Modularity**: Organizes the code into logical components.
 
-### Access Modifiers
+---
 
-C# provides several access modifiers to achieve encapsulation:
-- `public`: The member is accessible from any other code.
-- `private`: The member is accessible only within the body of the containing class or struct.
-- `protected`: The member is accessible within its class and by derived class instances.
-- `internal`: The member is accessible only within files in the same assembly.
-- `protected internal`: The member is accessible from the current assembly or any derived classes in other assemblies.
-- `private protected`: The member is accessible within its class or by derived classes in the same assembly.
+## **Encapsulation Using Access Modifiers in C#**
 
-### Properties
+C# provides **access modifiers** to enforce encapsulation:
+- **`private`**: Accessible only within the same class.
+- **`protected`**: Accessible within the same class and derived (child) classes.
+- **`public`**: Accessible from anywhere.
+- **`internal`**: Accessible only within the same assembly.
 
-In C#, properties provide a flexible mechanism to read, write, or compute the values of private fields. They are defined like methods, but accessed like fields and can include logic like input validation inside their "get" and "set" accessors.
-
-## Implementing Encapsulation
-
-Let's see encapsulation in action through a simple example.
-
-### Example: Encapsulation in a `Person` Class
-
+### **Example: Encapsulation with Private Fields**
 ```csharp
-public class Person
+using System;
+
+class BankAccount
 {
-    // Private field - cannot be accessed directly from outside the class
+    private string accountHolder;
+    private double balance;
+
+    // Constructor
+    public BankAccount(string accountHolder, double balance)
+    {
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+    }
+
+    // Getter method to access balance
+    public double GetBalance()
+    {
+        return balance;
+    }
+
+    // Setter method to modify balance
+    public void Deposit(double amount)
+    {
+        if (amount > 0)
+        {
+            balance += amount;
+            Console.WriteLine($"Deposited: {amount}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid deposit amount");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        BankAccount account = new BankAccount("Alice", 1000);
+        Console.WriteLine($"Current Balance: {account.GetBalance()}");
+        account.Deposit(500);
+        Console.WriteLine($"Updated Balance: {account.GetBalance()}");
+    }
+}
+```
+
+### **Output:**
+```
+Current Balance: 1000
+Deposited: 500
+Updated Balance: 1500
+```
+
+---
+
+## **Encapsulation Using Properties (Getters and Setters)**
+
+Encapsulation ensures that **data cannot be directly accessed** but must be retrieved or modified through **properties**.
+
+### **Example: Properties in C#**
+```csharp
+using System;
+
+class Employee
+{
     private string name;
     private int age;
 
-    // Public property - provides controlled access to the private field
+    // Property for Name
     public string Name
     {
         get { return name; }
-        set
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                name = value;
-            }
-            else
-            {
-                throw new ArgumentException("Name cannot be empty.");
-            }
-        }
+        set { name = value; }
     }
 
-    // Public property with automatic backing field for simplicity
+    // Property for Age with validation
     public int Age
     {
         get { return age; }
         set
         {
-            if (value >= 0)
-            {
+            if (value > 18)
                 age = value;
-            }
             else
-            {
-                throw new ArgumentOutOfRangeException("Age cannot be negative.");
-            }
+                Console.WriteLine("Age must be greater than 18");
         }
     }
+}
 
-    // Constructor
-    public Person(string name, int age)
+class Program
+{
+    static void Main()
     {
-        Name = name;
-        Age = age;
+        Employee emp = new Employee();
+        emp.Name = "John Doe";
+        emp.Age = 25;
+        Console.WriteLine($"Employee Name: {emp.Name}");
+        Console.WriteLine($"Employee Age: {emp.Age}");
     }
 }
 ```
 
-In the above example, the `Person` class encapsulates its data members `name` and `age` by making them private. The public properties `Name` and `Age` control how these fields can be accessed and modified.
+### **Output:**
+```
+Employee Name: John Doe
+Employee Age: 25
+```
 
-## Common Pitfalls and Best Practices
+---
 
-### Pitfalls
-- Not using properties when direct access to fields is not necessary.
-- Over-exposing members by making them public when they shouldn't be.
-- Forgetting to include logic for input validation which can lead to invalid states.
+## **Encapsulation in Real-World Applications**
 
-### Best Practices
-- Use properties to encapsulate fields whenever needed, especially when validation or additional logic is necessary.
-- Prefer using automatic properties for simple get and set operations unless specific logic is required.
-- Use the most restrictive access level that is practical. Start with private and relax as needed.
-- Regularly review your class to ensure encapsulation is enforced properly.
+Encapsulation is used in many real-world applications such as:
+1. **Banking Systems** - Ensuring account details are private.
+2. **Healthcare Applications** - Protecting patient records.
+3. **E-Commerce Platforms** - Hiding payment processing details.
 
-## Conclusion
+### **Example: Encapsulation in Payment Processing**
+```csharp
+using System;
 
-Encapsulation is a critical concept in OOP that helps to protect objects from outside interference and misuse. By understanding and applying encapsulation through access modifiers and properties in C#, you ensure that your code remains secure, modular, and easy to maintain.
+class PaymentProcessor
+{
+    private string cardNumber;
+    private double amount;
 
-## Further Reading
+    public PaymentProcessor(string cardNumber, double amount)
+    {
+        this.cardNumber = MaskCardNumber(cardNumber);
+        this.amount = amount;
+    }
 
-- [Microsoft Documentation on Encapsulation](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/using-properties)
-- [Object-Oriented Programming in C#](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/)
+    private string MaskCardNumber(string cardNumber)
+    {
+        return "****-****-****-" + cardNumber.Substring(cardNumber.Length - 4);
+    }
 
-This concludes our chapter on Encapsulation in C#. Understanding and utilizing encapsulation effectively is a significant step towards mastering object-oriented programming, ensuring your code is robust and well-structured.
+    public void ProcessPayment()
+    {
+        Console.WriteLine($"Processing payment of {amount} for card {cardNumber}");
+    }
+}
 
+class Program
+{
+    static void Main()
+    {
+        PaymentProcessor payment = new PaymentProcessor("1234567812345678", 250.00);
+        payment.ProcessPayment();
+    }
+}
+```
+
+### **Output:**
+```
+Processing payment of 250 for card ****-****-****-5678
+```
