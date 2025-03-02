@@ -4,6 +4,11 @@
 Profile::Profile(std::string name, std::string headline)
     : name(name), headline(headline) {}
 
+
+std::string Profile::getName() const{
+    return name;
+}
+
 void Profile::setAbout(const std::string& about) {
     this->about = about;
 }
