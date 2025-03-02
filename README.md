@@ -7,7 +7,7 @@
 
 This repository contains resources to learn Low Level Design (LLD) / Object Oriented Design (OOD) and prepare for interviews.
 
-👉 For better and more comprehensive experience, checkout the [LLD page at AlgoMaster.io](https://algomaster.io/learn/lld)
+👉 For a better and more comprehensive experience, checkout the [LLD page at AlgoMaster.io](https://algomaster.io/learn/lld)
 
 ## 📌 Fundamental Concepts
 
