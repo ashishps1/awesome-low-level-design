@@ -93,14 +93,16 @@ public class CoffeeMachine {
         return true;
     }
 
-    private void updateIngredients(Coffee coffee) {
-        for (Map.Entry<Ingredient, Integer> entry : coffee.getRecipe().entrySet()) {
+    private void updateIngredients(Coffee coffee){
+        for (Map.Entry<Ingredient,Integer> entry : coffee.getRecipe().entrySet()){
             Ingredient ingredient = entry.getKey();
-            int requiredQuantity = entry.getValue();
-            ingredient.updateQuantity(-requiredQuantity);
-            if (ingredient.getQuantity() < 3) {
+            int quantity = entry.getValue();
+
+            ingredients.get(ingredient.getName()).updateQuantity(-quantity);
+            if (ingredients.get(ingredient.getName()).getQuantity() < 3){
                 System.out.println("Low inventory alert: " + ingredient.getName());
             }
+
         }
     }
 }
