@@ -52,7 +52,7 @@ public class LLDRunner {
 //        LinkedInDemo.run();
 //        LoggingFrameworkDemo.run();
 //        LRUCacheDemo.run();
-//        MovieTicketBookingDemo.run();
+        MovieTicketBookingDemo.run();
 //        MusicStreamingServiceDemo.run();
 //        AuctionSystemDemo.run();
 //        OnlineShoppingServiceDemo.run();
