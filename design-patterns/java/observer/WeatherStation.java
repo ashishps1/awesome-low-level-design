@@ -1,3 +1,4 @@
+import java.util.*;
 class WeatherStation implements Subject {
     private List<Observer> observers;
     private float temperature;
