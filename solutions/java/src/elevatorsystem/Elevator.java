@@ -87,4 +87,8 @@ public class Elevator {
     public int getCurrentFloor() {
         return currentFloor;
     }
+
+    public Direction getCurrentDirection() {
+        return currentDirection;
+    }
 }
