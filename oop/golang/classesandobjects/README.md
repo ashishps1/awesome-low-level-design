@@ -19,16 +19,17 @@ type Car struct {
     Make string
     Model string
     Year int
+}
 
-    // Method to display car details
-    func () DisplayInfo() {
-        fmt.Println("Car Make: " + Make)
-        fmt.Println("Car Model: " + Model)
-        fmt.Println("Car Year: " + Year)
-        fmt.Println("Car Color: " + Color)
-    }
+// Method to display car details
+func (c *Car) DisplayInfo() {
+	fmt.Println("Car Make: " + c.Make)
+	fmt.Println("Car Model: " + c.Model)
+	fmt.Println("Car Year: ", c.Year)
+	fmt.Println("Car Color: " + c.Color)
 }
 ```
+
 - **Attributes**: The struct `Car` has four attributes that describe its state: `Color`, `Make`, `Model`, and `Year`.
 - **Methods**: The `DisplayInfo` function is responsible for showcasing the car details.
 
@@ -38,7 +39,7 @@ An object is an instance of a struct. When you create an object, you are bringin
 
 ### Creating Objects in Go
 
-To create an object, you instantiate the struct `Car`. 
+To create an object, you instantiate the struct `Car`.
 
 Here's how you can instantiate objects from the `Car` struct:
 
