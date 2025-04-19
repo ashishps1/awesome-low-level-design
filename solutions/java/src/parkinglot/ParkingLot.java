@@ -24,15 +24,19 @@ public class ParkingLot {
         levels.add(level);
     }
 
-    public boolean parkVehicle(Vehicle vehicle) {
+    public Ticket parkVehicle(Vehicle vehicle) {
         for (Level level : levels) {
-            if (level.parkVehicle(vehicle)) {
+            if (level.getAvailableSpots() > 0) {
+                Ticket ticket = level.parkVehicle(vehicle);
+                if (ticket == null) {
+                    continue; // No available spot in this level
+                }
                 System.out.println("Vehicle parked successfully.");
-                return true;
+                return ticket;
             }
         }
         System.out.println("Could not park vehicle.");
-        return false;
+        return null;
     }
 
     public boolean unparkVehicle(Vehicle vehicle) {
