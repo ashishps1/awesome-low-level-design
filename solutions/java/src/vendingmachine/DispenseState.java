@@ -24,8 +24,6 @@ public class DispenseState implements VendingMachineState {
 
     @Override
     public void dispenseProduct() {
-        vendingMachine.setState(vendingMachine.getReadyState());
-
         Product product = vendingMachine.getSelectedProduct();
         vendingMachine.inventory.updateQuantity(product, vendingMachine.inventory.getQuantity(product) - 1);
         System.out.println("Product dispensed: " + product.getName());
