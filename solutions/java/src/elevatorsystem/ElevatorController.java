@@ -23,8 +23,12 @@ public class ElevatorController {
     private Elevator findOptimalElevator(int sourceFloor, int destinationFloor) {
         Elevator optimalElevator = null;
         int minDistance = Integer.MAX_VALUE;
-
-        for (Elevator elevator : elevators) {
+        //first preference to direction.
+        Direction userDirection = (sourceFloor - destinationFloor) > 0 ? Direction.DOWN : Direction.UP;
+        List<Elevator> optimalElevators = elevators.stream().filter(e -> e.getCurrentDirection()==userDirection).findAny().isPresent() ? 
+             elevators.stream().filter(e -> e.getCurrentDirection()==userDirection).collect(Collectors.toList()) : elevators;
+        
+        for (Elevator elevator : optimalElevators) {
             int distance = Math.abs(sourceFloor - elevator.getCurrentFloor());
             if (distance < minDistance) {
                 minDistance = distance;
