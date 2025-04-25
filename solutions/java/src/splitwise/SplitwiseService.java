@@ -92,11 +92,11 @@ public class SplitwiseService {
             double balance = user1.getBalances().getOrDefault(key, 0.0);
 
             if (balance > 0) {
-                createTransaction(user1, user2, balance);
+                createTransaction(user2, user1, balance);
                 user1.getBalances().put(key, 0.0);
                 user2.getBalances().put(getBalanceKey(user2, user1), 0.0);
             } else if (balance < 0) {
-                createTransaction(user2, user1, Math.abs(balance));
+                createTransaction(user1, user2, Math.abs(balance));
                 user1.getBalances().put(key, 0.0);
                 user2.getBalances().put(getBalanceKey(user2, user1), 0.0);
             }
