@@ -19,14 +19,14 @@ type Car struct {
     Make string
     Model string
     Year int
+}
 
-    // Method to display car details
-    func () DisplayInfo() {
-        fmt.Println("Car Make: " + Make)
-        fmt.Println("Car Model: " + Model)
-        fmt.Println("Car Year: " + Year)
-        fmt.Println("Car Color: " + Color)
-    }
+// Method defined with Car as the receiver
+func (c Car) DisplayInfo() {
+    fmt.Println("Car Make: " + c.Make)
+    fmt.Println("Car Model: " + c.Model)
+    fmt.Println("Car Year:", c.Year)
+    fmt.Println("Car Color: " + c.Color)
 }
 ```
 - **Attributes**: The struct `Car` has four attributes that describe its state: `Color`, `Make`, `Model`, and `Year`.
