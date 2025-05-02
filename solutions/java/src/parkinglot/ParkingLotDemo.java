@@ -16,9 +16,19 @@ public class ParkingLotDemo {
         Vehicle motorcycle = new Motorcycle("M1234");
 
         // Park vehicles
-        parkingLot.parkVehicle(car);
-        parkingLot.parkVehicle(truck);
-        parkingLot.parkVehicle(motorcycle);
+        Ticket ticket1 = parkingLot.parkVehicle(car);
+        Ticket ticket2 = parkingLot.parkVehicle(truck);
+        Ticket ticket3 = parkingLot.parkVehicle(motorcycle);
+
+        if(ticket1 != null) {
+            System.out.println("Car parked with ticket ID: " + ticket1.getTicketId());
+        }
+        if(ticket2 != null) {
+            System.out.println("Truck parked with ticket ID: " + ticket2.getTicketId());
+        }
+        if(ticket3 != null) {
+            System.out.println("Motorcycle parked with ticket ID: " + ticket3.getTicketId());
+        }
 
         // Display availability
         parkingLot.displayAvailability();
