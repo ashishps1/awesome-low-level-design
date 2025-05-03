@@ -1,16 +1,21 @@
 package parkinglot;
 
+import parkinglot.fee.FeeStrategy;
+import parkinglot.fee.FlatRateFeeStrategy;
 import parkinglot.vehicletype.Vehicle;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ParkingLot {
     private static ParkingLot instance;
-    private final List<Level> levels;
+    private final List<ParkingFloor> floors;
+    private final Map<String, Ticket> activeTickets = new ConcurrentHashMap<>();
+    private FeeStrategy feeStrategy;
 
     private ParkingLot() {
-        levels = new ArrayList<>();
+        floors = new ArrayList<>();
+        feeStrategy = new FlatRateFeeStrategy();
     }
 
     public static synchronized ParkingLot getInstance() {
@@ -20,33 +25,42 @@ public class ParkingLot {
         return instance;
     }
 
-    public void addLevel(Level level) {
-        levels.add(level);
+    public void addFloor(ParkingFloor floor) {
+        floors.add(floor);
     }
 
-    public boolean parkVehicle(Vehicle vehicle) {
-        for (Level level : levels) {
-            if (level.parkVehicle(vehicle)) {
-                System.out.println("Vehicle parked successfully.");
-                return true;
+    public void setFeeStrategy (FeeStrategy feeStrategy) {
+        this.feeStrategy = feeStrategy;
+    }
+
+    public synchronized Ticket parkVehicle(Vehicle vehicle) throws Exception {
+        for (ParkingFloor floor : floors) {
+            Optional<ParkingSpot> spotOpt = floor.getAvailableSpot(vehicle.getType());
+            if (spotOpt.isPresent()) {
+                ParkingSpot spot = spotOpt.get();
+                if (spot.park(vehicle)) {
+                    String ticketId = UUID.randomUUID().toString();
+                    Ticket ticket = new Ticket(ticketId, vehicle, spot);
+                    activeTickets.put(ticketId, ticket);
+                    return ticket;
+                }
             }
         }
-        System.out.println("Could not park vehicle.");
-        return false;
+        throw new Exception("No available spot for " + vehicle.getType());
     }
 
-    public boolean unparkVehicle(Vehicle vehicle) {
-        for (Level level : levels) {
-            if (level.unparkVehicle(vehicle)) {
-                return true;
-            }
-        }
-        return false;
+    public synchronized double unparkVehicle(String ticketId) throws Exception {
+        Ticket ticket = activeTickets.remove(ticketId);
+        if (ticket == null) throw new Exception("Invalid ticket");
+
+        ParkingSpot spot = ticket.getSpot();
+        spot.unpark();
+
+        ticket.setExitTimestamp();
+        return feeStrategy.calculateFee(ticket);
     }
 
-    public void displayAvailability() {
-        for (Level level : levels) {
-            level.displayAvailability();
-        }
+    public List<ParkingFloor> getParkingFloors() {
+        return floors;
     }
 }

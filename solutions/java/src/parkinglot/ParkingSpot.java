@@ -6,35 +6,39 @@ import parkinglot.vehicletype.VehicleType;
 public class ParkingSpot {
     private final int spotNumber;
     private final VehicleType vehicleType;
-    private Vehicle parkedVehicle;
+    private Vehicle vehicle;
+    private boolean isOccupied;
 
     public ParkingSpot(int spotNumber, VehicleType vehicleType) {
         this.spotNumber = spotNumber;
         this.vehicleType = vehicleType;
+        this.isOccupied = false;
     }
 
     public synchronized boolean isAvailable() {
-        return parkedVehicle == null;
+        return !isOccupied;
     }
 
-    public synchronized void parkVehicle(Vehicle vehicle) {
-        if (isAvailable() && vehicle.getType() == vehicleType) {
-            parkedVehicle = vehicle;
-        } else {
-            throw new IllegalArgumentException("Invalid vehicle type or spot already occupied.");
+    public synchronized boolean park(Vehicle vehicle) {
+        if (isOccupied || vehicle.getType() != vehicleType) {
+            return false;
         }
+        this.vehicle = vehicle;
+        isOccupied = true;
+        return true;
     }
 
-    public synchronized void unparkVehicle() {
-        parkedVehicle = null;
+    public synchronized void unpark() {
+        vehicle = null;
+        isOccupied = false;
     }
 
     public VehicleType getVehicleType() {
         return vehicleType;
     }
 
-    public Vehicle getParkedVehicle() {
-        return parkedVehicle;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
     public int getSpotNumber() {

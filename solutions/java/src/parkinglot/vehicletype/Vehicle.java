@@ -9,6 +9,7 @@ public abstract class Vehicle {
         this.type = type;
     }
 
+    public String getLicensePlate() { return licensePlate; }
     public VehicleType getType() {
         return type;
     }
