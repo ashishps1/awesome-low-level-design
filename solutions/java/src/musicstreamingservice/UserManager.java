@@ -22,12 +22,15 @@ public class UserManager {
         users.put(user.getId(), user);
     }
 
-    public User loginUser(String username, String password) {
-        for (User user : users.values()) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return user;
-            }
-        }
-        return null;
+    public Map<String, User> getUsers() {
+        return users;
+    }
+
+    public User getUser(String userId) {
+        return users.get(userId);
+    }
+
+    public Playlist getUserPlaylist(String userId, String playlistId) {
+        return users.get(userId).getPlaylist(playlistId);
     }
 }

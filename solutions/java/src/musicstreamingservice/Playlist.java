@@ -1,7 +1,8 @@
 package musicstreamingservice;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Playlist {
     private final String id;
@@ -9,11 +10,11 @@ public class Playlist {
     private final User owner;
     private final List<Song> songs;
 
-    public Playlist(String id, String name, User owner) {
-        this.id = id;
+    public Playlist(String name, User owner) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.owner = owner;
-        this.songs = new ArrayList<>();
+        this.songs = new CopyOnWriteArrayList<>();
     }
 
     public void addSong(Song song) {
@@ -24,11 +25,15 @@ public class Playlist {
         songs.remove(song);
     }
 
-    public String getName() {
-        return name;
+    public List<Song> getSongs() {
+        return List.copyOf(songs);
     }
 
-    public List<Song> getSongs() {
-        return songs;
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

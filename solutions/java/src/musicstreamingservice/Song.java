@@ -1,14 +1,17 @@
 package musicstreamingservice;
 
+import java.time.Duration;
+import java.util.UUID;
+
 public class Song {
     private final String id;
     private final String title;
-    private final String artist;
-    private final String album;
-    private final int duration;
+    private final Artist artist;
+    private final Album album;
+    private final Duration duration;
 
-    public Song(String id, String title, String artist, String album, int duration) {
-        this.id = id;
+    public Song(String title, Artist artist, Album album, Duration duration) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.artist = artist;
         this.album = album;
@@ -23,11 +26,15 @@ public class Song {
         return title;
     }
 
-    public String getArtist() {
+    public Artist getArtist() {
         return artist;
     }
 
-    public String getAlbum() {
+    public String getArtistName() {
+        return artist.getName();
+    }
+
+    public Album getAlbum() {
         return album;
     }
 }

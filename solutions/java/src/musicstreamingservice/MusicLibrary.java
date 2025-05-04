@@ -46,21 +46,15 @@ public class MusicLibrary {
         return songs.get(songId);
     }
 
+    public List<Song> getSongs() {
+        return songs.values().stream().toList();
+    }
+
     public Album getAlbum(String albumId) {
         return albums.get(albumId);
     }
 
     public Artist getArtist(String artistId) {
         return artists.get(artistId);
-    }
-
-    public List<Song> searchSongs(String query) {
-        List<Song> matchingSongs = new ArrayList<>();
-        for (Song song : songs.values()) {
-            if (song.getTitle().contains(query) || song.getArtist().contains(query) || song.getAlbum().contains(query)) {
-                matchingSongs.add(song);
-            }
-        }
-        return matchingSongs;
     }
 }

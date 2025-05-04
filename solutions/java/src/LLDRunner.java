@@ -1,5 +1,6 @@
 import courseregistrationsystem.CourseRegistrationSystemDemo;
 import fooddeliveryservice.FoodDeliveryServiceDemo;
+import musicstreamingservice.MusicStreamingServiceDemo;
 
 public class LLDRunner {
     public static void main(String[] args) {
