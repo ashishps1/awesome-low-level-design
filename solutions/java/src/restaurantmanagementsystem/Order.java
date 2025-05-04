@@ -1,44 +1,54 @@
 package restaurantmanagementsystem;
 
-import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 public class Order {
-    private final int id;
-    private final List<MenuItem> items;
-    private final double totalAmount;
+    private final String id;
+    private final List<OrderItem> items;
     private OrderStatus status;
-    private final Timestamp timestamp;
+    private final Table table;
 
-    public Order(int id, List<MenuItem> items, double totalAmount, OrderStatus status, Timestamp timestamp) {
-        this.id = id;
+    public Order(Table table, List<OrderItem> items) {
+        this.id = UUID.randomUUID().toString();
+        this.table = table;
         this.items = items;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        this.timestamp = timestamp;
+        this.status = OrderStatus.PENDING;
+    }
+
+    public void markPreparing() {
+        this.status = OrderStatus.PREPARING;
+    }
+
+    public void markReady() {
+        this.status = OrderStatus.READY;
+    }
+
+    public void markServed() {
+        this.status = OrderStatus.SERVED;
+    }
+
+    public void markPaid() {
+        this.status = OrderStatus.PAID;
+    }
+
+    public double calculateTotal() {
+        return items.stream().mapToDouble(OrderItem::getSubtotal).sum();
     }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public List<MenuItem> getItems() {
+    public List<OrderItem> getItems() {
         return items;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
     }
 
     public OrderStatus getStatus() {
         return status;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
     }
 }

@@ -11,7 +11,7 @@ Design and implement a Food Delivery Service system that allows customers to pla
 - **Customer Registration:** Customers can register and place orders.
 - **Restaurant Management:** The system manages multiple restaurants, each with its own menu.
 - **Menu Management:** Restaurants can add and update menu items.
-- **Order Placement:** Customers can place orders for menu items from a restaurant.
+- **Order Placement:** Customers can place orders for menu items from a restaurantManagementSystem.
 - **Order Tracking:** The system tracks the status of each order (e.g., PLACED, PREPARING, OUT_FOR_DELIVERY, DELIVERED).
 - **Delivery Assignment:** Orders are assigned to available delivery agents.
 - **Delivery Agent Management:** The system manages delivery agents and their availability.
@@ -23,8 +23,8 @@ Design and implement a Food Delivery Service system that allows customers to pla
 
 - **FoodDeliveryService:** Main class that manages customers, restaurants, orders, and delivery agents.
 - **Customer:** Represents a customer who can place orders.
-- **Restaurant:** Represents a restaurant with a menu of items.
-- **MenuItem:** Represents an item on a restaurant's menu.
+- **Restaurant:** Represents a restaurantManagementSystem with a menu of items.
+- **MenuItem:** Represents an item on a restaurantManagementSystem's menu.
 - **Order:** Represents a customer's order, including items, status, and assigned delivery agent.
 - **DeliveryAgent:** Represents a delivery agent who delivers orders.
 
@@ -46,7 +46,7 @@ Design and implement a Food Delivery Service system that allows customers to pla
 - **Fields:** int id, String name, double price
 
 ### 5. Order
-- **Fields:** int id, Customer customer, Restaurant restaurant, List<MenuItem> items, OrderStatus status, DeliveryAgent agent
+- **Fields:** int id, Customer customer, Restaurant restaurantManagementSystem, List<MenuItem> items, OrderStatus status, DeliveryAgent agent
 
 ### 6. DeliveryAgent
 - **Fields:** int id, String name, boolean available, List<Order> assignedOrders
