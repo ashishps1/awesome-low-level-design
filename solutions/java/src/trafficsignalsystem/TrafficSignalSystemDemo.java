@@ -1,37 +1,45 @@
 package trafficsignalsystem;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public class TrafficSignalSystemDemo {
     public static void run() {
-        TrafficController trafficController = TrafficController.getInstance();
+        // Configure signal durations per direction
+        Map<Direction, Map<SignalState, Integer>> signalDurations = new EnumMap<>(Direction.class);
 
-        // Create roads
-        Road road1 = new Road("R1", "Main Street");
-        Road road2 = new Road("R2", "Broadway");
-        Road road3 = new Road("R3", "Park Avenue");
-        Road road4 = new Road("R4", "Elm Street");
+        // Example: Different durations for each direction
+        signalDurations.put(Direction.NORTH, Map.of(
+                SignalState.GREEN, 4,
+                SignalState.YELLOW, 2,
+                SignalState.RED, 3
+        ));
+        signalDurations.put(Direction.SOUTH, Map.of(
+                SignalState.GREEN, 3,
+                SignalState.YELLOW, 2,
+                SignalState.RED, 4
+        ));
+        signalDurations.put(Direction.EAST, Map.of(
+                SignalState.GREEN, 5,
+                SignalState.YELLOW, 2,
+                SignalState.RED, 3
+        ));
+        signalDurations.put(Direction.WEST, Map.of(
+                SignalState.GREEN, 2,
+                SignalState.YELLOW, 2,
+                SignalState.RED, 5
+        ));
 
-        // Create traffic lights
-        TrafficLight trafficLight1 = new TrafficLight("TL1", 6000, 3000, 9000);
-        TrafficLight trafficLight2 = new TrafficLight("TL2", 6000, 3000, 9000);
-        TrafficLight trafficLight3 = new TrafficLight("TL3", 6000, 3000, 9000);
-        TrafficLight trafficLight4 = new TrafficLight("TL4", 6000, 3000, 9000);
+        // Initialize controller with one signal per direction
+        Map<Direction, TrafficLight> signals = new EnumMap<>(Direction.class);
+        for (Direction direction : Direction.values()) {
+            signals.put(direction, new TrafficLight());
+        }
 
-        // Assign traffic lights to roads
-        road1.setTrafficLight(trafficLight1);
-        road2.setTrafficLight(trafficLight2);
-        road3.setTrafficLight(trafficLight3);
-        road4.setTrafficLight(trafficLight4);
+        Intersection intersection1 = new Intersection("1", signals, signalDurations);
 
-        // Add roads to the traffic controller
-        trafficController.addRoad(road1);
-        trafficController.addRoad(road2);
-        trafficController.addRoad(road3);
-        trafficController.addRoad(road4);
-
-        // Start traffic control
-        trafficController.startTrafficControl();
-
-        // Simulate an emergency on a specific road
-        trafficController.handleEmergency("R2");
+        // Start the traffic signal simulation
+        System.out.println("Starting traffic signal controller...\n");
+        intersection1.start();
     }
 }

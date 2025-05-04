@@ -1,6 +1,6 @@
 package trafficsignalsystem;
 
-public enum Signal {
+public enum SignalState {
     RED,
     YELLOW,
     GREEN

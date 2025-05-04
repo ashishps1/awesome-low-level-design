@@ -1,18 +1,95 @@
-# Designing a Logging Framework
+# Logging Framework (LLD)
+
+## Problem Statement
+
+Design and implement a flexible and extensible logging framework that can be used by applications to log messages at different levels (INFO, DEBUG, ERROR, etc.), support multiple output destinations (console, file, etc.), and allow for custom formatting of log messages.
+
+---
 
 ## Requirements
-1. The logging framework should support different log levels, such as DEBUG, INFO, WARNING, ERROR, and FATAL.
-2. It should allow logging messages with a timestamp, log level, and message content.
-3. The framework should support multiple output destinations, such as console, file, and database.
-4. It should provide a configuration mechanism to set the log level and output destination.
-5. The logging framework should be thread-safe to handle concurrent logging from multiple threads.
-6. It should be extensible to accommodate new log levels and output destinations in the future.
 
-## Classes, Interfaces and Enumerations
-1. The **LogLevel** enum defines the different log levels supported by the logging framework.
-2. The **LogMessage** class represents a log message with a timestamp, log level, and message content.
-3. The **LogAppender** interface defines the contract for appending log messages to different output destinations.
-4. The **ConsoleAppender**, **FileAppender**, and **DatabaseAppender** classes are concrete implementations of the LogAppender interface, supporting logging to the console, file, and database, respectively.
-5. The **LoggerConfig** class holds the configuration settings for the logger, including the log level and the selected log appender.
-6. The **Logger** class is a singleton that provides the main logging functionality. It allows setting the configuration, logging messages at different levels, and provides convenience methods for each log level.
-7. The **LoggingExample** class demonstrates the usage of the logging framework, showcasing different log levels, changing the configuration, and logging from multiple threads.
+- **Log Levels:** Support for multiple log levels (INFO, DEBUG, ERROR, etc.).
+- **Multiple Appenders:** Ability to log to different destinations (console, file, etc.).
+- **Custom Formatting:** Support for custom log message formatting.
+- **Configuration:** Ability to configure loggers and appenders.
+- **Thread Safety:** Should be thread-safe for concurrent logging.
+- **Extensibility:** Easy to add new log levels, appenders, or formatters.
+
+---
+
+## Core Entities
+
+- **Logger:** Main class used by clients to log messages.
+- **LogLevel:** Enum representing different log levels.
+- **LogMessage:** Encapsulates the details of a log event.
+- **LogFormatter:** Interface for formatting log messages.
+- **DefaultFormatter:** Default implementation of `LogFormatter`.
+- **LoggerConfig:** Holds configuration for the logger (appenders, formatters, etc.).
+- **LogAppender (in `logappender/`):** Interface and implementations for output destinations (e.g., ConsoleAppender, FileAppender).
+
+---
+
+## Class Design
+
+### 1. Logger
+- **Methods:**
+  - `log(LogLevel level, String message)`
+  - `info(String message)`
+  - `debug(String message)`
+  - `error(String message)`
+  - `setConfig(LoggerConfig config)`
+
+### 2. LogLevel
+- Enum for log levels (INFO, DEBUG, ERROR, etc.)
+
+### 3. LogMessage
+- Fields: `level`, `message`, `timestamp`, etc.
+
+### 4. LogFormatter (Interface)
+- `String format(LogMessage message)`
+
+### 5. DefaultFormatter
+- Implements `LogFormatter` with a default format.
+
+### 6. LoggerConfig
+- Holds configuration for loggers (appenders, formatters, log level).
+
+### 7. LogAppender (in `logappender/`)
+- Interface for appenders.
+- Implementations: `ConsoleAppender`, `FileAppender`, etc.
+
+---
+
+## Design Patterns Used
+
+- **Strategy Pattern:** For interchangeable log formatters and appenders.
+- **Singleton Pattern:** (If used) For global logger instance.
+- **Factory Pattern:** (Optional) For creating appenders/formatters based on config.
+- **Observer Pattern:** (Conceptually, for notifying multiple appenders.)
+
+---
+
+## Example Usage
+
+```java
+Logger logger = new Logger();
+logger.setConfig(new LoggerConfig(...));
+logger.info("Application started");
+logger.error("An error occurred");
+```
+
+---
+
+## Demo
+
+See `LoggingFrameworkDemo.java` for a sample usage of the logging framework.
+
+---
+
+## Extending the Framework
+
+- **Add a new log level:** Update `LogLevel.java`.
+- **Add a new appender:** Implement the `LogAppender` interface in `logappender/`.
+- **Add a new formatter:** Implement the `LogFormatter` interface.
+
+---

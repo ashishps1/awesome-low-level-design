@@ -1,15 +1,15 @@
 package stackoverflow;
 
 public class Vote {
-    private final User user;
-    private final int value;
+    private final User voter;
+    private final VoteType type;
 
-    public Vote(User user, int value) {
-        this.user = user;
-        this.value = value;
+    public Vote(User user, VoteType type) {
+        this.voter = user;
+        this.type = type;
     }
 
     // Getters
-    public User getUser() { return user; }
-    public int getValue() { return value; }
+    public User getVoter() { return voter; }
+    public VoteType getType() { return type; }
 }

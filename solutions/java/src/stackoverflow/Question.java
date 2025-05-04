@@ -14,6 +14,7 @@ public class Question implements Votable, Commentable {
     private final List<Comment> comments;
     private final List<Tag> tags;
     private final List<Vote> votes;
+    private Answer acceptedAnswer;
 
     public Question(User author, String title, String content, List<String> tagNames) {
         this.id = generateId();
@@ -30,25 +31,29 @@ public class Question implements Votable, Commentable {
         }
     }
 
-    public void addAnswer(Answer answer) {
+    public synchronized void addAnswer(Answer answer) {
         if (!answers.contains(answer)) {
             answers.add(answer);
         }
     }
 
+    public synchronized void acceptAnswer(Answer answer) {
+        this.acceptedAnswer = answer;
+        answer.markAsAccepted();
+    }
+
     @Override
-    public void vote(User user, int value) {
-        if (value != 1 && value != -1) {
-            throw new IllegalArgumentException("Vote value must be either 1 or -1");
-        }
-        votes.removeIf(v -> v.getUser().equals(user));
-        votes.add(new Vote(user, value));
-        author.updateReputation(value * 5);  // +5 for upvote, -5 for downvote
+    public void vote(User voter, VoteType type) {
+        votes.removeIf(v -> v.getVoter().equals(voter));
+        votes.add(new Vote(voter, type));
+        author.updateReputation(5 * (type == VoteType.UPVOTE ? 1 : -1));  // +5 for upvote, -5 for downvote
     }
 
     @Override
     public int getVoteCount() {
-        return votes.stream().mapToInt(Vote::getValue).sum();
+        return votes.stream()
+                .mapToInt(v -> v.getType() == VoteType.UPVOTE ? 1 : -1)
+                .sum();
     }
 
     @Override
@@ -73,4 +78,7 @@ public class Question implements Votable, Commentable {
     public Date getCreationDate() { return creationDate; }
     public List<Answer> getAnswers() { return new ArrayList<>(answers); }
     public List<Tag> getTags() { return new ArrayList<>(tags); }
+    public Answer getAcceptedAnswer() {
+        return acceptedAnswer;
+    }
 }

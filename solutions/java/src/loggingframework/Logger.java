@@ -3,12 +3,12 @@ package loggingframework;
 import loggingframework.logappender.ConsoleAppender;
 
 public class Logger {
-    private static final Logger instance = new Logger();
+    private static final Logger instance = new Logger(); // singleton
     private LoggerConfig config;
 
     private Logger() {
         // Private constructor to enforce singleton pattern
-        config = new LoggerConfig(LogLevel.INFO, new ConsoleAppender());
+        config = new LoggerConfig(LogLevel.INFO, new ConsoleAppender(new DefaultFormatter()));
     }
 
     public static Logger getInstance() {
@@ -35,7 +35,7 @@ public class Logger {
     }
 
     public void warning(String message) {
-        log(LogLevel.WARNING, message);
+        log(LogLevel.WARN, message);
     }
 
     public void error(String message) {

@@ -12,7 +12,7 @@ public class LoggingFrameworkDemo {
         logger.error("This is an error message");
 
         // Changing log level and appender
-        LoggerConfig config = new LoggerConfig(LogLevel.DEBUG, new FileAppender("app.log"));
+        LoggerConfig config = new LoggerConfig(LogLevel.DEBUG, new FileAppender("app.log", new DefaultFormatter()));
         logger.setConfig(config);
 
         logger.debug("This is a debug message");

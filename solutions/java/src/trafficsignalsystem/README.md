@@ -1,16 +1,97 @@
-# Designing a Traffic Signal Control System
+# Traffic Signal System (LLD)
+
+## Problem Statement
+
+Design and implement a Traffic Signal System to manage the traffic lights at an intersection. The system should support configurable signal durations for each direction and state, automatic cycling of signals, and the ability to override signals as needed.
+
+---
 
 ## Requirements
-1. The traffic signal system should control the flow of traffic at an intersection with multiple roads.
-2. The system should support different types of signals, such as red, yellow, and green.
-3. The duration of each signal should be configurable and adjustable based on traffic conditions.
-4. The system should handle the transition between signals smoothly, ensuring safe and efficient traffic flow.
-5. The system should be able to detect and handle emergency situations, such as an ambulance or fire truck approaching the intersection.
-6. The system should be scalable and extensible to support additional features and functionality.
 
-## Classes, Interfaces and Enumerations
-1. The **Signal** enum represents the different states of a traffic light: red, yellow, and green.
-2. The **Road** class represents a road in the traffic signal system, with properties such as ID, name, and an associated traffic light.
-3. The **TrafficLight** class represents a traffic light, with properties such as ID, current signal, and durations for each signal state. It provides methods to change the signal and notify observers (e.g., roads) about signal changes.
-4. The **TrafficController** class serves as the central controller for the traffic signal system. It follows the Singleton pattern to ensure a single instance of the controller. It manages the roads and their associated traffic lights, starts the traffic control process, and handles emergency situations.
-5. The **TrafficSignalSystemDemo** class is the main entry point of the application. It demonstrates the usage of the traffic signal system by creating roads, traffic lights, assigning traffic lights to roads, and starting the traffic control process.
+- **Multiple Directions:** The intersection supports multiple directions (e.g., NORTH, SOUTH, EAST, WEST).
+- **Traffic Light States:** Each direction has a traffic light with states: GREEN, YELLOW, RED.
+- **Configurable Durations:** Each direction and state can have its own configurable duration.
+- **Automatic Cycling:** The system automatically cycles through the states for each direction in a round-robin fashion.
+- **Override Capability:** The controller can override the current signal to set a specific direction to GREEN.
+- **Extensibility:** Easy to add new directions or states if needed.
+
+---
+
+## Core Entities
+
+- **Direction:** Enum representing the directions at the intersection (NORTH, SOUTH, EAST, WEST).
+- **SignalState:** Enum representing the state of a traffic light (GREEN, YELLOW, RED).
+- **TrafficLight:** Represents a traffic light for a direction, maintains its current state.
+- **Intersection:** Represents the intersection, holds all traffic lights and their configurations.
+- **TrafficSignalController:** Controls the cycling and overriding of traffic signals, manages timing and transitions.
+
+---
+
+## Class Design
+
+### 1. Direction
+- Enum: NORTH, SOUTH, EAST, WEST
+
+### 2. SignalState
+- Enum: GREEN, YELLOW, RED
+
+### 3. TrafficLight
+- **Fields:** currentState, direction
+- **Methods:** changeSignal(SignalState), getState(), getDirection()
+
+### 4. Intersection
+- **Fields:** id, Map<Direction, TrafficLight> signals, Map<Direction, Map<SignalState, Integer>> signalDurations
+- **Methods:** start(), getTrafficLight(Direction), etc.
+
+### 5. TrafficSignalController
+- **Fields:** Map<Direction, TrafficLight> signals, Map<Direction, Map<SignalState, Integer>> signalDurations, scheduler
+- **Methods:** start(), override(Direction), rotateSignal(Direction, SignalState), getNextDirection(Direction)
+
+---
+
+## Design Patterns Used
+
+- **State Pattern:** For managing the state transitions of each traffic light.
+- **Scheduler/Timer:** For handling timed transitions between states.
+- **Strategy Pattern:** (Conceptually) for supporting different timing strategies per direction/state.
+
+---
+
+## Example Usage
+
+```java
+// Configure signal durations per direction and state
+Map<Direction, Map<SignalState, Integer>> signalDurations = new EnumMap<>(Direction.class);
+signalDurations.put(Direction.NORTH, Map.of(
+    SignalState.GREEN, 4,
+    SignalState.YELLOW, 2,
+    SignalState.RED, 3
+));
+// ... repeat for other directions
+
+// Initialize traffic lights
+Map<Direction, TrafficLight> signals = new EnumMap<>(Direction.class);
+for (Direction direction : Direction.values()) {
+    signals.put(direction, new TrafficLight(direction));
+}
+
+// Create and start the controller
+TrafficSignalController controller = new TrafficSignalController(signals, signalDurations);
+controller.start();
+```
+
+---
+
+## Demo
+
+See `TrafficSignalSystemDemo.java` for a sample usage and simulation of the traffic signal system.
+
+---
+
+## Extending the Framework
+
+- **Add new directions:** Add to the `Direction` enum and update configuration.
+- **Add new states:** Add to the `SignalState` enum and update logic in the controller.
+- **Custom timing strategies:** Implement new strategies for special intersections or adaptive signals.
+
+---

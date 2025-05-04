@@ -45,12 +45,12 @@ public class StackOverflow {
         return user.addComment(commentable, content);
     }
 
-    public void voteQuestion(User user, Question question, int value) {
-        question.vote(user, value);
+    public void voteQuestion(User user, Question question, VoteType type) {
+        question.vote(user, type);
     }
 
-    public void voteAnswer(User user, Answer answer, int value) {
-        answer.vote(user, value);
+    public void voteAnswer(User user, Answer answer, VoteType type) {
+        answer.vote(user, type);
     }
 
     public void acceptAnswer(Answer answer) {
