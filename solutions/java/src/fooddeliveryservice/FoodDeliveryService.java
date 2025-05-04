@@ -1,13 +1,11 @@
 package fooddeliveryservice;
 
 import fooddeliveryservice.order.Order;
-import fooddeliveryservice.order.OrderItem;
 import fooddeliveryservice.order.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FoodDeliveryService {
@@ -31,53 +29,82 @@ public class FoodDeliveryService {
         return instance;
     }
 
-    public void registerCustomer(Customer customer) {
+    public Customer registerCustomer(String name, String email, String phone) {
+        Customer customer = new Customer(name, email, phone);
         customers.put(customer.getId(), customer);
+        return customer;
     }
 
-    public void registerRestaurant(Restaurant restaurant) {
+    public Restaurant registerRestaurant(String name, String address) {
+        Restaurant restaurant = new Restaurant(name, address);
         restaurants.put(restaurant.getId(), restaurant);
+        return restaurant;
     }
 
-    public void registerDeliveryAgent(DeliveryAgent agent) {
+    public DeliveryAgent registerDeliveryAgent(String name, String phone) {
+        DeliveryAgent agent = new DeliveryAgent(name, phone);
         deliveryAgents.put(agent.getId(), agent);
+        return agent;
     }
 
-    public List<Restaurant> getAvailableRestaurants() {
-        return new ArrayList<>(restaurants.values());
+    public List<String> getAvailableRestaurants() {
+        List<String> restaurantNames = new ArrayList<>();
+        for (Restaurant restaurant: restaurants.values()) {
+            restaurantNames.add(restaurant.getName());
+        }
+        return restaurantNames;
     }
 
-    public List<MenuItem> getRestaurantMenu(String restaurantId) {
+    public List<String> getRestaurantMenu(String restaurantId) {
+        List<String> restaurantMenu = new ArrayList<>();
         Restaurant restaurant = restaurants.get(restaurantId);
         if (restaurant != null) {
-            return restaurant.getMenu();
+            for (MenuItem menuItem: restaurant.getMenu()) {
+                restaurantMenu.add(menuItem.getMenuItem());
+            }
         }
-        return new ArrayList<>();
+        return restaurantMenu;
     }
 
-    public Order placeOrder(String customerId, String restaurantId, List<OrderItem> items) {
-        Customer customer = customers.get(customerId);
+    public void addMenuItem(String restaurantId, String name, String description, double price) {
         Restaurant restaurant = restaurants.get(restaurantId);
+        if (restaurant == null) throw new IllegalArgumentException("Invalid restaurant");
+        restaurant.addMenuItem(new MenuItem(name, description, price));
+    }
+
+    public Order placeOrder(String userId, String restaurantId, List<String> itemNames) {
+        Customer customer = customers.get(userId);
+        Restaurant restaurant = restaurants.get(restaurantId);
+
         if (customer != null && restaurant != null) {
-            Order order = new Order(generateOrderId(), customer, restaurant);
-            for (OrderItem item : items) {
-                order.addItem(item);
-            }
+            List<MenuItem> items = restaurant.getMenu().stream()
+                    .filter(m -> itemNames.contains(m.getName()))
+                    .toList();
+
+            Order order = new Order(customer, restaurant, items);
+
             orders.put(order.getId(), order);
             notifyRestaurant(order);
             System.out.println("Order placed: " + order.getId());
+
             return order;
         }
+
         return null;
     }
 
     public void updateOrderStatus(String orderId, OrderStatus status) {
         Order order = orders.get(orderId);
+
         if (order != null) {
-            order.setStatus(status);
+            order.updateStatus(status);
+
+            System.out.println("Order " + orderId + " updated to " + status);
+
             notifyCustomer(order);
-            if (status == OrderStatus.CONFIRMED) {
-                assignDeliveryAgent(order);
+
+            if (status == OrderStatus.DELIVERED && order.getDeliveryAgent() != null) {
+                order.getDeliveryAgent().release();
             }
         }
     }
@@ -85,11 +112,31 @@ public class FoodDeliveryService {
     public void cancelOrder(String orderId) {
         Order order = orders.get(orderId);
         if (order != null && order.getStatus() == OrderStatus.PENDING) {
-            order.setStatus(OrderStatus.CANCELLED);
+            order.updateStatus(OrderStatus.CANCELLED);
             notifyCustomer(order);
             notifyRestaurant(order);
             System.out.println("Order cancelled: " + order.getId());
         }
+    }
+
+    public synchronized void assignDeliveryAgent(String orderId) {
+        Order order = orders.get(orderId);
+
+        if(order == null) {
+            throw new IllegalArgumentException("Order not found");
+        }
+
+        for (DeliveryAgent agent : deliveryAgents.values()) {
+            if (agent.isAvailable()) {
+                agent.assign();
+                order.assignDeliveryAgent(agent);
+                notifyDeliveryAgent(order);
+                System.out.println("Agent " + agent.getName() + " assigned to order " + orderId);
+                return;
+            }
+        }
+
+        throw new IllegalStateException("No available delivery agent");
     }
 
     private void notifyCustomer(Order order) {
@@ -102,24 +149,8 @@ public class FoodDeliveryService {
         // ...
     }
 
-    private void assignDeliveryAgent(Order order) {
-        for (DeliveryAgent agent : deliveryAgents.values()) {
-            if (agent.isAvailable()) {
-                agent.setAvailable(false);
-                order.assignDeliveryAgent(agent);
-                notifyDeliveryAgent(order);
-                break;
-            }
-        }
-    }
-
     private void notifyDeliveryAgent(Order order) {
         // Send notification to the delivery agent about the assigned order
         // ...
-    }
-
-    private String generateOrderId() {
-        // Generate a unique order ID using UUID
-        return "ORD" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
 }

@@ -1,21 +1,85 @@
-# Designing an Online Food Delivery Service Like Swiggy
+# Food Delivery Service (LLD)
+
+## Problem Statement
+
+Design and implement a Food Delivery Service system that allows customers to place orders from restaurants, manages menu items, assigns delivery agents, and tracks order status from placement to delivery.
+
+---
 
 ## Requirements
-1. The food delivery service should allow customers to browse restaurants, view menus, and place orders.
-2. Restaurants should be able to manage their menus, prices, and availability.
-3. Delivery agents should be able to accept and fulfill orders.
-4. The system should handle order tracking and status updates.
-5. The system should support multiple payment methods.
-6. The system should handle concurrent orders and ensure data consistency.
-7. The system should be scalable and handle a high volume of orders.
-8. The system should provide real-time notifications to customers, restaurants, and delivery agents.
 
-## Classes, Interfaces and Enumerations
-1. The **Customer** class represents a customer who can place orders. It contains customer details such as ID, name, email, and phone number.
-2. The **Restaurant** class represents a restaurant that offers menu items. It contains restaurant details such as ID, name, address, and a list of menu items. It provides methods to add and remove menu items.
-3. The **MenuItem** class represents an item on a restaurant's menu. It contains details such as ID, name, description, price, and availability status.
-4. The **Order** class represents an order placed by a customer. It contains order details such as ID, customer, restaurant, list of order items, status, and assigned delivery agent. It provides methods to add and remove order items, update order status, and assign a delivery agent.
-5. The **OrderItem** class represents an item within an order. It contains the selected menu item and the quantity ordered.
-6. The **OrderStatus** enum represents the different statuses an order can have, such as PENDING, CONFIRMED, PREPARING, OUT_FOR_DELIVERY, DELIVERED, and CANCELLED.
-7. The **DeliveryAgent** class represents a delivery agent who fulfills orders. It contains details such as ID, name, phone number, and availability status.
-8. The **FoodDeliveryService** class is the main class that manages the food delivery service. It follows the Singleton pattern to ensure only one instance of the service exists. It provides methods to register customers, restaurants, and delivery agents, retrieve available restaurants and menus, place orders, update order status, cancel orders, and assign delivery agents to orders. It also handles notifications to customers, restaurants, and delivery agents.
+- **Customer Registration:** Customers can register and place orders.
+- **Restaurant Management:** The system manages multiple restaurants, each with its own menu.
+- **Menu Management:** Restaurants can add and update menu items.
+- **Order Placement:** Customers can place orders for menu items from a restaurant.
+- **Order Tracking:** The system tracks the status of each order (e.g., PLACED, PREPARING, OUT_FOR_DELIVERY, DELIVERED).
+- **Delivery Assignment:** Orders are assigned to available delivery agents.
+- **Delivery Agent Management:** The system manages delivery agents and their availability.
+- **Extensibility:** Easy to add new features such as ratings, reviews, or payment integration.
+
+---
+
+## Core Entities
+
+- **FoodDeliveryService:** Main class that manages customers, restaurants, orders, and delivery agents.
+- **Customer:** Represents a customer who can place orders.
+- **Restaurant:** Represents a restaurant with a menu of items.
+- **MenuItem:** Represents an item on a restaurant's menu.
+- **Order:** Represents a customer's order, including items, status, and assigned delivery agent.
+- **DeliveryAgent:** Represents a delivery agent who delivers orders.
+
+---
+
+## Class Design
+
+### 1. FoodDeliveryService
+- **Fields:** List<Customer> customers, List<Restaurant> restaurants, List<DeliveryAgent> agents, List<Order> orders
+- **Methods:** registerCustomer(Customer), addRestaurant(Restaurant), addMenuItem(Restaurant, MenuItem), placeOrder(Customer, Restaurant, List<MenuItem>), assignDeliveryAgent(Order), updateOrderStatus(Order, Status), etc.
+
+### 2. Customer
+- **Fields:** int id, String name, List<Order> orders
+
+### 3. Restaurant
+- **Fields:** int id, String name, List<MenuItem> menu
+
+### 4. MenuItem
+- **Fields:** int id, String name, double price
+
+### 5. Order
+- **Fields:** int id, Customer customer, Restaurant restaurant, List<MenuItem> items, OrderStatus status, DeliveryAgent agent
+
+### 6. DeliveryAgent
+- **Fields:** int id, String name, boolean available, List<Order> assignedOrders
+
+---
+
+## Example Usage
+
+```java
+FoodDeliveryService service = new FoodDeliveryService();
+Customer alice = new Customer(1, "Alice");
+Restaurant pizzaPlace = new Restaurant(1, "Pizza Place");
+MenuItem pizza = new MenuItem(1, "Margherita Pizza", 10.0);
+
+service.registerCustomer(alice);
+service.addRestaurant(pizzaPlace);
+service.addMenuItem(pizzaPlace, pizza);
+
+service.placeOrder(alice, pizzaPlace, List.of(pizza));
+```
+
+---
+
+## Demo
+
+See `FoodDeliveryServiceDemo.java` for a sample usage and simulation of the food delivery service.
+
+---
+
+## Extending the Framework
+
+- **Add ratings and reviews:** Allow customers to rate restaurants and delivery agents.
+- **Add payment integration:** Support online payments.
+- **Add order cancellation or modification:** Allow customers to cancel or modify orders before delivery.
+
+---

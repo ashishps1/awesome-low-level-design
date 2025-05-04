@@ -1,6 +1,8 @@
 package fooddeliveryservice;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Restaurant {
     private final String id;
@@ -15,6 +17,13 @@ public class Restaurant {
         this.menu = menu;
     }
 
+    public Restaurant(String name, String address) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.address = address;
+        this.menu = new ArrayList<>();
+    }
+
     public void addMenuItem(MenuItem item) {
         menu.add(item);
     }
@@ -25,6 +34,10 @@ public class Restaurant {
 
     public String getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<MenuItem> getMenu() {
