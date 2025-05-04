@@ -1,20 +1,17 @@
 package taskmanagementsystem;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 public class TaskManager {
     private static TaskManager instance;
     private final Map<String, Task> tasks;
-    private final Map<String, List<Task>> userTasks;
 
     private TaskManager() {
         tasks = new ConcurrentHashMap<>();
-        userTasks = new ConcurrentHashMap<>();
     }
 
     public static synchronized TaskManager getInstance() {
@@ -26,33 +23,46 @@ public class TaskManager {
 
     public void createTask(Task task) {
         tasks.put(task.getId(), task);
-        assignTaskToUser(task.getAssignedUser(), task);
     }
 
-    public void updateTask(Task updatedTask) {
-        Task existingTask = tasks.get(updatedTask.getId());
-        if (existingTask != null) {
-            synchronized (existingTask) {
-                existingTask.setTitle(updatedTask.getTitle());
-                existingTask.setDescription(updatedTask.getDescription());
-                existingTask.setDueDate(updatedTask.getDueDate());
-                existingTask.setPriority(updatedTask.getPriority());
-                existingTask.setStatus(updatedTask.getStatus());
-                User previousUser = existingTask.getAssignedUser();
-                User newUser = updatedTask.getAssignedUser();
-                if (!previousUser.equals(newUser)) {
-                    unassignTaskFromUser(previousUser, existingTask);
-                    assignTaskToUser(newUser, existingTask);
-                }
-            }
+    public Task getTaskById(String taskId) {
+        if (!tasks.containsKey(taskId)) {
+            throw new RuntimeException("Task not found: " + taskId);
         }
+        return tasks.get(taskId);
+    }
+
+    public void updateTaskStatus(String taskId, TaskStatus status) {
+        getTaskById(taskId).updateStatus(status);
+    }
+
+    public void updateTaskPriority(String taskId, TaskPriority priority) {
+        getTaskById(taskId).updatePriority(priority);
+    }
+
+    public void assignTask(String taskId, User user) {
+        getTaskById(taskId).assignUser(user);
+    }
+
+    public void addComment(String taskId, String commentText, User author) {
+        Task task = getTaskById(taskId);
+        task.addComment(new Comment(commentText, author));
+    }
+
+    public List<Task> listTasksByUser(User user) {
+        return tasks.values().stream()
+                .filter(task -> user.equals(task.getAssignee()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> listTasksByStatus(TaskStatus status) {
+        return tasks.values().stream()
+                .filter(task -> task.getStatus() == status)
+                .collect(Collectors.toList());
     }
 
     public void deleteTask(String taskId) {
-        Task task = tasks.remove(taskId);
-        if (task != null) {
-            unassignTaskFromUser(task.getAssignedUser(), task);
-        }
+        tasks.remove(taskId);
     }
 
     public List<Task> searchTasks(String keyword) {
@@ -63,42 +73,5 @@ public class TaskManager {
             }
         }
         return matchingTasks;
-    }
-
-    public List<Task> filterTasks(TaskStatus status, Date startDate, Date endDate, int priority) {
-        List<Task> filteredTasks = new ArrayList<>();
-        for (Task task : tasks.values()) {
-            if (task.getStatus() == status &&
-                    task.getDueDate().compareTo(startDate) >= 0 &&
-                    task.getDueDate().compareTo(endDate) <= 0 &&
-                    task.getPriority() == priority) {
-                filteredTasks.add(task);
-            }
-        }
-        return filteredTasks;
-    }
-
-    public void markTaskAsCompleted(String taskId) {
-        Task task = tasks.get(taskId);
-        if (task != null) {
-            synchronized (task) {
-                task.setStatus(TaskStatus.COMPLETED);
-            }
-        }
-    }
-
-    public List<Task> getTaskHistory(User user) {
-        return new ArrayList<>(userTasks.getOrDefault(user.getId(), new ArrayList<>()));
-    }
-
-    private void assignTaskToUser(User user, Task task) {
-        userTasks.computeIfAbsent(user.getId(), k -> new CopyOnWriteArrayList<>()).add(task);
-    }
-
-    private void unassignTaskFromUser(User user, Task task) {
-        List<Task> tasks = userTasks.get(user.getId());
-        if (tasks != null) {
-            tasks.remove(task);
-        }
     }
 }

@@ -1,5 +1,5 @@
 package pubsubsystem;
 
 public interface Subscriber {
-    void onMessage(Message message);
+    void consume(Message message);
 }

@@ -1,61 +1,82 @@
 package tictactoe;
 
 public class Board {
-    private final char[][] grid;
-    private int movesCount;
+    private final Cell[][] grid;
+    private final int movesCount;
+    private final int size;
 
-    public Board() {
-        grid = new char[3][3];
+    public Board(int size) {
+        this.size = size;
+        grid = new Cell[size][size];
+        movesCount = 0;
         initializeBoard();
     }
 
     private void initializeBoard() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                grid[row][col] = '-';
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                grid[row][col] = new Cell();
             }
         }
-        movesCount = 0;
     }
 
-    public synchronized void makeMove(int row, int col, char symbol) {
-        if (row < 0 || row >= 3 || col < 0 || col >= 3 || grid[row][col] != '-') {
-            throw new IllegalArgumentException("Invalid move!");
-        }
-        grid[row][col] = symbol;
-        movesCount++;
+    public boolean isValidMove(int row, int col) {
+        return row >= 0 && col >= 0 && row < size && col < size && grid[row][col].isEmpty();
     }
 
-    public boolean isFull() {
-        return movesCount == 9;
+    public void placeMove(int row, int col, Symbol symbol) {
+        grid[row][col].setSymbol(symbol);
     }
 
-    public boolean hasWinner() {
+    public boolean checkWin(Symbol symbol) {
         // Check rows
-        for (int row = 0; row < 3; row++) {
-            if (grid[row][0] != '-' && grid[row][0] == grid[row][1] && grid[row][1] == grid[row][2]) {
-                return true;
+        for (int i = 0; i < size; i++) {
+            boolean rowWin = true;
+            for (int j = 0; j < size; j++) {
+                if (grid[i][j].getSymbol() != symbol) {
+                    rowWin = false;
+                    break;
+                }
             }
+            if (rowWin) return true;
         }
 
         // Check columns
-        for (int col = 0; col < 3; col++) {
-            if (grid[0][col] != '-' && grid[0][col] == grid[1][col] && grid[1][col] == grid[2][col]) {
-                return true;
+        for (int j = 0; j < size; j++) {
+            boolean colWin = true;
+            for (int i = 0; i < size; i++) {
+                if (grid[i][j].getSymbol() != symbol) {
+                    colWin = false;
+                    break;
+                }
             }
+            if (colWin) return true;
         }
 
-        // Check diagonals
-        if (grid[0][0] != '-' && grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]) {
-            return true;
+        // Diagonal
+        boolean diag1 = true, diag2 = true;
+        for (int i = 0; i < size; i++) {
+            if (grid[i][i].getSymbol() != symbol) diag1 = false;
+            if (grid[i][size - i - 1].getSymbol() != symbol) diag2 = false;
         }
-        return grid[0][2] != '-' && grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0];
+
+        return diag1 || diag2;
     }
 
-    public void printBoard() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                System.out.print(grid[row][col] + " ");
+    public boolean isFull() {
+        return movesCount == size * size;
+    }
+
+    public void reset() {
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                grid[i][j].setSymbol(Symbol.EMPTY);
+    }
+
+    public void print() {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                System.out.print(grid[row][col].getSymbol() + " ");
             }
             System.out.println();
         }

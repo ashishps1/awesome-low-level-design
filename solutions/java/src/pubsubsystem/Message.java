@@ -1,13 +1,13 @@
 package pubsubsystem;
 
 public class Message {
-    private final String content;
+    private final String payload;
 
-    public Message(String content) {
-        this.content = content;
+    public Message(String payload) {
+        this.payload = payload;
     }
 
-    public String getContent() {
-        return content;
+    public String getPayload() {
+        return payload;
     }
 }

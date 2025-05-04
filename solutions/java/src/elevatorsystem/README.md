@@ -1,17 +1,74 @@
-# Designing an Elevator System
+# Elevator System (LLD)
+
+## Problem Statement
+
+Design and implement an Elevator System that can handle multiple requests, move between floors, and manage direction and state efficiently.
+
+---
 
 ## Requirements
-1. The elevator system should consist of multiple elevators serving multiple floors.
-2. Each elevator should have a capacity limit and should not exceed it.
-3. Users should be able to request an elevator from any floor and select a destination floor.
-4. The elevator system should efficiently handle user requests and optimize the movement of elevators to minimize waiting time.
-5. The system should prioritize requests based on the direction of travel and the proximity of the elevators to the requested floor.
-6. The elevators should be able to handle multiple requests concurrently and process them in an optimal order.
-7. The system should ensure thread safety and prevent race conditions when multiple threads interact with the elevators.
 
-## Classes, Interfaces and Enumerations
-1. The **Direction** enum represents the possible directions of elevator movement (UP or DOWN).
-2. The **Request** class represents a user request for an elevator, containing the source floor and destination floor.
-3. The **Elevator** class represents an individual elevator in the system. It has a capacity limit and maintains a list of 4. requests. The elevator processes requests concurrently and moves between floors based on the requests.
-4. The **ElevatorController** class manages multiple elevators and handles user requests. It finds the optimal elevator to serve a request based on the proximity of the elevators to the requested floor.
-5. The **ElevatorSystem** class is the entry point of the application and demonstrates the usage of the elevator system.
+- **Multiple Elevator:** The system manages multiple elevators.
+- **Request Handling:** The system can handle requests to move to specific floors in a given direction (UP/DOWN).
+- **Direction Management:** The elevator maintains and updates its current direction (UP, DOWN, IDLE).
+- **State Management:** The elevator tracks its current floor, direction, and pending requests.
+- **Efficient Movement:** The elevator processes requests in an efficient order (e.g., all UP requests, then all DOWN requests).
+- **Extensibility:** Easy to add more elevators or advanced scheduling algorithms.
+
+---
+
+## Core Entities
+
+- **Elevator:** Represents the elevator, manages its state, direction, and request queue.
+- **ElevatorController:** Handles incoming requests and delegates them to the elevator.
+- **Request:** Represents a request to move to a specific floor in a given direction.
+- **Direction (enum):** UP, DOWN, IDLE.
+
+---
+
+## Class Design
+
+### 1. Elevator
+- **Fields:** currentFloor, direction, List<Request> requests, isMoving, etc.
+- **Methods:** addRequest(Request), move(), openDoor(), closeDoor(), processNextRequest(), getCurrentFloor(), getDirection(), etc.
+
+### 2. ElevatorController
+- **Fields:** Elevator elevator
+- **Methods:** requestElevator(int floor, Direction direction), step(), etc.
+
+### 3. Request
+- **Fields:** int floor, Direction direction
+
+### 4. Direction (enum)
+- Values: UP, DOWN, IDLE
+
+---
+
+## Example Usage
+
+```java
+ElevatorController controller = new ElevatorController();
+controller.requestElevator(5, Direction.UP);
+controller.requestElevator(2, Direction.DOWN);
+
+// Simulate elevator steps
+for (int i = 0; i < 10; i++) {
+    controller.step();
+}
+```
+
+---
+
+## Demo
+
+See `ElevatorSystemDemo.java` for a sample usage and simulation of the elevator system.
+
+---
+
+## Extending the Framework
+
+- **Add multiple elevators:** Create a list of `Elevator` objects and update the controller logic.
+- **Advanced scheduling:** Implement algorithms for optimal elevator assignment.
+- **Add features:** Such as maintenance mode, emergency stop, or floor display.
+
+---

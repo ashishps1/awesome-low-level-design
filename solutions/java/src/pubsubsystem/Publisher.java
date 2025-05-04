@@ -1,24 +1,19 @@
 package pubsubsystem;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Publisher {
-    private final Set<Topic> topics;
+    private final String id;
+    private final Broker broker;
 
-    public Publisher() {
-        this.topics = new HashSet<>();
+    public Publisher(String id, Broker broker) {
+        this.id = id;
+        this.broker = broker;
     }
 
-    public void registerTopic(Topic topic) {
-        topics.add(topic);
+    public void publish(String topic, String payload) {
+        broker.publish(topic, new Message(payload));
     }
 
-    public void publish(Topic topic, Message message) {
-        if(!topics.contains(topic)) {
-            System.out.println("This publisher can't publish to topic: " + topic.getName());
-            return;
-        }
-        topic.publish(message);
+    public String getId() {
+        return id;
     }
 }

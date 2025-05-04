@@ -7,14 +7,14 @@ public class Elevator {
     private final int id;
     private final int capacity;
     private int currentFloor;
-    private Direction currentDirection;
+    private Direction direction;
     private final List<Request> requests;
 
     public Elevator(int id, int capacity) {
         this.id = id;
         this.capacity = capacity;
-        this.currentFloor = 1;
-        this.currentDirection = Direction.UP;
+        this.currentFloor = 0;
+        this.direction = Direction.UP;
         this.requests = new ArrayList<>();
     }
 
@@ -34,7 +34,7 @@ public class Elevator {
                 e.printStackTrace();
             }
         }
-        return requests.remove(0);
+        return requests.removeFirst();
     }
 
     public synchronized void processRequests() {
@@ -56,7 +56,7 @@ public class Elevator {
         int endFloor = request.getDestinationFloor();
 
         if (startFloor < endFloor) {
-            currentDirection = Direction.UP;
+            direction = Direction.UP;
             for (int i = startFloor; i <= endFloor; i++) {
                 currentFloor = i;
                 System.out.println("Elevator " + id + " reached floor " + currentFloor);
@@ -67,7 +67,7 @@ public class Elevator {
                 }
             }
         } else if (startFloor > endFloor) {
-            currentDirection = Direction.DOWN;
+            direction = Direction.DOWN;
             for (int i = startFloor; i >= endFloor; i--) {
                 currentFloor = i;
                 System.out.println("Elevator " + id + " reached floor " + currentFloor);
@@ -88,7 +88,7 @@ public class Elevator {
         return currentFloor;
     }
 
-    public Direction getCurrentDirection() {
-        return currentDirection;
+    public Direction getDirection() {
+        return direction;
     }
 }

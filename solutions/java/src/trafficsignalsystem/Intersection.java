@@ -4,21 +4,24 @@ import java.util.Map;
 
 public class Intersection {
     private final String id;
-    private Map<Direction, TrafficLight> signals;
+    private final Map<Direction, TrafficLight> signals;
+    private final Map<Direction, Map<String, Integer>> signalDurations;
     private final TrafficSignalController controller;
 
-    public Intersection(String id, Map<Direction, TrafficLight> signals, Map<Direction, Map<SignalState, Integer>> signalDurations) {
+    public Intersection(String id, Map<Direction, TrafficLight> signals, Map<Direction, Map<String, Integer>> signalDurations) {
         this.id = id;
         this.signals = signals;
+        this.signalDurations = signalDurations;
         this.controller = new TrafficSignalController(signals, signalDurations);
     }
 
-    public void start() {
-        controller.start();
+    public void start(Direction startDirection) {
+        controller.start(startDirection);
     }
 
     public void manualOverride(Direction direction) {
-        controller.override(direction);
+        System.out.println("Manual override: Setting " + direction + " to GREEN.");
+        controller.manualOverride(direction);
     }
 
     public TrafficLight getSignal(Direction direction) {

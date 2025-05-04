@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class CourseRegistrationSystem {
     private static CourseRegistrationSystem instance;
     private final Map<String, Course> courses;
-    private final Map<Integer, Student> students;
+    private final Map<String, Student> students;
     private final List<Registration> registrations;
 
     private CourseRegistrationSystem() {
@@ -26,12 +26,41 @@ public class CourseRegistrationSystem {
         return instance;
     }
 
-    public void addCourse(Course course) {
-        courses.put(course.getCode(), course);
+    public Student registerStudent(String name, String email) {
+        Student student = new Student(name, email);
+        students.put(student.getId(), student);
+        return student;
     }
 
-    public void addStudent(Student student) {
-        students.put(student.getId(), student);
+    public Course addCourse(String code, String name, String instructor, int capacity) {
+        Course course = new Course(code, name, instructor, capacity);
+        courses.put(course.getCode(), course);
+        return course;
+    }
+
+    public synchronized void enroll(String studentId, String courseCode) {
+        Student student = students.get(studentId);
+        Course course = courses.get(courseCode);
+        if (student == null || course == null) {
+            throw new IllegalArgumentException("Student or Course not found");
+        }
+        course.enroll(student);
+        student.enroll(course);
+    }
+
+
+    public synchronized void drop(String studentId, String courseCode) {
+        Student student = students.get(studentId);
+        Course course = courses.get(courseCode);
+        if (student == null || course == null) {
+            throw new IllegalArgumentException("Student or Course not found");
+        }
+        course.drop(student);
+        student.drop(course);
+    }
+
+    public List<Course> getAvailableCourses() {
+        return courses.values().stream().filter(Course::isCourseAvailable).toList();
     }
 
     public List<Course> searchCourses(String query) {
@@ -42,26 +71,5 @@ public class CourseRegistrationSystem {
             }
         }
         return result;
-    }
-
-    public synchronized boolean registerCourse(Student student, Course course) {
-        if (course.getEnrolledStudents() < course.getMaxCapacity()) {
-            Registration registration = new Registration(student, course, new Timestamp(System.currentTimeMillis()));
-            registrations.add(registration);
-            student.getRegisteredCourses().add(course);
-            course.setEnrolledStudents(course.getEnrolledStudents() + 1);
-            notifyObservers(course);
-            return true;
-        }
-        return false;
-    }
-
-    public List<Course> getRegisteredCourses(Student student) {
-        return student.getRegisteredCourses();
-    }
-
-    private void notifyObservers(Course course) {
-        // Notify observers (e.g., UI) about the updated course enrollment
-        // ...
     }
 }

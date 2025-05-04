@@ -1,18 +1,103 @@
-# Designing a Pub-Sub System in Java
+# Pub/Sub System (LLD)
+
+## Problem Statement
+
+Design and implement a Publish-Subscribe (Pub/Sub) system that allows publishers to send messages to topics, and subscribers to receive messages from topics they are interested in. The system should support multiple topics, multiple subscribers per topic, and asynchronous message delivery.
+
+---
 
 ## Requirements
-1. The Pub-Sub system should allow publishers to publish messages to specific topics.
-2. Subscribers should be able to subscribe to topics of interest and receive messages published to those topics.
-3. The system should support multiple publishers and subscribers.
-4. Messages should be delivered to all subscribers of a topic in real-time.
-5. The system should handle concurrent access and ensure thread safety.
-6. The Pub-Sub system should be scalable and efficient in terms of message delivery.
 
-## Classes, Interfaces and Enumerations
-1. The **Message** class represents a message that can be published and received by subscribers. It contains the message content.
-2. The **Topic** class represents a topic to which messages can be published. It maintains a set of subscribers and provides methods to add and remove subscribers, as well as publish messages to all subscribers.
-3. The **Subscriber** interface defines the contract for subscribers. It declares the onMessage method that is invoked when a subscriber receives a message.
-4. The **PrintSubscriber** class is a concrete implementation of the Subscriber interface. It receives messages and prints them to the console.
-5. The **Publisher** class represents a publisher that publishes messages to a specific topic.
-6. The **PubSubSystem** class is the main class that manages topics, subscribers, and message publishing. It uses a ConcurrentHashMap to store topics and an ExecutorService to handle concurrent message publishing.
-7. The **PubSubDemo** class demonstrates the usage of the Pub-Sub system by creating topics, subscribers, and publishers, and publishing messages.
+- **Topics:** The system supports multiple topics.
+- **Publishers:** Publishers can publish messages to any topic.
+- **Subscribers:** Subscribers can subscribe to one or more topics and receive messages published to those topics.
+- **Multiple Subscribers:** Each topic can have multiple subscribers.
+- **Asynchronous Delivery:** Messages are delivered to subscribers asynchronously.
+- **Unsubscribe:** Subscribers can unsubscribe from topics.
+- **Extensibility:** Easy to add new subscriber types or message processing logic.
+
+---
+
+## Core Entities
+
+- **Broker:** Manages topics, subscriptions, and message delivery.
+- **Topic:** Represents a topic to which messages can be published and subscribers can subscribe.
+- **Publisher:** Publishes messages to topics via the broker.
+- **Subscriber (interface):** Interface for all subscribers, defines the `consume(Message)` method.
+- **PrintSubscriber:** A subscriber that prints received messages.
+- **LoggingSubscriber:** A subscriber that logs received messages.
+- **Message:** Represents a message with a payload.
+- **Dispatcher:** Handles asynchronous delivery of messages to subscribers.
+
+---
+
+## Class Design
+
+### 1. Broker
+- **Fields:** Map<String, Topic> topics
+- **Methods:** createTopic(String), subscribe(String, Subscriber), unsubscribe(String, Subscriber), publish(String, Message)
+
+### 2. Topic
+- **Fields:** String name, List<Subscriber> subscribers
+- **Methods:** addSubscriber(Subscriber), removeSubscriber(Subscriber), publish(Message)
+
+### 3. Publisher
+- **Fields:** String name, Broker broker
+- **Methods:** publish(String topic, String payload)
+
+### 4. Subscriber (interface)
+- **Methods:** consume(Message)
+
+### 5. PrintSubscriber
+- **Implements:** Subscriber
+- **Behavior:** Prints received messages to the console
+
+### 6. LoggingSubscriber
+- **Implements:** Subscriber
+- **Behavior:** Logs received messages (prints with a log prefix)
+
+### 7. Message
+- **Fields:** String payload
+- **Methods:** getPayload()
+
+### 8. Dispatcher
+- **Methods:** dispatch(Subscriber, Message), shutdown()
+
+---
+
+## Design Patterns Used
+
+- **Observer Pattern:** The Pub/Sub system is a concrete implementation of the Observer pattern. Topics (subjects) maintain a list of subscribers (observers) and notify them asynchronously when a new message is published.
+## Example Usage
+
+```java
+Broker broker = new Broker();
+broker.createTopic("topic1");
+broker.createTopic("topic2");
+
+Publisher publisher1 = new Publisher("publisher1", broker);
+Subscriber subscriber1 = new PrintSubscriber("PrintSubscriber1");
+Subscriber subscriber2 = new LoggingSubscriber("LoggingSubscriber2");
+
+broker.subscribe("topic1", subscriber1);
+broker.subscribe("topic2", subscriber2);
+
+publisher1.publish("topic1", "Hello Topic1!");
+publisher1.publish("topic2", "Hello Topic2!");
+```
+
+---
+
+## Demo
+
+See `PubSubSystemDemo.java` for a sample usage and simulation of the pub/sub system.
+
+---
+
+## Extending the Design
+
+- **Add new subscriber types:** Implement the `Subscriber` interface for custom processing.
+- **Add new message types:** Extend the `Message` class for richer payloads.
+- **Add filtering or transformation:** Enhance the broker or topic to support message filtering or transformation.
+
+---

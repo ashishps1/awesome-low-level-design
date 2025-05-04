@@ -1,23 +1,27 @@
 package trafficsignalsystem;
 
 public class TrafficLight {
-    private SignalState currentSignalState;
+    private SignalState state;
+    private final Direction direction;
 
-    public TrafficLight() {
-        this.currentSignalState = SignalState.RED;
+    public TrafficLight(Direction direction) {
+        this.direction = direction;
+        this.state = new RedState(); // Default initial state
     }
 
-    public synchronized void changeSignal(SignalState newSignalState) {
-        currentSignalState = newSignalState;
-        notifyObservers();
+    public void setState(SignalState state) {
+        this.state = state;
     }
 
-    public SignalState getCurrentSignal() {
-        return currentSignalState;
+    public SignalState getState() {
+        return state;
     }
 
-    private void notifyObservers() {
-        // Notify observers (e.g., roads) about the signal change
-        // ...
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void handle(TrafficSignalController controller) {
+        state.handle(this, controller, direction);
     }
 }

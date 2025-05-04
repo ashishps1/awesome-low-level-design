@@ -1,7 +1,7 @@
 package taskmanagementsystem;
 
 public enum TaskStatus {
-    PENDING,
+    TODO,
     IN_PROGRESS,
-    COMPLETED
+    DONE
 }

@@ -2,9 +2,9 @@ package tictactoe;
 
 public class Player {
     private final String name;
-    private final char symbol;
+    private final Symbol symbol;
 
-    public Player(String name, char symbol) {
+    public Player(String name, Symbol symbol) {
         this.name = name;
         this.symbol = symbol;
     }
@@ -13,7 +13,7 @@ public class Player {
         return name;
     }
 
-    public char getSymbol() {
+    public Symbol getSymbol() {
         return symbol;
     }
 }

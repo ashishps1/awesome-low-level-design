@@ -1,26 +1,51 @@
 package taskmanagementsystem;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Task {
     private final String id;
     private String title;
     private String description;
     private Date dueDate;
-    private int priority;
     private TaskStatus status;
-    private final User assignedUser;
+    private TaskPriority priority;
+    private User assignee;
+    private final List<Comment> comments;
+    private final List<Task> subtasks;
 
-    public Task(String id, String title, String description, Date dueDate, int priority, User assignedUser) {
+    public Task(String id, String title, String description, Date dueDate, TaskPriority priority, User assignee) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.status = TaskStatus.PENDING;
-        this.assignedUser = assignedUser;
+        this.status = TaskStatus.TODO;
+        this.assignee = assignee;
+        this.comments = new ArrayList<>();
+        this.subtasks = new ArrayList<>();
     }
 
+    public synchronized void assignUser(User user) {
+        this.assignee = user;
+    }
+
+    public synchronized void updateStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public synchronized void updatePriority(TaskPriority priority) {
+        this.priority = priority;
+    }
+
+    public synchronized void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public synchronized void addSubtask(Task subtask) {
+        subtasks.add(subtask);
+    }
 
     // Getters and setters
     public String getId() {
@@ -35,7 +60,7 @@ public class Task {
         return description;
     }
 
-    public int getPriority() {
+    public TaskPriority getPriority() {
         return priority;
     }
 
@@ -47,8 +72,8 @@ public class Task {
         return status;
     }
 
-    public User getAssignedUser() {
-        return assignedUser;
+    public User getAssignee() {
+        return assignee;
     }
 
     public void setTitle(String title) {
@@ -63,7 +88,7 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(TaskPriority priority) {
         this.priority = priority;
     }
 

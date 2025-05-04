@@ -23,9 +23,9 @@ public class Topic {
         subscribers.remove(subscriber);
     }
 
-    public void publish(Message message) {
+    public void broadcast(Message message) {
         for (Subscriber subscriber : subscribers) {
-            subscriber.onMessage(message);
+            Dispatcher.dispatch(subscriber, message);
         }
     }
 }

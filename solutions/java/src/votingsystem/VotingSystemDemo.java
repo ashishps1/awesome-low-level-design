@@ -3,8 +3,8 @@ package votingsystem;
 import java.util.*;
 import java.util.concurrent.*;
 
-class VotingSystemDemo {
-    public static void main(String[] args) {
+public class VotingSystemDemo {
+    public static void run() {
         VotingSystem votingSystem = VotingSystem.getInstance();
 
         votingSystem.registerCandidate("C1", "John Doe", "Party A");

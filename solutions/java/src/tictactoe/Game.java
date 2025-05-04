@@ -1,64 +1,53 @@
 package tictactoe;
 
-import java.util.Scanner;
-
 public class Game {
-    private final Player player1;
-    private final Player player2;
     private final Board board;
-    private Player currentPlayer;
+    private final Player[] players;
+    private int currentPlayerIndex;
+    private GameStatus status;
 
-    public Game(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.board = new Board();
-        this.currentPlayer = player1;
+    public Game(Player player1, Player player2, int size) {
+        this.board = new Board(size);
+        this.players = new Player[]{player1, player2};
+        this.status = GameStatus.IN_PROGRESS;
     }
 
-    public void play() {
-        board.printBoard();
-
-        while (!board.isFull() && !board.hasWinner()) {
-            System.out.println(currentPlayer.getName() + "'s turn.");
-            int row = getValidInput("Enter row (0-2): ");
-            int col = getValidInput("Enter column (0-2): ");
-
-            try {
-                board.makeMove(row, col, currentPlayer.getSymbol());
-                board.printBoard();
-                switchPlayer();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+    public synchronized boolean playMove(int row, int col) {
+        if (status != GameStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Game already finished.");
         }
 
-        if (board.hasWinner()) {
-            switchPlayer();
-            System.out.println(currentPlayer.getName() + " wins!");
+        if (!board.isValidMove(row, col)) {
+            throw new IllegalArgumentException("Invalid move.");
+        }
+
+        Player current = players[currentPlayerIndex];
+        board.placeMove(row, col, current.getSymbol());
+
+        if (board.checkWin(current.getSymbol())) {
+            status = GameStatus.WIN;
+            System.out.println(current.getName() + " wins!");
+        } else if (board.isFull()) {
+            status = GameStatus.DRAW;
+            System.out.println("Game ended in a draw.");
         } else {
-            System.out.println("It's a draw!");
+            currentPlayerIndex = 1 - currentPlayerIndex;
         }
+
+        return true;
     }
 
-    private void switchPlayer() {
-        currentPlayer = (currentPlayer == player1) ? player2 : player1;
+    public synchronized void reset() {
+        board.reset();
+        currentPlayerIndex = 0;
+        status = GameStatus.IN_PROGRESS;
     }
 
-    private int getValidInput(String message) {
-        Scanner scanner = new Scanner(System.in);
-        int input;
+    public GameStatus getStatus() {
+        return status;
+    }
 
-        while (true) {
-            System.out.print(message);
-            if (scanner.hasNextInt()) {
-                input = scanner.nextInt();
-                if (input >= 0 && input <= 2) {
-                    return input;
-                }
-            } else {
-                scanner.next();
-            }
-            System.out.println("Invalid input! Please enter a number between 0 and 2.");
-        }
+    public void printBoard() {
+        board.print();
     }
 }

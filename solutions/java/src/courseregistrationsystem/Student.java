@@ -1,21 +1,31 @@
 package courseregistrationsystem;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Student {
-    private final int id;
+    private final String id;
     private final String name;
     private final String email;
-    private final List<Course> registeredCourses;
+    private final List<Course> enrolledCourses;
 
-    public Student(int id, String name, String email, List<Course> registeredCourses) {
-        this.id = id;
+    public Student(String name, String email) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
-        this.registeredCourses = registeredCourses;
+        this.enrolledCourses = new ArrayList<>();
     }
 
-    public int getId() {
+    public void enroll(Course course) {
+        enrolledCourses.add(course);
+    }
+
+    public void drop(Course course) {
+        enrolledCourses.remove(course);
+    }
+
+    public String getId() {
         return id;
     }
 
@@ -27,7 +37,7 @@ public class Student {
         return email;
     }
 
-    public List<Course> getRegisteredCourses() {
-        return registeredCourses;
+    public List<Course> getEnrolledCourses() {
+        return enrolledCourses;
     }
 }

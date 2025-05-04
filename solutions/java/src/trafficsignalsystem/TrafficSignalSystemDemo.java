@@ -5,41 +5,21 @@ import java.util.Map;
 
 public class TrafficSignalSystemDemo {
     public static void run() {
-        // Configure signal durations per direction
-        Map<Direction, Map<SignalState, Integer>> signalDurations = new EnumMap<>(Direction.class);
+        // Configure durations per direction and state
+        Map<Direction, Map<String, Integer>> signalDurations = new EnumMap<>(Direction.class);
+        signalDurations.put(Direction.NORTH, Map.of("GREEN", 4, "YELLOW", 2, "RED", 3));
+        signalDurations.put(Direction.SOUTH, Map.of("GREEN", 3, "YELLOW", 2, "RED", 4));
+        signalDurations.put(Direction.EAST, Map.of("GREEN", 5, "YELLOW", 2, "RED", 3));
+        signalDurations.put(Direction.WEST, Map.of("GREEN", 2, "YELLOW", 2, "RED", 5));
 
-        // Example: Different durations for each direction
-        signalDurations.put(Direction.NORTH, Map.of(
-                SignalState.GREEN, 4,
-                SignalState.YELLOW, 2,
-                SignalState.RED, 3
-        ));
-        signalDurations.put(Direction.SOUTH, Map.of(
-                SignalState.GREEN, 3,
-                SignalState.YELLOW, 2,
-                SignalState.RED, 4
-        ));
-        signalDurations.put(Direction.EAST, Map.of(
-                SignalState.GREEN, 5,
-                SignalState.YELLOW, 2,
-                SignalState.RED, 3
-        ));
-        signalDurations.put(Direction.WEST, Map.of(
-                SignalState.GREEN, 2,
-                SignalState.YELLOW, 2,
-                SignalState.RED, 5
-        ));
-
-        // Initialize controller with one signal per direction
+        // Initialize traffic lights
         Map<Direction, TrafficLight> signals = new EnumMap<>(Direction.class);
         for (Direction direction : Direction.values()) {
-            signals.put(direction, new TrafficLight());
+            signals.put(direction, new TrafficLight(direction));
         }
 
+        // Create and start the controller
         Intersection intersection1 = new Intersection("1", signals, signalDurations);
-
-        // Start the traffic signal simulation
-        System.out.println("Starting traffic signal controller...\n");
-        intersection1.start();
+        intersection1.start(Direction.NORTH);
     }
 }

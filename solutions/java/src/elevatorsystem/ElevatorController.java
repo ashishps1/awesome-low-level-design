@@ -2,7 +2,6 @@ package elevatorsystem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ElevatorController {
     private final List<Elevator> elevators;
@@ -26,8 +25,8 @@ public class ElevatorController {
         int minDistance = Integer.MAX_VALUE;
         //first preference to direction.
         Direction userDirection = (sourceFloor - destinationFloor) > 0 ? Direction.DOWN : Direction.UP;
-        List<Elevator> optimalElevators = elevators.stream().filter(e -> e.getCurrentDirection()==userDirection).findAny().isPresent() ? 
-             elevators.stream().filter(e -> e.getCurrentDirection()==userDirection).collect(Collectors.toList()) : elevators;
+        List<Elevator> optimalElevators = elevators.stream().anyMatch(e -> e.getDirection()==userDirection) ?
+             elevators.stream().filter(e -> e.getDirection()==userDirection).toList() : elevators;
         
         for (Elevator elevator : optimalElevators) {
             int distance = Math.abs(sourceFloor - elevator.getCurrentFloor());

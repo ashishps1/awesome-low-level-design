@@ -2,12 +2,12 @@ package coffeevendingmachine;
 
 import java.util.Map;
 
-public class Coffee {
+public class CoffeeRecipe {
     private final String name;
     private final double price;
-    private final Map<Ingredient, Integer> recipe;
+    private final Map<String, Integer> recipe;
 
-    public Coffee(String name, double price, Map<Ingredient, Integer> recipe) {
+    public CoffeeRecipe(String name, double price, Map<String, Integer> recipe) {
         this.name = name;
         this.price = price;
         this.recipe = recipe;
@@ -21,7 +21,7 @@ public class Coffee {
         return price;
     }
 
-    public Map<Ingredient, Integer> getRecipe() {
+    public Map<String, Integer> getRecipe() {
         return recipe;
     }
 }

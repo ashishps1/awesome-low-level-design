@@ -1,19 +1,88 @@
-# Designing a Coffee Vending Machine
+# Coffee Vending Machine (LLD)
+
+## Problem Statement
+
+Design and implement a Coffee Vending Machine system that can serve different types of coffee, manage ingredient inventory, process payments, and handle user interactions such as selecting coffee and refilling ingredients.
+
+---
 
 ## Requirements
-1. The coffee vending machine should support different types of coffee, such as espresso, cappuccino, and latte.
-2. Each type of coffee should have a specific price and recipe (ingredients and their quantities).
-3. The machine should have a menu to display the available coffee options and their prices.
-4. Users should be able to select a coffee type and make a payment.
-5. The machine should dispense the selected coffee and provide change if necessary.
-6. The machine should track the inventory of ingredients and notify when they are running low.
-7. The machine should handle multiple user requests concurrently and ensure thread safety.
 
-## Classes, Interfaces and Enumerations
-1. The **Coffee** class represents a coffee type with its name, price, and recipe (ingredients and their quantities).
-2. The **Ingredient** class represents an ingredient used in making coffee, with its name and quantity. It provides a synchronized method to update the quantity.
-3. The **Payment** class represents a payment made by a user, with the amount paid.
-4. The **CoffeeMachine** class is the main class that manages the coffee vending machine. It follows the Singleton pattern to ensure a single instance of the machine.
-5. The **CoffeeMachine** class initializes the coffee menu and ingredients in its constructor. It provides methods to display the menu, select a coffee, dispense coffee, and update ingredient quantities.
-6. The hasEnoughIngredients method checks if there are sufficient ingredients to make a selected coffee, while the updateIngredients method updates the ingredient quantities after dispensing a coffee.
-7. The **CoffeeVendingMachine** class is the entry point of the application and demonstrates the usage of the coffee vending machine. It creates an instance of the machine, displays the menu, and simulates concurrent user requests using an ExecutorService.
+- **Multiple Coffee Types:** The machine should support multiple coffee recipes (e.g., Espresso, Latte, Cappuccino).
+- **Ingredient Management:** The machine should track and manage ingredient levels, and prevent dispensing if ingredients are insufficient.
+- **Payment Processing:** The machine should process payments before dispensing coffee.
+- **Refill Ingredients:** The machine should allow refilling of ingredients.
+- **Extensibility:** Easy to add new coffee types or payment methods.
+
+---
+
+## Core Entities
+
+- **CoffeeVendingMachine:** Main class that manages the overall operation, user interaction, and coordinates other components.
+- **CoffeeRecipe:** Represents a coffee recipe, including required ingredients and their quantities.
+- **IngredientStore:** Manages the inventory of ingredients, supports checking and refilling.
+- **Dispenser:** Handles the dispensing of coffee after successful payment and ingredient check.
+- **PaymentProcessor:** Handles payment logic and validation.
+- **Payment:** Represents a payment transaction.
+
+---
+
+## Class Design
+
+### 1. CoffeeVendingMachine
+- **Fields:** ingredientStore, paymentProcessor, Map<String, CoffeeRecipe> recipes, Dispenser
+- **Methods:** selectCoffee(String), makeCoffee(String, Payment), refillIngredient(String, int), addRecipe(CoffeeRecipe), etc.
+
+### 2. CoffeeRecipe
+- **Fields:** name, Map<String, Integer> ingredients
+- **Methods:** getName(), getIngredients()
+
+### 3. IngredientStore
+- **Fields:** Map<String, Integer> ingredientLevels
+- **Methods:** hasIngredients(Map<String, Integer>), useIngredients(Map<String, Integer>), refill(String, int), getLevel(String)
+
+### 4. Dispenser
+- **Methods:** dispense(String)
+
+### 5. PaymentProcessor
+- **Methods:** processPayment(Payment)
+
+### 6. Payment
+- **Fields:** amount, paymentType, etc.
+
+---
+
+## Design Patterns Used
+
+- **Strategy Pattern:** (Conceptually) for supporting different payment methods or coffee recipes.
+- **Separation of Concerns:** Each class has a single responsibility (inventory, payment, dispensing, etc.).
+
+---
+
+## Example Usage
+
+```java
+CoffeeVendingMachine machine = new CoffeeVendingMachine();
+machine.addRecipe(new CoffeeRecipe("Espresso", Map.of("CoffeeBeans", 10, "Water", 30)));
+machine.refillIngredient("CoffeeBeans", 100);
+machine.refillIngredient("Water", 200);
+
+Payment payment = new Payment(50, "CASH");
+machine.makeCoffee("Espresso", payment);
+```
+
+---
+
+## Demo
+
+See `CoffeeVendingMachineDemo.java` for a sample usage and simulation of the coffee vending machine.
+
+---
+
+## Extending the Framework
+
+- **Add new coffee types:** Create new `CoffeeRecipe` instances and add them to the machine.
+- **Add new payment methods:** Extend `PaymentProcessor` to support new payment types.
+- **Add new ingredients:** Update `IngredientStore` and recipes as needed.
+
+---

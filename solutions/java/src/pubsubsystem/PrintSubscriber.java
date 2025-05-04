@@ -8,7 +8,7 @@ public class PrintSubscriber implements Subscriber {
     }
 
     @Override
-    public void onMessage(Message message) {
-        System.out.println("Subscriber " + name + " received message: " + message.getContent());
+    public void consume(Message message) {
+        System.out.println("Subscriber " + name + " received message: " + message.getPayload());
     }
 }

@@ -10,21 +10,21 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class RentalSystem {
-    private static RentalSystem instance;
+public class CarRentalSystem {
+    private static CarRentalSystem instance;
     private final Map<String, Car> cars;
     private final Map<String, Reservation> reservations;
     private final PaymentProcessor paymentProcessor;
 
-    private RentalSystem() {
+    private CarRentalSystem() {
         cars = new ConcurrentHashMap<>();
         reservations = new ConcurrentHashMap<>();
         paymentProcessor = new CreditCardPaymentProcessor();
     }
 
-    public static synchronized RentalSystem getInstance() {
+    public static synchronized CarRentalSystem getInstance() {
         if (instance == null) {
-            instance = new RentalSystem();
+            instance = new CarRentalSystem();
         }
         return instance;
     }

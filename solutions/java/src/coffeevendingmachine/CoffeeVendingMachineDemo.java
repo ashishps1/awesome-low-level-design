@@ -2,20 +2,24 @@ package coffeevendingmachine;
 
 public class CoffeeVendingMachineDemo {
     public static void run() {
-        CoffeeMachine coffeeMachine = CoffeeMachine.getInstance();
+        CoffeeVendingMachine coffeeVendingMachine = CoffeeVendingMachine.getInstance();
+
+        coffeeVendingMachine.refillIngredient("Water", 120);
+        coffeeVendingMachine.refillIngredient("Milk", 70);
+        coffeeVendingMachine.refillIngredient("Coffee", 150);
 
         // Display coffee menu
-        coffeeMachine.displayMenu();
+        coffeeVendingMachine.displayMenu();
 
         // Simulate user requests
-        Coffee espresso = coffeeMachine.selectCoffee("Espresso");
-        coffeeMachine.dispenseCoffee(espresso, new Payment(3.0));
+        CoffeeRecipe espresso = coffeeVendingMachine.selectCoffee("Espresso");
+        coffeeVendingMachine.dispenseCoffee(espresso, new Payment(3.0));
 
-        Coffee cappuccino = coffeeMachine.selectCoffee("Cappuccino");
-        coffeeMachine.dispenseCoffee(cappuccino, new Payment(3.5));
+        CoffeeRecipe cappuccino = coffeeVendingMachine.selectCoffee("Cappuccino");
+        coffeeVendingMachine.dispenseCoffee(cappuccino, new Payment(3.5));
 
 
-        Coffee latte = coffeeMachine.selectCoffee("Latte");
-        coffeeMachine.dispenseCoffee(latte, new Payment(4.0));
+        CoffeeRecipe latte = coffeeVendingMachine.selectCoffee("Latte");
+        coffeeVendingMachine.dispenseCoffee(latte, new Payment(4.0));
     }
 }

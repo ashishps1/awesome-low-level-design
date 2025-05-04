@@ -2,39 +2,44 @@ package pubsubsystem;
 
 public class PubSubSystemDemo {
     public static void run() {
-        // Create topics
-        Topic topic1 = new Topic("Topic1");
-        Topic topic2 = new Topic("Topic2");
+        // Create Broker
+        Broker broker = new Broker();
+
+        // Create Topics
+        broker.createTopic("topic1");
+        broker.createTopic("topic2");
 
         // Create publishers
-        Publisher publisher1 = new Publisher();
-        Publisher publisher2 = new Publisher();
+        Publisher publisher1 = new Publisher("publisher1", broker);
+        Publisher publisher2 = new Publisher("publisher2", broker);
 
         // Create subscribers
-        Subscriber subscriber1 = new PrintSubscriber("Subscriber1");
-        Subscriber subscriber2 = new PrintSubscriber("Subscriber2");
-        Subscriber subscriber3 = new PrintSubscriber("Subscriber3");
-
-        publisher1.registerTopic(topic1);
-        publisher2.registerTopic(topic2);
+        Subscriber subscriber1 = new PrintSubscriber("PrintSubscriber1");
+        Subscriber subscriber2 = new PrintSubscriber("PrintSubscriber2");
+        Subscriber subscriber3 = new LoggingSubscriber("LoggingSubscriber3");
 
         // Subscribe to topics
-        topic1.addSubscriber(subscriber1);
-        topic1.addSubscriber(subscriber2);
-        topic2.addSubscriber(subscriber2);
-        topic2.addSubscriber(subscriber3);
+        broker.subscribe("topic1", subscriber1);
+        broker.subscribe("topic1", subscriber2);
+        broker.subscribe("topic2", subscriber3);
 
         // Publish messages
-        publisher1.publish(topic1, new Message("Message1 for Topic1"));
-        publisher1.publish(topic1, new Message("Message2 for Topic1"));
-        publisher2.publish(topic2, new Message("Message1 for Topic2"));
-
+        publisher1.publish("topic1", "Message1 for Topic1");
+        publisher1.publish("topic1", "Message2 for Topic1");
+        publisher1.publish("topic2", "Message1 for Topic2");
 
         // Unsubscribe from a topic
-        topic1.removeSubscriber(subscriber2);
+        broker.unsubscribe("topic1", subscriber2);
 
         // Publish more messages
-        publisher1.publish(topic1, new Message("Message3 for Topic1"));
-        publisher2.publish(topic2, new Message("Message2 for Topic2"));
+        publisher1.publish("topic1", "Message3 for Topic1");
+        publisher2.publish("topic2", "Message2 for Topic2");
+
+        try {
+            Thread.sleep(100); // Allow async delivery
+            Dispatcher.shutdown();
+        } catch (InterruptedException e) {
+            System.out.println("Interrupted exception");
+        }
     }
 }

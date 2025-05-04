@@ -1,36 +1,4 @@
-import airlinemanagementsystem.AirlineManagementSystemDemo;
-import atm.ATMDemo;
-import carrentalsystem.CarRentalSystemDemo;
-import chessgame.ChessGameDemo;
-import coffeevendingmachine.CoffeeVendingMachineDemo;
-import concertticketbookingsystem.ConcertTicketBookingSystemDemo;
-import courseregistrationsystem.CourseRegistrationDemo;
-import cricinfo.CricinfoDemo;
-import digitalwalletservice.DigitalWalletDemo;
-import elevatorsystem.ElevatorSystemDemo;
-import fooddeliveryservice.FoodDeliveryServiceDemo;
-import hotelmanagementsystem.HotelManagementSystemDemo;
-import librarymanagementsystem.LibraryManagementSystemDemo;
-import linkedin.LinkedInDemo;
-import loggingframework.LoggingFrameworkDemo;
-import lrucache.LRUCacheDemo;
-import movieticketbookingsystem.MovieTicketBookingDemo;
-import musicstreamingservice.MusicStreamingServiceDemo;
-import onlineauctionsystem.AuctionSystemDemo;
-import onlineshoppingservice.OnlineShoppingServiceDemo;
-import onlinestockbrokeragesystem.StockBrokerageSystemDemo;
-import parkinglot.ParkingLotDemo;
-import pubsubsystem.PubSubSystemDemo;
-import restaurantmanagementsystem.RestaurantManagementDemo;
-import ridesharingservice.RideSharingServiceDemo;
-import snakeandladdergame.SnakeAndLadderDemo;
-import socialnetworkingservice.SocialNetworkingServiceDemo;
-import splitwise.SplitwiseDemo;
-import stackoverflow.StackOverflowDemo;
-import taskmanagementsystem.TaskManagementSystemDemo;
-import tictactoe.TicTacToeDemo;
-import trafficsignalsystem.TrafficSignalSystemDemo;
-import vendingmachine.VendingMachineDemo;
+import courseregistrationsystem.CourseRegistrationSystemDemo;
 
 public class LLDRunner {
     public static void main(String[] args) {
@@ -42,7 +10,7 @@ public class LLDRunner {
 //        ChessGameDemo.run();
 //        CoffeeVendingMachineDemo.run();
 //        ConcertTicketBookingSystemDemo.run();
-//        CourseRegistrationDemo.run();
+        CourseRegistrationSystemDemo.run();
 //        CricinfoDemo.run();
 //        DigitalWalletDemo.run();
 //        ElevatorSystemDemo.run();
@@ -67,7 +35,8 @@ public class LLDRunner {
 //        StackOverflowDemo.run();
 //        TaskManagementSystemDemo.run();
 //        TicTacToeDemo.run();
-        TrafficSignalSystemDemo.run();
+//        TrafficSignalSystemDemo.run();
 //        VendingMachineDemo.run();
+//        VotingSystemDemo.run();
     }
 }
