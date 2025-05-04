@@ -1,19 +1,15 @@
 package onlineauctionsystem;
 
 public class User {
-    private final String id;
     private final String username;
-    private final String email;
+    private final String name;
 
-    public User(String id, String username, String email) {
-        this.id = id;
+    public User(String username, String name) {
         this.username = username;
-        this.email = email;
+        this.name = name;
     }
 
-    // Getters and setters
-
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 }

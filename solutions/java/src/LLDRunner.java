@@ -2,6 +2,7 @@ import airlinemanagementsystem.AirlineManagementSystemDemo;
 import courseregistrationsystem.CourseRegistrationSystemDemo;
 import fooddeliveryservice.FoodDeliveryServiceDemo;
 import musicstreamingservice.MusicStreamingServiceDemo;
+import onlineauctionsystem.AuctionSystemDemo;
 import onlineshoppingservice.OnlineShoppingServiceDemo;
 
 public class LLDRunner {

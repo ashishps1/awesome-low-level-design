@@ -2,15 +2,20 @@ package onlineauctionsystem;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class AuctionSystem {
     private static AuctionSystem instance;
     private final Map<String, User> users;
-    private final Map<String, AuctionListing> auctionListings;
+    private final Map<String, Auction> auctions;
+    private final ScheduledExecutorService scheduler;
 
     private AuctionSystem() {
         users = new ConcurrentHashMap<>();
-        auctionListings = new ConcurrentHashMap<>();
+        auctions = new ConcurrentHashMap<>();
+        this.scheduler = Executors.newScheduledThreadPool(1);
     }
 
     public static synchronized AuctionSystem getInstance() {
@@ -20,43 +25,38 @@ public class AuctionSystem {
         return instance;
     }
 
-    public void registerUser(User user) {
-        users.put(user.getId(), user);
+    public User registerUser(String username, String name) {
+        User user = new User(username, name);
+        users.put(username, user);
+        return user;
     }
 
     public User getUser(String userId) {
         return users.get(userId);
     }
 
-    public void createAuctionListing(AuctionListing auctionListing) {
-        auctionListings.put(auctionListing.getId(), auctionListing);
-        startAuctionTimer(auctionListing);
+    public Auction createAuction(User seller, Item item, double startingPrice, Date start, Date end) {
+        Auction auction = new Auction(seller, item, startingPrice, start, end);
+        auctions.put(auction.getId(), auction);
+
+        long delay = end.getTime() - new Date().getTime();
+        scheduler.schedule(auction::closeAuction, delay, TimeUnit.MILLISECONDS);
+
+        System.out.println("Auction created: " + auction.getId());
+        return auction;
     }
 
-    public List<AuctionListing> searchAuctionListings(String keyword) {
-        List<AuctionListing> matchingListings = new ArrayList<>();
-        for (AuctionListing auctionListing : auctionListings.values()) {
-            if (auctionListing.getItemName().contains(keyword) || auctionListing.getDescription().contains(keyword)) {
-                matchingListings.add(auctionListing);
-            }
-        }
-        return matchingListings;
+    public void placeBid(String auctionId, Bid bid) {
+        Auction auction = auctions.get(auctionId);
+        if (auction == null) throw new IllegalArgumentException("Invalid auction ID");
+        auction.placeBid(bid);
     }
 
-    public void placeBid(String auctionListingId, Bid bid) {
-        AuctionListing auctionListing = auctionListings.get(auctionListingId);
-        if (auctionListing != null) {
-            auctionListing.placeBid(bid);
-        }
+    public List<Auction> viewActiveAuctions() {
+        return auctions.values().stream().filter(Auction::isActive).toList();
     }
 
-    private void startAuctionTimer(AuctionListing auctionListing) {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                auctionListing.closeAuction();
-            }
-        }, auctionListing.getDuration());
+    public void shutdown() {
+        scheduler.shutdown();
     }
 }

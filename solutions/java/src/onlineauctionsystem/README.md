@@ -1,24 +1,91 @@
-# Designing an Online Auction System
-In this article, we delve into the object-oriented design and implementation of an Online Auction System using Java. 
+# Online Auction System (LLD)
 
-This system allows for the creation and management of auctions, user participation in bidding, and handling transactions.
+## Problem Statement
+
+Design and implement an Online Auction System that allows users to create auctions, place bids on items, track auction status, and determine winners.
+
+---
 
 ## Requirements
-1. The online auction system should allow users to register and log in to their accounts.
-2. Users should be able to create new auction listings with details such as item name, description, starting price, and auction duration.
-3. Users should be able to browse and search for auction listings based on various criteria (e.g., item name, category, price range).
-4. Users should be able to place bids on active auction listings.
-5. The system should automatically update the current highest bid and notify the bidders accordingly.
-6. The auction should end when the specified duration is reached, and the highest bidder should be declared the winner.
-7. The system should handle concurrent access to auction listings and ensure data consistency.
-8. The system should be extensible to accommodate future enhancements and new features.
 
-## Classes, Interfaces and Enumerations
-1. The **User** class represents a user in the online auction system, with properties such as id, username, and email.
-2. The **AuctionStatus** enum defines the possible states of an auction listing, such as active and closed.
-3. The **AuctionListing** class represents an auction listing in the system, with properties like id, item name, description, starting price, duration, seller, current highest bid, and a list of bids.
-4. The **Bid** class represents a bid placed by a user on an auction listing, with properties such as id, bidder, amount, and timestamp.
-5. The **AuctionSystem** class is the core of the online auction system and follows the Singleton pattern to ensure a single instance of the auction system.
-6. The AuctionSystem class uses concurrent data structures (ConcurrentHashMap and CopyOnWriteArrayList) to handle concurrent access to auction listings and ensure thread safety.
-7. The AuctionSystem class provides methods for registering users, creating auction listings, searching auction listings, and placing bids.
-8. The **AuctionSystemDemo** class serves as the entry point of the application and demonstrates the usage of the online auction system.
+- **User Management:** Users can register and participate in auctions.
+- **Item Management:** The system manages items that can be auctioned.
+- **Auction Creation:** Users can create auctions for items, specifying start and end times.
+- **Bidding:** Users can place bids on active auctions.
+- **Auction Status Tracking:** The system tracks the status of each auction (e.g., ACTIVE, ENDED).
+- **Winner Determination:** The system determines the winning bid and user when an auction ends.
+- **Extensibility:** Easy to add new features such as reserve prices, buy-now options, or notifications.
+
+---
+
+## Core Entities
+
+- **AuctionSystem:** Main class that manages users, items, auctions, and bidding.
+- **User:** Represents a user who can create auctions and place bids.
+- **Item:** Represents an item to be auctioned.
+- **Auction:** Represents an auction for an item, including bids, status, and winner.
+- **Bid:** Represents a bid placed by a user on an auction.
+- **AuctionStatus:** Enum for auction status (ACTIVE, ENDED).
+
+---
+
+## Class Design
+
+### 1. AuctionSystem
+- **Fields:** List<User> users, List<Item> items, List<Auction> auctions
+- **Methods:** registerUser(User), addItem(Item), createAuction(Item, User, Date startTime, Date endTime), placeBid(Auction, User, double amount), endAuction(Auction), getActiveAuctions(), getEndedAuctions(), etc.
+
+### 2. User
+- **Fields:** int id, String name
+
+### 3. Item
+- **Fields:** int id, String name, String description
+
+### 4. Auction
+- **Fields:** int id, Item item, User seller, List<Bid> bids, AuctionStatus status, User winner, Date startTime, Date endTime
+- **Methods:** addBid(Bid), endAuction(), getHighestBid(), getWinner()
+
+### 5. Bid
+- **Fields:** int id, User bidder, double amount, Date bidTime
+
+### 6. AuctionStatus (enum)
+- Values: ACTIVE, ENDED
+
+---
+
+## Example Usage
+
+```java
+AuctionSystem system = new AuctionSystem();
+User alice = new User(1, "Alice");
+User bob = new User(2, "Bob");
+system.registerUser(alice);
+system.registerUser(bob);
+
+Item painting = new Item(1, "Painting", "Beautiful landscape painting");
+system.addItem(painting);
+
+Auction auction = system.createAuction(painting, alice, new Date(), new Date(System.currentTimeMillis() + 3600000));
+system.placeBid(auction, bob, 100.0);
+system.placeBid(auction, alice, 120.0);
+
+system.endAuction(auction);
+User winner = auction.getWinner();
+System.out.println("Winner: " + (winner != null ? winner.getName() : "No winner"));
+```
+
+---
+
+## Demo
+
+See `AuctionSystemDemo.java` for a sample usage and simulation of the online auction system.
+
+---
+
+## Extending the Framework
+
+- **Add reserve prices:** Only sell if the highest bid meets the minimum price.
+- **Add buy-now options:** Allow instant purchase at a set price.
+- **Add notifications:** Notify users of auction events or outbids.
+
+---
