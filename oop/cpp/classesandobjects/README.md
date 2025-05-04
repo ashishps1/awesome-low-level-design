@@ -24,6 +24,7 @@ class Car {
     string model;
     int year;
 
+    public:
     // Constructor
     Car(string color, string make, string model, int year) {
         this->color = color;
@@ -39,7 +40,7 @@ class Car {
         cout << "Car Year: " << year << endl;
         cout << "Car Color: " << color << endl;
     }
-}
+};
 ```
 - **Attributes**: The class `Car` has four attributes that describe its state: `color`, `make`, `model`, and `year`.
 - **Constructor**: The constructor `Car(string color, string make, string model, int year)` initializes new objects of the class.
@@ -65,6 +66,8 @@ int main() {
     car1.displayInfo();
     cout << "-----------------";
     car2.displayInfo();
+
+    return 0;
 }
 ```
 
