@@ -4,17 +4,14 @@ import airlinemanagementsystem.flight.Flight;
 import airlinemanagementsystem.Passenger;
 import airlinemanagementsystem.seat.Seat;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.UUID;
 
 public class BookingManager {
     private static BookingManager instance;
     private final Map<String, Booking> bookings;
     private final Object lock = new Object();
-    private final AtomicInteger bookingCounter = new AtomicInteger(0);
 
     private BookingManager() {
         bookings = new HashMap<>();
@@ -28,8 +25,8 @@ public class BookingManager {
     }
 
     public Booking createBooking(Flight flight, Passenger passenger, Seat seat, double price) {
-        String bookingNumber = generateBookingNumber();
-        Booking booking = new Booking(bookingNumber, flight, passenger, seat, price);
+        String bookingNumber = UUID.randomUUID().toString();
+        Booking booking = new Booking(flight, passenger, seat, price);
         synchronized (lock) {
             bookings.put(bookingNumber, booking);
         }
@@ -43,11 +40,5 @@ public class BookingManager {
                 booking.cancel();
             }
         }
-    }
-
-    private String generateBookingNumber() {
-        int bookingId = bookingCounter.incrementAndGet();
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        return "BKG" + timestamp + String.format("%06d", bookingId);
     }
 }

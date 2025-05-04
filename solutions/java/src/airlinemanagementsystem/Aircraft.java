@@ -10,4 +10,8 @@ public class Aircraft {
         this.model = model;
         this.totalSeats = totalSeats;
     }
+
+    public String getTailNumber() {
+        return tailNumber;
+    }
 }

@@ -1,23 +1,92 @@
-# Designing an Airline Management System
+# Airline Management System (LLD)
+
+## Problem Statement
+
+Design and implement an Airline Management System that allows users to book flights, manage passengers, handle seat assignments, process payments, and track bookings and flights.
+
+---
 
 ## Requirements
-1. The airline management system should allow users to search for flights based on source, destination, and date.
-2. Users should be able to book flights, select seats, and make payments.
-3. The system should manage flight schedules, aircraft assignments, and crew assignments.
-4. The system should handle passenger information, including personal details and baggage information.
-5. The system should support different types of users, such as passengers, airline staff, and administrators.
-6. The system should be able to handle cancellations, refunds, and flight changes.
-7. The system should ensure data consistency and handle concurrent access to shared resources.
-8. The system should be scalable and extensible to accommodate future enhancements and new features.
 
-## Classes, Interfaces and Enumerations
-1. The **Flight** class represents a flight in the airline management system, with properties such as flight number, source, destination, departure time, arrival time, and available seats.
-2. The **Aircraft** class represents an aircraft, with properties like tail number, model, and total seats.
-3. The **Passenger** class represents a passenger, with properties such as ID, name, email, and phone number.
-4. The **Booking** class represents a booking made by a passenger for a specific flight and seat, with properties such as booking number, flight, passenger, seat, price, and booking status.
-5. The **Seat** class represents a seat on a flight, with properties like seat number, seat type, and seat status.
-6. The **Payment** class represents a payment made for a booking, with properties such as payment ID, payment method, amount, and payment status.
-7. The **FlightSearch** class provides functionality to search for flights based on source, destination, and date.
-8. The **BookingManager** class manages the creation and cancellation of bookings. It follows the Singleton pattern to ensure a single instance of the booking manager.
-9. The **PaymentProcessor** class handles the processing of payments. It follows the Singleton pattern to ensure a single instance of the payment processor.
-10. The **AirlineManagementSystem** class serves as the main entry point of the system, combining all the components and providing methods for flight management, booking, payment processing, and other operations.
+- **Flight Management:** The system manages flights, each with a unique flight number, aircraft, source, destination, and schedule.
+- **Aircraft Management:** Each flight is associated with an aircraft, which has a model and a set of seats.
+- **Seat Management:** The system manages seat assignments and availability for each flight.
+- **Passenger Management:** Passengers can be added, updated, and associated with bookings.
+- **Booking Management:** Users can book flights, and the system tracks bookings, assigned seats, and passengers.
+- **Payment Processing:** The system processes payments for bookings.
+- **Extensibility:** Easy to add new features such as loyalty programs, meal selection, or multi-leg journeys.
+
+---
+
+## Core Entities
+
+- **AirlineManagementSystem:** Main class that manages flights, bookings, passengers, and payments.
+- **Flight:** Represents a flight with flight number, aircraft, source, destination, schedule, and seats.
+- **Aircraft:** Represents an aircraft with a model and a set of seats.
+- **Seat:** Represents a seat on an aircraft, with seat number, class, and availability.
+- **Passenger:** Represents a passenger with ID, name, and contact details.
+- **Booking:** Represents a booking, including passenger(s), flight, seat(s), and payment.
+- **Payment (in payment/):** Represents a payment transaction for a booking.
+
+---
+
+## Class Design
+
+### 1. AirlineManagementSystem
+- **Fields:** List<Flight> flights, List<Booking> bookings, List<Passenger> passengers, PaymentProcessor paymentProcessor
+- **Methods:** addFlight(Flight), addPassenger(Passenger), bookFlight(Passenger, Flight, Seat, Payment), getAvailableSeats(Flight), getBookings(Passenger), etc.
+
+### 2. Flight (in flight/)
+- **Fields:** String flightNumber, Aircraft aircraft, String source, String destination, Date schedule, List<Seat> seats
+
+### 3. Aircraft
+- **Fields:** String model, List<Seat> seats
+
+### 4. Seat (in seat/)
+- **Fields:** String seatNumber, String seatClass, boolean isAvailable
+
+### 5. Passenger
+- **Fields:** int id, String name, String contactInfo
+
+### 6. Booking (in booking/)
+- **Fields:** int id, Passenger passenger, Flight flight, List<Seat> seats, Payment payment
+
+### 7. Payment (in payment/)
+- **Fields:** int id, double amount, String method, PaymentStatus status
+
+### 8. PaymentProcessor (in payment/)
+- **Methods:** process(Payment), validate(Payment)
+
+---
+
+## Example Usage
+
+```java
+AirlineManagementSystem system = new AirlineManagementSystem();
+Aircraft aircraft = new Aircraft("Boeing 737", seatList);
+Flight flight = new Flight("AI101", aircraft, "DEL", "BOM", new Date(), seatList);
+system.addFlight(flight);
+
+Passenger alice = new Passenger(1, "Alice", "alice@email.com");
+system.addPassenger(alice);
+
+Seat seat = flight.getAvailableSeats().get(0);
+Payment payment = new Payment(1, 5000.0, "CREDIT_CARD");
+system.bookFlight(alice, flight, seat, payment);
+```
+
+---
+
+## Demo
+
+See `AirlineManagementSystemDemo.java` for a sample usage and simulation of the airline management system.
+
+---
+
+## Extending the Framework
+
+- **Add loyalty programs:** Track frequent flyer points and rewards.
+- **Add meal selection:** Allow passengers to select meals during booking.
+- **Add multi-leg journeys:** Support bookings with multiple connecting flights.
+
+---

@@ -1,15 +1,19 @@
 package airlinemanagementsystem;
 
+import java.util.UUID;
+
 public class Passenger {
     private final String id;
     private final String name;
     private final String email;
-    private final String phone;
 
-    public Passenger(String id, String name, String email, String phone) {
-        this.id = id;
+    public Passenger(String name, String email) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
-        this.phone = phone;
+    }
+
+    public String getId() {
+        return id;
     }
 }

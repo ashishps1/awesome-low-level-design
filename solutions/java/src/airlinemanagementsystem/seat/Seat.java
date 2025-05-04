@@ -11,11 +11,19 @@ public class Seat {
         this.status = SeatStatus.AVAILABLE;
     }
 
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+
     public void reserve() {
         status = SeatStatus.RESERVED;
     }
 
     public void release() {
         status = SeatStatus.AVAILABLE;
+    }
+
+    public synchronized boolean isBooked() {
+        return status == SeatStatus.OCCUPIED;
     }
 }
