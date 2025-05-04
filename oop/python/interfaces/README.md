@@ -11,7 +11,7 @@ An **interface** is a collection of method definitions that a class must impleme
 ### **Key Characteristics of Interfaces in Python**
 - Uses the `abc` module to create abstract base classes (ABCs).
 - Defines methods without implementation that must be overridden.
-- Supports **multiple inheritance**, unlike normal classes.
+- Supports **multiple inheritance**, like normal classes.
 - Improves **code flexibility and maintainability**.
 
 ---
