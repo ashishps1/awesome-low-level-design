@@ -2,7 +2,7 @@ package onlineshoppingservice;
 
 public enum OrderStatus {
     PENDING,
-    PROCESSING,
+    PLACED,
     SHIPPED,
     DELIVERED,
     CANCELLED

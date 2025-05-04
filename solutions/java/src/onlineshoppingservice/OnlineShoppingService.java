@@ -28,16 +28,34 @@ public class OnlineShoppingService {
         return instance;
     }
 
-    public void registerUser(User user) {
+    public User registerUser(String name, String email, String password) {
+        User user = new User(name, email, password);
         users.put(user.getId(), user);
+        return user;
     }
 
     public User getUser(String userId) {
         return users.get(userId);
     }
 
-    public void addProduct(Product product) {
+    public Product addProduct(String name, String description, double price, int stock) {
+        Product product = new Product(name, description, price, stock);
         products.put(product.getId(), product);
+        return product;
+    }
+
+    public void addToCart(String userId, String productId, int quantity) {
+        User user = users.get(userId);
+        Product product = products.get(productId);
+        if (user == null || product == null)
+            throw new IllegalArgumentException("User or product not found");
+
+        user.getCart().add(product, quantity);
+    }
+
+    public Cart getUserCart(String userId) {
+        User user = users.get(userId);
+        return user.getCart();
     }
 
     public Product getProduct(String productId) {
@@ -50,40 +68,51 @@ public class OnlineShoppingService {
                 .collect(Collectors.toList());
     }
 
-    public synchronized Order placeOrder(User user, ShoppingCart cart, Payment payment) {
+    public synchronized Order placeOrder(String userId, Payment payment) {
+        User user = users.get(userId);
+        if (user == null) throw new IllegalArgumentException("User not found");
+
         List<OrderItem> orderItems = new ArrayList<>();
-        for (OrderItem item : cart.getItems()) {
-            Product product = item.getProduct();
-            int quantity = item.getQuantity();
+
+        Map<Product, Integer> items = user.getCart().getItems();
+        for (Map.Entry<Product, Integer> entry : items.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+
             if (product.isAvailable(quantity)) {
-                product.updateQuantity(-quantity);
-                orderItems.add(item);
+                product.decreaseStock(quantity);
+                orderItems.add(new OrderItem(product, quantity));
             }
         }
 
-        if (orderItems.isEmpty()) {
-            throw new IllegalStateException("No available products in the cart.");
-        }
-
-        String orderId = generateOrderId();
-        Order order = new Order(orderId, user, orderItems);
-        orders.put(orderId, order);
+        Order order = new Order(user, orderItems);
+        orders.put(order.getId(), order);
+        user.getCart().clear();
         user.addOrder(order);
-        cart.clear();
 
         if (payment.processPayment(order.getTotalAmount())) {
-            order.setStatus(OrderStatus.PROCESSING);
+            order.setStatus(OrderStatus.PLACED);
         } else {
             order.setStatus(OrderStatus.CANCELLED);
             // Revert the product quantities
             for (OrderItem item : orderItems) {
                 Product product = item.getProduct();
                 int quantity = item.getQuantity();
-                product.updateQuantity(quantity);
+                product.increaseStock(quantity);
             }
         }
 
         return order;
+    }
+
+    public synchronized void cancelOrder(String orderId) {
+        Order order = orders.get(orderId);
+        if (order == null) throw new IllegalArgumentException("Order not found");
+
+        order.cancel();
+        for (OrderItem orderItem : order.getItems()) {
+            orderItem.getProduct().increaseStock(orderItem.getQuantity());
+        }
     }
 
     public Order getOrder(String orderId) {

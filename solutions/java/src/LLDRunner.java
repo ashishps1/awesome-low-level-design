@@ -1,6 +1,7 @@
 import courseregistrationsystem.CourseRegistrationSystemDemo;
 import fooddeliveryservice.FoodDeliveryServiceDemo;
 import musicstreamingservice.MusicStreamingServiceDemo;
+import onlineshoppingservice.OnlineShoppingServiceDemo;
 
 public class LLDRunner {
     public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class LLDRunner {
 //        MovieTicketBookingDemo.run();
 //        MusicStreamingServiceDemo.run();
 //        AuctionSystemDemo.run();
-//        OnlineShoppingServiceDemo.run();
+        OnlineShoppingServiceDemo.run();
 //        StockBrokerageSystemDemo.run();
 //        ParkingLotDemo.run();
 //        PubSubSystemDemo.run();

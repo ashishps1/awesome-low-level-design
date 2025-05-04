@@ -1,6 +1,7 @@
 package onlineshoppingservice;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Order {
     private final String id;
@@ -9,8 +10,8 @@ public class Order {
     private final double totalAmount;
     private OrderStatus status;
 
-    public Order(String id, User user, List<OrderItem> items) {
-        this.id = id;
+    public Order(User user, List<OrderItem> items) {
+        this.id = UUID.randomUUID().toString();
         this.user = user;
         this.items = items;
         this.totalAmount = calculateTotalAmount();
@@ -19,6 +20,12 @@ public class Order {
 
     private double calculateTotalAmount() {
         return items.stream().mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity()).sum();
+    }
+
+    public void cancel() {
+        if (status == OrderStatus.SHIPPED)
+            throw new IllegalStateException("Cannot cancel shipped order");
+        status = OrderStatus.CANCELLED;
     }
 
     public void setStatus(OrderStatus status) {
