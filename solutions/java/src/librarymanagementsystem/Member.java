@@ -1,38 +1,41 @@
 package librarymanagementsystem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class Member {
-    private final String memberId;
+    private final String id;
     private final String name;
     private final String contactInfo;
-    private final List<Book> borrowedBooks;
+    private final List<Loan> currentLoans;
+    private static final int MAX_BOOKS = 5;
 
-    public Member(String memberId, String name, String contactInfo) {
-        this.memberId = memberId;
+    public Member(String name, String contactInfo) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.contactInfo = contactInfo;
-        this.borrowedBooks = new ArrayList<>();
+        this.currentLoans = Collections.synchronizedList(new ArrayList<>());
     }
 
-    public void borrowBook(Book book) {
-        borrowedBooks.add(book);
+    public synchronized boolean canBorrow() {
+        return currentLoans.size() < MAX_BOOKS;
     }
 
-    public void returnBook(Book book) {
-        borrowedBooks.remove(book);
+    public synchronized void addLoan(Loan loan) {
+        currentLoans.add(loan);
     }
 
-    public String getMemberId() {
-        return memberId;
+    public synchronized void removeLoan(Loan loan) {
+        currentLoans.remove(loan);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
-    }
-
-    public List<Book> getBorrowedBooks() {
-        return borrowedBooks;
     }
 }

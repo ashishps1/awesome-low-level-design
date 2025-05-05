@@ -2,6 +2,7 @@ import airlinemanagementsystem.AirlineManagementSystemDemo;
 import chessgame.ChessGameDemo;
 import courseregistrationsystem.CourseRegistrationSystemDemo;
 import fooddeliveryservice.FoodDeliveryServiceDemo;
+import librarymanagementsystem.LibraryManagementSystemDemo;
 import musicstreamingservice.MusicStreamingServiceDemo;
 import onlineauctionsystem.AuctionSystemDemo;
 import onlineshoppingservice.OnlineShoppingServiceDemo;

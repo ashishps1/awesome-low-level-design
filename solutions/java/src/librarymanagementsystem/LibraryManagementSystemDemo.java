@@ -4,26 +4,26 @@ import java.util.List;
 
 public class LibraryManagementSystemDemo {
     public static void run() {
-        LibraryManager libraryManager = LibraryManager.getInstance();
+        LibraryManagementSystem libraryManagementSystem = LibraryManagementSystem.getInstance();
 
         // Add books to the catalog
-        libraryManager.addBook(new Book("ISBN1", "Book 1", "Author 1", 2020));
-        libraryManager.addBook(new Book("ISBN2", "Book 2", "Author 2", 2019));
-        libraryManager.addBook(new Book("ISBN3", "Book 3", "Author 3", 2021));
+        libraryManagementSystem.addBook(new Book("ISBN1", "Book 1", "Author 1"));
+        libraryManagementSystem.addBook(new Book("ISBN2", "Book 2", "Author 1"));
+        libraryManagementSystem.addBook(new Book("ISBN3", "Book 3", "Author 3"));
 
         // Register members
-        libraryManager.registerMember(new Member("M1", "John Doe", "john@example.com"));
-        libraryManager.registerMember(new Member("M2", "Jane Smith", "jane@example.com"));
+        Member member1 = libraryManagementSystem.registerMember("John Doe", "john@example.com");
+        Member member2 = libraryManagementSystem.registerMember("Jane Smith", "jane@example.com");
 
         // Borrow books
-        libraryManager.borrowBook("M1", "ISBN1");
-        libraryManager.borrowBook("M2", "ISBN2");
+        Loan loan1 = libraryManagementSystem.borrowBook(member1.getId(), "Book 1");
+        Loan loan2 = libraryManagementSystem.borrowBook(member2.getId(), "Book 2");
 
         // Return books
-        libraryManager.returnBook("M1", "ISBN1");
+        libraryManagementSystem.returnBook(loan1.getId());
 
         // Search books
-        List<Book> searchResults = libraryManager.searchBooks("Book");
+        List<Book> searchResults = libraryManagementSystem.searchByAuthor("Author 1");
         System.out.println("Search Results:");
         for (Book book : searchResults) {
             System.out.println(book.getTitle() + " by " + book.getAuthor());
