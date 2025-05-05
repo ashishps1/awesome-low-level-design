@@ -8,4 +8,10 @@ public class Location {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public double distanceTo(Location other) {
+        double dx = this.latitude - other.latitude;
+        double dy = this.longitude - other.longitude;
+        return Math.sqrt(dx * dx + dy * dy); // Euclidean for simplicity
+    }
 }

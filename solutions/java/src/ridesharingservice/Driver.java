@@ -1,36 +1,32 @@
 package ridesharingservice;
 
-public class Driver {
-    private int id;
-    private String name;
-    private String contact;
-    private String licensePlate;
+public class Driver extends User {
+    private final String licensePlate;
     private Location location;
     private DriverStatus status;
+    private Trip currentTrip;
 
-    public Driver(int id, String name, String contact, String licensePlate, Location location, DriverStatus status) {
-        this.id = id;
-        this.name = name;
-        this.contact = contact;
+    public Driver(String name, String contact, String licensePlate, Location location) {
+        super(name, contact);
         this.licensePlate = licensePlate;
         this.location = location;
-        this.status = status;
+        this.status = DriverStatus.AVAILABLE;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public synchronized void updateLocation(Location location) {
+        this.location = location;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public synchronized boolean isAvailable() { return status == DriverStatus.AVAILABLE; }
+
+    public synchronized void assignTrip(Trip trip) {
+        this.currentTrip = trip;
+        this.status = DriverStatus.BUSY;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
+    public synchronized void completeTrip() {
+        this.currentTrip = null;
+        this.status = DriverStatus.AVAILABLE;
     }
 
     public void setLocation(Location location) {
@@ -41,16 +37,8 @@ public class Driver {
         this.status = status;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getContact() {
-        return contact;
+    public Trip getCurrentTrip() {
+        return currentTrip;
     }
 
     public String getLicensePlate() {

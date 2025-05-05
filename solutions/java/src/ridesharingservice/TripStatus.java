@@ -1,9 +1,9 @@
 package ridesharingservice;
 
-public enum RideStatus {
+public enum TripStatus {
     REQUESTED,
     ACCEPTED,
-    IN_PROGRESS,
+    ONGOING,
     COMPLETED,
     CANCELLED
 }

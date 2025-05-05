@@ -1,42 +1,41 @@
 package ridesharingservice;
 
+import ridesharingservice.payment.CreditCardPayment;
+
 public class RideSharingServiceDemo {
     public static void run() {
-        RideService rideService = RideService.getInstance();
+        RideSharingService rideSharingService = RideSharingService.getInstance();
 
         // Create passengers
-        Passenger passenger1 = new Passenger(1, "John Doe", "1234567890", new Location(37.7749, -122.4194));
-        Passenger passenger2 = new Passenger(2, "Jane Smith", "9876543210", new Location(37.7860, -122.4070));
-        rideService.addPassenger(passenger1);
-        rideService.addPassenger(passenger2);
+        User user1 = rideSharingService.registerRider("John Doe", "1234567890");
+        User user2 = rideSharingService.registerRider("Jane Smith", "9876543210");
 
         // Create drivers
-        Driver driver1 = new Driver(1, "Alice Johnson", "4567890123", "ABC123", new Location(37.7749, -122.4194), DriverStatus.AVAILABLE);
-        Driver driver2 = new Driver(2, "Bob Williams", "7890123456", "XYZ789", new Location(37.7860, -122.4070), DriverStatus.AVAILABLE);
-        rideService.addDriver(driver1);
-        rideService.addDriver(driver2);
+        Driver driver1 = rideSharingService.registerDriver("Alice Johnson", "4567890123", "ABC123", new Location(37.7749, -122.4194));
+        Driver driver2 = rideSharingService.registerDriver("Bob Williams", "7890123456", "XYZ789", new Location(37.7860, -122.4070));
 
         // Passenger 1 requests a ride
-        rideService.requestRide(passenger1, passenger1.getLocation(), new Location(37.7887, -122.4098));
+        Trip trip1 = rideSharingService.requestRide(user1.getId(), new Location(32.7887, -112.4098), new Location(37.7887, -122.4098));
 
         // Driver 1 accepts the ride
-        Ride ride = rideService.getRequestedRides().poll();
-        rideService.acceptRide(driver1, ride);
+        rideSharingService.acceptRide(driver1.getId(), trip1.getId());
 
         // Start the ride
-        rideService.startRide(ride);
+        rideSharingService.startRide(trip1.getId());
 
         // Complete the ride
-        rideService.completeRide(ride);
+        rideSharingService.completeRide(trip1.getId());
+
+        // Make payment
+        rideSharingService.makePayment(trip1.getId(), new CreditCardPayment());
 
         // Passenger 2 requests a ride
-        rideService.requestRide(passenger2, passenger2.getLocation(), new Location(37.7749, -122.4194));
+        Trip trip2 = rideSharingService.requestRide(user2.getId(), new Location(27.7749, -102.6124), new Location(37.7749, -122.4194));
 
         // Driver 2 accepts the ride
-        Ride ride2 = rideService.getRequestedRides().poll();
-        rideService.acceptRide(driver2, ride2);
+        rideSharingService.acceptRide(driver2.getId(), trip2.getId());
 
         // Passenger 2 cancels the ride
-        rideService.cancelRide(ride2);
+        rideSharingService.cancelRide(trip2.getId());
     }
 }

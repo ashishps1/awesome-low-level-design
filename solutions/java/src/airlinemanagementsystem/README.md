@@ -24,8 +24,8 @@ Design and implement an Airline Management System that allows users to book flig
 - **Flight:** Represents a flight with flight number, aircraft, source, destination, schedule, and seats.
 - **Aircraft:** Represents an aircraft with a model and a set of seats.
 - **Seat:** Represents a seat on an aircraft, with seat number, class, and availability.
-- **Passenger:** Represents a passenger with ID, name, and contact details.
-- **Booking:** Represents a booking, including passenger(s), flight, seat(s), and payment.
+- **Passenger:** Represents a user with ID, name, and contact details.
+- **Booking:** Represents a booking, including user(s), flight, seat(s), and payment.
 - **Payment (in payment/):** Represents a payment transaction for a booking.
 
 ---
@@ -49,7 +49,7 @@ Design and implement an Airline Management System that allows users to book flig
 - **Fields:** int id, String name, String contactInfo
 
 ### 6. Booking (in booking/)
-- **Fields:** int id, Passenger passenger, Flight flight, List<Seat> seats, Payment payment
+- **Fields:** int id, Passenger user, Flight flight, List<Seat> seats, Payment payment
 
 ### 7. Payment (in payment/)
 - **Fields:** int id, double amount, String method, PaymentStatus status

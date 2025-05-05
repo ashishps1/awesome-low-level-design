@@ -1,4 +1,4 @@
-package ridesharingservice;
+package ridesharingservice.payment;
 
 public enum PaymentStatus {
     PENDING,
