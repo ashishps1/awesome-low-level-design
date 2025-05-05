@@ -5,6 +5,7 @@ import fooddeliveryservice.FoodDeliveryServiceDemo;
 import musicstreamingservice.MusicStreamingServiceDemo;
 import onlineauctionsystem.AuctionSystemDemo;
 import onlineshoppingservice.OnlineShoppingServiceDemo;
+import socialnetworkingservice.SocialNetworkingServiceDemo;
 
 public class LLDRunner {
     public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class LLDRunner {
 //        AirlineManagementSystemDemo.run();
 //        ATMDemo.run();
 //        CarRentalSystemDemo.run();
-        ChessGameDemo.run();
+//        ChessGameDemo.run();
 //        CoffeeVendingMachineDemo.run();
 //        ConcertTicketBookingSystemDemo.run();
 //        CourseRegistrationSystemDemo.run();
@@ -36,7 +37,7 @@ public class LLDRunner {
 //        RestaurantManagementDemo.run();
 //        RideSharingServiceDemo.run();
 //        SnakeAndLadderDemo.run();
-//        SocialNetworkingServiceDemo.run();
+        SocialNetworkingServiceDemo.run();
 //        SplitwiseDemo.run();
 //        StackOverflowDemo.run();
 //        TaskManagementSystemDemo.run();

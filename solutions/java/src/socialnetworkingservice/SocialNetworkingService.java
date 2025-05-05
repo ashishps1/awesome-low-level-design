@@ -1,23 +1,16 @@
 package socialnetworkingservice;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SocialNetworkingService {
     private static SocialNetworkingService instance;
-    private final Map<String, User> users;
-    private final Map<String, Post> posts;
-    private final Map<String, List<Notification>> notifications;
+    private final Map<String, User> usersMap;
+    private final Map<String, Post> postsMap;
 
     private SocialNetworkingService() {
-        users = new ConcurrentHashMap<>();
-        posts = new ConcurrentHashMap<>();
-        notifications = new ConcurrentHashMap<>();
+        usersMap = new ConcurrentHashMap<>();
+        postsMap = new ConcurrentHashMap<>();
     }
 
     public static synchronized SocialNetworkingService getInstance() {
@@ -27,12 +20,14 @@ public class SocialNetworkingService {
         return instance;
     }
 
-    public void registerUser(User user) {
-        users.put(user.getId(), user);
+    public User registerUser(String name, String email, String password, String bio) {
+        User user = new User(name, email, password, bio);
+        usersMap.put(user.getId(), user);
+        return user;
     }
 
     public User loginUser(String email, String password) {
-        for (User user : users.values()) {
+        for (User user : usersMap.values()) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 return user;
             }
@@ -40,88 +35,68 @@ public class SocialNetworkingService {
         return null;
     }
 
-    public void updateUserProfile(User user) {
-        users.put(user.getId(), user);
+    public void sendFriendRequest(String fromId, String toId) {
+        User from = usersMap.get(fromId);
+        User to = usersMap.get(toId);
+
+        if (from == null || to == null) throw new IllegalArgumentException("User not found");
+        if (from.isFriend(to)) return;
+
+        FriendRequest req = new FriendRequest(from, to);
+        to.receiveRequest(req);
+        sendNotification(to, NotificationType.FRIEND_REQUEST_ACCEPTED, "Friend request from: " + from.getName());
     }
 
-    public void sendFriendRequest(String senderId, String receiverId) {
-        User receiver = users.get(receiverId);
-        if (receiver != null) {
-            Notification notification = new Notification(generateNotificationId(), receiverId,
-                    NotificationType.FRIEND_REQUEST, "Friend request from " + senderId, new Timestamp(System.currentTimeMillis()));
-            addNotification(receiverId, notification);
-        }
+    public void acceptFriendRequest(String toId, String fromId) {
+        User to = usersMap.get(toId);
+        User from = usersMap.get(fromId);
+
+        FriendRequest req = to.getRequestFrom(from);
+        if (req == null) throw new IllegalArgumentException("No pending request");
+
+        req.accept();
+        to.addFriend(from);
+        from.addFriend(to);
+        sendNotification(from, NotificationType.FRIEND_REQUEST_ACCEPTED, "You are now friends with: " + to.getName());
     }
 
-    public void acceptFriendRequest(String userId, String friendId) {
-        User user = users.get(userId);
-        User friend = users.get(friendId);
-        if (user != null && friend != null) {
-            user.getFriends().add(friendId);
-            friend.getFriends().add(userId);
-            Notification notification = new Notification(generateNotificationId(), friendId,
-                    NotificationType.FRIEND_REQUEST_ACCEPTED, "Friend request accepted by " + userId,
-                    new Timestamp(System.currentTimeMillis()));
-            addNotification(friendId, notification);
-        }
-    }
-
-    public void createPost(Post post) {
-        posts.put(post.getId(), post);
-        User user = users.get(post.getUserId());
-        if (user != null) {
-            user.getPosts().add(post);
-        }
-    }
-
-    public List<Post> getNewsfeed(String userId) {
-        List<Post> newsfeed = new ArrayList<>();
-        User user = users.get(userId);
-        if (user != null) {
-            List<String> friendIds = user.getFriends();
-            for (String friendId : friendIds) {
-                User friend = users.get(friendId);
-                if (friend != null) {
-                    newsfeed.addAll(friend.getPosts());
-                }
-            }
-            newsfeed.addAll(user.getPosts());
-            newsfeed.sort((p1, p2) -> p2.getTimestamp().compareTo(p1.getTimestamp()));
-        }
-        return newsfeed;
+    public Post createPost(String userId, String content) {
+        User user = usersMap.get(userId);
+        Post post = new Post(user, content);
+        user.addPost(post);
+        postsMap.put(post.getId(), post);
+        return post;
     }
 
     public void likePost(String userId, String postId) {
-        Post post = posts.get(postId);
-        if (post != null && !post.getLikes().contains(userId)) {
-            post.getLikes().add(userId);
-            Notification notification = new Notification(generateNotificationId(), post.getUserId(),
-                    NotificationType.LIKE, "Your post was liked by " + userId,
-                    new Timestamp(System.currentTimeMillis()));
-            addNotification(post.getUserId(), notification);
-        }
+        User user = usersMap.get(userId);
+        Post post = postsMap.get(postId);
+        post.like(user);
+        sendNotification(post.getAuthor(), NotificationType.LIKE, "Your post was liked by " + user.getName());
     }
 
-    public void commentOnPost(Comment comment) {
-        Post post = posts.get(comment.getPostId());
-        if (post != null) {
-            post.getComments().add(comment);
-            Notification notification = new Notification(generateNotificationId(), post.getUserId(),
-                    NotificationType.COMMENT, "Your post received a comment from " + comment.getUserId(),
-                    new Timestamp(System.currentTimeMillis()));
-            addNotification(post.getUserId(), notification);
-        }
+    public void commentOnPost(String userId, String postId, String text) {
+        User user = usersMap.get(userId);
+        Post post = postsMap.get(postId);
+        post.comment(user, text);
+        sendNotification(post.getAuthor(), NotificationType.COMMENT, "Your post received a comment from " + user.getName());
     }
 
-    private void addNotification(String userId, Notification notification) {
-        notifications.computeIfAbsent(userId, k -> new CopyOnWriteArrayList<>()).add(notification);
+    public List<Post> getNewsFeed(String userId) {
+        User user = usersMap.get(userId);
+        return user.getFriends().stream()
+                .flatMap(friend -> friend.getPosts().stream())
+                .sorted(Comparator.comparing(Post::getTimestamp).reversed())
+                .limit(20)
+                .toList();
+    }
+
+    private void sendNotification(User receiver, NotificationType type, String notificationText) {
+        Notification notification = new Notification(receiver, type, notificationText);
+        receiver.addNotification(notification);
     }
 
     public List<Notification> getNotifications(String userId) {
-        return notifications.getOrDefault(userId, new ArrayList<>());
-    }
-
-    private String generateNotificationId() {
-        return UUID.randomUUID().toString();
+        return usersMap.get(userId).getNotifications();
     }
 }
