@@ -62,7 +62,7 @@ public class DigitalWallet {
         destinationAccount.deposit(amount);
 
         String transactionId = generateTransactionId();
-        Transaction transaction = new Transaction(transactionId, sourceAccount, destinationAccount, amount, currency);
+        Transaction transaction = new Transaction(transactionId, sourceAccount, destinationAccount, amount, destinationAccount.getCurrency());
         sourceAccount.addTransaction(transaction);
         destinationAccount.addTransaction(transaction);
     }
