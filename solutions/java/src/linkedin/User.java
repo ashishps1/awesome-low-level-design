@@ -1,6 +1,8 @@
 package linkedin;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class User {
     private final String id;
@@ -11,20 +13,33 @@ public class User {
     private final List<Connection> connections;
     private final List<Message> inbox;
     private final List<Message> sentMessages;
+    private final List<Notification> notifications;
 
-    public User(String id, String name, String email, String password, Profile profile, List<Connection> connections, List<Message> inbox, List<Message> sentMessages) {
-        this.id = id;
+    public User(String name, String email, String password) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
         this.password = password;
-        this.profile = profile;
-        this.connections = connections;
-        this.inbox = inbox;
-        this.sentMessages = sentMessages;
+        this.connections = new ArrayList<>();
+        this.sentMessages = new ArrayList<>();
+        this.inbox = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public void addNotification(Notification notification) {
+        notifications.add(notification);
+    }
+
+    public void addToInbox(Message message) {
+        inbox.add(message);
+    }
+
+    public void addToSentMessages(Message message) {
+        sentMessages.add(message);
     }
 
     public String getId() {
@@ -55,7 +70,7 @@ public class User {
         return inbox;
     }
 
-    public List<Message> getSentMessages() {
-        return sentMessages;
+    public List<Notification> getNotifications() {
+        return notifications;
     }
 }

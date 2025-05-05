@@ -1,20 +1,21 @@
 package linkedin;
 
-import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
 
 public class Notification {
     private final String id;
     private final User user;
     private final NotificationType type;
     private final String content;
-    private final Timestamp timestamp;
+    private final Date timestamp;
 
-    public Notification(String id, User user, NotificationType type, String content, Timestamp timestamp) {
-        this.id = id;
+    public Notification(User user, NotificationType type, String content) {
+        this.id = UUID.randomUUID().toString();
         this.user = user;
         this.type = type;
         this.content = content;
-        this.timestamp = timestamp;
+        this.timestamp = new Date();
     }
 
     public String getId() {
@@ -31,9 +32,5 @@ public class Notification {
 
     public String getContent() {
         return content;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
     }
 }

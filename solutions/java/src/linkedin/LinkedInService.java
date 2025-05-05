@@ -4,9 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LinkedInService {
     private static LinkedInService instance;
@@ -27,8 +25,10 @@ public class LinkedInService {
         return instance;
     }
 
-    public void registerUser(User user) {
+    public User registerUser(String name, String email, String password) {
+        User user = new User(name, email, password);
         users.put(user.getId(), user);
+        return user;
     }
 
     public User loginUser(String email, String password) {
@@ -40,17 +40,10 @@ public class LinkedInService {
         return null;
     }
 
-    public void updateUserProfile(User user) {
-        users.put(user.getId(), user);
-    }
-
     public void sendConnectionRequest(User sender, User receiver) {
         Connection connection = new Connection(sender, new Timestamp(System.currentTimeMillis()));
         receiver.getConnections().add(connection);
-        Notification notification = new Notification(generateNotificationId(), receiver,
-                NotificationType.CONNECTION_REQUEST, "New connection request from " + sender.getName(),
-                new Timestamp(System.currentTimeMillis()));
-        addNotification(receiver.getId(), notification);
+        sendNotification(receiver, NotificationType.CONNECTION_REQUEST, "New connection request from " + sender.getName());
     }
 
     public void acceptConnectionRequest(User user, User connectionUser) {
@@ -72,14 +65,10 @@ public class LinkedInService {
         return results;
     }
 
-    public void postJobListing(JobPosting jobPosting) {
+    public JobPosting postJobListing(String title, String company, String description, String location) {
+        JobPosting jobPosting = new JobPosting(title, company, description, location);
         jobPostings.put(jobPosting.getId(), jobPosting);
-        for (User user : users.values()) {
-            Notification notification = new Notification(generateNotificationId(), user,
-                    NotificationType.JOB_POSTING, "New job posting: " + jobPosting.getTitle(),
-                    new Timestamp(System.currentTimeMillis()));
-            addNotification(user.getId(), notification);
-        }
+        return jobPosting;
     }
 
     public List<JobPosting> searchJobPostings(String keyword) {
@@ -93,29 +82,19 @@ public class LinkedInService {
     }
 
     public void sendMessage(User sender, User receiver, String content) {
-        Message message = new Message(generateMessageId(), sender, receiver, content,
-                new Timestamp(System.currentTimeMillis()));
-        receiver.getInbox().add(message);
-        sender.getSentMessages().add(message);
-        Notification notification = new Notification(generateNotificationId(), receiver,
-                NotificationType.MESSAGE, "New message from " + sender.getName(),
-                new Timestamp(System.currentTimeMillis()));
-        addNotification(receiver.getId(), notification);
+        Message message = new Message(sender, receiver, content);
+        receiver.addToInbox(message);
+        sender.addToSentMessages(message);
+        sendNotification(receiver, NotificationType.MESSAGE, "New message from " + sender.getName());
     }
 
-    private void addNotification(String userId, Notification notification) {
-        notifications.computeIfAbsent(userId, k -> new CopyOnWriteArrayList<>()).add(notification);
+    private void sendNotification(User receiver, NotificationType type, String message) {
+        Notification notification = new Notification(receiver, type, message);
+        receiver.addNotification(notification);
     }
 
     public List<Notification> getNotifications(String userId) {
-        return notifications.getOrDefault(userId, new ArrayList<>());
-    }
-
-    private String generateNotificationId() {
-        return UUID.randomUUID().toString();
-    }
-
-    private String generateMessageId() {
-        return UUID.randomUUID().toString();
+        User user = users.get(userId);
+        return user.getNotifications();
     }
 }

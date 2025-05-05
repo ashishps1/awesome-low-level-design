@@ -3,7 +3,7 @@ package linkedin;
 import java.util.List;
 
 public class Profile {
-    private String profilePicture;
+    private String profilePictureUrl;
     private String headline;
     private String summary;
     private List<Experience> experiences;
@@ -18,8 +18,8 @@ public class Profile {
         this.headline = headline;
     }
 
-    public String getProfilePicture() {
-        return profilePicture;
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
     }
 
     public String getHeadline() {

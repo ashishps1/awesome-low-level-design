@@ -1,7 +1,6 @@
 package linkedin;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,25 +9,14 @@ public class LinkedInDemo {
         LinkedInService linkedInService = LinkedInService.getInstance();
 
         // User registration
-        User user1 = new User("1", "John Doe", "john@example.com", "password", new Profile(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        User user2 = new User("2", "Jane Smith", "jane@example.com", "password", new Profile(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        linkedInService.registerUser(user1);
-        linkedInService.registerUser(user2);
+        User user1 = linkedInService.registerUser("John Doe", "john@example.com", "password");
+        User user2 = linkedInService.registerUser("Jane Smith", "jane@example.com", "password");
 
-        // User login
-        User loggedInUser = linkedInService.loginUser("john@example.com", "password");
-        if (loggedInUser != null) {
-            System.out.println("User logged in: " + loggedInUser.getName());
-        } else {
-            System.out.println("Invalid email or password.");
-        }
-
-        // Update user profile
+        // Set user profile
         Profile profile = new Profile();
         profile.setHeadline("Software Engineer");
         profile.setSummary("Passionate about coding and problem-solving.");
-        loggedInUser.setProfile(profile);
-        linkedInService.updateUserProfile(loggedInUser);
+        user1.setProfile(profile);
 
         // Send connection request
         linkedInService.sendConnectionRequest(user1, user2);
@@ -37,8 +25,8 @@ public class LinkedInDemo {
         linkedInService.acceptConnectionRequest(user2, user1);
 
         // Post a job listing
-        JobPosting jobPosting = new JobPosting("1", "Software Developer", "We are hiring!", Arrays.asList("Java", "Python"), "San Francisco", new Timestamp(System.currentTimeMillis()));
-        linkedInService.postJobListing(jobPosting);
+        JobPosting jobPosting1 = linkedInService.postJobListing("Software Developer", "Discord", "AI Engineer", "San Francisco");
+        JobPosting jobPosting2 = linkedInService.postJobListing("Software Developer", "Airbnb", "Full Stack Developer", "Seattle");
 
         // Search for users
         List<User> searchResults = linkedInService.searchUsers("John");

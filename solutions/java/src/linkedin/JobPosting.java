@@ -1,23 +1,32 @@
 package linkedin;
 
-import java.sql.Timestamp;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JobPosting {
     private final String id;
     private final String title;
+    private final String company;
     private final String description;
-    private final List<String> requirements;
     private final String location;
-    private final Timestamp postDate;
+    private final Date postDate;
+    private final Map<String, User> applicants;
 
-    public JobPosting(String id, String title, String description, List<String> requirements, String location, Timestamp postDate) {
-        this.id = id;
+    public JobPosting(String title, String company, String description, String location) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
+        this.company = company;
         this.description = description;
-        this.requirements = requirements;
         this.location = location;
-        this.postDate = postDate;
+        this.postDate = new Date();
+        this.applicants = new ConcurrentHashMap<>();
+    }
+
+    public void apply(User user) {
+        if(applicants.containsKey(user.getId())) {
+            throw new IllegalArgumentException("User has already applied to the job");
+        }
+        applicants.put(user.getId(), user);
     }
 
     public String getId() {
@@ -32,15 +41,11 @@ public class JobPosting {
         return description;
     }
 
-    public List<String> getRequirements() {
-        return requirements;
-    }
-
     public String getLocation() {
         return location;
     }
 
-    public Timestamp getPostDate() {
-        return postDate;
+    public List<User> getApplicants() {
+        return applicants.values().stream().toList();
     }
 }
