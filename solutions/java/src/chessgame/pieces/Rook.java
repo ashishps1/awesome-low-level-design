@@ -1,15 +1,16 @@
 package chessgame.pieces;
 
 import chessgame.Board;
+import chessgame.Cell;
 import chessgame.Color;
 
 public class Rook extends Piece {
-    public Rook(Color color, int row, int col) {
-        super(color, row, col);
+    public Rook(Color color) {
+        super(color);
     }
 
     @Override
-    public boolean canMove(Board board, int destRow, int destCol) {
-        return (row == destRow || col == destCol);
+    public boolean isValidMove(Board board, Cell from, Cell to) {
+        return (from.getRow() == to.getRow() || from.getCol() == to.getCol());
     }
 }

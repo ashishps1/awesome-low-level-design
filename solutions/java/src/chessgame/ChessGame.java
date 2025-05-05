@@ -6,48 +6,48 @@ import java.util.Scanner;
 
 public class ChessGame {
     private final Board board;
-    private final Player[] players;
-    private int currentPlayer;
+    private final Player whitePlayer, blackPlayer;
+    private Player currentPlayer;
 
     public ChessGame() {
         board = new Board();
-        players = new Player[]{new Player(Color.WHITE), new Player(Color.BLACK)};
-        currentPlayer = 0;
+        this.whitePlayer = new Player(Color.WHITE);
+        this.blackPlayer = new Player(Color.BLACK);
+        this.currentPlayer = whitePlayer;
     }
 
     public void start() {
         // Game loop
         while (!isGameOver()) {
-            Player player = players[currentPlayer];
+            Player player = currentPlayer;
             System.out.println(player.getColor() + "'s turn.");
-
             // Get move from the player
             Move move = getPlayerMove(player);
-
             // Make the move on the board
             try {
-                player.makeMove(board, move);
+                board.movePiece(move);
             } catch (InvalidMoveException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Try again!");
                 continue;
             }
-
             // Switch to the next player
-            currentPlayer = (currentPlayer + 1) % 2;
+            switchTurn();
         }
-
         // Display game result
         displayResult();
     }
 
+    private void switchTurn() {
+        currentPlayer = currentPlayer == whitePlayer ? blackPlayer : whitePlayer;
+    }
+
     private boolean isGameOver() {
-        return board.isCheckmate(players[0].getColor()) || board.isCheckmate(players[1].getColor()) ||
-                board.isStalemate(players[0].getColor()) || board.isStalemate(players[1].getColor());
+        return board.isCheckmate(whitePlayer.getColor()) || board.isCheckmate(blackPlayer.getColor()) ||
+                board.isStalemate(whitePlayer.getColor()) || board.isStalemate(blackPlayer.getColor());
     }
 
     private Move getPlayerMove(Player player) {
-        // TODO: Implement logic to get a valid move from the player
         // For simplicity, let's assume the player enters the move via console input
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter source row: ");
@@ -64,7 +64,7 @@ public class ChessGame {
             throw new IllegalArgumentException("Invalid piece selection!");
         }
 
-        return new Move(piece, destRow, destCol);
+        return new Move(board.getCell(sourceRow, sourceCol), board.getCell(destRow, destCol));
     }
 
     private void displayResult() {

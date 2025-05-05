@@ -3,25 +3,15 @@ package chessgame;
 import chessgame.pieces.Piece;
 
 public class Move {
-    private final Piece piece;
-    private final int destRow;
-    private final int destCol;
+    private final Cell start;
+    private final Cell end;
 
-    public Move(Piece piece, int destRow, int destCol) {
-        this.piece = piece;
-        this.destRow = destRow;
-        this.destCol = destCol;
+    public Move(Cell start, Cell end) {
+        this.start = start;
+        this.end = end;
     }
 
-    public Piece getPiece() {
-        return piece;
-    }
+    public Cell getStart() { return start; }
 
-    public int getDestRow() {
-        return destRow;
-    }
-
-    public int getDestCol() {
-        return destCol;
-    }
+    public Cell getEnd() { return end; }
 }

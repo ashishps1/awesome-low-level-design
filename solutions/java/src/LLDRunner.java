@@ -1,4 +1,5 @@
 import airlinemanagementsystem.AirlineManagementSystemDemo;
+import chessgame.ChessGameDemo;
 import courseregistrationsystem.CourseRegistrationSystemDemo;
 import fooddeliveryservice.FoodDeliveryServiceDemo;
 import musicstreamingservice.MusicStreamingServiceDemo;
@@ -12,7 +13,7 @@ public class LLDRunner {
 //        AirlineManagementSystemDemo.run();
 //        ATMDemo.run();
 //        CarRentalSystemDemo.run();
-//        ChessGameDemo.run();
+        ChessGameDemo.run();
 //        CoffeeVendingMachineDemo.run();
 //        ConcertTicketBookingSystemDemo.run();
 //        CourseRegistrationSystemDemo.run();

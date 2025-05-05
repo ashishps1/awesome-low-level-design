@@ -15,13 +15,12 @@ public class ATM {
     }
 
     public void authenticateUser(Card card) {
-         boolean isAuthenticated = bankingService.authenticate(card.getCardNumber(), card.getPin());
-    if (isAuthenticated) {
-        System.out.println("Authentication successful.");
-    } else {
-        System.out.println("Authentication failed.");
-    }
-    return isAuthenticated;
+        boolean isAuthenticated = bankingService.authenticate(card.getCardNumber(), card.getPin());
+        if (isAuthenticated) {
+            System.out.println("Authentication successful.");
+        } else {
+            System.out.println("Authentication failed.");
+        }
     }
 
     public double checkBalance(String accountNumber) {

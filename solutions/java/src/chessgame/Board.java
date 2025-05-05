@@ -3,56 +3,66 @@ package chessgame;
 import chessgame.pieces.*;
 
 public class Board {
-    private final Piece[][] board;
+    private final Cell[][] board;
 
     public Board() {
-        board = new Piece[8][8];
-        initializeBoard();
+        board = new Cell[8][8];
+
+        for (int row = 0; row < 8; row++)
+            for (int col = 0; col < 8; col++)
+                board[row][col] = new Cell(row, col);
+
+        setupPieces();
     }
 
-    private void initializeBoard() {
-        // Initialize white pieces
-        board[0][0] = new Rook(Color.WHITE, 0, 0);
-        board[0][1] = new Knight(Color.WHITE, 0, 1);
-        board[0][2] = new Bishop(Color.WHITE, 0, 2);
-        board[0][3] = new Queen(Color.WHITE, 0, 3);
-        board[0][4] = new King(Color.WHITE, 0, 4);
-        board[0][5] = new Bishop(Color.WHITE, 0, 5);
-        board[0][6] = new Knight(Color.WHITE, 0, 6);
-        board[0][7] = new Rook(Color.WHITE, 0, 7);
-        for (int i = 0; i < 8; i++) {
-            board[1][i] = new Pawn(Color.WHITE, 1, i);
+    private void setupPieces() {
+        // Add pawns and main pieces for both sides
+        for (int j = 0; j < 8; j++) {
+            board[1][j].setPiece(new Pawn(Color.WHITE));
+            board[6][j].setPiece(new Pawn(Color.BLACK));
         }
+
+        // Initialize white pieces
+        board[0][0].setPiece(new Rook(Color.WHITE));
+        board[0][1].setPiece(new Knight(Color.WHITE));
+        board[0][2].setPiece(new Bishop(Color.WHITE));
+        board[0][3].setPiece(new Queen(Color.WHITE));
+        board[0][4].setPiece(new King(Color.WHITE));
+        board[0][5].setPiece(new Bishop(Color.WHITE));
+        board[0][6].setPiece(new Knight(Color.WHITE));
+        board[0][7].setPiece(new Rook(Color.WHITE));
 
         // Initialize black pieces
-        board[7][0] = new Rook(Color.BLACK, 7, 0);
-        board[7][1] = new Knight(Color.BLACK, 7, 1);
-        board[7][2] = new Bishop(Color.BLACK, 7, 2);
-        board[7][3] = new Queen(Color.BLACK, 7, 3);
-        board[7][4] = new King(Color.BLACK, 7, 4);
-        board[7][5] = new Bishop(Color.BLACK, 7, 5);
-        board[7][6] = new Knight(Color.BLACK, 7, 6);
-        board[7][7] = new Rook(Color.BLACK, 7, 7);
-        for (int i = 0; i < 8; i++) {
-            board[6][i] = new Pawn(Color.BLACK, 6, i);
-        }
+        board[7][0].setPiece(new Rook(Color.BLACK));
+        board[7][1].setPiece(new Knight(Color.BLACK));
+        board[7][2].setPiece(new Bishop(Color.BLACK));
+        board[7][3].setPiece(new Queen(Color.BLACK));
+        board[7][4].setPiece(new King(Color.BLACK));
+        board[7][5].setPiece(new Bishop(Color.BLACK));
+        board[7][6].setPiece(new Knight(Color.BLACK));
+        board[7][7].setPiece(new Rook(Color.BLACK));
     }
 
-    public Piece getPiece(int row, int col) {
+    public Cell getCell(int row, int col) {
         return board[row][col];
     }
 
-    public void setPiece(int row, int col, Piece piece) {
-        board[row][col] = piece;
+    public synchronized boolean movePiece(Move move) {
+        Cell from = move.getStart(), to = move.getEnd();
+        Piece piece = from.getPiece();
+        if (piece == null || !piece.isValidMove(this, from, to)) return false;
+
+        to.setPiece(piece);
+        from.setPiece(null);
+        return true;
     }
 
-    public boolean isValidMove(Piece piece, int destRow, int destCol) {
-        if (piece == null || destRow < 0 || destRow > 7 || destCol < 0 || destCol > 7) {
-            return false;
-        }
-        Piece destPiece = board[destRow][destCol];
-        return (destPiece == null || destPiece.getColor() != piece.getColor()) &&
-                piece.canMove(this, destRow, destCol);
+    public Piece getPiece(int row, int col) {
+        return board[row][col].getPiece();
+    }
+
+    public void setPiece(int row, int col, Piece piece) {
+        board[row][col].setPiece(piece);
     }
 
     public boolean isCheckmate(Color color) {

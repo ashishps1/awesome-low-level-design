@@ -1,17 +1,18 @@
 package chessgame.pieces;
 
 import chessgame.Board;
+import chessgame.Cell;
 import chessgame.Color;
 
 public class Queen extends Piece {
-    public Queen(Color color, int row, int col) {
-        super(color, row, col);
+    public Queen(Color color) {
+        super(color);
     }
 
     @Override
-    public boolean canMove(Board board, int destRow, int destCol) {
-        int rowDiff = Math.abs(destRow - row);
-        int colDiff = Math.abs(destCol - col);
-        return (rowDiff == colDiff) || (row == destRow || col == destCol);
+    public boolean isValidMove(Board board, Cell from, Cell to) {
+        int rowDiff = Math.abs(to.getRow() - from.getRow());
+        int colDiff = Math.abs(to.getCol() - from.getCol());
+        return (rowDiff == colDiff) || (from.getRow() == to.getRow() || from.getCol() == to.getCol());
     }
 }

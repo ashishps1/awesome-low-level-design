@@ -1,20 +1,94 @@
-# Designing a Chess Game
+# Chess Game (LLD)
+
+## Problem Statement
+
+Design and implement a Chess Game that allows two players to play chess on a standard 8x8 board, enforces chess rules, validates moves, and determines game status (check, checkmate, stalemate).
+
+---
 
 ## Requirements
-1. The chess game should follow the standard rules of chess.
-2. The game should support two players, each controlling their own set of pieces.
-3. The game board should be represented as an 8x8 grid, with alternating black and white squares.
-4. Each player should have 16 pieces: 1 king, 1 queen, 2 rooks, 2 bishops, 2 knights, and 8 pawns.
-5. The game should validate legal moves for each piece and prevent illegal moves.
-6. The game should detect checkmate and stalemate conditions.
-7. The game should handle player turns and allow players to make moves alternately.
-8. The game should provide a user interface for players to interact with the game.
 
-## Classes, Interfaces and Enumerations
-1. The **Piece** class is an abstract base class representing a chess piece. It contains common attributes such as color, row, and column, and declares an abstract method canMove to be implemented by each specific piece class.
-2. The **King**, **Queen**, **Rook**, **Bishop**, **Knight**, and **Pawn** classes extend the Piece class and implement their respective movement logic in the canMove method.
-3. The **Board** class represents the chess board and manages the placement of pieces. It provides methods to get and set pieces on the board, check the validity of moves, and determine checkmate and stalemate conditions.
-4. The **Player** class represents a player in the game and has a method to make a move on the board.
-5. The Move class represents a move made by a player, containing the piece being moved and the destination coordinates.
-6. The **Game** class orchestrates the overall game flow. It initializes the board, handles player turns, and determines the game result.
-7. The **ChessGame** class is the entry point of the application and starts the game.
+- **Two Players:** The game is played between two players (White and Black).
+- **Board:** The game uses a standard 8x8 chess board.
+- **Pieces:** All standard chess pieces (King, Queen, Rook, Bishop, Knight, Pawn) with their movement rules.
+- **Move Validation:** The game validates moves according to chess rules and prevents illegal moves.
+- **Turn Management:** Players alternate turns.
+- **Game Status:** The game detects check, checkmate, and stalemate.
+- **Exception Handling:** The system throws exceptions for invalid moves.
+- **Extensibility:** Easy to add features such as move history, undo, or AI opponent.
+
+---
+
+## Core Entities
+
+- **ChessGame:** Main class that manages the game flow, player turns, and game status.
+- **Board:** Represents the 8x8 chess board and manages piece positions.
+- **Cell:** Represents a cell on the board, with row, column, and piece.
+- **Player:** Represents a player with a name and color.
+- **Color (enum):** WHITE, BLACK.
+- **Move:** Represents a move from one cell to another.
+- **Piece (abstract, in pieces/):** Base class for all chess pieces.
+- **King, Queen, Rook, Bishop, Knight, Pawn (in pieces/):** Concrete piece classes with movement logic.
+- **InvalidMoveException:** Exception thrown for invalid moves.
+
+---
+
+## Class Design
+
+### 1. ChessGame
+- **Fields:** Board board, Player[] players, int currentPlayerIndex, boolean isGameOver
+- **Methods:** start(), makeMove(Move), switchPlayer(), isCheck(), isCheckmate(), isStalemate(), getCurrentPlayer()
+
+### 2. Board
+- **Fields:** Cell[][] grid, List<Piece> pieces
+- **Methods:** getCell(int row, int col), movePiece(Move), isCellOccupied(int row, int col), isCheck(Color), isCheckmate(Color), isStalemate(Color), printBoard()
+
+### 3. Cell
+- **Fields:** int row, int col, Piece piece
+- **Methods:** getPiece(), setPiece(Piece), isEmpty()
+
+### 4. Player
+- **Fields:** String name, Color color
+
+### 5. Color (enum)
+- Values: WHITE, BLACK
+
+### 6. Move
+- **Fields:** Cell from, Cell to
+
+### 7. Piece (abstract, in pieces/)
+- **Fields:** Color color, Cell position
+- **Methods:** isValidMove(Board, Move), getPossibleMoves(Board)
+
+### 8. InvalidMoveException
+- **Thrown:** When a move is not valid according to chess rules
+
+---
+
+## Example Usage
+
+```java
+Player white = new Player("Alice", Color.WHITE);
+Player black = new Player("Bob", Color.BLACK);
+ChessGame game = new ChessGame(white, black);
+game.start();
+
+Move move = new Move(game.getBoard().getCell(6, 4), game.getBoard().getCell(4, 4)); // e2 to e4
+game.makeMove(move);
+```
+
+---
+
+## Demo
+
+See `ChessGameDemo.java` for a sample usage and simulation of the chess game.
+
+---
+
+## Extending the Framework
+
+- **Add move history:** Track all moves for undo/redo or replay.
+- **Add AI opponent:** Implement a computer player.
+- **Add GUI:** Build a graphical interface for the game.
+
+---
