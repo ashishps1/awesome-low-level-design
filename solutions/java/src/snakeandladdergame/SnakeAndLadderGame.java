@@ -9,10 +9,10 @@ public class SnakeAndLadderGame {
     private final Dice dice;
     private int currentPlayerIndex;
 
-    public SnakeAndLadderGame(List<String> playerNames) {
-        board = new Board();
-        dice = new Dice();
-        players = new ArrayList<>();
+    public SnakeAndLadderGame(Board board, List<String> playerNames, Dice dice) {
+        this.board = board;
+        this.dice = dice;
+        this.players = new ArrayList<>();
         for (String playerName : playerNames) {
             players.add(new Player(playerName));
         }
@@ -26,7 +26,7 @@ public class SnakeAndLadderGame {
             int newPosition = currentPlayer.getPosition() + diceRoll;
 
             if (newPosition <= board.getBoardSize()) {
-                currentPlayer.setPosition(board.getNewPositionAfterSnakeOrLadder(newPosition));
+                currentPlayer.setPosition(board.getNextPosition(newPosition));
                 System.out.println(currentPlayer.getName() + " rolled a " + diceRoll +
                         " and moved to position " + currentPlayer.getPosition());
             }

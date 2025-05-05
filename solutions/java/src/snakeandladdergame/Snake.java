@@ -1,19 +1,19 @@
 package snakeandladdergame;
 
 public class Snake {
-    private final int start;
-    private final int end;
+    private final int head;
+    private final int tail;
 
-    public Snake(int start, int end) {
-        this.start = start;
-        this.end = end;
+    public Snake(int head, int tail) {
+        this.head = head;
+        this.tail = tail;
     }
 
-    public int getStart() {
-        return start;
+    public int getHead() {
+        return head;
     }
 
-    public int getEnd() {
-        return end;
+    public int getTail() {
+        return tail;
     }
 }

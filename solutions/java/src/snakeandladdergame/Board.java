@@ -1,53 +1,34 @@
 package snakeandladdergame;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private static final int BOARD_SIZE = 100;
-    private final List<Snake> snakes;
-    private final List<Ladder> ladders;
+    private final int boardSize;
+    private final Map<Integer, Integer> snakes;
+    private final Map<Integer, Integer> ladders;
 
-    public Board() {
-        snakes = new ArrayList<>();
-        ladders = new ArrayList<>();
-        initializeSnakesAndLadders();
-    }
+    public Board(int boardSize, List<Snake> snakeList, List<Ladder> ladderList) {
+        this.boardSize = boardSize;
+        snakes = new HashMap<>();
+        ladders = new HashMap<>();
 
-    private void initializeSnakesAndLadders() {
-        // Initialize snakes
-        snakes.add(new Snake(16, 6));
-        snakes.add(new Snake(48, 26));
-        snakes.add(new Snake(64, 60));
-        snakes.add(new Snake(93, 73));
-
-        // Initialize ladders
-        ladders.add(new Ladder(1, 38));
-        ladders.add(new Ladder(4, 14));
-        ladders.add(new Ladder(9, 31));
-        ladders.add(new Ladder(21, 42));
-        ladders.add(new Ladder(28, 84));
-        ladders.add(new Ladder(51, 67));
-        ladders.add(new Ladder(80, 99));
+        for (Snake s : snakeList) {
+            snakes.put(s.getHead(), s.getTail());
+        }
+        for (Ladder l : ladderList) {
+            ladders.put(l.getStart(), l.getEnd());
+        }
     }
 
     public int getBoardSize() {
-        return BOARD_SIZE;
+        return boardSize;
     }
 
-    public int getNewPositionAfterSnakeOrLadder(int position) {
-        for (Snake snake : snakes) {
-            if (snake.getStart() == position) {
-                return snake.getEnd();
-            }
-        }
-
-        for (Ladder ladder : ladders) {
-            if (ladder.getStart() == position) {
-                return ladder.getEnd();
-            }
-        }
-
+    public int getNextPosition(int position) {
+        if (snakes.containsKey(position)) return snakes.get(position);
+        if (ladders.containsKey(position)) return ladders.get(position);
         return position;
     }
 }

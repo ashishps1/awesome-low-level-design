@@ -6,6 +6,7 @@ import musicstreamingservice.MusicStreamingServiceDemo;
 import onlineauctionsystem.AuctionSystemDemo;
 import onlineshoppingservice.OnlineShoppingServiceDemo;
 import ridesharingservice.RideSharingServiceDemo;
+import snakeandladdergame.SnakeAndLadderDemo;
 import socialnetworkingservice.SocialNetworkingServiceDemo;
 
 public class LLDRunner {
@@ -37,7 +38,7 @@ public class LLDRunner {
 //        PubSubSystemDemo.run();
 //        RestaurantManagementDemo.run();
 //        RideSharingServiceDemo.run();
-//        SnakeAndLadderDemo.run();
+        SnakeAndLadderDemo.run();
 //        SocialNetworkingServiceDemo.run();
 //        SplitwiseDemo.run();
 //        StackOverflowDemo.run();

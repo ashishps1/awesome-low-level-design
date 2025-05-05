@@ -1,10 +1,15 @@
 package snakeandladdergame;
 
 public class Dice {
-    private static final int MIN_VALUE = 1;
-    private static final int MAX_VALUE = 6;
+    private final int minValue;
+    private final int maxValue;
+
+    public Dice(int minValue, int maxValue) {
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+    }
 
     public int roll() {
-        return (int) (Math.random() * (MAX_VALUE - MIN_VALUE + 1) + MIN_VALUE);
+        return (int) (Math.random() * (maxValue - minValue + 1) + minValue);
     }
 }
