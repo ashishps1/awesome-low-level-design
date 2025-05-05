@@ -9,6 +9,7 @@ import onlineshoppingservice.OnlineShoppingServiceDemo;
 import ridesharingservice.RideSharingServiceDemo;
 import snakeandladdergame.SnakeAndLadderDemo;
 import socialnetworkingservice.SocialNetworkingServiceDemo;
+import vendingmachine.VendingMachineDemo;
 
 public class LLDRunner {
     public static void main(String[] args) {
@@ -46,7 +47,7 @@ public class LLDRunner {
 //        TaskManagementSystemDemo.run();
 //        TicTacToeDemo.run();
 //        TrafficSignalSystemDemo.run();
-//        VendingMachineDemo.run();
+        VendingMachineDemo.run();
 //        VotingSystemDemo.run();
     }
 }

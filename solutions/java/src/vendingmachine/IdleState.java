@@ -9,10 +9,10 @@ class IdleState implements VendingMachineState {
 
     @Override
     public void selectProduct(Product product) {
-        if (vendingMachine.inventory.isAvailable(product)) {
+        if (vendingMachine.getInventory().isAvailable(product)) {
+            System.out.println("Product selected: " + product.getName());
             vendingMachine.setSelectedProduct(product);
             vendingMachine.setState(vendingMachine.getReadyState());
-            System.out.println("Product selected: " + product.getName());
         } else {
             System.out.println("Product not available: " + product.getName());
         }

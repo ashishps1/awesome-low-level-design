@@ -29,6 +29,12 @@ public class VendingMachine {
         return instance;
     }
 
+    public Product addProduct(String name, double price, int quantity) {
+        Product product = new Product(name, price);
+        inventory.addProduct(product, quantity);
+        return product;
+    }
+
     public void selectProduct(Product product) {
         currentState.selectProduct(product);
     }
@@ -51,6 +57,10 @@ public class VendingMachine {
 
     void setState(VendingMachineState state) {
         currentState = state;
+    }
+
+    Inventory getInventory() {
+        return inventory;
     }
 
     VendingMachineState getIdleState() {

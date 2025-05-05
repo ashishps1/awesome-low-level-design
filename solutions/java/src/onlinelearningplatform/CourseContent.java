@@ -1,4 +1,4 @@
-package onlineElearningplatform;
+package onlinelearningplatform;
 
 class CourseContent {
     private String contentId;

@@ -1,4 +1,4 @@
-package onlineElearningplatform;
+package onlinelearningplatform;
 
 import java.util.Date;
 

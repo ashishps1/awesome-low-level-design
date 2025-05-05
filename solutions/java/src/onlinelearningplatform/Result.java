@@ -1,4 +1,4 @@
-package onlineElearningplatform;
+package onlinelearningplatform;
 
 class Result {
     private String resultId;

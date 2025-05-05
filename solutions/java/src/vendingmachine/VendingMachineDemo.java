@@ -5,13 +5,9 @@ public class VendingMachineDemo {
         VendingMachine vendingMachine = VendingMachine.getInstance();
 
         // Add products to the inventory
-        Product coke = new Product("Coke", 1.5);
-        Product pepsi = new Product("Pepsi", 1.5);
-        Product water = new Product("Water", 1.0);
-
-        vendingMachine.inventory.addProduct(coke, 5);
-        vendingMachine.inventory.addProduct(pepsi, 3);
-        vendingMachine.inventory.addProduct(water, 2);
+        Product coke = vendingMachine.addProduct("Coke", 1.5, 3);
+        Product pepsi = vendingMachine.addProduct("Pepsi", 1.5, 2);
+        Product water = vendingMachine.addProduct("Water", 1.0, 5);
 
         // Select a product
         vendingMachine.selectProduct(coke);
