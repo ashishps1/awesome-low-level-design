@@ -56,8 +56,8 @@ public class DigitalWallet {
         }
         sourceAccount.withdraw(amount);
 
-        if (destinationAccount.getCurrency() != currency) {
-            amount = CurrencyConverter.convert(amount, currency, destinationAccount.getCurrency());
+        if (destinationAccount.getCurrency() != sourceAccount.getCurrency()) {
+            amount = CurrencyConverter.convert(amount, sourceAccount.getCurrency(), destinationAccount.getCurrency());
         }
         destinationAccount.deposit(amount);
 
