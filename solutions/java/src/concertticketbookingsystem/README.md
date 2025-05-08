@@ -1,22 +1,99 @@
-# Designing a Concert Ticket Booking System
+# Concert Ticket Booking System (LLD)
+
+## Problem Statement
+
+Design and implement a Concert Ticket Booking System that allows users to book seats for concerts. The system should manage concert details, seat availability, and handle bookings with proper validation.
+
+---
 
 ## Requirements
-1. The concert ticket booking system should allow users to view available concerts and their seating arrangements.
-2. Users should be able to search for concerts based on various criteria such as artist, venue, date, and time.
-3. Users should be able to select seats and purchase tickets for a specific concert.
-4. The system should handle concurrent booking requests to avoid double-booking of seats.
-5. The system should ensure fair booking opportunities for all users.
-6. The system should handle payment processing securely.
-7. The system should generate booking confirmations and send them to users via email or SMS.
-8. The system should provide a waiting list functionality for sold-out concerts.
 
-## Classes, Interfaces and Enumerations
-1. The **Concert** class represents a concert event, with properties such as ID, artist, venue, date and time, and a list of seats.
-2. The **Seat** class represents a seat in a concert, with properties like ID, seat number, seat type, price, and status. It provides methods to book and release a seat.
-3. The **SeatType** enum represents the different types of seats available, such as regular, premium, and VIP.
-4. The **SeatStatus** enum represents the status of a seat, which can be available, booked, or reserved.
-5. The **Booking** class represents a booking made by a user for a specific concert and seats. It contains properties such as ID, user, concert, seats, total price, and status. It provides methods to confirm and cancel a booking.
-6. The **BookingStatus** enum represents the status of a booking, which can be pending, confirmed, or cancelled.
-7. The **User** class represents a user of the concert ticket booking system, with properties like ID, name, and email.
-8. The **ConcertTicketBookingSystem** class is the central component of the system. It follows the Singleton pattern to ensure a single instance of the system. It manages concerts, bookings, and provides methods to add concerts, search concerts, book tickets, and cancel bookings.
-9. The **SeatNotAvailableException** is a custom exception used to handle cases where a seat is not available for booking.
+- **Concert Management:** The system manages concert details including name, date, venue, and available seats.
+- **Seat Management:** The system tracks different types of seats (VIP, STANDARD, ECONOMY) and their availability.
+- **Booking Management:** Users can book seats, and the system handles booking status (CONFIRMED, CANCELLED).
+- **User Management:** The system maintains user information for bookings.
+- **Validation:** The system prevents double bookings and handles seat availability checks.
+
+---
+
+## Core Entities
+
+- **ConcertTicketBookingSystem:** Main class that manages concerts, bookings, and seat allocation.
+- **Concert:** Represents a concert with its details and seat management.
+- **Seat:** Represents a seat with its type, status, and booking information.
+- **User:** Represents a user who can book tickets.
+- **Booking:** Represents a booking with its status and associated details.
+- **SeatType:** Enum for different seat categories (VIP, STANDARD, ECONOMY).
+- **SeatStatus:** Enum for seat states (AVAILABLE, BOOKED).
+- **BookingStatus:** Enum for booking states (CONFIRMED, CANCELLED).
+
+---
+
+## Class Design
+
+### 1. ConcertTicketBookingSystem
+- **Fields:** List<Concert> concerts, List<Booking> bookings
+- **Methods:** addConcert(), bookSeat(), cancelBooking(), getAvailableSeats(), etc.
+
+### 2. Concert
+- **Fields:** String name, String date, String venue, List<Seat> seats
+- **Methods:** addSeat(), getAvailableSeats(), bookSeat(), etc.
+
+### 3. Seat
+- **Fields:** String seatNumber, SeatType type, SeatStatus status, Booking booking
+- **Methods:** isAvailable(), book(), cancel(), etc.
+
+### 4. User
+- **Fields:** String name, String email
+
+### 5. Booking
+- **Fields:** String bookingId, User user, Concert concert, Seat seat, BookingStatus status
+- **Methods:** confirm(), cancel(), etc.
+
+### 6. Enums
+- **SeatType:** VIP, STANDARD, ECONOMY
+- **SeatStatus:** AVAILABLE, BOOKED
+- **BookingStatus:** CONFIRMED, CANCELLED
+
+---
+
+## Example Usage
+
+```java
+ConcertTicketBookingSystem system = new ConcertTicketBookingSystem();
+
+// Add a concert
+Concert concert = system.addConcert("Rock Concert", "2024-12-31", "Stadium");
+
+// Book a seat
+User user = new User("John Doe", "john@example.com");
+Booking booking = system.bookSeat(concert, "A1", user);
+
+// Cancel booking
+system.cancelBooking(booking);
+```
+
+---
+
+## Demo
+
+See `ConcertTicketBookingSystemDemo.java` for a sample usage and simulation of the booking system.
+
+---
+
+## Extending the Framework
+
+- **Add payment processing:** Integrate payment gateway for ticket purchases
+- **Add waitlist functionality:** Handle seat waitlist when fully booked
+- **Add discount management:** Support for different pricing tiers and discounts
+- **Add notification system:** Send booking confirmations and updates
+
+---
+
+## Design Patterns Used
+
+- **Singleton Pattern:** For managing the booking system instance
+- **Factory Pattern:** For creating different types of seats
+- **Observer Pattern:** For notifying users about booking status changes
+
+---

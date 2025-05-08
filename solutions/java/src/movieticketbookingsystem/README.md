@@ -1,26 +1,132 @@
-# Designing a Movie Ticket Booking System like BookMyShow
+# Movie Ticket Booking System (LLD)
+
+## Problem Statement
+
+Design and implement a Movie Ticket Booking System that allows users to book movie tickets, select seats, and manage shows. The system should handle movie schedules, theater management, and seat reservations.
+
+---
 
 ## Requirements
-1. The system should allow users to view the list of movies playing in different theaters.
-2. Users should be able to select a movie, theater, and show timing to book tickets.
-3. The system should display the seating arrangement of the selected show and allow users to choose seats.
-4. Users should be able to make payments and confirm their booking.
-5. The system should handle concurrent bookings and ensure seat availability is updated in real-time.
-6. The system should support different types of seats (e.g., normal, premium) and pricing.
-7. The system should allow theater administrators to add, update, and remove movies, shows, and seating arrangements.
-8. The system should be scalable to handle a large number of concurrent users and bookings.
 
-## Classes, Interfaces and Enumerations
-1. The **Movie** class represents a movie with properties such as ID, title, description, and duration.
-2. The **Theater** class represents a theater with properties such as ID, name, location, and a list of shows.
-3. The **Show** class represents a movie show in a theater, with properties such as ID, movie, theater, start time, end time, and a map of seats.
-4. The **Seat** class represents a seat in a show, with properties such as ID, row, column, type, price, and status.
-5. The **SeatType** enum defines the different types of seats (normal or premium).
-6. The **SeatStatus** enum defines the different statuses of a seat (available or booked).
-7. The **Booking** class represents a booking made by a user, with properties such as ID, user, show, selected seats, total price, and status.
-8. The **BookingStatus** enum defines the different statuses of a booking (pending, confirmed, or cancelled).
-9. The **User** class represents a user of the booking system, with properties such as ID, name, and email.
-10. The **MovieTicketBookingSystem** class is the main class that manages the movie ticket booking system. It follows the Singleton pattern to ensure only one instance of the system exists.
-11. The MovieTicketBookingSystem class provides methods for adding movies, theaters, and shows, as well as booking tickets, confirming bookings, and cancelling bookings.
-12. Multi-threading is achieved using concurrent data structures such as ConcurrentHashMap to handle concurrent access to shared resources like shows and bookings.
-13. The **MovieTicketBookingDemo** class demonstrates the usage of the movie ticket booking system by adding movies, theaters, shows, booking tickets, and confirming or cancelling bookings.
+1. **Movie Management:**
+   - Store movie information (title, duration, language)
+   - Manage movie schedules and shows
+   - Track movie availability
+
+2. **Theater Management:**
+   - Manage theater information
+   - Handle multiple shows per theater
+   - Track theater capacity
+
+3. **Show Management:**
+   - Schedule shows for movies
+   - Manage show timings
+   - Handle show availability
+
+4. **Seat Management:**
+   - Track seat availability
+   - Handle seat selection
+   - Manage different seat types
+
+5. **Booking Management:**
+   - Process ticket bookings
+   - Handle booking cancellations
+   - Manage booking status
+
+---
+
+## Core Entities
+
+### 1. MovieTicketBookingSystem
+- **Fields:** List<Movie> movies, List<Theater> theaters, List<Show> shows
+- **Methods:** 
+  - addMovie()
+  - addTheater()
+  - addShow()
+  - bookTicket()
+  - cancelBooking()
+  - getAvailableShows()
+
+### 2. Movie
+- **Fields:** String id, String title, int duration, String language
+- **Methods:** 
+  - getShows()
+  - isAvailable()
+
+### 3. Theater
+- **Fields:** String id, String name, String location
+- **Methods:** 
+  - addShow()
+  - getShows()
+  - getCapacity()
+
+### 4. Show
+- **Fields:** String id, Movie movie, Theater theater, Date showTime, List<Seat> seats
+- **Methods:** 
+  - getAvailableSeats()
+  - bookSeat()
+  - cancelSeat()
+
+### 5. User
+- **Fields:** String id, String name, String email
+- **Methods:** 
+  - getBookings()
+  - updateProfile()
+
+---
+
+## Example Usage
+
+```java
+MovieTicketBookingSystem system = new MovieTicketBookingSystem();
+
+// Add a movie
+Movie movie = system.addMovie("Inception", 150, "English");
+
+// Add a theater
+Theater theater = system.addTheater("Cineplex", "Downtown");
+
+// Add a show
+Show show = system.addShow(movie, theater, showTime);
+
+// Book tickets
+User user = new User("John Doe", "john@example.com");
+Booking booking = system.bookTicket(user, show, seats);
+```
+
+---
+
+## Demo
+
+See `MovieTicketBookingDemo.java` for a sample usage and simulation of the movie ticket booking system.
+
+---
+
+## Extending the Framework
+
+- **Add payment processing:** Integrate payment gateway for ticket purchases
+- **Add seat selection UI:** Implement interactive seat selection interface
+- **Add pricing tiers:** Support different pricing for different seat types
+- **Add show scheduling:** Implement advanced show scheduling algorithms
+- **Add notification system:** Send booking confirmations and reminders
+- **Add user reviews:** Allow users to rate and review movies
+
+---
+
+## Design Patterns Used
+
+- **Singleton Pattern:** For the booking system instance
+- **Factory Pattern:** For creating different types of seats
+- **Observer Pattern:** For seat availability updates
+- **Strategy Pattern:** For different pricing strategies
+
+---
+
+## Exception Handling
+
+- **SeatNotAvailableException:** Thrown when trying to book an unavailable seat
+- **InvalidShowException:** Thrown when show details are invalid
+- **BookingFailedException:** Thrown when booking process fails
+- **CancellationFailedException:** Thrown when cancellation process fails
+
+---

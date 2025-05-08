@@ -2,71 +2,98 @@
 
 ## Problem Statement
 
-Design and implement an Online Stock Brokerage System that allows users to manage accounts, place buy and sell orders for stocks, maintain portfolios, and handle order execution and exceptions.
+Design and implement an Online Stock Brokerage System that allows users to buy and sell stocks, manage their portfolio, and track their investments. The system should handle order processing, account management, and stock trading.
 
 ---
 
 ## Requirements
 
-- **User Management:** Users can register and manage their accounts.
-- **Account Management:** Each user has an account with a balance for trading.
-- **Stock Management:** The system manages a list of stocks with their details and prices.
-- **Portfolio Management:** Users can view and manage their stock holdings (portfolio).
-- **Order Placement:** Users can place buy and sell orders for stocks.
-- **Order Execution:** The system executes orders, updates portfolios and account balances.
-- **Order Status Tracking:** Orders have statuses (e.g., PENDING, COMPLETED, FAILED).
-- **Exception Handling:** The system handles insufficient funds and insufficient stock scenarios.
-- **Extensibility:** Easy to add new order types, features, or support for multiple exchanges.
+1. **Account Management:**
+   - Create and manage user accounts
+   - Track account balance
+   - Handle fund deposits and withdrawals
+
+2. **Stock Management:**
+   - Track available stocks
+   - Maintain stock prices
+   - Handle stock information
+
+3. **Order Management:**
+   - Process buy and sell orders
+   - Track order status
+   - Handle order execution
+
+4. **Portfolio Management:**
+   - Track user's stock holdings
+   - Calculate portfolio value
+   - Monitor investment performance
+
+5. **Trading Rules:**
+   - Validate order amounts
+   - Check sufficient funds
+   - Verify stock availability
 
 ---
 
 ## Core Entities
 
-- **StockBroker:** Main class that manages users, accounts, stocks, and order processing.
-- **User:** Represents a user with a unique ID and name.
-- **Account:** Represents a user's trading account with a balance.
-- **Portfolio:** Represents a user's stock holdings.
-- **Stock:** Represents a stock with a symbol, name, and price.
-- **Order:** Abstract class representing a buy or sell order.
-- **BuyOrder / SellOrder:** Concrete classes for buy and sell orders.
-- **OrderStatus:** Enum for order status (PENDING, COMPLETED, FAILED).
-- **InsufficientFundsException / InsufficientStockException:** Custom exceptions for error handling.
-
----
-
-## Class Design
-
 ### 1. StockBroker
-- **Fields:** Map<Integer, User> users, Map<Integer, Account> accounts, Map<Integer, Portfolio> portfolios, Map<String, Stock> stocks
-- **Methods:** registerUser(User), createAccount(User, double initialBalance), addStock(Stock), placeOrder(Order), getPortfolio(User), getAccount(User), etc.
+- **Fields:** List<Account> accounts, List<Stock> stocks, List<Order> orders
+- **Methods:** 
+  - createAccount()
+  - placeBuyOrder()
+  - placeSellOrder()
+  - getPortfolio()
+  - getStockPrice()
 
-### 2. User
-- **Fields:** int id, String name
+### 2. Account
+- **Fields:** String id, User user, double balance, Portfolio portfolio
+- **Methods:** 
+  - deposit()
+  - withdraw()
+  - getBalance()
+  - getPortfolio()
 
-### 3. Account
-- **Fields:** int userId, double balance
-- **Methods:** deposit(double), withdraw(double), getBalance()
+### 3. User
+- **Fields:** String id, String name, String email
+- **Methods:** 
+  - getAccount()
+  - updateProfile()
 
-### 4. Portfolio
-- **Fields:** int userId, Map<String, Integer> stockHoldings
-- **Methods:** addStock(Stock, int quantity), removeStock(Stock, int quantity), getHoldings()
+### 4. Stock
+- **Fields:** String symbol, String name, double currentPrice
+- **Methods:** 
+  - updatePrice()
+  - getPrice()
 
-### 5. Stock
-- **Fields:** String symbol, String name, double price
+### 5. Order
+- **Fields:** String id, Account account, Stock stock, int quantity, OrderStatus status
+- **Methods:** 
+  - execute()
+  - cancel()
+  - getStatus()
 
-### 6. Order (abstract)
-- **Fields:** int userId, String stockSymbol, int quantity, double price, OrderStatus status
-- **Methods:** execute(StockBroker)
+### 6. BuyOrder
+- **Fields:** double price
+- **Methods:** 
+  - validateFunds()
+  - execute()
 
-### 7. BuyOrder / SellOrder
-- **Inherits:** Order
-- **Methods:** execute(StockBroker)
+### 7. SellOrder
+- **Fields:** double price
+- **Methods:** 
+  - validateStocks()
+  - execute()
 
-### 8. OrderStatus (enum)
-- Values: PENDING, COMPLETED, FAILED
+### 8. Portfolio
+- **Fields:** Map<Stock, Integer> holdings
+- **Methods:** 
+  - addStock()
+  - removeStock()
+  - getValue()
 
-### 9. InsufficientFundsException / InsufficientStockException
-- Custom exceptions for error handling
+### 9. OrderStatus (Enum)
+- **Values:** PENDING, EXECUTED, CANCELLED, FAILED
 
 ---
 
@@ -74,18 +101,23 @@ Design and implement an Online Stock Brokerage System that allows users to manag
 
 ```java
 StockBroker broker = new StockBroker();
-User alice = new User(1, "Alice");
-broker.registerUser(alice);
-broker.createAccount(alice, 10000.0);
 
-Stock apple = new Stock("AAPL", "Apple Inc.", 150.0);
-broker.addStock(apple);
+// Create a user account
+User user = new User("John Doe", "john@example.com");
+Account account = broker.createAccount(user);
 
-Order buyOrder = new BuyOrder(alice.getId(), "AAPL", 10, 150.0);
-broker.placeOrder(buyOrder);
+// Deposit funds
+account.deposit(10000.0);
 
-Portfolio alicePortfolio = broker.getPortfolio(alice);
-System.out.println(alicePortfolio.getHoldings());
+// Place a buy order
+Stock stock = broker.getStock("AAPL");
+BuyOrder buyOrder = broker.placeBuyOrder(account, stock, 10);
+
+// Place a sell order
+SellOrder sellOrder = broker.placeSellOrder(account, stock, 5);
+
+// Get portfolio
+Portfolio portfolio = account.getPortfolio();
 ```
 
 ---
@@ -98,8 +130,29 @@ See `StockBrokerageSystemDemo.java` for a sample usage and simulation of the sto
 
 ## Extending the Framework
 
-- **Add new order types:** Such as limit orders, stop-loss orders, etc.
-- **Support multiple exchanges:** Manage stocks and orders across different exchanges.
-- **Add features:** Such as transaction history, reporting, or margin trading.
+- **Add real-time market data:** Integrate with market data providers
+- **Add order types:** Support limit orders, stop-loss orders
+- **Add trading strategies:** Implement automated trading strategies
+- **Add transaction history:** Track all trading activities
+- **Add reporting system:** Generate investment reports
+- **Add notification system:** Send price alerts and order updates
+
+---
+
+## Design Patterns Used
+
+- **Singleton Pattern:** For the stock broker instance
+- **Factory Pattern:** For creating different types of orders
+- **Observer Pattern:** For stock price updates
+- **Strategy Pattern:** For different order execution strategies
+
+---
+
+## Exception Handling
+
+- **InsufficientFundsException:** Thrown when account has insufficient funds
+- **InsufficientStockException:** Thrown when portfolio has insufficient stocks
+- **InvalidOrderException:** Thrown when order details are invalid
+- **OrderExecutionException:** Thrown when order execution fails
 
 ---

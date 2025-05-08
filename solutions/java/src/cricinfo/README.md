@@ -1,24 +1,143 @@
-# Designing a Cricket Information System like CricInfo
+# Cricket Information System (LLD)
+
+## Problem Statement
+
+Design and implement a Cricket Information System similar to CricInfo that provides comprehensive information about cricket matches, teams, players, and live scores. The system should handle real-time updates, match statistics, and user interactions.
+
+---
 
 ## Requirements
-1. The Cricinfo system should provide information about cricket matches, teams, players, and live scores.
-2. Users should be able to view the schedule of upcoming matches and the results of completed matches.
-3. The system should allow users to search for specific matches, teams, or players.
-4. Users should be able to view detailed information about a particular match, including the scorecard, commentary, and statistics.
-5. The system should support real-time updates of live scores and match information.
-6. The system should handle concurrent access to match data and ensure data consistency.
-7. The system should be scalable and able to handle a large volume of user requests.
-8. The system should be extensible to accommodate new features and enhancements in the future.
 
-## Classes, Interfaces and Enumerations
-1. The **Match** class represents a cricket match, with properties such as ID, title, venue, start time, teams, status, and scorecard.
-2. The **Team** class represents a cricket team, with properties like ID, name, and a list of players.
-3. The **Player** class represents a cricket player, with properties such as ID, name, and role.
-4. The **Scorecard** class represents the scorecard of a match, containing team scores and a list of innings.
-5. The **Innings** class represents an innings in a match, with properties like ID, batting team, bowling team, and a list of overs.
-6. The **Over** class represents an over in an innings, containing a list of balls.
-7. The **Ball** class represents a ball bowled in an over, with properties such as ball number, bowler, batsman, and result.
-8. The **MatchStatus** enum represents the different statuses of a match, such as scheduled, in progress, completed, or abandoned.
-9. The **MatchService** class manages the matches in the system, providing methods to add, retrieve, and update match information. It follows the Singleton pattern to ensure a single instance of the service.
-10. The **ScorecardService** class manages the scorecards of matches, allowing the creation, retrieval, and update of scorecards and their associated data, such as innings and scores. It also follows the Singleton pattern.
-11. The **CricinfoSystem** class serves as the main entry point of the system, integrating the match and scorecard services and providing high-level methods for interacting with the system.
+1. **Match Information Management:**
+   - Store and manage cricket match details
+   - Track match schedules and results
+   - Support real-time score updates
+   - Handle match status transitions
+
+2. **Team and Player Management:**
+   - Maintain team rosters and player information
+   - Track player roles and statistics
+   - Support team composition changes
+
+3. **Scorecard Management:**
+   - Record detailed match statistics
+   - Track innings, overs, and ball-by-ball information
+   - Maintain batting and bowling statistics
+
+4. **Search and Retrieval:**
+   - Search for matches, teams, and players
+   - View detailed match information
+   - Access historical data and statistics
+
+5. **System Requirements:**
+   - Handle concurrent access
+   - Ensure data consistency
+   - Support scalability
+   - Allow for future extensions
+
+---
+
+## Core Entities
+
+### 1. Match
+- **Fields:** String id, String title, String venue, Date startTime, Team team1, Team team2, MatchStatus status, Scorecard scorecard
+- **Methods:** updateStatus(), getScorecard(), getMatchDetails()
+
+### 2. Team
+- **Fields:** String id, String name, List<Player> players
+- **Methods:** addPlayer(), removePlayer(), getTeamStats()
+
+### 3. Player
+- **Fields:** String id, String name, String role
+- **Methods:** getPlayerStats(), updateRole()
+
+### 4. Scorecard
+- **Fields:** Match match, List<Innings> innings
+- **Methods:** addInnings(), updateScore(), getMatchSummary()
+
+### 5. Innings
+- **Fields:** String id, Team battingTeam, Team bowlingTeam, List<Over> overs
+- **Methods:** addOver(), getInningsSummary()
+
+### 6. Over
+- **Fields:** int overNumber, List<Ball> balls
+- **Methods:** addBall(), getOverSummary()
+
+### 7. Ball
+- **Fields:** int ballNumber, Player bowler, Player batsman, String result
+- **Methods:** recordResult(), getBallDetails()
+
+### 8. MatchStatus (Enum)
+- **Values:** SCHEDULED, IN_PROGRESS, COMPLETED, ABANDONED
+
+---
+
+## Services
+
+### 1. MatchService (Singleton)
+- **Methods:** 
+  - addMatch(Match match)
+  - getMatch(String id)
+  - updateMatchStatus(String id, MatchStatus status)
+  - searchMatches(String query)
+
+### 2. ScorecardService (Singleton)
+- **Methods:**
+  - createScorecard(Match match)
+  - updateScorecard(String matchId, Scorecard scorecard)
+  - getScorecard(String matchId)
+  - addInnings(String matchId, Innings innings)
+
+### 3. CricinfoSystem
+- **Methods:**
+  - getMatchDetails(String matchId)
+  - getTeamDetails(String teamId)
+  - getPlayerDetails(String playerId)
+  - search(String query)
+
+---
+
+## Example Usage
+
+```java
+CricinfoSystem system = CricinfoSystem.getInstance();
+
+// Create a new match
+Match match = system.createMatch("IND vs AUS", "Melbourne Cricket Ground", new Date());
+
+// Update match status
+system.updateMatchStatus(match.getId(), MatchStatus.IN_PROGRESS);
+
+// Record a ball
+system.recordBall(match.getId(), 1, 1, "FOUR");
+
+// Get match details
+MatchDetails details = system.getMatchDetails(match.getId());
+```
+
+---
+
+## Demo
+
+See the demo class for a sample usage and simulation of the cricket information system.
+
+---
+
+## Extending the Framework
+
+- **Add user authentication:** Support for user accounts and preferences
+- **Add commentary system:** Real-time match commentary
+- **Add statistics engine:** Advanced player and team statistics
+- **Add notification system:** Match updates and alerts
+- **Add social features:** User comments and discussions
+
+---
+
+## Design Patterns Used
+
+- **Singleton Pattern:** For service classes (MatchService, ScorecardService)
+- **Factory Pattern:** For creating matches and scorecards
+- **Observer Pattern:** For real-time updates and notifications
+- **Strategy Pattern:** For different types of match formats
+
+---

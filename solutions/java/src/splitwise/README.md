@@ -1,22 +1,149 @@
-# Designing Splitwise
+# Splitwise System (LLD)
+
+## Problem Statement
+
+Design and implement a Splitwise System that allows users to split expenses among groups and individuals. The system should handle expense tracking, balance calculations, and settlement of debts between users.
+
+---
 
 ## Requirements
-1. The system should allow users to create accounts and manage their profile information.
-2. Users should be able to create groups and add other users to the groups.
-3. Users should be able to add expenses within a group, specifying the amount, description, and participants.
-4. The system should automatically split the expenses among the participants based on their share.
-5. Users should be able to view their individual balances with other users and settle up the balances.
-6. The system should support different split methods, such as equal split, percentage split, and exact amounts.
-7. Users should be able to view their transaction history and group expenses.
-8. The system should handle concurrent transactions and ensure data consistency.
 
-## Classes, Interfaces and Enumerations
-1. The **User** class represents a user in the Splitwise system, with properties such as ID, name, email, and a map to store balances with other users.
-2. The **Group** class represents a group in Splitwise, containing a list of member users and a list of expenses.
-3. The **Expense** class represents an expense within a group, with properties such as ID, amount, description, the user who paid, and a list of splits.
-4. The **Split** class is an abstract class representing the split of an expense. It is extended by EqualSplit, PercentSplit, and ExactSplit classes to handle different split methods.
-5. The **Transaction** class represents a transaction between two users, with properties such as ID, sender, receiver, and amount.
-6. The **SplitwiseService** class is the main class that manages the Splitwise system. It follows the Singleton pattern to ensure only one instance of the service exists.
-7. The SplitwiseService class provides methods for adding users, groups, and expenses, splitting expenses, updating balances, settling balances, and creating transactions.
-8. Multi-threading is achieved using concurrent data structures such as ConcurrentHashMap and CopyOnWriteArrayList to handle concurrent access to shared resources.
-9. The **SplitwiseDemo** class demonstrates the usage of the Splitwise system by creating users, a group, adding an expense, settling balances, and printing user balances.
+1. **User Management:**
+   - Create and manage user profiles
+   - Track user balances
+   - Handle user relationships
+
+2. **Group Management:**
+   - Create and manage groups
+   - Add/remove members
+   - Track group expenses
+
+3. **Expense Management:**
+   - Add expenses to groups or individuals
+   - Support different split types (EQUAL, EXACT, PERCENTAGE)
+   - Track expense history
+
+4. **Balance Management:**
+   - Calculate balances between users
+   - Track who owes whom
+   - Handle settlements
+
+5. **Transaction Management:**
+   - Record transactions
+   - Track payment status
+   - Generate balance reports
+
+---
+
+## Core Entities
+
+### 1. SplitwiseService
+- **Fields:** List<User> users, List<Group> groups, List<Expense> expenses
+- **Methods:** 
+  - addUser()
+  - createGroup()
+  - addExpense()
+  - getBalance()
+  - settleExpense()
+
+### 2. User
+- **Fields:** String id, String name, String email, Map<User, Double> balances
+- **Methods:** 
+  - updateProfile()
+  - getBalance()
+  - addBalance()
+  - subtractBalance()
+
+### 3. Group
+- **Fields:** String id, String name, List<User> members, List<Expense> expenses
+- **Methods:** 
+  - addMember()
+  - removeMember()
+  - addExpense()
+  - getBalances()
+
+### 4. Expense
+- **Fields:** String id, String description, double amount, User paidBy, List<User> paidFor, SplitType splitType
+- **Methods:** 
+  - calculateSplits()
+  - getAmount()
+  - getPaidBy()
+
+### 5. Transaction
+- **Fields:** String id, User from, User to, double amount
+- **Methods:** 
+  - execute()
+  - getStatus()
+
+### 6. SplitType (Enum)
+- **Values:** EQUAL, EXACT, PERCENTAGE
+
+---
+
+## Example Usage
+
+```java
+SplitwiseService service = new SplitwiseService();
+
+// Create users
+User user1 = service.addUser("John", "john@example.com");
+User user2 = service.addUser("Jane", "jane@example.com");
+
+// Create a group
+Group group = service.createGroup("Trip to Paris");
+group.addMember(user1);
+group.addMember(user2);
+
+// Add an expense
+Expense expense = service.addExpense(
+    "Dinner", 
+    100.0, 
+    user1, 
+    Arrays.asList(user1, user2), 
+    SplitType.EQUAL
+);
+
+// Get balances
+double balance = service.getBalance(user1, user2);
+
+// Settle expense
+service.settleExpense(user2, user1, 50.0);
+```
+
+---
+
+## Demo
+
+See `SplitwiseDemo.java` for a sample usage and simulation of the Splitwise system.
+
+---
+
+## Extending the Framework
+
+- **Add expense categories:** Categorize expenses (food, travel, etc.)
+- **Add recurring expenses:** Support for regular payments
+- **Add expense comments:** Allow users to add notes to expenses
+- **Add expense attachments:** Support for receipts and documents
+- **Add payment integration:** Integrate with payment gateways
+- **Add notification system:** Send reminders for pending payments
+
+---
+
+## Design Patterns Used
+
+- **Singleton Pattern:** For the Splitwise service instance
+- **Factory Pattern:** For creating different types of splits
+- **Strategy Pattern:** For different expense splitting strategies
+- **Observer Pattern:** For balance updates and notifications
+
+---
+
+## Exception Handling
+
+- **InvalidAmountException:** Thrown when expense amount is invalid
+- **InvalidSplitException:** Thrown when split details are invalid
+- **UserNotFoundException:** Thrown when user is not found
+- **GroupNotFoundException:** Thrown when group is not found
+- **InsufficientBalanceException:** Thrown when user has insufficient balance
+
+---

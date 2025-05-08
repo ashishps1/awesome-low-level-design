@@ -1,22 +1,138 @@
-# Designing a Hotel Management System
+# Hotel Management System (LLD)
+
+## Problem Statement
+
+Design and implement a Hotel Management System that manages hotel rooms, reservations, and guest information. The system should handle room bookings, check-ins, check-outs, and maintain room status.
+
+---
 
 ## Requirements
-1. The hotel management system should allow guests to book rooms, check-in, and check-out.
-2. The system should manage different types of rooms, such as single, double, deluxe, and suite.
-3. The system should handle room availability and reservation status.
-4. The system should allow the hotel staff to manage guest information, room assignments, and billing.
-5. The system should support multiple payment methods, such as cash, credit card, and online payment.
-6. The system should handle concurrent bookings and ensure data consistency.
-7. The system should provide reporting and analytics features for hotel management.
-8. The system should be scalable and handle a large number of rooms and guests.
 
-## Classes, Interfaces and Enumerations
-1. The **Guest** class represents a guest of the hotel, with properties such as ID, name, email, and phone number.
-2. The **Room** class represents a room in the hotel, with properties like ID, room type, price, and status. It provides methods to book, check-in, and check-out a room.
-3. The **RoomType** enum represents the different types of rooms available in the hotel.
-4. The **RoomStatus** enum represents the status of a room, which can be available, booked, or occupied.
-5. The **Reservation** class represents a reservation made by a guest for a specific room and date range. It contains properties such as ID, guest, room, check-in date, check-out date, and status. It provides a method to cancel a reservation.
-6. The **ReservationStatus** enum represents the status of a reservation, which can be confirmed or cancelled.
-7. The **Payment** interface defines the contract for processing payments. It is implemented by concrete payment classes like CashPayment and CreditCardPayment.
-8. The **HotelManagementSystem** class is the central component of the hotel management system. It follows the Singleton pattern to ensure only one instance of the system exists. It provides methods to add guests and rooms, book rooms, cancel reservations, check-in, check-out, and process payments. It also handles concurrent access to shared resources using synchronization.
-9. The **HotelManagementSystemDemo** class demonstrates the usage of the hotel management system by creating guests, rooms, booking a room, checking in, checking out, and cancelling a reservation.
+1. **Room Management:**
+   - Track different types of rooms (STANDARD, DELUXE, SUITE)
+   - Manage room availability and status
+   - Handle room pricing and features
+
+2. **Reservation Management:**
+   - Create and manage reservations
+   - Handle check-in and check-out processes
+   - Track reservation status (CONFIRMED, CANCELLED, CHECKED_IN, CHECKED_OUT)
+
+3. **Guest Management:**
+   - Store guest information
+   - Track guest history
+   - Handle guest preferences
+
+4. **Room Status Tracking:**
+   - Monitor room availability (AVAILABLE, OCCUPIED, MAINTENANCE)
+   - Update room status based on reservations
+   - Handle room maintenance requests
+
+5. **Payment Integration:**
+   - Process room payments
+   - Handle different payment methods
+   - Generate invoices
+
+---
+
+## Core Entities
+
+### 1. HotelManagementSystem
+- **Fields:** List<Room> rooms, List<Reservation> reservations, List<Guest> guests
+- **Methods:** 
+  - addRoom()
+  - makeReservation()
+  - checkIn()
+  - checkOut()
+  - getAvailableRooms()
+  - cancelReservation()
+
+### 2. Room
+- **Fields:** String roomNumber, RoomType type, double price, RoomStatus status
+- **Methods:** 
+  - isAvailable()
+  - updateStatus()
+  - getPrice()
+
+### 3. Guest
+- **Fields:** String id, String name, String email, String phoneNumber
+- **Methods:** 
+  - updateProfile()
+  - getReservations()
+
+### 4. Reservation
+- **Fields:** String id, Guest guest, Room room, Date checkInDate, Date checkOutDate, ReservationStatus status
+- **Methods:** 
+  - confirm()
+  - cancel()
+  - checkIn()
+  - checkOut()
+
+### 5. RoomType (Enum)
+- **Values:** STANDARD, DELUXE, SUITE
+
+### 6. RoomStatus (Enum)
+- **Values:** AVAILABLE, OCCUPIED, MAINTENANCE
+
+### 7. ReservationStatus (Enum)
+- **Values:** CONFIRMED, CANCELLED, CHECKED_IN, CHECKED_OUT
+
+---
+
+## Example Usage
+
+```java
+HotelManagementSystem system = new HotelManagementSystem();
+
+// Add a room
+Room room = system.addRoom("101", RoomType.DELUXE, 150.0);
+
+// Create a guest
+Guest guest = new Guest("John Doe", "john@example.com", "1234567890");
+
+// Make a reservation
+Reservation reservation = system.makeReservation(guest, room, checkInDate, checkOutDate);
+
+// Check in
+system.checkIn(reservation);
+
+// Check out
+system.checkOut(reservation);
+```
+
+---
+
+## Demo
+
+See `HotelManagementSystemDemo.java` for a sample usage and simulation of the hotel management system.
+
+---
+
+## Extending the Framework
+
+- **Add room service:** Track room service requests and delivery
+- **Add housekeeping:** Manage housekeeping schedules and tasks
+- **Add loyalty program:** Implement guest loyalty points and rewards
+- **Add inventory management:** Track hotel supplies and amenities
+- **Add reporting system:** Generate occupancy and revenue reports
+- **Add notification system:** Send booking confirmations and reminders
+
+---
+
+## Design Patterns Used
+
+- **Singleton Pattern:** For the hotel management system instance
+- **Factory Pattern:** For creating different types of rooms
+- **Observer Pattern:** For room status updates and notifications
+- **Strategy Pattern:** For different pricing strategies
+
+---
+
+## Exception Handling
+
+- **RoomNotAvailableException:** Thrown when trying to book an unavailable room
+- **InvalidReservationException:** Thrown when reservation details are invalid
+- **CheckInException:** Thrown when check-in process fails
+- **CheckOutException:** Thrown when check-out process fails
+
+---
