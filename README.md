@@ -23,7 +23,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 
 | **Creational Patterns**                                                       | **Structural Patterns**                                         | **Behavioral Patterns**                                                               |
 | ----------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)            | [Adapter](https://refactoring.guru/design-patterns/adapter)     | [Iterator](https://refactoring.guru/design-patterns/iterator)                         |
+| [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)            | [Adapter](https://blog.algomaster.io/p/ce091479-c602-4c07-b7ba-315c643b31d8)     | [Iterator](https://refactoring.guru/design-patterns/iterator)                         |
 | [Factory Method](https://refactoring.guru/design-patterns/factory-method)     | [Bridge](https://refactoring.guru/design-patterns/bridge)       | [Observer](https://refactoring.guru/design-patterns/observer)                         |
 | [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory) | [Composite](https://refactoring.guru/design-patterns/composite) | [Strategy](https://blog.algomaster.io/p/9c9932d8-80ad-4848-bf28-d6e01892a011)                         |
 | [Builder](https://refactoring.guru/design-patterns/builder)                   | [Decorator](https://refactoring.guru/design-patterns/decorator) | [Command](https://refactoring.guru/design-patterns/command)                           |
