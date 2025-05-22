@@ -32,7 +32,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 |                                                                               | [Proxy](https://blog.algomaster.io/p/c58eb4ce-a8ad-48dd-b003-dae454e02897)         | [Visitor](https://refactoring.guru/design-patterns/visitor)                           |
 |                                                                               |                                                                 | [Mediator](https://blog.algomaster.io/p/953decb8-84b0-4628-889e-02a42f4e0749)                         |
 |                                                                               |                                                                 | [Memento](https://blog.algomaster.io/p/9a2b4b07-a061-4b1e-b700-8275c35d2d68)                           |
-|                                                                               |                                                                 | [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility) |
+|                                                                               |                                                                 | [Chain of Responsibility](https://blog.algomaster.io/p/8302dc37-637e-4566-947e-13fdc773cf0b) |
 
 ## 🗂️ UML
 - [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
