@@ -31,7 +31,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 |                                                                               | [Flyweight](https://refactoring.guru/design-patterns/flyweight) | [Template Method](https://blog.algomaster.io/p/f1bf0594-7b16-480c-b213-3fd8b1d3e811)           |
 |                                                                               | [Proxy](https://blog.algomaster.io/p/c58eb4ce-a8ad-48dd-b003-dae454e02897)         | [Visitor](https://refactoring.guru/design-patterns/visitor)                           |
 |                                                                               |                                                                 | [Mediator](https://refactoring.guru/design-patterns/mediator)                         |
-|                                                                               |                                                                 | [Memento](https://refactoring.guru/design-patterns/memento)                           |
+|                                                                               |                                                                 | [Memento](https://blog.algomaster.io/p/9a2b4b07-a061-4b1e-b700-8275c35d2d68)                           |
 |                                                                               |                                                                 | [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility) |
 
 ## 🗂️ UML
