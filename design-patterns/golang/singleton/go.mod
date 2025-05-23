@@ -1,3 +1,3 @@
-module github.com/VishalMCF/awesome-low-level-design/design-patterns/singleton
+module singleton
 
-go 1.23.0
+go 1.21 
