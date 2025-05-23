@@ -1,15 +1,24 @@
 public class DecoratorDemo {
     public static void main(String[] args) {
-        // Order a simple coffee
-        Coffee coffee = new SimpleCoffee();
-        System.out.println("Cost: $" + coffee.getCost() + "; Description: " + coffee.getDescription());
+        TextView plain = new PlainTextView("Hello, world!");
 
-        // Decorate it with milk
-        coffee = new Milk(coffee);
-        System.out.println("Cost: $" + coffee.getCost() + "; Description: " + coffee.getDescription());
+        System.out.print("Plain: ");
+        plain.render();
+        System.out.println();
 
-        // Decorate it with sugar
-        coffee = new Sugar(coffee);
-        System.out.println("Cost: $" + coffee.getCost() + "; Description: " + coffee.getDescription());
+        System.out.print("Bold: ");
+        TextView bold = new BoldDecorator(plain);
+        bold.render();
+        System.out.println();
+
+        System.out.print("Italic + Bold: ");
+        TextView italicBold = new ItalicDecorator(bold);
+        italicBold.render();
+        System.out.println();
+
+        System.out.print("Underline + Italic + Bold: ");
+        TextView fullStyle = new UnderlineDecorator(italicBold);
+        fullStyle.render();
+        System.out.println();
     }
 }
