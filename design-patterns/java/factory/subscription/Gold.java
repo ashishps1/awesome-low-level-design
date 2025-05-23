@@ -1,10 +1,8 @@
-import java.util.HashMap;
-
-public class RoyalGold implements Subscription {
+public class Gold implements Subscription {
 
     DataBase dataBase;
 
-    public RoyalGold(DataBase dataBase) {
+    public Gold(DataBase dataBase) {
         this.dataBase = dataBase;
     }
 
@@ -15,22 +13,22 @@ public class RoyalGold implements Subscription {
 
     @Override
     public boolean addSubscription(Customer customer) {
-        System.out.println("Customer Added to the RoyalGold List" );
-        dataBase.addToDataBase(customer.customerId, "RoyalGold");
+        System.out.println("Customer"+ customer.customerId+ "Added to the Gold List" );
+        dataBase.addToDataBase(customer.customerId, "Gold");
         return true;
     }
 
     @Override
     public boolean removeSubscription(Customer customer) {
         dataBase.removeFromDataBase(customer.customerId);
-        System.out.println("Customer removed to the RoyalGold List" );
+        System.out.println("Customer "+ customer.customerId +" removed to the Gold List" );
         return true;
     }
 
     @Override
     public boolean updateSubscription(Customer customer) {
-        dataBase.updateDataBase(customer.customerId, "RoyalGold");
-        System.out.println("Customer Updated to the RoyalGold List" );
+        dataBase.updateDataBase(customer.customerId, "Gold");
+        System.out.println("Customer "+ customer.customerId+" Updated to the Gold List" );
         return true;
     }
 

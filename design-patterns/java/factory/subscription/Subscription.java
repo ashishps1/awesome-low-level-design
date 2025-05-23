@@ -1,4 +1,3 @@
-
 public interface Subscription {
      public String subscriptionType();
      public boolean addSubscription(Customer customer);

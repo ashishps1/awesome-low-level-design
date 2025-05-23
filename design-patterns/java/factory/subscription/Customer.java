@@ -1,4 +1,3 @@
-
 public class Customer {
     public String customerId;
     public Subscription subscription = null;
