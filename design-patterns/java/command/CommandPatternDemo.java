@@ -1,41 +1,40 @@
 public class CommandPatternDemo {
     public static void main(String[] args) {
-        // Set up the receiver
-        Light livingRoomLight = new Light("Living Room");
-        Light kitchenLight = new Light("Kitchen");
+        // Receivers
+        Light light = new Light();
+        Thermostat thermostat = new Thermostat();
 
-        // Create concrete commands
-        Command livingRoomLightOn = new LightOnCommand(livingRoomLight);
-        Command livingRoomLightOff = new LightOffCommand(livingRoomLight);
-        Command kitchenLightOn = new LightOnCommand(kitchenLight);
-        Command kitchenLightOff = new LightOffCommand(kitchenLight);
+        // Commands
+        Command lightOn = new LightOnCommand(light);
+        Command lightOff = new LightOffCommand(light);
+        Command setTemp22 = new SetTemperatureCommand(thermostat, 22);
 
-        // Set up the invoker
-        RemoteControl remote = new RemoteControl();
+        // Invoker
+        SmartButton button = new SmartButton();
 
-        // Use the invoker to execute commands
-        remote.setCommand(livingRoomLightOn);
-        remote.pressButton();
-        remote.setCommand(kitchenLightOn);
-        remote.pressButton();
-        remote.setCommand(livingRoomLightOff);
-        remote.pressButton();
-        remote.setCommand(kitchenLightOff);
-        remote.pressButton();
+        // Simulate usage
+        System.out.println("→ Pressing Light ON");
+        button.setCommand(lightOn);
+        button.press();
 
-        // Demonstrate undo
-        System.out.println("\nDemonstrating undo:");
-        remote.setCommand(livingRoomLightOn);
-        remote.pressButton();
-        remote.pressUndoButton();
+        System.out.println("→ Pressing Set Temp to 22°C");
+        button.setCommand(setTemp22);
+        button.press();
 
-        // Demonstrate RemoteControlWithUndo
-        System.out.println("\nDemonstrating RemoteControlWithUndo:");
-        RemoteControlWithUndo advancedRemote = new RemoteControlWithUndo();
-        advancedRemote.addCommand(livingRoomLightOn);
-        advancedRemote.addCommand(kitchenLightOn);
-        advancedRemote.executeCommands();
-        advancedRemote.undoLastCommand();
-        advancedRemote.undoLastCommand();
+        System.out.println("→ Pressing Light OFF");
+        button.setCommand(lightOff);
+        button.press();
+
+        System.out.println("\n🔁 Undo Last Action");
+        button.undoLast(); // Undo Light OFF
+
+        System.out.println("🔁 Undo Previous Action");
+        button.undoLast(); // Undo Set Temp
+
+        System.out.println("🔁 Undo Again");
+        button.undoLast(); // Undo Light ON
+
+        System.out.println("🔁 Undo Once More");
+        button.undoLast(); // No more actions
     }
 }

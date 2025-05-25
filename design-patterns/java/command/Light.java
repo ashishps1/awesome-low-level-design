@@ -1,18 +1,9 @@
-class Light {
-    private boolean isOn = false;
-    private String location;
-
-    public Light(String location) {
-        this.location = location;
+public class Light {
+    public void on() {
+        System.out.println("Light turned ON");
     }
 
-    public void turnOn() {
-        isOn = true;
-        System.out.println(location + " light is now ON");
-    }
-
-    public void turnOff() {
-        isOn = false;
-        System.out.println(location + " light is now OFF");
+    public void off() {
+        System.out.println("Light turned OFF");
     }
 }
