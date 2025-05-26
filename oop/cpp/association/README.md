@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Association is a fundamental concept in object-oriented programming (OOP) that defines a relationship between two or more objects. It represents how objects interact with each other while maintaining their independence.
+Association is a key concept in object-oriented programming (OOP) that defines a relationship between two or more objects. It represents how objects interact with each other while maintaining their independence.
 
 Association is **not inheritance**—rather, it is a relationship between objects that allows communication while ensuring they remain loosely coupled.
 
