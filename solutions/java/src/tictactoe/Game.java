@@ -11,7 +11,6 @@ public class Game {
         this.players = new Player[]{player1, player2};
         this.status = GameStatus.IN_PROGRESS;
     }
-
     public boolean playMove(int row, int col) {
         if (status != GameStatus.IN_PROGRESS) {
             throw new IllegalStateException("Game already finished.");
