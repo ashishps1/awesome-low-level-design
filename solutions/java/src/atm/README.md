@@ -76,7 +76,8 @@ CashDispenser cashDispenser = new CashDispenser(10000);
 ATM atm = new ATM(bankingService, cashDispenser);
 
 bankingService.createAccount("1234567890", 1000.0);
-Card card = new Card("1234567890", "1234");
+bankingService.linkCardToAccount("Card1234567890", "1234", "1234567890");
+Card card = bankingService.getCard("Card1234567890");
 atm.authenticateUser(card);
 
 double balance = atm.checkBalance("1234567890");
