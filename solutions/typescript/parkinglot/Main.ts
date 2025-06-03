@@ -1,8 +1,49 @@
 type carType = "Car" | "Bike" | "Truck";
 
-class ParkingLot {}
+class ParkingLot {
+  name: string;
+  parkingFloors: ParkingFloor[]
 
-class ParkingLevel {}
+  constructor(name: string){
+    this.name = name
+  }
+
+  addFloor(parkingFloor : ParkingFloor){
+    this.parkingFloors.push(parkingFloor)
+  }
+
+  parkCar(car: Car){
+    for(let parkingFloor of this.parkingFloors){
+      if(parkingFloor.checkEmptySpot(car)){
+
+      }
+    }
+
+  }
+}
+
+class ParkingFloor {
+  floor: number
+  parkingSpots : ParkingSpot[]
+
+  constructor(floor: number){
+    this.floor = floor
+  }
+
+  addSpot(parkingSpot: ParkingSpot){
+    this.parkingSpots.push(parkingSpot)
+  }
+
+  parkCar(car: Car){
+    for(let parkingSpot of this.parkingSpots){
+      if(parkingSpot.isEmpty(car)){
+        return true
+      }
+    }
+  }
+
+
+}
 
 class ParkingSpot {
   type: carType;
@@ -25,6 +66,17 @@ class ParkingSpot {
 
   unparkCar() {
     this.parkedCar = null;
+  }
+
+  get isAvailable(){
+    
+  }
+
+  isEmpty(car: Car){
+    if(!this.parkedCar && car.carType === this.type){
+      return true
+    }
+    return false
   }
 }
 
