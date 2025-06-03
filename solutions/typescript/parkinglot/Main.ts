@@ -2,43 +2,43 @@ type carType = "Car" | "Bike" | "Truck";
 
 class ParkingLot {
   name: string;
-  parkingFloors: ParkingFloor[]
+  parkingFloors: ParkingFloor[];
 
-  constructor(name: string){
-    this.name = name
+  constructor(name: string) {
+    this.name = name;
   }
 
-  addFloor(parkingFloor : ParkingFloor){
-    this.parkingFloors.push(parkingFloor)
+  addFloor(parkingFloor: ParkingFloor) {
+    this.parkingFloors.push(parkingFloor);
   }
 
-  parkCar(car: Car){
-    for(let parkingFloor of this.parkingFloors){
-      if(parkingFloor.checkEmptySpot(car)){
-
+  parkCar(car: Car) {
+    for (let parkingFloor of this.parkingFloors) {
+      const parkingSpot = parkingFloor.checkEmptySpot(car);
+      if (parkingSpot) {
+        parkingSpot.parkCar(car);
+        return;
       }
     }
-
   }
 }
 
 class ParkingFloor {
-  floor: number
-  parkingSpots : ParkingSpot[]
+  floor: number;
+  parkingSpots: ParkingSpot[];
 
-  constructor(floor: number){
-    this.floor = floor
+  constructor(floor: number) {
+    this.floor = floor;
   }
 
-  addSpot(parkingSpot: ParkingSpot){
-    this.parkingSpots.push(parkingSpot)
+  addSpot(parkingSpot: ParkingSpot) {
+    this.parkingSpots.push(parkingSpot);
   }
 
-  parkCar(car: Car){
-    for(let parkingSpot of this.parkingSpots){
-      if(parkingSpot.isEmpty(car)){
-        return true
-      }
+  checkEmptySpot(car: Car) {
+    for (let parkingSpot of this.parkingSpots) {
+      if (parkingSpot.isAvailable && parkingSpot.canfit(car))
+        return parkingSpot;
     }
   }
 
@@ -54,29 +54,26 @@ class ParkingSpot {
   }
 
   parkCar(car: Car) {
-    if (this.parkedCar) {
+    if (!this.isAvailable) {
       throw new Error("This spot is already taken");
     }
-
-    if (car.getCarType !== this.type) {
+    if (!this.canfit(car)) {
       throw new Error(`Spot is not supported for car ${car.getNumber}`);
     }
-    return `Parked car ${car.getNumber}`;
+    this.parkedCar = car;
+    console.log(`Parked car ${car.getNumber}`);
   }
 
   unparkCar() {
     this.parkedCar = null;
   }
 
-  get isAvailable(){
-    
+  get isAvailable() {
+    return !this.parkedCar;
   }
 
-  isEmpty(car: Car){
-    if(!this.parkedCar && car.carType === this.type){
-      return true
-    }
-    return false
+  canfit(car: Car) {
+    return car.getCarType === this.type;
   }
 }
 
