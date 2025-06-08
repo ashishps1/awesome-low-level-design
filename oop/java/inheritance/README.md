@@ -7,11 +7,13 @@
 ## **What is Inheritance?**
 
 **Inheritance** is a mechanism where a child class derives properties and behaviors from a parent class. The child class can:
+
 - Use the fields and methods of the parent class
 - Override parent class methods to provide a specific implementation
 - Add its own additional properties and methods
 
 ### **Key Benefits of Inheritance**
+
 - **Code Reusability**: Avoids code duplication by reusing fields and methods of the parent class.
 - **Improves Maintainability**: Reduces redundancy, making code easier to manage.
 - **Enhances Extensibility**: New functionality can be added easily without modifying existing code.
@@ -21,6 +23,7 @@
 ## **How to Implement Inheritance in Java**
 
 ### **Step 1: Create a Parent Class**
+
 The parent class contains common fields and methods.
 
 ```java
@@ -35,6 +38,7 @@ public class Animal {
 ```
 
 ### **Step 2: Create a Child Class using `extends`**
+
 The child class inherits the properties and methods of the parent class.
 
 ```java
@@ -47,6 +51,7 @@ public class Dog extends Animal {
 ```
 
 ### **Step 3: Use the Child Class**
+
 Now, let's create an object and use the inherited methods.
 
 ```java
@@ -61,6 +66,7 @@ public class Main {
 ```
 
 ### **Output:**
+
 ```
 Buddy is eating...
 Buddy is barking...
@@ -73,6 +79,7 @@ Buddy is barking...
 Java supports different types of inheritance:
 
 ### **1. Single Inheritance**
+
 A subclass inherits from one superclass.
 
 ```java
@@ -90,6 +97,7 @@ class Child extends Parent {
 ```
 
 ### **2. Multilevel Inheritance**
+
 A subclass inherits from another subclass, forming a chain.
 
 ```java
@@ -113,6 +121,7 @@ class Child extends Parent {
 ```
 
 ### **3. Hierarchical Inheritance**
+
 A single parent class has multiple child classes.
 
 ```java
@@ -159,6 +168,7 @@ class Dog extends Animal {
 ```
 
 ### **Usage**
+
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -169,6 +179,7 @@ public class Main {
 ```
 
 ### **Output:**
+
 ```
 Dog barks
 ```
@@ -178,6 +189,7 @@ Dog barks
 ## **The `super` Keyword in Inheritance**
 
 The `super` keyword is used to **refer to the parent class**. It helps to:
+
 1. Call the parent class constructor.
 2. Access the parent class methods.
 3. Access the parent class fields.
@@ -205,6 +217,7 @@ class Dog extends Animal {
 ```
 
 ### **Usage**
+
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -215,57 +228,10 @@ public class Main {
 ```
 
 ### **Output:**
+
 ```
 Animal Constructor
 Dog Constructor
 Animal makes a sound
 Dog barks
-```
-
----
-
-## **Real-World Example: Employee Management System**
-
-```java
-class Employee {
-    String name;
-    double salary;
-    
-    Employee(String name, double salary) {
-        this.name = name;
-        this.salary = salary;
-    }
-    void displayDetails() {
-        System.out.println("Employee: " + name + ", Salary: " + salary);
-    }
-}
-
-class Manager extends Employee {
-    double bonus;
-    
-    Manager(String name, double salary, double bonus) {
-        super(name, salary);
-        this.bonus = bonus;
-    }
-    void displayDetails() {
-        super.displayDetails();
-        System.out.println("Bonus: " + bonus);
-    }
-}
-```
-
-### **Usage**
-```java
-public class Main {
-    public static void main(String[] args) {
-        Manager manager = new Manager("Alice", 70000, 10000);
-        manager.displayDetails();
-    }
-}
-```
-
-### **Output:**
-```
-Employee: Alice, Salary: 70000.0
-Bonus: 10000.0
 ```

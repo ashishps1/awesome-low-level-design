@@ -9,11 +9,13 @@
 ## **What is Inheritance?**
 
 **Inheritance** is a mechanism where a child class derives properties and behaviors from a parent class. The child class can:
+
 - Use the fields and methods of the parent class
 - Override parent class methods to provide a specific implementation
 - Add its own additional properties and methods
 
 ### **Key Benefits of Inheritance**
+
 - **Code Reusability**: Avoids code duplication by reusing fields and methods of the parent class.
 - **Improves Maintainability**: Reduces redundancy, making code easier to manage.
 - **Enhances Extensibility**: New functionality can be added easily without modifying existing code.
@@ -23,6 +25,7 @@
 ## **How to Implement Inheritance in C++**
 
 ### **Step 1: Create a Parent Class**
+
 The parent class contains common fields and methods.
 
 ```cpp
@@ -40,6 +43,7 @@ public:
 ```
 
 ### **Step 2: Create a Child Class using `public` Inheritance**
+
 The child class inherits the properties and methods of the parent class.
 
 ```cpp
@@ -53,6 +57,7 @@ public:
 ```
 
 ### **Step 3: Use the Child Class**
+
 Now, let's create an object and use the inherited methods.
 
 ```cpp
@@ -66,6 +71,7 @@ int main() {
 ```
 
 ### **Output:**
+
 ```
 Buddy is eating...
 Buddy is barking...
@@ -78,6 +84,7 @@ Buddy is barking...
 C++ supports different types of inheritance:
 
 ### **1. Single Inheritance**
+
 A subclass inherits from one superclass.
 
 ```cpp
@@ -97,6 +104,7 @@ public:
 ```
 
 ### **2. Multilevel Inheritance**
+
 A subclass inherits from another subclass, forming a chain.
 
 ```cpp
@@ -123,6 +131,7 @@ public:
 ```
 
 ### **3. Hierarchical Inheritance**
+
 A single parent class has multiple child classes.
 
 ```cpp
@@ -149,6 +158,7 @@ public:
 ```
 
 ### **4. Multiple Inheritance** (Supported in C++)
+
 Unlike Java, C++ allows a child class to inherit from multiple parent classes.
 
 ```cpp
@@ -193,6 +203,7 @@ public:
 ```
 
 ### **Usage**
+
 ```cpp
 int main() {
     Animal* myAnimal = new Dog(); // Polymorphism
@@ -203,6 +214,7 @@ int main() {
 ```
 
 ### **Output:**
+
 ```
 Dog barks
 ```
@@ -237,6 +249,7 @@ public:
 ```
 
 ### **Usage**
+
 ```cpp
 int main() {
     Dog myDog;
@@ -246,57 +259,10 @@ int main() {
 ```
 
 ### **Output:**
+
 ```
 Animal Constructor
 Dog Constructor
 Animal makes a sound
 Dog barks
-```
-
----
-
-## **Real-World Example: Employee Management System**
-
-```cpp
-class Employee {
-public:
-    string name;
-    double salary;
-    
-    Employee(string name, double salary) {
-        this->name = name;
-        this->salary = salary;
-    }
-    void displayDetails() {
-        cout << "Employee: " << name << ", Salary: " << salary << endl;
-    }
-};
-
-class Manager : public Employee {
-public:
-    double bonus;
-    
-    Manager(string name, double salary, double bonus) : Employee(name, salary) {
-        this->bonus = bonus;
-    }
-    void displayDetails() {
-        Employee::displayDetails();
-        cout << "Bonus: " << bonus << endl;
-    }
-};
-```
-
-### **Usage**
-```cpp
-int main() {
-    Manager manager("Alice", 70000, 10000);
-    manager.displayDetails();
-    return 0;
-}
-```
-
-### **Output:**
-```
-Employee: Alice, Salary: 70000.0
-Bonus: 10000.0
 ```

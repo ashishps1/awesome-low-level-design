@@ -7,11 +7,13 @@
 ## **What is Inheritance?**
 
 **Inheritance** is a mechanism where a child class derives properties and behaviors from a parent class. The child class can:
+
 - Use the attributes and methods of the parent class
 - Override parent class methods to provide a specific implementation
 - Add its own additional attributes and methods
 
 ### **Key Benefits of Inheritance**
+
 - **Code Reusability**: Avoids code duplication by reusing attributes and methods of the parent class.
 - **Improves Maintainability**: Reduces redundancy, making code easier to manage.
 - **Enhances Extensibility**: New functionality can be added easily without modifying existing code.
@@ -21,6 +23,7 @@
 ## **How to Implement Inheritance in Python**
 
 ### **Step 1: Create a Parent Class**
+
 The parent class contains common attributes and methods.
 
 ```python
@@ -28,12 +31,13 @@ The parent class contains common attributes and methods.
 class Animal:
     def __init__(self, name):
         self.name = name
-    
+
     def eat(self):
         print(f"{self.name} is eating...")
 ```
 
 ### **Step 2: Create a Child Class using Parent Class**
+
 The child class inherits the properties and methods of the parent class.
 
 ```python
@@ -44,6 +48,7 @@ class Dog(Animal):
 ```
 
 ### **Step 3: Use the Child Class**
+
 Now, let's create an object and use the inherited methods.
 
 ```python
@@ -55,6 +60,7 @@ if __name__ == "__main__":
 ```
 
 ### **Output:**
+
 ```
 Buddy is eating...
 Buddy is barking...
@@ -67,6 +73,7 @@ Buddy is barking...
 Python supports different types of inheritance:
 
 ### **1. Single Inheritance**
+
 A subclass inherits from one superclass.
 
 ```python
@@ -80,6 +87,7 @@ class Child(Parent):
 ```
 
 ### **2. Multilevel Inheritance**
+
 A subclass inherits from another subclass, forming a chain.
 
 ```python
@@ -97,6 +105,7 @@ class Child(Parent):
 ```
 
 ### **3. Hierarchical Inheritance**
+
 A single parent class has multiple child classes.
 
 ```python
@@ -114,6 +123,7 @@ class Child2(Parent):
 ```
 
 ### **4. Multiple Inheritance**
+
 Unlike Java, Python **supports multiple inheritance**, allowing a subclass to inherit from multiple parent classes.
 
 ```python
@@ -147,6 +157,7 @@ class Dog(Animal):
 ```
 
 ### **Usage**
+
 ```python
 if __name__ == "__main__":
     my_animal = Dog()  # Polymorphism
@@ -154,6 +165,7 @@ if __name__ == "__main__":
 ```
 
 ### **Output:**
+
 ```
 Dog barks
 ```
@@ -163,6 +175,7 @@ Dog barks
 ## **The `super()` Function in Inheritance**
 
 The `super()` function is used to **refer to the parent class**. It helps to:
+
 1. Call the parent class constructor.
 2. Access the parent class methods.
 
@@ -170,7 +183,7 @@ The `super()` function is used to **refer to the parent class**. It helps to:
 class Animal:
     def __init__(self):
         print("Animal Constructor")
-    
+
     def make_sound(self):
         print("Animal makes a sound")
 
@@ -178,13 +191,14 @@ class Dog(Animal):
     def __init__(self):
         super().__init__()  # Calls the parent class constructor
         print("Dog Constructor")
-    
+
     def make_sound(self):
         super().make_sound()  # Calls parent method
         print("Dog barks")
 ```
 
 ### **Usage**
+
 ```python
 if __name__ == "__main__":
     my_dog = Dog()
@@ -192,45 +206,10 @@ if __name__ == "__main__":
 ```
 
 ### **Output:**
+
 ```
 Animal Constructor
 Dog Constructor
 Animal makes a sound
 Dog barks
-```
-
----
-
-## **Real-World Example: Employee Management System**
-
-```python
-class Employee:
-    def __init__(self, name, salary):
-        self.name = name
-        self.salary = salary
-    
-    def display_details(self):
-        print(f"Employee: {self.name}, Salary: {self.salary}")
-
-class Manager(Employee):
-    def __init__(self, name, salary, bonus):
-        super().__init__(name, salary)
-        self.bonus = bonus
-    
-    def display_details(self):
-        super().display_details()
-        print(f"Bonus: {self.bonus}")
-```
-
-### **Usage**
-```python
-if __name__ == "__main__":
-    manager = Manager("Alice", 70000, 10000)
-    manager.display_details()
-```
-
-### **Output:**
-```
-Employee: Alice, Salary: 70000
-Bonus: 10000
 ```
