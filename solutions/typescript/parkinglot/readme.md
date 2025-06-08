@@ -18,4 +18,5 @@
     * `Factory(optional)`: For creating vehicles dynamically.
     * `Observer(optional)`: To notify users when a spot becomes available.
 2. Ensure thread-safety where required using appropriate concurrency-safe constructs (e.g., Mutex simulation, Promise control).
+
 3. Build a simple `Main.ts` file or script to demonstrate usage.

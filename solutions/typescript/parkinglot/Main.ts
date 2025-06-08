@@ -1,96 +1,48 @@
-type carType = "Car" | "Bike" | "Truck";
+import ParkingLot from "./ParkingLot"
+import ParkingFloor from "./Floor"
+import ParkingSpot from "./Spot"
+import { Car } from "./Vehicle"
 
-class ParkingLot {
-  name: string;
-  parkingFloors: ParkingFloor[];
+const jagnesh = ParkingLot.getInstance("Jagnesh")
+console.log(jagnesh.name)
 
-  constructor(name: string) {
-    this.name = name;
-  }
+const car1 = new Car("car-1")
+const car2 = new Car("car-2")
+const car3 = new Car("car-3")
+const car4 = new Car("car-4")
 
-  addFloor(parkingFloor: ParkingFloor) {
-    this.parkingFloors.push(parkingFloor);
-  }
-
-  parkCar(car: Car) {
-    for (let parkingFloor of this.parkingFloors) {
-      const parkingSpot = parkingFloor.checkEmptySpot(car);
-      if (parkingSpot) {
-        parkingSpot.parkCar(car);
-        return;
-      }
-    }
-  }
-}
-
-class ParkingFloor {
-  floor: number;
-  parkingSpots: ParkingSpot[];
-
-  constructor(floor: number) {
-    this.floor = floor;
-  }
-
-  addSpot(parkingSpot: ParkingSpot) {
-    this.parkingSpots.push(parkingSpot);
-  }
-
-  checkEmptySpot(car: Car) {
-    for (let parkingSpot of this.parkingSpots) {
-      if (parkingSpot.isAvailable && parkingSpot.canfit(car))
-        return parkingSpot;
-    }
-  }
+const a1 = new ParkingSpot('a-1', "Car")
+// const a2 = new ParkingSpot('a-2', "Truck")
+const a3 = new ParkingSpot('a-3', "Bike")
+const a4 = new ParkingSpot('a-4', "Car")
+// const a5 = new ParkingSpot('a-5', "Car")
 
 
-}
+const f1 = new ParkingFloor("1")
+f1.addSpot(a1)
+// f1.addSpot(a2)
+f1.addSpot(a3)
+f1.addSpot(a4)
+// f1.addSpot(a5)
 
-class ParkingSpot {
-  type: carType;
-  parkedCar: Car | null;
+const b1 = new ParkingSpot('b-1', "Car")
+const b2 = new ParkingSpot('b-2', "Truck")
+// const b3 = new ParkingSpot('b-3', "Bike")
+const b4 = new ParkingSpot('b-4', "Car")
+// const b5 = new ParkingSpot('b-5', "Car")
 
-  constructor(type: carType) {
-    this.type = type;
-  }
 
-  parkCar(car: Car) {
-    if (!this.isAvailable) {
-      throw new Error("This spot is already taken");
-    }
-    if (!this.canfit(car)) {
-      throw new Error(`Spot is not supported for car ${car.getNumber}`);
-    }
-    this.parkedCar = car;
-    console.log(`Parked car ${car.getNumber}`);
-  }
+const f2 = new ParkingFloor("2")
+f2.addSpot(b1)
+f2.addSpot(b2)
+// f2.addSpot(b3)
+f2.addSpot(b4)
+// f2.addSpot(b5)
 
-  unparkCar() {
-    this.parkedCar = null;
-  }
+jagnesh.addFloor(f1)
+jagnesh.addFloor(f2)
+jagnesh.spotAvailability()
 
-  get isAvailable() {
-    return !this.parkedCar;
-  }
-
-  canfit(car: Car) {
-    return car.getCarType === this.type;
-  }
-}
-
-class Car {
-  private number: string;
-  private carType: carType;
-
-  constructor(carNumber: string, carType: carType) {
-    this.number = carNumber;
-    this.carType = carType;
-  }
-
-  get getNumber() {
-    return this.number;
-  }
-
-  get getCarType() {
-    return this.carType;
-  }
-}
+jagnesh.parkCar(car1)
+jagnesh.parkCar(car2)
+jagnesh.spotAvailability()
