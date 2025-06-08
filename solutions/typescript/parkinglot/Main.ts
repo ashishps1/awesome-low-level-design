@@ -3,8 +3,8 @@ import ParkingFloor from "./Floor"
 import ParkingSpot from "./Spot"
 import { Car } from "./Vehicle"
 
-const jagnesh = ParkingLot.getInstance("Jagnesh")
-console.log(jagnesh.name)
+const parkYourCar = ParkingLot.getInstance("ParkYourCar")
+console.log(parkYourCar.name)
 
 const car1 = new Car("car-1")
 const car2 = new Car("car-2")
@@ -39,10 +39,10 @@ f2.addSpot(b2)
 f2.addSpot(b4)
 // f2.addSpot(b5)
 
-jagnesh.addFloor(f1)
-jagnesh.addFloor(f2)
-jagnesh.spotAvailability()
+parkYourCar.addFloor(f1)
+parkYourCar.addFloor(f2)
+parkYourCar.spotAvailability()
 
-jagnesh.parkCar(car1)
-jagnesh.parkCar(car2)
-jagnesh.spotAvailability()
+parkYourCar.parkCar(car1)
+parkYourCar.parkCar(car2)
+parkYourCar.spotAvailability()
