@@ -44,6 +44,7 @@ public class Question implements Votable, Commentable {
 
     @Override
     public void vote(User voter, VoteType type) {
+        if(voter.equals(author)) return;  //throw error -> Author shouldn't be allowed to vote
         votes.removeIf(v -> v.getVoter().equals(voter));
         votes.add(new Vote(voter, type));
         author.updateReputation(5 * (type == VoteType.UPVOTE ? 1 : -1));  // +5 for upvote, -5 for downvote
