@@ -11,7 +11,8 @@ public class ATMDemo {
         bankingService.createAccount("9876543210", 500.0);
 
         // Perform ATM operations
-        Card card = new Card("1234567890", "1234");
+        bankingService.linkCardToAccount("Card1234567890", "1234", "1234567890");
+        Card card = bankingService.getCard("Card1234567890");
         atm.authenticateUser(card);
 
         double balance = atm.checkBalance("1234567890");
