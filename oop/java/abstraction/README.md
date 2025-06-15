@@ -135,13 +135,21 @@ Cat meows
 
 ## **Abstract Class vs Interface: Key Differences**
 
-| Feature | Abstract Class | Interface |
-|---------|---------------|-----------|
-| Methods | Can have abstract and concrete methods | Only abstract methods (before Java 8) |
-| Fields | Can have instance variables | Can only have public static final variables |
-| Constructor | Can have constructors | Cannot have constructors |
-| Multiple Inheritance | Not supported | Supported |
-| Access Modifiers | Can have different access modifiers | Methods are `public` by default |
+| Feature                | Abstract Class                                      | Interface                                      |
+|------------------------|----------------------------------------------------|-----------------------------------------------|
+| **Inheritance**        | A class **extends** only **one** abstract class    | A class **implements multiple** interfaces    |
+| **Methods**            | Can have **abstract + concrete** methods           | Only abstract methods (before Java 8)        |
+| **Default Methods**    | Concrete methods work without `default` keyword    | Supports `default` methods (Java 8+)         |
+| **Static Methods**     | Can have static methods                            | Supports static methods (Java 8+)            |
+| **Fields**             | Can have **instance variables** (non-final)        | Only **public static final** (constants)     |
+| **Constructor**        | Can have constructors                              | **No constructors** allowed                  |
+| **Multiple Inheritance** | Not supported (only **single** inheritance)   | Supports **multiple** inheritance         |
+| **Access Modifiers**   | Methods/fields can be `public`, `protected`, `private`, or default | Methods are `public` by default |
+| **Purpose**            | **Partial implementation** (code reuse)           | **Full abstraction** (contract definition)   |
+| **Object Creation**    | Cannot be instantiated directly                | Cannot be instantiated directly           |
+| **`super` Keyword**    | Can use `super()` to call parent constructor       | No `super()` (no constructors)            |
+| **Private Methods**    | Supports `private` methods (Java 9+)              | Supports `private` methods (Java 9+)         |
+| **`final` Methods**    | Can have `final` methods                       | Cannot have `final` methods               |
 
 ---
 
