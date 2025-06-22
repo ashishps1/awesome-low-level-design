@@ -10,7 +10,7 @@ public class ParkingFloor {
     private final List<ParkingSpot> parkingSpots;
 
     /**
-     * EX PL 02 :
+     * Exp PL 02 :
      * final tells that this list cannot be reassigned after construction. This is good.
      * the only time the contents will change is during construction. In No wy will parkingSpots increase or decrease
      * What this would mean is getAvailableSpot should not be synchronized. Since the concurrency is handled at the parking lot level
