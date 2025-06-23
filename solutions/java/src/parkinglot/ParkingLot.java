@@ -33,11 +33,21 @@ public class ParkingLot {
         this.feeStrategy = feeStrategy;
     }
 
-    public synchronized Ticket parkVehicle(Vehicle vehicle) throws Exception {
+
+    public Ticket parkVehicle(Vehicle vehicle) throws Exception {
+        /**
+         * For a parking lot floors will not change dynamically.
+         */
         for (ParkingFloor floor : floors) {
+            /**
+             * Spot is thread Safe. Client need not do locking.
+             */
             Optional<ParkingSpot> spotOpt = floor.getAvailableSpot(vehicle.getType());
             if (spotOpt.isPresent()) {
                 ParkingSpot spot = spotOpt.get();
+                /**
+                 * Spot is thread safe. hence spot.park will be as well.
+                 */
                 if (spot.park(vehicle)) {
                     String ticketId = UUID.randomUUID().toString();
                     Ticket ticket = new Ticket(ticketId, vehicle, spot);
@@ -49,7 +59,7 @@ public class ParkingLot {
         throw new Exception("No available spot for " + vehicle.getType());
     }
 
-    public synchronized double unparkVehicle(String ticketId) throws Exception {
+    public double unparkVehicle(String ticketId) throws Exception {
         Ticket ticket = activeTickets.remove(ticketId);
         if (ticket == null) throw new Exception("Invalid ticket");
 

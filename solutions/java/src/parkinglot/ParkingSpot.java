@@ -9,39 +9,82 @@ public class ParkingSpot {
     private Vehicle vehicle;
     private boolean isOccupied;
 
+    /**
+     * Exp PL 01:
+     * Objects state is comprised of all of the above variables.
+     * So any access to these variables should be synchronized.
+     */
+
+    private Object lock = new Object();
+
     public ParkingSpot(int spotNumber, VehicleType vehicleType) {
         this.spotNumber = spotNumber;
         this.vehicleType = vehicleType;
         this.isOccupied = false;
     }
 
-    public synchronized boolean isAvailable() {
-        return !isOccupied;
+    public boolean isAvailable() {
+        // sync on primitive(boolean) does not work. Hence use lock variable
+        // Ideally i would have wanted to use isOccupied variable directly.
+        // synchronized(this.isOccupied)
+        // {
+        // return !isOccupied;
+        // }
+
+        synchronized (lock) {
+            return !isOccupied;
+        }
+
     }
 
-    public synchronized boolean park(Vehicle vehicle) {
-        if (isOccupied || vehicle.getType() != vehicleType) {
-            return false;
+    public boolean park(Vehicle vehicle) {
+        synchronized (lock) {
+            // Check if the spot is already occupied or if the vehicle type does not match
+            if (isOccupied || vehicle.getType() != vehicleType) {
+                return false;
+            }
+            this.vehicle = vehicle;
+            isOccupied = true;
         }
-        this.vehicle = vehicle;
-        isOccupied = true;
         return true;
     }
 
-    public synchronized void unpark() {
-        vehicle = null;
-        isOccupied = false;
+    public void unpark() {
+        /**
+         * See Exp PL 01
+         */
+        synchronized (lock) {
+            vehicle = null;
+            isOccupied = false;
+        }
+
     }
 
     public VehicleType getVehicleType() {
-        return vehicleType;
+        /**
+         * See Exp PL 01
+         */
+        synchronized (lock) {
+            return vehicleType;
+        }
     }
 
     public Vehicle getVehicle() {
-        return vehicle;
+        /**
+         * See Exp PL 01
+         */
+        synchronized(lock)
+        {
+            return vehicle;
+        }
     }
 
     public int getSpotNumber() {
-        return spotNumber;
+        /**
+         * See Exp PL 01
+         */
+        synchronized (lock) {
+            return spotNumber;
+        }   
     }
 }
