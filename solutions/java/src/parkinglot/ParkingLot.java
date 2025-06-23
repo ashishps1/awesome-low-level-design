@@ -5,11 +5,12 @@ import parkinglot.fee.FlatRateFeeStrategy;
 import parkinglot.vehicletype.Vehicle;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ParkingLot {
     private static ParkingLot instance;
     private final List<ParkingFloor> floors;
-    private final Map<String, Ticket> activeTickets = new HashMap<>();
+    private final Map<String, Ticket> activeTickets = new ConcurrentHashMap<>();
     private FeeStrategy feeStrategy;
 
     private ParkingLot() {
