@@ -1,4 +1,4 @@
-package parkinglot.vehicletype;
+package parkinglot.vehicle;
 
 public class Truck extends Vehicle {
     public Truck(String license) {

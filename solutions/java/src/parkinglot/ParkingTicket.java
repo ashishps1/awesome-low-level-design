@@ -1,18 +1,20 @@
 package parkinglot;
 
-import parkinglot.vehicletype.Vehicle;
+import parkinglot.parkingspot.ParkingSpot;
+import parkinglot.vehicle.Vehicle;
 
 import java.util.Date;
+import java.util.UUID;
 
-public class Ticket {
+public class ParkingTicket {
     private final String ticketId;
     private final Vehicle vehicle;
     private final ParkingSpot spot;
     private final long entryTimestamp;
     private long exitTimestamp;
 
-    public Ticket(String ticketId, Vehicle vehicle, ParkingSpot spot) {
-        this.ticketId = ticketId;
+    public ParkingTicket(Vehicle vehicle, ParkingSpot spot) {
+        this.ticketId = UUID.randomUUID().toString();
         this.vehicle = vehicle;
         this.spot = spot;
         this.entryTimestamp = new Date().getTime();

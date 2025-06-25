@@ -1,6 +1,7 @@
 package parkinglot;
 
-import parkinglot.vehicletype.VehicleType;
+import parkinglot.parkingspot.ParkingSpot;
+import parkinglot.vehicle.Vehicle;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,22 +15,11 @@ public class ParkingFloor {
         this.parkingSpots = spots;
     }
 
-    public synchronized Optional<ParkingSpot> getAvailableSpot(VehicleType type) {
+    public synchronized Optional<ParkingSpot> getAvailableSpot(Vehicle vehicle) {
         return parkingSpots.stream()
-                .filter(spot -> spot.isAvailable() && spot.getVehicleType() == type)
+                .filter(spot -> spot.isAvailable() && spot.canFitVehicle(vehicle))
                 .findFirst();
     }
 
     public int getFloorNumber() { return floorNumber; }
-
-    public List<ParkingSpot> getParkingSpots() {
-        return parkingSpots;
-    }
-
-    public List<Integer> getAvailableSpots(VehicleType type) {
-        return parkingSpots.stream()
-                .filter(spot -> spot.isAvailable() && spot.getVehicleType() == type)
-                .map(ParkingSpot::getSpotNumber)
-                .toList();
-    }
 }

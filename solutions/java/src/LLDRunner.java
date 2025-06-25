@@ -47,7 +47,7 @@ public class LLDRunner {
 //        TaskManagementSystemDemo.run();
 //        TicTacToeDemo.run();
 //        TrafficSignalSystemDemo.run();
-        VendingMachineDemo.run();
+//        VendingMachineDemo.run();
 //        VotingSystemDemo.run();
     }
 }

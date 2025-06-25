@@ -1,4 +1,4 @@
-package parkinglot.vehicletype;
+package parkinglot.vehicle;
 
 public abstract class Vehicle {
     protected String licensePlate;
@@ -9,7 +9,7 @@ public abstract class Vehicle {
         this.type = type;
     }
 
-    public String getLicensePlate() { return licensePlate; }
+    public String getLicenseNumber() { return licensePlate; }
     public VehicleType getType() {
         return type;
     }

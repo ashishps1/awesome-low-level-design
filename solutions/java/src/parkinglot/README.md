@@ -2,7 +2,7 @@
 
 ## Problem Statement
 
-Design and implement a Parking Lot Management System that supports parking and unparking of vehicles, ticket generation, fee calculation, and management of multiple floors and spot types.
+Design and implement a Parking Lot Management System that supports parking and unparking of vehicles, parkingTicket generation, fee calculation, and management of multiple floors and spot types.
 
 ---
 
@@ -11,7 +11,7 @@ Design and implement a Parking Lot Management System that supports parking and u
 - **Multiple Floors:** The parking lot can have multiple floors.
 - **Parking Spots:** Each floor has multiple parking spots of different types (e.g., car, bike, truck).
 - **Vehicle Types:** Support for different vehicle types (see `vehicletype/`).
-- **Ticketing:** Generate a ticket when a vehicle is parked.
+- **Ticketing:** Generate a parkingTicket when a vehicle is parked.
 - **Unparking:** Allow vehicles to unpark and calculate the parking fee.
 - **Fee Calculation:** Support for different fee strategies (see `fee/`).
 - **Spot Allocation:** Allocate the nearest available spot of the correct type.
@@ -24,7 +24,7 @@ Design and implement a Parking Lot Management System that supports parking and u
 - **ParkingLot:** Main class managing the entire parking lot, floors, and overall operations.
 - **ParkingFloor:** Represents a single floor in the parking lot, manages its spots.
 - **ParkingSpot:** Represents an individual parking spot, knows its type and occupancy.
-- **Ticket:** Represents a parking ticket issued when a vehicle is parked.
+- **Ticket:** Represents a parking parkingTicket issued when a vehicle is parked.
 - **VehicleType (in `vehicletype/`):** Enum or classes for different vehicle types.
 - **Fee Calculation (in `fee/`):** Classes for calculating parking fees based on duration and vehicle type.
 
@@ -61,7 +61,7 @@ Design and implement a Parking Lot Management System that supports parking and u
 - Enum or classes for vehicle types (Car, Bike, Truck, etc.)
 
 ### 6. Fee Calculation (in `fee/`)
-- **Methods:** `calculateFee(Ticket ticket, Date exitTime)`
+- **Methods:** `calculateFee(Ticket parkingTicket, Date exitTime)`
 - **Extensible:** Add new strategies for fee calculation.
 
 ---
@@ -79,8 +79,8 @@ Design and implement a Parking Lot Management System that supports parking and u
 ```java
 ParkingLot lot = new ParkingLot();
 lot.addFloor(new ParkingFloor(...));
-Ticket ticket = lot.parkVehicle(new Car("KA-01-1234"));
-lot.unparkVehicle(ticket.getId());
+Ticket parkingTicket = lot.parkVehicle(new Car("KA-01-1234"));
+lot.unparkVehicle(parkingTicket.getId());
 ```
 
 ---

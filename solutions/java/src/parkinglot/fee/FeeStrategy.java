@@ -1,7 +1,7 @@
 package parkinglot.fee;
 
-import parkinglot.Ticket;
+import parkinglot.ParkingTicket;
 
 public interface FeeStrategy {
-    double calculateFee(Ticket ticket);
+    double calculateFee(ParkingTicket parkingTicket);
 }

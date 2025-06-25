@@ -1,7 +1,7 @@
 package parkinglot.fee;
 
-import parkinglot.Ticket;
-import parkinglot.vehicletype.VehicleType;
+import parkinglot.ParkingTicket;
+import parkinglot.vehicle.VehicleType;
 
 import java.util.Map;
 
@@ -13,9 +13,9 @@ public class VehicleBasedFeeStrategy implements FeeStrategy {
     );
 
     @Override
-    public double calculateFee(Ticket ticket) {
-        long duration = ticket.getExitTimestamp() - ticket.getEntryTimestamp();
+    public double calculateFee(ParkingTicket parkingTicket) {
+        long duration = parkingTicket.getExitTimestamp() - parkingTicket.getEntryTimestamp();
         long hours = (duration / (1000 * 60 * 60)) + 1;
-        return hours * hourlyRates.get(ticket.getVehicle().getType());
+        return hours * hourlyRates.get(parkingTicket.getVehicle().getType());
     }
 }
