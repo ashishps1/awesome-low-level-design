@@ -83,7 +83,7 @@ See `ConcertTicketBookingSystemDemo.java` for a sample usage and simulation of t
 
 ## Extending the Framework
 
-- **Add payment processing:** Integrate payment gateway for ticket purchases
+- **Add payment processing:** Integrate payment gateway for parkingTicket purchases
 - **Add waitlist functionality:** Handle seat waitlist when fully booked
 - **Add discount management:** Support for different pricing tiers and discounts
 - **Add notification system:** Send booking confirmations and updates

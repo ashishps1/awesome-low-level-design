@@ -6,6 +6,7 @@ import librarymanagementsystem.LibraryManagementSystemDemo;
 import musicstreamingservice.MusicStreamingServiceDemo;
 import onlineauctionsystem.AuctionSystemDemo;
 import onlineshoppingservice.OnlineShoppingServiceDemo;
+import parkinglot.ParkingLotDemo;
 import ridesharingservice.RideSharingServiceDemo;
 import snakeandladdergame.SnakeAndLadderDemo;
 import socialnetworkingservice.SocialNetworkingServiceDemo;

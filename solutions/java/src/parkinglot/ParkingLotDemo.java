@@ -1,10 +1,7 @@
 package parkinglot;
 
 import parkinglot.fee.VehicleBasedFeeStrategy;
-import parkinglot.parkingspot.BikeSpot;
-import parkinglot.parkingspot.CompactSpot;
-import parkinglot.parkingspot.LargeSpot;
-import parkinglot.parkingspot.ParkingSpot;
+import parkinglot.parkingspot.*;
 import parkinglot.vehicle.*;
 import java.util.List;
 
@@ -13,14 +10,14 @@ public class ParkingLotDemo {
         ParkingLot parkingLot = ParkingLot.getInstance();
 
         List<ParkingSpot> parkingSpotsFloor1 = List.of(
-                new BikeSpot("101"),
-                new CompactSpot("102"),
-                new LargeSpot("103")
+                ParkingSpotFactory.createParkingSpot(ParkingSpotType.BIKE, "101"),
+                ParkingSpotFactory.createParkingSpot(ParkingSpotType.COMPACT, "102"),
+                ParkingSpotFactory.createParkingSpot(ParkingSpotType.LARGE, "103")
         );
 
         List<ParkingSpot> parkingSpotsFloor2 = List.of(
-                new BikeSpot("201"),
-                new LargeSpot("202")
+                ParkingSpotFactory.createParkingSpot(ParkingSpotType.BIKE, "201"),
+                ParkingSpotFactory.createParkingSpot(ParkingSpotType.LARGE, "202")
         );
 
         // Add a floor with different types of spots
