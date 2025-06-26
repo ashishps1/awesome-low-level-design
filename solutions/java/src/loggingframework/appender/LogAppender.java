@@ -1,4 +1,4 @@
-package loggingframework.logappender;
+package loggingframework.appender;
 
 import loggingframework.LogMessage;
 

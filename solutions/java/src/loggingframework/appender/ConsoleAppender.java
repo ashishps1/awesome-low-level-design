@@ -1,6 +1,6 @@
-package loggingframework.logappender;
+package loggingframework.appender;
 
-import loggingframework.LogFormatter;
+import loggingframework.formatter.LogFormatter;
 import loggingframework.LogMessage;
 
 public class ConsoleAppender implements LogAppender {

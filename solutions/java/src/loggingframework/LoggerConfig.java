@@ -1,6 +1,6 @@
 package loggingframework;
 
-import loggingframework.logappender.LogAppender;
+import loggingframework.appender.LogAppender;
 
 public class LoggerConfig {
     private LogLevel logLevel;
