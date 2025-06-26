@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Logger {
-    private LoggerConfig config;
     private LogLevel minLevel;
     private final List<LogAppender> appenders;
     private final ExecutorService executor;

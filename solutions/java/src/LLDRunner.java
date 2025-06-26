@@ -31,7 +31,7 @@ public class LLDRunner {
 //        HotelManagementSystemDemo.run();
 //        LibraryManagementSystemDemo.run();
 //        LinkedInDemo.run();
-//        LoggingFrameworkDemo.run();
+        LoggingFrameworkDemo.run();
 //        LRUCacheDemo.run();
 //        MovieTicketBookingDemo.run();
 //        MusicStreamingServiceDemo.run();
