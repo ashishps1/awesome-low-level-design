@@ -4,6 +4,7 @@ import courseregistrationsystem.CourseRegistrationSystemDemo;
 import fooddeliveryservice.FoodDeliveryServiceDemo;
 import librarymanagementsystem.LibraryManagementSystemDemo;
 import loggingframework.LoggingFrameworkDemo;
+import lrucache.LRUCacheDemo;
 import musicstreamingservice.MusicStreamingServiceDemo;
 import onlineauctionsystem.AuctionSystemDemo;
 import onlineshoppingservice.OnlineShoppingServiceDemo;
@@ -31,7 +32,7 @@ public class LLDRunner {
 //        HotelManagementSystemDemo.run();
 //        LibraryManagementSystemDemo.run();
 //        LinkedInDemo.run();
-        LoggingFrameworkDemo.run();
+//        LoggingFrameworkDemo.run();
 //        LRUCacheDemo.run();
 //        MovieTicketBookingDemo.run();
 //        MusicStreamingServiceDemo.run();
