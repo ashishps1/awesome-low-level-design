@@ -3,11 +3,9 @@ package vendingmachine.states;
 import vendingmachine.Coin;
 import vendingmachine.VendingMachine;
 
-public class IdleState implements State {
-    private final VendingMachine machine;
-
+public class IdleState extends State {
     public IdleState(VendingMachine machine) {
-        this.machine = machine;
+        super(machine);
     }
 
     @Override
@@ -22,7 +20,7 @@ public class IdleState implements State {
             return;
         }
         machine.setSelectedItemCode(code);
-        machine.setState(machine.getItemSelectedState());
+        machine.setState(new ItemSelectedState(machine));
         System.out.println("Item selected: " + code);
     }
 

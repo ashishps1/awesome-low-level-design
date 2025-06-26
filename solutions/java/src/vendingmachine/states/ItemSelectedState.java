@@ -3,11 +3,9 @@ package vendingmachine.states;
 import vendingmachine.Coin;
 import vendingmachine.VendingMachine;
 
-public class ItemSelectedState implements State {
-    private final VendingMachine machine;
-
+public class ItemSelectedState extends State {
     public ItemSelectedState(VendingMachine machine) {
-        this.machine = machine;
+        super(machine);
     }
 
     @Override
@@ -17,7 +15,7 @@ public class ItemSelectedState implements State {
         int price = machine.getSelectedItem().getPrice();
         if (machine.getBalance() >= price) {
             System.out.println("Sufficient money received.");
-            machine.setState(machine.getHasMoneyState());
+            machine.setState(new HasMoneyState(machine));
         }
     }
 
@@ -34,6 +32,6 @@ public class ItemSelectedState implements State {
     @Override
     public void refund() {
         machine.reset();
-        machine.setState(machine.getIdleState());
+        machine.setState(new IdleState(machine));
     }
 }

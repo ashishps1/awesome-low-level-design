@@ -3,11 +3,9 @@ package vendingmachine.states;
 import vendingmachine.Coin;
 import vendingmachine.VendingMachine;
 
-public class HasMoneyState implements State {
-    private final VendingMachine machine;
-
+public class HasMoneyState extends State {
     public HasMoneyState(VendingMachine machine) {
-        this.machine = machine;
+        super(machine);
     }
 
     @Override
@@ -22,7 +20,7 @@ public class HasMoneyState implements State {
 
     @Override
     public void dispense() {
-        machine.setState(machine.getDispensingState());
+        machine.setState(new DispensingState(machine));
         machine.dispenseItem();
     }
 
@@ -30,6 +28,6 @@ public class HasMoneyState implements State {
     public void refund() {
         machine.refundBalance();
         machine.reset();
-        machine.setState(machine.getIdleState());
+        machine.setState(new IdleState(machine));
     }
 }

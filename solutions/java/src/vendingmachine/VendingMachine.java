@@ -4,22 +4,13 @@ import vendingmachine.states.*;
 
 public class VendingMachine {
     private final static VendingMachine INSTANCE = new VendingMachine();
-    private final State idleState;
-    private final State itemSelectedState;
-    private final State hasMoneyState;
-    private final State dispensingState;
-
     private final Inventory inventory = new Inventory();
     private State currentState;
     private int balance = 0;
     private String selectedItemCode;
 
     public VendingMachine() {
-        idleState = new IdleState(this);
-        itemSelectedState = new ItemSelectedState(this);
-        hasMoneyState = new HasMoneyState(this);
-        dispensingState = new DispensingState(this);
-        currentState = idleState;
+        currentState = new IdleState(this);
     }
 
     public static VendingMachine getInstance() {
@@ -55,7 +46,7 @@ public class VendingMachine {
             }
         }
         reset();
-        setState(idleState);
+        setState(new IdleState(this));
     }
 
     public void refundBalance() {
@@ -86,9 +77,5 @@ public class VendingMachine {
 
     // Getters for states and inventory
     public Inventory getInventory() { return inventory; }
-    public State getIdleState() { return idleState; }
-    public State getItemSelectedState() { return itemSelectedState; }
-    public State getHasMoneyState() { return hasMoneyState; }
-    public State getDispensingState() { return dispensingState; }
     public int getBalance() { return balance; }
 }

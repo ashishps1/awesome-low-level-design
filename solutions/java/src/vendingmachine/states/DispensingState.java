@@ -3,11 +3,9 @@ package vendingmachine.states;
 import vendingmachine.Coin;
 import vendingmachine.VendingMachine;
 
-public class DispensingState implements State {
-    private final VendingMachine machine;
-
+public class DispensingState extends State {
     public DispensingState(VendingMachine machine) {
-        this.machine = machine;
+        super(machine);
     }
 
     @Override
