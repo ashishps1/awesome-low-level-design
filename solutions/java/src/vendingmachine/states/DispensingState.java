@@ -26,7 +26,7 @@ public class DispensingState implements State {
     }
 
     @Override
-    public void returnChange() {
+    public void refund() {
         System.out.println("Dispensing in progress. Refund not allowed.");
     }
 }

@@ -27,7 +27,7 @@ public class HasMoneyState implements State {
     }
 
     @Override
-    public void returnChange() {
+    public void refund() {
         machine.refundBalance();
         machine.reset();
         machine.setState(machine.getIdleState());

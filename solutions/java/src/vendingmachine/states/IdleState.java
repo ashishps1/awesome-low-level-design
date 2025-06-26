@@ -6,8 +6,8 @@ import vendingmachine.VendingMachine;
 public class IdleState implements State {
     private final VendingMachine machine;
 
-    public IdleState(VendingMachine vendingMachine) {
-        this.machine = vendingMachine;
+    public IdleState(VendingMachine machine) {
+        this.machine = machine;
     }
 
     @Override
@@ -23,6 +23,7 @@ public class IdleState implements State {
         }
         machine.setSelectedItemCode(code);
         machine.setState(machine.getItemSelectedState());
+        System.out.println("Item selected: " + code);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class IdleState implements State {
     }
 
     @Override
-    public void returnChange() {
-        System.out.println("No money to return.");
+    public void refund() {
+        System.out.println("No money to refund.");
     }
 }

@@ -13,8 +13,10 @@ public class ItemSelectedState implements State {
     @Override
     public void insertCoin(Coin coin) {
         machine.addBalance(coin.getValue());
+        System.out.println("Coin Inserted: " + coin.getValue());
         int price = machine.getSelectedItem().getPrice();
         if (machine.getBalance() >= price) {
+            System.out.println("Sufficient money received.");
             machine.setState(machine.getHasMoneyState());
         }
     }
@@ -30,7 +32,7 @@ public class ItemSelectedState implements State {
     }
 
     @Override
-    public void returnChange() {
+    public void refund() {
         machine.reset();
         machine.setState(machine.getIdleState());
     }
