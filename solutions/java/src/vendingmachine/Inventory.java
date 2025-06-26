@@ -1,32 +1,26 @@
 package vendingmachine;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Inventory {
-    private final Map<Product, Integer> products;
+    private final Map<String, Item> itemMap = new HashMap<>();
+    private final Map<String, Integer> stockMap = new HashMap<>();
 
-    public Inventory() {
-        products = new ConcurrentHashMap<>();
+    public void addItem(String code, Item item, int quantity) {
+        itemMap.put(code, item);
+        stockMap.put(code, quantity);
     }
 
-    public void addProduct(Product product, int quantity) {
-        products.put(product, quantity);
+    public Item getItem(String code) {
+        return itemMap.get(code);
     }
 
-    public void removeProduct(Product product) {
-        products.remove(product);
+    public boolean isAvailable(String code) {
+        return stockMap.getOrDefault(code, 0) > 0;
     }
 
-    public void updateQuantity(Product product, int quantity) {
-        products.put(product, quantity);
-    }
-
-    public int getQuantity(Product product) {
-        return products.getOrDefault(product, 0);
-    }
-
-    public boolean isAvailable(Product product) {
-        return products.containsKey(product) && products.get(product) > 0;
+    public void reduceStock(String code) {
+        stockMap.put(code, stockMap.get(code) - 1);
     }
 }

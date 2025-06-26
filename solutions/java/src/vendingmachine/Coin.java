@@ -1,18 +1,18 @@
 package vendingmachine;
 
 public enum Coin {
-    PENNY(0.01),
-    NICKEL(0.05),
-    DIME(0.1),
-    QUARTER(0.25);
+    PENNY(1),
+    NICKEL(5),
+    DIME(10),
+    QUARTER(25);
 
-    private final double value;
+    private final int value;
 
-    Coin(double value) {
+    Coin(int value) {
         this.value = value;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
 }
