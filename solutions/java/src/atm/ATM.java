@@ -2,6 +2,7 @@ package atm;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ATM {
@@ -15,7 +16,11 @@ public class ATM {
     }
 
     public void authenticateUser(Card card) {
-        boolean isAuthenticated = bankingService.authenticate(card.getCardNumber(), card.getPin());
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter PIN for card " + card.getCardNumber() + ": ");
+        String enteredPin = scanner.nextLine();
+
+        boolean isAuthenticated = bankingService.authenticate(card.getCardNumber(), enteredPin);
         if (isAuthenticated) {
             System.out.println("Authentication successful.");
         } else {
