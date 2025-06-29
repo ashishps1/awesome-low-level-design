@@ -1,15 +1,11 @@
 package splitwise;
 
 public class Split {
-    protected User user;
-    protected double amount;
+    private final User user;
+    private final double amount;
 
     public Split(User user, double amount) {
         this.user = user;
-        this.amount = amount;
-    }
-
-    public void setAmount(double amount) {
         this.amount = amount;
     }
 
