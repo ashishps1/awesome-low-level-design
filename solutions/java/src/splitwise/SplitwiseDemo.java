@@ -1,9 +1,8 @@
 package splitwise;
 
-import splitwise.splittype.EqualSplit;
-import splitwise.splittype.PercentSplit;
+import splitwise.splitstrategy.SplitType;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class SplitwiseDemo {
@@ -11,44 +10,52 @@ public class SplitwiseDemo {
         SplitwiseService splitwiseService = SplitwiseService.getInstance();
 
         // Create users
-        User user1 = new User("1", "Alice", "alice@example.com");
-        User user2 = new User("2", "Bob", "bob@example.com");
-        User user3 = new User("3", "Charlie", "charlie@example.com");
-
-        splitwiseService.addUser(user1);
-        splitwiseService.addUser(user2);
-        splitwiseService.addUser(user3);
+        User user1 = splitwiseService.createUser("Alice", "alice@example.com");
+        User user2 = splitwiseService.createUser("Bob", "bob@example.com");
+        User user3 = splitwiseService.createUser("Charlie", "charlie@example.com");
 
         // Create a group
-        Group group = new Group("1", "Apartment");
-        group.addMember(user1);
-        group.addMember(user2);
-        group.addMember(user3);
+        Group group = splitwiseService.createGroup("Apartment",
+                List.of(user1.getUserId(), user2.getUserId(), user3.getUserId()));
 
-        splitwiseService.addGroup(group);
+        // Add group expense
+        Expense rentExpense = splitwiseService.addExpense("Rent", 9000.0, user1.getUserId(),
+                group.getGroupId(), SplitType.EQUAL,
+                Map.of(
+                        user1.getUserId(), 3000.0,
+                        user2.getUserId(), 3000.0,
+                        user3.getUserId(), 3000.0
+                ));
 
-        // Add an expense
-        Expense expense = new Expense("1", 300.0, "Rent", user1);
-        EqualSplit equalSplit1 = new EqualSplit(user1);
-        EqualSplit equalSplit2 = new EqualSplit(user2);
-        PercentSplit percentSplit = new PercentSplit(user3, 20.0);
-
-        expense.addSplit(equalSplit1);
-        expense.addSplit(equalSplit2);
-        expense.addSplit(percentSplit);
-
-        splitwiseService.addExpense(group.getId(), expense);
-
-        // Settle balances
-        splitwiseService.settleBalance(user1.getId(), user2.getId());
-        splitwiseService.settleBalance(user1.getId(), user3.getId());
+        // Add non-group expense (groupId = null)
+        Expense dinnerExpense = splitwiseService.addExpense("Dinner", 600.0, user2.getUserId(),
+                null, SplitType.EXACT,
+                Map.of(
+                        user1.getUserId(), 400.0,
+                        user2.getUserId(), 200.0
+                ));
 
         // Print user balances
-        for (User user : Arrays.asList(user1, user2, user3)) {
-            System.out.println("User: " + user.getName());
-            for (Map.Entry<String, Double> entry : user.getBalances().entrySet()) {
-                System.out.println("  Balance with " + entry.getKey() + ": " + entry.getValue());
-            }
-        }
+        System.out.println("\nPrinting balance for each user:");
+        splitwiseService.printBalances();
+
+        // Settle balances
+        System.out.println("\nSettling balances between users");
+        splitwiseService.settle(user2.getUserId(), user1.getUserId(), 2000.0);
+        splitwiseService.settle(user3.getUserId(), user1.getUserId(), 3000.0);
+
+        // Print user balances
+        System.out.println("\nPrinting balance for each user:");
+        splitwiseService.printBalances();
+
+        splitwiseService.deleteExpense(dinnerExpense.getExpenseId());
+
+        // Print user balances
+        System.out.println("\nPrinting balance for each user:");
+        splitwiseService.printBalances();
+
+        // Print user balance
+        System.out.println("\nPrinting balance for: " + user1.getName());
+        splitwiseService.printBalanceForUser(user1.getUserId());
     }
 }

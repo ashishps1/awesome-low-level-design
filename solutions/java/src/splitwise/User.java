@@ -1,23 +1,20 @@
 package splitwise;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.UUID;
 
 public class User {
-    private final String id;
+    private final String userId;
     private final String name;
     private final String email;
-    private final Map<String, Double> balances;
 
-    public User(String id, String name, String email) {
-        this.id = id;
+    public User(String name, String email) {
+        this.userId = UUID.randomUUID().toString();;
         this.name = name;
         this.email = email;
-        this.balances = new ConcurrentHashMap<>();
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
     public String getName() {
@@ -26,9 +23,5 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public Map<String, Double> getBalances() {
-        return balances;
     }
 }
