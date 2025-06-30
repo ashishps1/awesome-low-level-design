@@ -3,9 +3,11 @@ package stackoverflow;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Question implements Votable, Commentable {
-    private final int id;
+    private final String id;
     private final String title;
     private final String content;
     private final User author;
@@ -16,43 +18,38 @@ public class Question implements Votable, Commentable {
     private final List<Vote> votes;
     private Answer acceptedAnswer;
 
-    public Question(User author, String title, String content, List<String> tagNames) {
-        this.id = generateId();
+    public Question(User author, String title, String content, List<Tag> tags) {
+        this.id = UUID.randomUUID().toString();
         this.author = author;
         this.title = title;
         this.content = content;
         this.creationDate = new Date();
-        this.answers = new ArrayList<>();
-        this.tags = new ArrayList<>();
-        this.votes = new ArrayList<>();
-        this.comments = new ArrayList<>();
-        for (String tagName : tagNames) {
-            this.tags.add(new Tag(tagName));
-        }
+        this.answers = new CopyOnWriteArrayList<>();
+        this.votes = new CopyOnWriteArrayList<>();
+        this.comments = new CopyOnWriteArrayList<>();
+        this.tags = tags;
     }
 
     public synchronized void addAnswer(Answer answer) {
-        if (!answers.contains(answer)) {
-            answers.add(answer);
-        }
+        answers.add(answer);
     }
 
     public synchronized void acceptAnswer(Answer answer) {
         this.acceptedAnswer = answer;
-        answer.markAsAccepted();
     }
 
     @Override
     public void vote(User voter, VoteType type) {
         votes.removeIf(v -> v.getVoter().equals(voter));
         votes.add(new Vote(voter, type));
-        author.updateReputation(5 * (type == VoteType.UPVOTE ? 1 : -1));  // +5 for upvote, -5 for downvote
+        author.updateReputation(type == VoteType.UPVOTE ? ReputationType.QUESTION_UPVOTE.getPoints() :
+                ReputationType.QUESTION_DOWNVOTE.getPoints());
     }
 
     @Override
     public int getVoteCount() {
         return votes.stream()
-                .mapToInt(v -> v.getType() == VoteType.UPVOTE ? 1 : -1)
+                .mapToInt(v -> v.getType().getValue())
                 .sum();
     }
 
@@ -66,19 +63,10 @@ public class Question implements Votable, Commentable {
         return new ArrayList<>(comments);
     }
 
-    private int generateId() {
-        return (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
-    }
-
     // Getters
-    public int getId() { return id; }
+    public String getId() { return id; }
     public User getAuthor() { return author; }
     public String getTitle() { return title; }
     public String getContent() { return content; }
-    public Date getCreationDate() { return creationDate; }
-    public List<Answer> getAnswers() { return new ArrayList<>(answers); }
     public List<Tag> getTags() { return new ArrayList<>(tags); }
-    public Answer getAcceptedAnswer() {
-        return acceptedAnswer;
-    }
 }

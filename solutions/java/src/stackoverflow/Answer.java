@@ -3,9 +3,10 @@ package stackoverflow;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Answer implements Votable, Commentable {
-    private final int id;
+    private final String id;
     private final String content;
     private final User author;
     private final Question question;
@@ -15,7 +16,7 @@ public class Answer implements Votable, Commentable {
     private final List<Vote> votes;
 
     public Answer(User author, Question question, String content) {
-        this.id = generateId();
+        this.id = UUID.randomUUID().toString();
         this.author = author;
         this.question = question;
         this.content = content;
@@ -29,13 +30,14 @@ public class Answer implements Votable, Commentable {
     public void vote(User voter, VoteType type) {
         votes.removeIf(v -> v.getVoter().equals(voter));
         votes.add(new Vote(voter, type));
-        author.updateReputation(10 * (type == VoteType.UPVOTE ? 1 : -1));  // +10 for upvote, -10 for downvote
+        author.updateReputation(type == VoteType.UPVOTE ? ReputationType.ANSWER_UPVOTE.getPoints() :
+                ReputationType.ANSWER_DOWNVOTE.getPoints());
     }
 
     @Override
     public int getVoteCount() {
         return votes.stream()
-                .mapToInt(v -> v.getType() == VoteType.UPVOTE ? 1 : -1)
+                .mapToInt(v -> v.getType().getValue())
                 .sum();
     }
 
@@ -49,23 +51,21 @@ public class Answer implements Votable, Commentable {
         return new ArrayList<>(comments);
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
     public void markAsAccepted() {
         if (isAccepted) {
             throw new IllegalStateException("This answer is already accepted");
         }
         isAccepted = true;
-        author.updateReputation(15);  // +15 reputation for accepted answer
-    }
-
-    private int generateId() {
-        return (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+        author.updateReputation(ReputationType.ANSWER_ACCEPTED.getPoints());
     }
 
     // Getters
-    public int getId() { return id; }
+    public String getId() { return id; }
     public User getAuthor() { return author; }
-    public Question getQuestion() { return question; }
     public String getContent() { return content; }
-    public Date getCreationDate() { return creationDate; }
     public boolean isAccepted() { return isAccepted; }
 }
