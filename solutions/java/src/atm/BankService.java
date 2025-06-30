@@ -31,11 +31,11 @@ public class BankService {
         return card;
     }
 
-    public boolean isValidCard(Card card, String pin) {
+    public boolean authenticate(Card card, String pin) {
         return card.getPin().equals(pin);
     }
 
-    public Card isValidCard(String cardNumber) {
+    public Card getCard(String cardNumber) {
         return cards.getOrDefault(cardNumber, null);
     }
 

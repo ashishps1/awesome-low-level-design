@@ -50,6 +50,14 @@ public class ATM {
 
     public void selectOperation(OperationType op, int... args) { currentState.selectOperation(this, op, args); }
 
+    public Card getCard(String cardNumber) {
+        return bankService.getCard(cardNumber);
+    }
+
+    public boolean authenticate(String pin) {
+        return bankService.authenticate(currentCard, pin);
+    }
+
     public void checkBalance() {
         double balance = bankService.getBalance(currentCard);
         System.out.printf("Your current account balance is: $%.2f%n", balance);

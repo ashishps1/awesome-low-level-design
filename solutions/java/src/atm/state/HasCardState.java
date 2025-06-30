@@ -1,7 +1,6 @@
 package atm.state;
 
 import atm.ATM;
-import atm.Card;
 import atm.OperationType;
 
 public class HasCardState implements ATMState {
@@ -13,8 +12,7 @@ public class HasCardState implements ATMState {
     @Override
     public void enterPin(ATM atm, String pin) {
         System.out.println("Authenticating PIN...");
-        Card card = atm.getCurrentCard();
-        boolean isAuthenticated = atm.getBankService().isValidCard(card, pin);
+        boolean isAuthenticated = atm.authenticate(pin);;
 
         if (isAuthenticated) {
             System.out.println("Authentication successful.");
