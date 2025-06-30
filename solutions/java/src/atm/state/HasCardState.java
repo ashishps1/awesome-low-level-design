@@ -14,7 +14,7 @@ public class HasCardState implements ATMState {
     public void enterPin(ATM atm, String pin) {
         System.out.println("Authenticating PIN...");
         Card card = atm.getCurrentCard();
-        boolean isAuthenticated = atm.getBankService().authenticate(card, pin);
+        boolean isAuthenticated = atm.getBankService().isValidCard(card, pin);
 
         if (isAuthenticated) {
             System.out.println("Authentication successful.");

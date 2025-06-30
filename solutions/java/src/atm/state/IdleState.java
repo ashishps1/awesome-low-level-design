@@ -8,7 +8,7 @@ public class IdleState implements ATMState {
     @Override
     public void insertCard(ATM atm, String cardNumber) {
         System.out.println("\nCard has been inserted.");
-        Card card = atm.getBankService().authenticate(cardNumber);
+        Card card = atm.getBankService().isValidCard(cardNumber);
 
         if (card == null) {
             ejectCard(atm);
