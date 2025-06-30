@@ -1,55 +1,83 @@
 package atm;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import atm.dispenser.DispenseChain;
+import atm.dispenser.NoteDispenser100;
+import atm.dispenser.NoteDispenser20;
+import atm.dispenser.NoteDispenser50;
+import atm.state.ATMState;
+import atm.state.IdleState;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ATM {
-    private final BankingService bankingService;
+    private static ATM INSTANCE;
+    private final BankService bankService;
     private final CashDispenser cashDispenser;
     private static final AtomicLong transactionCounter = new AtomicLong(0);
+    private ATMState currentState;
+    private Card currentCard;
 
-    public ATM(BankingService bankingService, CashDispenser cashDispenser) {
-        this.bankingService = bankingService;
-        this.cashDispenser = cashDispenser;
+    private ATM() {
+        this.currentState = new IdleState();
+        this.bankService = new BankService();
+
+        // Setup the dispenser chain
+        DispenseChain c1 = new NoteDispenser100(10); // 10 x $100 notes
+        DispenseChain c2 = new NoteDispenser50(20); // 20 x $50 notes
+        DispenseChain c3 = new NoteDispenser20(30); // 30 x $20 notes
+        c1.setNextChain(c2);
+        c2.setNextChain(c3);
+        this.cashDispenser = new CashDispenser(c1);
     }
 
-    public void authenticateUser(Card card) {
-        boolean isAuthenticated = bankingService.authenticate(card.getCardNumber(), card.getPin());
-        if (isAuthenticated) {
-            System.out.println("Authentication successful.");
-        } else {
-            System.out.println("Authentication failed.");
+    public static ATM getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ATM();
+        }
+        return INSTANCE;
+    }
+
+    public void changeState(ATMState newState) { this.currentState = newState; }
+    public void setCurrentCard(Card card) { this.currentCard = card; }
+
+    public void insertCard(String cardNumber) {
+        currentState.insertCard(this, cardNumber);
+    }
+
+    public void enterPin(String pin) {
+        currentState.enterPin(this, pin);
+    }
+
+    public void selectOperation(OperationType op, int... args) { currentState.selectOperation(this, op, args); }
+
+    public void checkBalance() {
+        double balance = bankService.getBalance(currentCard);
+        System.out.printf("Your current account balance is: $%.2f%n", balance);
+    }
+
+    public void withdrawCash(int amount) {
+        if (!cashDispenser.canDispenseCash(amount)) {
+            throw new IllegalStateException("Insufficient cash available in the ATM.");
+        }
+
+        bankService.withdrawMoney(currentCard, amount);
+
+        try {
+            cashDispenser.dispenseCash(amount);
+        } catch (Exception e) {
+            bankService.depositMoney(currentCard, amount); // Deposit back if dispensing fails
         }
     }
 
-    public double checkBalance(String accountNumber) {
-        Account account = bankingService.getAccount(accountNumber);
-        return account.getBalance();
+    public void depositCash(int amount) {
+        bankService.depositMoney(currentCard, amount);
     }
 
-    public void withdrawCash(String accountNumber, double amount) {
-        Account account = bankingService.getAccount(accountNumber);
-        // Check if sufficient balance is available
-        if (account != null && account.getBalance() < amount) {
-            System.out.println("Error: Insufficient balance.");
-            return;
-        }
-        Transaction transaction = new WithdrawalTransaction(generateTransactionId(), account, amount);
-        bankingService.processTransaction(transaction);
-        cashDispenser.dispenseCash((int) amount);
+    public Card getCurrentCard() {
+        return currentCard;
     }
 
-    public void depositCash(String accountNumber, double amount) {
-        Account account = bankingService.getAccount(accountNumber);
-        Transaction transaction = new DepositTransaction(generateTransactionId(), account, amount);
-        bankingService.processTransaction(transaction);
-    }
-
-    private String generateTransactionId() {
-        // Generate a unique transaction ID
-        long transactionNumber = transactionCounter.incrementAndGet();
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        return "TXN" + timestamp + String.format("%010d", transactionNumber);
+    public BankService getBankService() {
+        return bankService;
     }
 }

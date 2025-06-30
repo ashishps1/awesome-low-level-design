@@ -1,17 +1,22 @@
 package atm;
 
-public class CashDispenser {
-    private int cashAvailable;
+import atm.dispenser.DispenseChain;
 
-    public CashDispenser(int initialCash) {
-        this.cashAvailable = initialCash;
+public class CashDispenser {
+    private final DispenseChain chain;
+
+    public CashDispenser(DispenseChain chain) {
+        this.chain = chain;
     }
 
     public synchronized void dispenseCash(int amount) {
-        if (amount > cashAvailable) {
-            throw new IllegalArgumentException("Insufficient cash available in the ATM.");
+        chain.dispense(amount);
+    }
+
+    public synchronized boolean canDispenseCash(int amount) {
+        if (amount % 10 != 0) {
+            return false;
         }
-        cashAvailable -= amount;
-        System.out.println("Cash dispensed: " + amount);
+        return chain.canDispense(amount);
     }
 }

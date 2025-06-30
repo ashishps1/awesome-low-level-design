@@ -2,25 +2,35 @@ package atm;
 
 public class ATMDemo {
     public static void run() {
-        BankingService bankingService = new BankingService();
-        CashDispenser cashDispenser = new CashDispenser(10000);
-        ATM atm = new ATM(bankingService, cashDispenser);
+        ATM atm = ATM.getInstance();
 
-        // Create sample accounts
-        bankingService.createAccount("1234567890", 1000.0);
-        bankingService.createAccount("9876543210", 500.0);
+        // Perform Check Balance operation
+        atm.insertCard("1234-5678-9012-3456");
+        atm.enterPin("1234");
+        atm.selectOperation(OperationType.CHECK_BALANCE); // $1000
 
-        // Perform ATM operations
-        Card card = new Card("1234567890", "1234");
-        atm.authenticateUser(card);
+        // Perform Withdraw Cash operation
+        atm.insertCard("1234-5678-9012-3456");
+        atm.enterPin("1234");
+        atm.selectOperation(OperationType.WITHDRAW_CASH, 570);
 
-        double balance = atm.checkBalance("1234567890");
-        System.out.println("Account balance: " + balance);
+        // Perform Deposit Cash operation
+        atm.insertCard("1234-5678-9012-3456");
+        atm.enterPin("1234");
+        atm.selectOperation(OperationType.DEPOSIT_CASH, 200);
 
-        atm.withdrawCash("1234567890", 500.0);
-        atm.depositCash("9876543210", 200.0);
+        // Perform Check Balance operation
+        atm.insertCard("1234-5678-9012-3456");
+        atm.enterPin("1234");
+        atm.selectOperation(OperationType.CHECK_BALANCE); // $630
 
-        balance = atm.checkBalance("1234567890");
-        System.out.println("Updated account balance: " + balance);
+        // Perform Withdraw Cash more than balance
+        atm.insertCard("1234-5678-9012-3456");
+        atm.enterPin("1234");
+        atm.selectOperation(OperationType.WITHDRAW_CASH, 700); // Insufficient balance
+
+        // Insert Incorrect PIN
+        atm.insertCard("1234-5678-9012-3456");
+        atm.enterPin("3425");
     }
 }

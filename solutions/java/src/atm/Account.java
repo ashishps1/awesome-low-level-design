@@ -1,12 +1,17 @@
 package atm;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Account {
     private final String accountNumber;
     private double balance;
+    private Map<String, Card> cards;
 
     public Account(String accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.cards = new HashMap<>();
     }
 
     public String getAccountNumber() {
@@ -17,11 +22,19 @@ public class Account {
         return balance;
     }
 
-    public void debit(double amount) {
-        balance -= amount;
+    public Map<String, Card> getCards() {
+        return cards;
     }
 
-    public void credit(double amount) {
+    public synchronized void deposit(double amount) {
         balance += amount;
+    }
+
+    public boolean withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            return true;
+        }
+        return false;
     }
 }

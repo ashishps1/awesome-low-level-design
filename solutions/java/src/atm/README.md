@@ -37,7 +37,7 @@ Design and implement an ATM (Automated Teller Machine) system that allows users 
 ## Class Design
 
 ### 1. ATM
-- **Fields:** BankingService bankingService, CashDispenser cashDispenser
+- **Fields:** BankingService bankService, CashDispenser cashDispenser
 - **Methods:** authenticateUser(Card), checkBalance(String accountNumber), withdrawCash(String accountNumber, double amount), depositCash(String accountNumber, double amount)
 
 ### 2. Card
@@ -71,11 +71,11 @@ Design and implement an ATM (Automated Teller Machine) system that allows users 
 ## Example Usage
 
 ```java
-BankingService bankingService = new BankingService();
+BankingService bankService = new BankingService();
 CashDispenser cashDispenser = new CashDispenser(10000);
-ATM atm = new ATM(bankingService, cashDispenser);
+ATM atm = new ATM(bankService, cashDispenser);
 
-bankingService.createAccount("1234567890", 1000.0);
+bankService.createAccount("1234567890", 1000.0);
 Card card = new Card("1234567890", "1234");
 atm.authenticateUser(card);
 

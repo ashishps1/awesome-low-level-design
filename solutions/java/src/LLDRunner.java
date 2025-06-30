@@ -1,4 +1,5 @@
 import airlinemanagementsystem.AirlineManagementSystemDemo;
+import atm.ATMDemo;
 import chessgame.ChessGameDemo;
 import courseregistrationsystem.CourseRegistrationSystemDemo;
 import fooddeliveryservice.FoodDeliveryServiceDemo;
@@ -21,7 +22,7 @@ public class LLDRunner {
         // Uncomment the LLD problem you want to run with sample input defined in the corresponding Demo class.
 
 //        AirlineManagementSystemDemo.run();
-//        ATMDemo.run();
+        ATMDemo.run();
 //        CarRentalSystemDemo.run();
 //        ChessGameDemo.run();
 //        CoffeeVendingMachineDemo.run();

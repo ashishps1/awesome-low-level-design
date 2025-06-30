@@ -7,6 +7,6 @@ public class WithdrawalTransaction extends Transaction {
 
     @Override
     public void execute() {
-        account.debit(amount);
+        account.withdraw(amount);
     }
 }
