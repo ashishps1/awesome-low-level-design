@@ -14,6 +14,10 @@ public class RestaurantManagementSystemDemo {
         MenuItem menuItem2 = restaurantManagementSystem.addMenuItem("Pizza", 12.99);
         MenuItem menuItem3 = restaurantManagementSystem.addMenuItem("Salad", 7.99);
 
+        // Add tables
+        restaurantManagementSystem.addTable(1, 4);
+        restaurantManagementSystem.addTable(2, 2);
+
         // Place an order
         Order order = restaurantManagementSystem.placeOrder(1, List.of(
                 new OrderItem(menuItem1, 1),
