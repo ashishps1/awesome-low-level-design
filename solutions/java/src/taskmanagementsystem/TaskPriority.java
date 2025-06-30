@@ -1,5 +1,5 @@
 package taskmanagementsystem;
 
 public enum TaskPriority {
-    LOW, MEDIUM, HIGH
+    LOW, MEDIUM, HIGH, CRITICAL
 }

@@ -1,18 +1,19 @@
 package taskmanagementsystem;
 
+import java.util.UUID;
+
 public class User {
     private final String id;
     private final String name;
     private final String email;
 
-    public User(String id, String name, String email) {
-        this.id = id;
+    public User(String name, String email) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
     }
 
-    // Getters and setters
-
+    // Getters...
     public String getId() {
         return id;
     }

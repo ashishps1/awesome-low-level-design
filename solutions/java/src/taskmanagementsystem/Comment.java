@@ -15,4 +15,8 @@ public class Comment {
         this.author = author;
         this.timestamp = new Date();
     }
+
+    public User getAuthor() {
+        return author;
+    }
 }
