@@ -30,7 +30,7 @@ public class Account {
         balance += amount;
     }
 
-    public boolean withdraw(double amount) {
+    public synchronized boolean withdraw(double amount) {
         if (balance >= amount) {
             balance -= amount;
             return true;
