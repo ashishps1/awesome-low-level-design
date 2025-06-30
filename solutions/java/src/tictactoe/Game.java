@@ -11,8 +11,7 @@ public class Game {
         this.players = new Player[]{player1, player2};
         this.status = GameStatus.IN_PROGRESS;
     }
-
-    public synchronized boolean playMove(int row, int col) {
+    public boolean playMove(int row, int col) {
         if (status != GameStatus.IN_PROGRESS) {
             throw new IllegalStateException("Game already finished.");
         }
@@ -37,7 +36,7 @@ public class Game {
         return true;
     }
 
-    public synchronized void reset() {
+    public void reset() {
         board.reset();
         currentPlayerIndex = 0;
         status = GameStatus.IN_PROGRESS;
