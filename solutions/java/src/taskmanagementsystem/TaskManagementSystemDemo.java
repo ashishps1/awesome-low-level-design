@@ -18,9 +18,12 @@ public class TaskManagementSystemDemo {
         TaskList taskList2 = taskManagementSystem.createTaskList("Bug Fix");
 
         // Create tasks
-        Task task1 = taskManagementSystem.createTask(taskList1.getId(), "Task 1", "Description 1", new Date(), TaskPriority.LOW, user1.getId());
-        Task task2 = taskManagementSystem.createTask(taskList1.getId(), "Task 2", "Description 2", new Date(), TaskPriority.MEDIUM, user1.getId());
-        Task task3 = taskManagementSystem.createTask(taskList2.getId(), "Task 3", "Description 3", new Date(), TaskPriority.HIGH, user2.getId());
+        Task task1 = taskManagementSystem.createTask(taskList1.getId(), "Task 1", "Description 1",
+                new Date(), TaskPriority.LOW, user1.getId());
+        Task task2 = taskManagementSystem.createTask(taskList1.getId(), "Task 2", "Description 2",
+                new Date(), TaskPriority.MEDIUM, user1.getId());
+        Task task3 = taskManagementSystem.createTask(taskList2.getId(), "Task 3", "Description 3",
+                new Date(), TaskPriority.HIGH, user2.getId());
 
         // Update task status
         taskManagementSystem.updateTaskStatus(task2.getId(), TaskStatus.IN_PROGRESS);

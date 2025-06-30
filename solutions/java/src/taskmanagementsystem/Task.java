@@ -96,14 +96,6 @@ public class Task {
         this.description = description;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public void setPriority(TaskPriority priority) {
-        this.priority = priority;
-    }
-
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
