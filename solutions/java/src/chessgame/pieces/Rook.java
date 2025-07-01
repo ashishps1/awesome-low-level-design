@@ -10,7 +10,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isValidMove(Board board, Cell from, Cell to) {
+    public boolean canMove(Board board, Cell from, Cell to) {
         return (from.getRow() == to.getRow() || from.getCol() == to.getCol());
     }
 }

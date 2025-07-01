@@ -50,7 +50,7 @@ public class Board {
     public synchronized boolean movePiece(Move move) {
         Cell from = move.getStart(), to = move.getEnd();
         Piece piece = from.getPiece();
-        if (piece == null || !piece.isValidMove(this, from, to)) return false;
+        if (piece == null || !piece.canMove(this, from, to)) return false;
 
         to.setPiece(piece);
         from.setPiece(null);

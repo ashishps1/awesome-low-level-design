@@ -11,7 +11,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean isValidMove(Board board, Cell from, Cell to);
+    public abstract boolean canMove(Board board, Cell from, Cell to);
 
     public Color getColor() {
         return color;
