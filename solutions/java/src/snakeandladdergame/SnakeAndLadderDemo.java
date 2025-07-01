@@ -20,7 +20,11 @@ public class SnakeAndLadderDemo {
 
         List<String> players = Arrays.asList("Player 1", "Player 2", "Player 3");
 
-        SnakeAndLadderGame game = new SnakeAndLadderGame(board, players, new Dice(1, 6));
+        Game game = new Game.Builder()
+                .setBoard(board)
+                .setPlayers(players)
+                .setDice(new Dice(1, 6))
+                .build();
 
         game.play();
     }

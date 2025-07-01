@@ -26,9 +26,17 @@ public class Board {
         return boardSize;
     }
 
-    public int getNextPosition(int position) {
-        if (snakes.containsKey(position)) return snakes.get(position);
-        if (ladders.containsKey(position)) return ladders.get(position);
-        return position;
+    public int getNextPosition(int currentPosition) {
+        int newPosition = currentPosition;
+
+        if (snakes.containsKey(currentPosition)) {
+            System.out.println("Oops! Bitten by snake 🐍");
+            newPosition =  snakes.get(currentPosition);
+        } else if (ladders.containsKey(currentPosition)) {
+            System.out.println("Yay! Climbed a ladder 🪜");
+            newPosition = ladders.get(currentPosition);
+        }
+
+        return newPosition;
     }
 }
