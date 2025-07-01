@@ -21,12 +21,16 @@ public class Loan {
     }
 
     public void closeLoan() {
-        copy.markReturned();
+        copy.markAvailable();
         member.removeLoan(this);
         active = false;
     }
 
     public String getId() {
         return id;
+    }
+
+    public BookCopy getCopy() {
+        return copy;
     }
 }

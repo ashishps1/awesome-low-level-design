@@ -9,26 +9,27 @@ public class Member {
     private final String id;
     private final String name;
     private final String contactInfo;
-    private final List<Loan> currentLoans;
-    private static final int MAX_BOOKS = 5;
+    private final List<Loan> loans;
 
     public Member(String name, String contactInfo) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.contactInfo = contactInfo;
-        this.currentLoans = Collections.synchronizedList(new ArrayList<>());
+        this.loans = Collections.synchronizedList(new ArrayList<>());
     }
 
-    public synchronized boolean canBorrow() {
-        return currentLoans.size() < MAX_BOOKS;
-    }
+    public int getBorrowedCount() { return loans.size(); }
 
     public synchronized void addLoan(Loan loan) {
-        currentLoans.add(loan);
+        loans.add(loan);
     }
 
     public synchronized void removeLoan(Loan loan) {
-        currentLoans.remove(loan);
+        loans.remove(loan);
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
     }
 
     public String getId() {

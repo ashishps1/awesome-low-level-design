@@ -3,34 +3,34 @@ package librarymanagementsystem;
 import java.util.UUID;
 
 public class BookCopy {
-    private final String id;
+    private final String barCode;
     private final Book book;
-    private boolean isAvailable;
+    private BookStatus status;
 
     public BookCopy(Book book) {
-        this.id = UUID.randomUUID().toString();
+        this.barCode = UUID.randomUUID().toString();
         this.book = book;
-        this.isAvailable = true;
+        this.status = BookStatus.AVAILABLE;
     }
 
     public synchronized boolean isAvailable() {
-        return isAvailable;
+        return status == BookStatus.AVAILABLE;
     }
 
-    public synchronized void markIssued() {
-        if (!isAvailable) throw new IllegalStateException("Already issued");
-        isAvailable = false;
+    public synchronized void markBorrowed() {
+        if (!isAvailable()) throw new IllegalStateException("Already issued");
+        status = BookStatus.BORROWED;
     }
 
-    public synchronized void markReturned() {
-        isAvailable = true;
+    public synchronized void markAvailable() {
+        status = BookStatus.AVAILABLE;
     }
 
     public Book getBook() {
         return book;
     }
 
-    public String getId() {
-        return id;
+    public String getBarCode() {
+        return barCode;
     }
 }
