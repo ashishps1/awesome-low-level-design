@@ -1,4 +1,6 @@
-package pubsubsystem;
+package pubsubsystem.subscriber;
+
+import pubsubsystem.Message;
 
 public class PrintSubscriber implements Subscriber {
     private final String name;
@@ -9,6 +11,6 @@ public class PrintSubscriber implements Subscriber {
 
     @Override
     public void consume(Message message) {
-        System.out.println("Subscriber " + name + " received message: " + message.getPayload());
+        System.out.println("Subscriber " + name + " received message: " + message.getContent());
     }
 }

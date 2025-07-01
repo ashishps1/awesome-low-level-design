@@ -1,5 +1,7 @@
 package pubsubsystem;
 
+import pubsubsystem.subscriber.Subscriber;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
