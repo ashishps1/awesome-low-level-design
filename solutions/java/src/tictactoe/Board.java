@@ -1,15 +1,21 @@
 package tictactoe;
 
+import tictactoe.winningstrategy.WinningStrategy;
+
+import java.util.List;
+
 public class Board {
     private final Cell[][] grid;
     private final int movesCount;
     private final int size;
+    List<WinningStrategy> winningStrategies;
 
-    public Board(int size) {
+    public Board(int size, List<WinningStrategy> winningStrategies) {
         this.size = size;
         grid = new Cell[size][size];
         movesCount = 0;
         initializeBoard();
+        this.winningStrategies = winningStrategies;
     }
 
     private void initializeBoard() {
@@ -29,38 +35,12 @@ public class Board {
     }
 
     public boolean checkWin(Symbol symbol) {
-        // Check rows
-        for (int i = 0; i < size; i++) {
-            boolean rowWin = true;
-            for (int j = 0; j < size; j++) {
-                if (grid[i][j].getSymbol() != symbol) {
-                    rowWin = false;
-                    break;
-                }
+        for (WinningStrategy winningStrategy: winningStrategies) {
+            if(winningStrategy.checkWinner(this, symbol)) {
+                return true;
             }
-            if (rowWin) return true;
         }
-
-        // Check columns
-        for (int j = 0; j < size; j++) {
-            boolean colWin = true;
-            for (int i = 0; i < size; i++) {
-                if (grid[i][j].getSymbol() != symbol) {
-                    colWin = false;
-                    break;
-                }
-            }
-            if (colWin) return true;
-        }
-
-        // Diagonal
-        boolean diag1 = true, diag2 = true;
-        for (int i = 0; i < size; i++) {
-            if (grid[i][i].getSymbol() != symbol) diag1 = false;
-            if (grid[i][size - i - 1].getSymbol() != symbol) diag2 = false;
-        }
-
-        return diag1 || diag2;
+        return false;
     }
 
     public boolean isFull() {
@@ -81,5 +61,13 @@ public class Board {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public Symbol getSymbol(int row, int col) {
+        return grid[row][col].getSymbol();
+    }
+
+    public int getSize() {
+        return size;
     }
 }

@@ -1,13 +1,25 @@
 package tictactoe;
 
-public class Game {
+import tictactoe.winningstrategy.ColumnWinningStrategy;
+import tictactoe.winningstrategy.DiagonalWinningStrategy;
+import tictactoe.winningstrategy.RowWinningStrategy;
+import tictactoe.winningstrategy.WinningStrategy;
+
+import java.util.List;
+
+public class TicTacToeGame {
     private final Board board;
     private final Player[] players;
     private int currentPlayerIndex;
     private GameStatus status;
 
-    public Game(Player player1, Player player2, int size) {
-        this.board = new Board(size);
+    public TicTacToeGame(Player player1, Player player2, int size) {
+        List<WinningStrategy> winningStrategies = List.of(
+                new RowWinningStrategy(),
+                new ColumnWinningStrategy(),
+                new DiagonalWinningStrategy()
+        );
+        this.board = new Board(size, winningStrategies);
         this.players = new Player[]{player1, player2};
         this.status = GameStatus.IN_PROGRESS;
     }
