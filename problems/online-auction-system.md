@@ -13,6 +13,10 @@ This system allows for the creation and management of auctions, user participati
 7. The system should handle concurrent access to auction listings and ensure data consistency.
 8. The system should be extensible to accommodate future enhancements and new features.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/onlineauctionsystem-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/onlineauctionsystem/) 
 #### [Python Implementation](../solutions/python/onlineauctionsystem/)

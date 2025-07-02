@@ -8,6 +8,10 @@
 5. The system should assign reputation score to users based on their activity and the quality of their contributions.
 6. The system should handle concurrent access and ensure data consistency.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/stackoverflow-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/stackoverflow/) 
 #### [Python Implementation](../solutions/python/stackoverflow/)

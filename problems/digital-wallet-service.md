@@ -10,6 +10,10 @@
 7. The digital wallet should handle concurrent transactions and ensure data consistency.
 8. The system should be scalable to handle a large number of users and transactions.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/digitalwalletservice-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/digitalwalletservice/) 
 #### [Python Implementation](../solutions/python/digitalwalletservice/)

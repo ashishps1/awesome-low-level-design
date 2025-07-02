@@ -10,6 +10,10 @@
 7. The system should provide reporting and analytics features for hotel management.
 8. The system should be scalable and handle a large number of rooms and guests.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/hotelmanagementsystem-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/hotelmanagementsystem/) 
 #### [Python Implementation](../solutions/python/hotelmanagementsystem/)

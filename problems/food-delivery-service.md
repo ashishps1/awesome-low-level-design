@@ -10,6 +10,10 @@
 7. The system should be scalable and handle a high volume of orders.
 8. The system should provide real-time notifications to customers, restaurants, and delivery agents.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/fooddeliveryservice-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/fooddeliveryservice/) 
 #### [Python Implementation](../solutions/python/fooddeliveryservice/)

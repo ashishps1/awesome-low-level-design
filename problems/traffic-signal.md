@@ -8,6 +8,10 @@
 5. The system should be able to detect and handle emergency situations, such as an ambulance or fire truck approaching the intersection.
 6. The system should be scalable and extensible to support additional features and functionality.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/trafficsignalsystem-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/trafficsignalsystem/) 
 #### [Python Implementation](../solutions/python/trafficsignalsystem/)

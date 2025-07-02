@@ -9,6 +9,10 @@
 1. The machine should provide an interface for restocking products and collecting money.
 1. The machine should handle exceptional scenarios, such as insufficient funds or out-of-stock products.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/vendingmachine-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/vendingmachine/) 
 #### [Python Implementation](../solutions/python/vendingmachine/)

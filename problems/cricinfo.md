@@ -10,6 +10,10 @@
 7. The system should be scalable and able to handle a large volume of user requests.
 8. The system should be extensible to accommodate new features and enhancements in the future.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/cricinfo-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/cricinfo/) 
 #### [Python Implementation](../solutions/python/cricinfo/)

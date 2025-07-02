@@ -10,6 +10,10 @@
 7. Users should be able to view their transaction history and group expenses.
 8. The system should handle concurrent transactions and ensure data consistency.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/splitwise-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/splitwise/)
 #### [Python Implementation](../solutions/python/splitwise/)

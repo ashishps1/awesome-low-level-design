@@ -10,6 +10,10 @@
 7. The game should continue until one of the players reaches the final cell on the board.
 8. The game should handle multiple game sessions concurrently, allowing different groups of players to play independently.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/snakeandladdergame-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/snakeandladdergame/) 
 #### [Python Implementation](../solutions/python/snakeandladdergame/)

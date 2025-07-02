@@ -10,6 +10,10 @@
 7. The system should be scalable and handle a large volume of songs and users.
 8. The system should be extensible to support additional features such as social sharing and offline playback.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/musicstreamingservice-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/musicstreamingservice/) 
 #### [Python Implementation](../solutions/python/musicstreamingservice/)

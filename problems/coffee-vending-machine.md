@@ -9,6 +9,10 @@
 6. The machine should track the inventory of ingredients and notify when they are running low.
 7. The machine should handle multiple user requests concurrently and ensure thread safety.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/coffeevendingmachine-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/coffeevendingmachine/) 
 #### [Python Implementation](../solutions/python/coffeevendingmachine/)

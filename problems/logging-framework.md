@@ -8,6 +8,10 @@
 5. The logging framework should be thread-safe to handle concurrent logging from multiple threads.
 6. It should be extensible to accommodate new log levels and output destinations in the future.
 
+## UML Class Diagram
+
+![](../uml-diagrams/class-diagrams/loggingframework-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/loggingframework/) 
 #### [Python Implementation](../solutions/python/loggingframework/)
