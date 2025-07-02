@@ -95,6 +95,11 @@ Design and implement an Online Stock Brokerage System that allows users to buy a
 ### 9. OrderStatus (Enum)
 - **Values:** PENDING, EXECUTED, CANCELLED, FAILED
 
+## Class Design
+
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/onlineStockBrokerageSystem-class-diagram.png)
 ---
 
 ## Example Usage

@@ -32,29 +32,41 @@ Design and implement an Airline Management System that allows users to book flig
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/airlinemanagementsystem-class-diagram.png)
+
 ### 1. AirlineManagementSystem
+
 - **Fields:** List<Flight> flights, List<Booking> bookings, List<Passenger> passengers, PaymentProcessor paymentProcessor
 - **Methods:** addFlight(Flight), addPassenger(Passenger), bookFlight(Passenger, Flight, Seat, Payment), getAvailableSeats(Flight), getBookings(Passenger), etc.
 
 ### 2. Flight (in flight/)
+
 - **Fields:** String flightNumber, Aircraft aircraft, String source, String destination, Date schedule, List<Seat> seats
 
 ### 3. Aircraft
+
 - **Fields:** String model, List<Seat> seats
 
 ### 4. Seat (in seat/)
+
 - **Fields:** String seatNumber, String seatClass, boolean isAvailable
 
 ### 5. Passenger
+
 - **Fields:** int id, String name, String contactInfo
 
 ### 6. Booking (in booking/)
+
 - **Fields:** int id, Passenger user, Flight flight, List<Seat> seats, Payment payment
 
 ### 7. Payment (in payment/)
+
 - **Fields:** int id, double amount, String method, PaymentStatus status
 
 ### 8. PaymentProcessor (in payment/)
+
 - **Methods:** process(Payment), validate(Payment)
 
 ---

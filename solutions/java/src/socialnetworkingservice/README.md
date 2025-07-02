@@ -33,6 +33,10 @@ Design and implement a Social Networking Service that allows users to connect, s
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/SocialNetworkingService-class-diagram.png)
+
 ### 1. SocialNetworkingService
 - **Fields:** List<User> users, List<Post> posts, List<FriendRequest> friendRequests, List<Notification> notifications
 - **Methods:** registerUser(User), sendFriendRequest(User, User), acceptFriendRequest(FriendRequest), rejectFriendRequest(FriendRequest), createPost(User, String content), likePost(User, Post), commentOnPost(User, Post, String comment), sendNotification(Notification), etc.

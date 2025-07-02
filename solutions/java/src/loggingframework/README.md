@@ -31,6 +31,10 @@ Design and implement a flexible and extensible logging framework that can be use
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/loggingframework-class-diagram.png)
+
 ### 1. Logger
 - **Methods:**
   - `log(LogLevel level, String message)`

@@ -32,6 +32,10 @@ Design and implement a Parking Lot Management System that supports parking and u
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/parkinglot-class-diagram.png)
+
 ### 1. ParkingLot
 - **Methods:**
   - `parkVehicle(Vehicle vehicle)`

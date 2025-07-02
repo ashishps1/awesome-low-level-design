@@ -33,6 +33,10 @@ Design and implement a Publish-Subscribe (Pub/Sub) system that allows publishers
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/pubsubsystem-class-diagram.png)
+
 ### 1. Broker
 - **Fields:** Map<String, Topic> topics
 - **Methods:** createTopic(String), subscribe(String, Subscriber), unsubscribe(String, Subscriber), publish(String, Message)

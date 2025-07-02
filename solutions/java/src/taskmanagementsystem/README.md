@@ -32,6 +32,10 @@ Design and implement a Task Management System that allows users to create, assig
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/taskmanagementsystem-class-diagram.png)
+
 ### 1. Task
 - **Fields:** id, title, description, status, priority, assignee (User), List<Comment>
 - **Methods:** updateStatus(TaskStatus), updatePriority(TaskPriority), assignUser(User), addComment(Comment), etc.

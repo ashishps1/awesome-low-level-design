@@ -77,6 +77,10 @@ Design and implement a Hotel Management System that manages hotel rooms, reserva
 ### 7. ReservationStatus (Enum)
 - **Values:** CONFIRMED, CANCELLED, CHECKED_IN, CHECKED_OUT
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/HotelManagementSystem-class-diagram.png)
+
 ---
 
 ## Example Usage

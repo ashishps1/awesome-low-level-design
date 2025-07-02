@@ -42,6 +42,10 @@ Design and implement an Elevator System that can handle multiple requests, move 
 ### 4. Direction (enum)
 - Values: UP, DOWN, IDLE
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/elevatorsystem-class-diagram.png)
+
 ---
 
 ## Example Usage

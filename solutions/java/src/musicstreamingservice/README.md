@@ -37,6 +37,10 @@ Design and implement an online music streaming service (like Spotify) that allow
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/musicstreamingservice-class-diagram.png)
+
 ### 1. Song
 - **Fields:** int id, String title, Artist artist, Album album, int duration
 - **Methods:** getId(), getTitle(), getArtist(), getAlbum(), getDuration()

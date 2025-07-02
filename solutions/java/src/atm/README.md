@@ -36,6 +36,10 @@ Design and implement an ATM (Automated Teller Machine) system that allows users 
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/atm-class-diagram.png)
+
 ### 1. ATM
 - **Fields:** BankingService bankService, CashDispenser cashDispenser
 - **Methods:** authenticateUser(Card), checkBalance(String accountNumber), withdrawCash(String accountNumber, double amount), depositCash(String accountNumber, double amount)

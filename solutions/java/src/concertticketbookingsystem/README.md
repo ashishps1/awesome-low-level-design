@@ -31,6 +31,10 @@ Design and implement a Concert Ticket Booking System that allows users to book s
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/concertticketbookingsystem-class-diagram.png)
+
 ### 1. ConcertTicketBookingSystem
 - **Fields:** List<Concert> concerts, List<Booking> bookings
 - **Methods:** addConcert(), bookSeat(), cancelBooking(), getAvailableSeats(), etc.

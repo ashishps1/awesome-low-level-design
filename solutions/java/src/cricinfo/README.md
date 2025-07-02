@@ -70,6 +70,10 @@ Design and implement a Cricket Information System similar to CricInfo that provi
 ### 8. MatchStatus (Enum)
 - **Values:** SCHEDULED, IN_PROGRESS, COMPLETED, ABANDONED
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/cricinfo-class-diagram.png)
+
 ---
 
 ## Services

@@ -31,6 +31,10 @@ Design and implement an Online Auction System that allows users to create auctio
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/onlineauctionsystem-class-diagram.png)
+
 ### 1. AuctionSystem
 - **Fields:** List<User> users, List<Item> items, List<Auction> auctions
 - **Methods:** registerUser(User), addItem(Item), createAuction(Item, User, Date startTime, Date endTime), placeBid(Auction, User, double amount), endAuction(Auction), getActiveAuctions(), getEndedAuctions(), etc.
