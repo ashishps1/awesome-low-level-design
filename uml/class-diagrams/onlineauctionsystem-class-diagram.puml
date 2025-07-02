@@ -1,0 +1,87 @@
+```plantuml
+@startuml
+
+title Online Auction System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class AuctionSystem {
+    - static AuctionSystem instance
+    - final Map<String, User> users
+    - final Map<String, Auction> auctions
+    - final ScheduledExecutorService scheduler
+    + static synchronized AuctionSystem getInstance()
+    + User registerUser(String username, String name)
+    + User getUser(String userId)
+    + Auction createAuction(User seller, Item item, double startingPrice, Date start, Date end)
+    + void placeBid(String auctionId, Bid bid)
+    + List<Auction> viewActiveAuctions()
+    + void shutdown()
+}
+
+class Bid {
+    - final String id
+    - final User bidder
+    - final double amount
+    - final LocalDateTime timestamp
+    + Bid(User bidder, double amount)
+    + double getAmount()
+    + User getBidder()
+}
+
+class User {
+    - final String username
+    - final String name
+    + User(String username, String name)
+    + String getUsername()
+}
+
+class Auction {
+    - final String id
+    - final Item item
+    - final Date startTime
+    - final Date endTime
+    - AuctionStatus status
+    - Bid highestBid
+    - final List<Bid> bidHistory
+    + Auction(User seller, Item item, double startingPrice, Date startTime, Date endTime)
+    + synchronized void placeBid(Bid bid)
+    + synchronized void closeAuction()
+    + boolean isActive()
+    + String getId()
+    + Bid getHighestBid()
+    + Item getItem()
+    + AuctionStatus getStatus()
+}
+
+class Item {
+    - final String name
+    - final String description
+    + Item(String name, String description)
+    + String getName()
+}
+
+enum AuctionStatus {
+    ACTIVE,
+    CLOSED
+}
+
+AuctionSystem --> User: manages >
+AuctionSystem --> Auction: manages >
+Auction --> Item: uses >
+Auction --> Bid: contains >
+Bid --> User: references >
+AuctionStatus <|.. Auction: uses
+
+@enduml
+```

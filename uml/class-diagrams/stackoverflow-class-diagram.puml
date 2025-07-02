@@ -1,0 +1,170 @@
+```plantuml
+@startuml
+
+title Stack Overflow - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Commentable {
+    + void addComment(Comment comment)
+    + List<Comment> getComments()
+}
+
+class Votable {
+    + void vote(User voter, VoteType type)
+    + int getVoteCount()
+}
+
+class Answer implements Votable, Commentable {
+    - final String id
+    - final String content
+    - final User author
+    - final Question question
+    - boolean isAccepted
+    - final Date creationDate
+    - final List<Comment> comments
+    - final List<Vote> votes
+    + Answer(User author, Question question, String content)
+    + void vote(User voter, VoteType type)
+    + int getVoteCount()
+    + void addComment(Comment comment)
+    + List<Comment> getComments()
+    + Question getQuestion()
+    + void markAsAccepted()
+    + String getId()
+    + User getAuthor()
+    + String getContent()
+    + boolean isAccepted()
+}
+
+class ReputationType {
+    + static final ReputationType QUESTION_UPVOTE
+    + static final ReputationType QUESTION_DOWNVOTE
+    + static final ReputationType ANSWER_UPVOTE
+    + static final ReputationType ANSWER_DOWNVOTE
+    + static final ReputationType ANSWER_ACCEPTED
+    - final int points
+    + ReputationType(int points)
+    + int getPoints()
+}
+
+class Tag {
+    - final String id
+    - final String name
+    + Tag(String name)
+    + String getId()
+    + String getName()
+}
+
+class Vote {
+    - final User voter
+    - final VoteType type
+    + Vote(User user, VoteType type)
+    + User getVoter()
+    + VoteType getType()
+}
+
+class User {
+    - final String userId
+    - final String name
+    - final String email
+    - int reputation
+    + User(String name, String email)
+    + void updateReputation(int value)
+    + String getUserId()
+    + String getName()
+    + int getReputation()
+}
+
+class Question implements Votable, Commentable {
+    - final String id
+    - final String title
+    - final String content
+    - final User author
+    - final Date creationDate
+    - final List<Answer> answers
+    - final List<Comment> comments
+    - final List<Tag> tags
+    - final List<Vote> votes
+    - Answer acceptedAnswer
+    + Question(User author, String title, String content, List<Tag> tags)
+    + void addAnswer(Answer answer)
+    + void acceptAnswer(Answer answer)
+    + void vote(User voter, VoteType type)
+    + int getVoteCount()
+    + void addComment(Comment comment)
+    + List<Comment> getComments()
+    + String getId()
+    + User getAuthor()
+    + String getTitle()
+    + String getContent()
+    + List<Tag> getTags()
+}
+
+class StackOverflow {
+    - static StackOverflow instance
+    - final Map<String, User> users
+    - final Map<String, Question> questions
+    - final Map<String, Answer> answers
+    - final Map<String, Tag> tags
+    + static synchronized StackOverflow getInstance()
+    + User createUser(String username, String email)
+    + Question postQuestion(String userId, String title, String content, List<String> questionTags)
+    + Answer postAnswer(String userId, String questionId, String content)
+    + Comment addComment(String userId, Commentable commentable, String content)
+    + void vote(String userId, Votable votable, VoteType voteType)
+    + void acceptAnswer(String answerId)
+    + List<Question> searchQuestions(String query)
+    + List<Question> getQuestionsByUser(String userId)
+}
+
+class Comment {
+    - final String id
+    - final String content
+    - final User author
+    - final Date creationDate
+    + Comment(User author, String content)
+    + String getId()
+    + User getAuthor()
+    + String getContent()
+}
+
+enum VoteType {
+    UPVOTE(1),
+    DOWNVOTE(-1)
+    - final int value
+    + VoteType(int value)
+    + int getValue()
+}
+
+Answer --> Commentable: implements
+Question --> Commentable: implements
+Answer --> Votable: implements
+Question --> Votable: implements
+StackOverflow --> User: manages >
+StackOverflow --> Question: manages >
+StackOverflow --> Answer: manages >
+StackOverflow --> Tag: manages >
+Question --> Tag: contains >
+Answer --> Question: references >
+Vote --> User: references >
+VoteType <|-- UPVOTE: implements
+VoteType <|-- DOWNVOTE: implements
+ReputationType <|-- QuestionUpvote: uses >
+ReputationType <|-- QuestionDownvote: uses >
+ReputationType <|-- AnswerUpvote: uses >
+ReputationType <|-- AnswerDownvote: uses >
+ReputationType <|-- AnswerAccepted: uses >
+
+@enduml
+```

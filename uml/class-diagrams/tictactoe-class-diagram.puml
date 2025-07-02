@@ -1,0 +1,100 @@
+\```plantuml
+@startuml
+
+title TicTacToe - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Player {
+    - final String name
+    - final Symbol symbol
+    + Player(String name, Symbol symbol)
+    + String getName()
+    + Symbol getSymbol()
+}
+
+class TicTacToeGame {
+    - final Board board
+    - final Player[] players
+    - int currentPlayerIndex
+    - GameStatus status
+    + TicTacToeGame(Player player1, Player player2, int size)
+    + synchronized boolean playMove(int row, int col)
+    + synchronized void reset()
+    + GameStatus getStatus()
+    + void printBoard()
+}
+
+class Board {
+    - final Cell[][] grid
+    - final int movesCount
+    - final int size
+    - List<WinningStrategy> winningStrategies
+    + Board(int size, List<WinningStrategy> winningStrategies)
+    + boolean isValidMove(int row, int col)
+    + void placeMove(int row, int col, Symbol symbol)
+    + boolean checkWin(Symbol symbol)
+    + boolean isFull()
+    + void reset()
+    + void print()
+    + Symbol getSymbol(int row, int col)
+    + int getSize()
+}
+
+class Cell {
+    - Symbol symbol
+    + Cell()
+    + Symbol getSymbol()
+    + void setSymbol(Symbol symbol)
+    + boolean isEmpty()
+}
+
+interface WinningStrategy {
+    + boolean checkWinner(Board board, Symbol symbol)
+}
+
+class RowWinningStrategy {
+    + boolean checkWinner(Board board, Symbol symbol)
+}
+
+class DiagonalWinningStrategy {
+    + boolean checkWinner(Board board, Symbol symbol)
+}
+
+class ColumnWinningStrategy {
+    + boolean checkWinner(Board board, Symbol symbol)
+}
+
+enum Symbol {
+    X,
+    O,
+    EMPTY
+}
+
+enum GameStatus {
+    IN_PROGRESS,
+    WIN,
+    DRAW
+}
+
+Player --> Symbol: uses >
+TicTacToeGame --> Player: plays with >
+TicTacToeGame --> Board: manages >
+Board --> Cell: contains >
+Board --> WinningStrategy: uses >
+WinningStrategy <|.. RowWinningStrategy: implements
+WinningStrategy <|.. DiagonalWinningStrategy: implements
+WinningStrategy <|.. ColumnWinningStrategy: implements
+
+@enduml
+```

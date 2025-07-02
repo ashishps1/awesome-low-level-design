@@ -1,0 +1,134 @@
+```plantuml
+@startuml
+
+title Online Shopping Service - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class OnlineShoppingService {
+    - static OnlineShoppingService instance
+    - final Map<String, User> users
+    - final Map<String, Product> products
+    - final Map<String, Order> orders
+    + static synchronized OnlineShoppingService getInstance()
+    + User registerUser(String name, String email, String password)
+    + User getUser(String userId)
+    + Product addProduct(String name, String description, double price, int stock)
+    + void addToCart(String userId, String productId, int quantity)
+    + Cart getUserCart(String userId)
+    + Product getProduct(String productId)
+    + List<Product> searchProducts(String keyword)
+    + synchronized Order placeOrder(String userId, Payment payment)
+    + synchronized void cancelOrder(String orderId)
+    + Order getOrder(String orderId)
+}
+
+class User {
+    - final String id
+    - final String name
+    - final String email
+    - final String password
+    - final Cart cart
+    - final List<Order> orders
+    + User(String name, String email, String password)
+    + void addOrder(Order order)
+    + String getId()
+    + String getName()
+    + String getEmail()
+    + String getPassword()
+    + Cart getCart()
+    + List<Order> getOrders()
+}
+
+class Order {
+    - final String id
+    - final User user
+    - final List<OrderItem> items
+    - final double totalAmount
+    - OrderStatus status
+    + Order(User user, List<OrderItem> items)
+    + void cancel()
+    + void setStatus(OrderStatus status)
+    + String getId()
+    + User getUser()
+    + List<OrderItem> getItems()
+    + double getTotalAmount()
+    + OrderStatus getStatus()
+}
+
+class OrderItem {
+    - final Product product
+    - final int quantity
+    + OrderItem(Product product, int quantity)
+    + Product getProduct()
+    + int getQuantity()
+}
+
+class Product {
+    - final String id
+    - final String name
+    - final String description
+    - final double price
+    - int stock
+    + Product(String name, String description, double price, int stock)
+    + synchronized void increaseStock(int quantity)
+    + synchronized void decreaseStock(int quantity)
+    + synchronized void updateQuantity(int quantity)
+    + synchronized boolean isAvailable(int quantity)
+    + String getId()
+    + String getName()
+    + String getDescription()
+    + double getPrice()
+    + int getStock()
+}
+
+class Cart {
+    - final Map<Product, Integer> items
+    + Cart()
+    + void add(Product product, int quantity)
+    + Map<Product, Integer> getItems()
+    + void clear()
+}
+
+enum OrderStatus {
+    PENDING,
+    PLACED,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED
+}
+
+interface Payment {
+    + boolean processPayment(double amount)
+}
+
+class CreditCardPayment {
+    + boolean processPayment(double amount)
+}
+
+class UPIPayment {
+    + boolean processPayment(double amount)
+}
+
+OnlineShoppingService --> User: manages >
+OnlineShoppingService --> Product: manages >
+OnlineShoppingService --> Order: manages >
+User --> Order: places >
+User --> Cart: owns >
+Order --> OrderItem: includes >
+OrderItem --> Product: references >
+Payment <|.. CreditCardPayment: implements
+Payment <|.. UPIPayment: implements
+
+@enduml
+```

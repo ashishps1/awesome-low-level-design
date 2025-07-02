@@ -1,0 +1,111 @@
+```plantuml
+@startuml
+
+title Online Learning Platform - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class OnlineLearningPlatform {
+}
+
+class Payment {
+    - String paymentId
+    - String userId
+    - double amount
+    - String paymentMethod
+    - Date paymentDate
+    + Payment(String paymentId, String userId, double amount, String paymentMethod, Date paymentDate)
+}
+
+class User {
+    - String userId
+    - String name
+    - String email
+    - String password
+    - String type
+    - List<Course> enrolledCourses
+    - List<Payment> payments
+    - List<Result> results
+    + User(String userId, String name, String email, String password, String type)
+    + void enrollInCourse(Course course)
+    + void makePayment(Payment payment)
+    + void addResult(Result result)
+    + String getUserId()
+    + String getName()
+}
+
+class Course {
+    - String courseId
+    - String name
+    - String type
+    - String description
+    - List<User> students
+    - List<CourseContent> courseContents
+    - List<Quiz> quizzes
+    + Course(String courseId, String name, String type, String description)
+    + void addStudent(User user)
+    + void addContent(CourseContent content)
+    + void addQuiz(Quiz quiz)
+    + String getCourseId()
+    + String getName()
+}
+
+class Quiz {
+    - String quizId
+    - String courseId
+    - String name
+    - String description
+    - int marks
+    + Quiz(String quizId, String courseId, String name, String description, int marks)
+    + String getQuizId()
+}
+
+class Result {
+    - String resultId
+    - String userId
+    - String courseId
+    - String quizId
+    - int score
+    + Result(String resultId, String userId, String courseId, String quizId, int score)
+}
+
+class CourseContent {
+    - String contentId
+    - String courseId
+    - String type
+    + CourseContent(String contentId, String courseId, String type)
+}
+
+class Enrollment {
+    - String enrollmentId
+    - String userId
+    - String courseId
+    - Date enrollmentDate
+    - String completionStatus
+    + Enrollment(String enrollmentId, String userId, String courseId, Date enrollmentDate, String completionStatus)
+}
+
+OnlineLearningPlatform --> User: creates >
+OnlineLearningPlatform --> Course: creates >
+User --> Course: enrolls >
+User --> Payment: makes >
+User --> Result: records >
+Course --> User: has >
+Course --> Quiz: includes >
+Course --> CourseContent: contains >
+Quiz --> Course: belongs to >
+Result --> Quiz: evaluates >
+Result --> User: belongs to >
+
+@enduml
+```

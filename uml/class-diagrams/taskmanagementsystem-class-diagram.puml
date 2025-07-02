@@ -1,0 +1,136 @@
+```plantuml
+@startuml
+
+title Task Management System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class TaskList {
+    - final String id
+    - final String name
+    - final List<Task> tasks
+    + TaskList(String name)
+    + void addTask(Task task)
+    + List<Task> getTasks()
+    + String getId()
+    + String getName()
+}
+
+class User {
+    - final String id
+    - final String name
+    - final String email
+    + User(String name, String email)
+    + String getId()
+    + String getEmail()
+    + String getName()
+}
+
+class Task {
+    - final String id
+    - String title
+    - String description
+    - Date dueDate
+    - TaskStatus status
+    - TaskPriority priority
+    - final User createdBy
+    - User assignedTo
+    - final List<Comment> comments
+    - final List<Task> subtasks
+    - final List<ActivityLog> history
+    + Task(String title, String description, Date dueDate, TaskPriority priority, User createdBy)
+    + synchronized void assignUser(User user)
+    + synchronized void updateStatus(TaskStatus status)
+    + synchronized void updatePriority(TaskPriority priority)
+    + synchronized void addComment(Comment comment)
+    + synchronized void addSubtask(Task subtask)
+    + String getId()
+    + String getTitle()
+    + String getDescription()
+    + TaskPriority getPriority()
+    + Date getDueDate()
+    + TaskStatus getStatus()
+    + User getAssignedTo()
+    + void setTitle(String title)
+    + void setDescription(String description)
+    + void setStatus(TaskStatus status)
+}
+
+class ActivityLog {
+    - final String logId
+    - final String action
+    - final User performedBy
+    - final Date timestamp
+    + ActivityLog(String action, User performedBy)
+}
+
+class Comment {
+    - final String id
+    - final String content
+    - final User author
+    - final Date timestamp
+    + Comment(String content, User author)
+    + User getAuthor()
+}
+
+class TaskManagementSystem {
+    - static TaskManagementSystem instance
+    - final Map<String, User> users
+    - final Map<String, Task> tasks
+    - final Map<String, TaskList> taskLists
+    + static synchronized TaskManagementSystem getInstance()
+    + User createUser(String name, String email)
+    + TaskList createTaskList(String listName)
+    + Task createTask(String listId, String title, String description, Date dueDate, TaskPriority priority, String createdByUserId)
+    + Task getTaskById(String taskId)
+    + void updateTaskStatus(String taskId, TaskStatus status)
+    + void updateTaskPriority(String taskId, TaskPriority priority)
+    + void assignTask(String taskId, String userId)
+    + void addComment(String taskId, String commentText, User author)
+    + List<Task> listTasksByUser(String userId)
+    + List<Task> listTasksByStatus(TaskStatus status)
+    + void deleteTask(String taskId)
+    + List<Task> searchTasks(String keyword, TaskSortingStrategy sortingStrategy)
+}
+
+enum TaskStatus {
+    TODO,
+    IN_PROGRESS,
+    DONE,
+    BLOCKED
+}
+
+enum TaskPriority {
+    LOW, MEDIUM, HIGH, CRITICAL
+}
+
+TaskManagementSystem --> User: manages >
+TaskManagementSystem --> Task: manages >
+TaskManagementSystem --> TaskList: manages >
+TaskList --> Task: contains >
+Task --> User: createdBy >
+Task --> User: assignedTo >
+Task --> Comment: has >
+Task --> ActivityLog: records >
+ActivityLog --> User: performedBy >
+Comment --> User: author >
+
+interface TaskSortingStrategy {
+    + void sort(List<Task> tasks)
+}
+
+TaskSortingStrategy <|.. SortByDueDate: implements
+TaskSortingStrategy <|.. SortByPriority: implements
+
+@enduml
+```

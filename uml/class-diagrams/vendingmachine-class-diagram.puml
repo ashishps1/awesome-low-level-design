@@ -1,0 +1,118 @@
+```plantuml
+@startuml
+
+title Vending Machine - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class VendingMachine {
+    - static VendingMachine INSTANCE
+    - final Inventory inventory
+    - State currentState
+    - int balance
+    - String selectedItemCode
+    + static VendingMachine getInstance()
+    + void insertCoin(Coin coin)
+    + Item addItem(String code, String name, int price, int quantity)
+    + void selectItem(String code)
+    + void dispense()
+    + void dispenseItem()
+    + void refundBalance()
+    + void reset()
+    + void addBalance(int value)
+    + Item getSelectedItem()
+    + void setSelectedItemCode(String code)
+    + void setState(State state)
+    + Inventory getInventory()
+    + int getBalance()
+}
+
+class Inventory {
+    - final Map<String, Item> itemMap
+    - final Map<String, Integer> stockMap
+    + void addItem(String code, Item item, int quantity)
+    + Item getItem(String code)
+    + boolean isAvailable(String code)
+    + void reduceStock(String code)
+}
+
+class Item {
+    - String code
+    - String name
+    - int price
+    + Item(String code, String name, int price)
+    + String getName()
+    + int getPrice()
+}
+
+enum Coin {
+    PENNY(1),
+    NICKEL(5),
+    DIME(10),
+    QUARTER(25);
+    - final int value
+    + int getValue()
+}
+
+abstract class State {
+    - VendingMachine machine
+    + State(VendingMachine machine)
+    + abstract void insertCoin(Coin coin)
+    + abstract void selectItem(String code)
+    + abstract void dispense()
+    + abstract void refund()
+}
+
+class IdleState {
+    + IdleState(VendingMachine machine)
+    + void insertCoin(Coin coin)
+    + void selectItem(String code)
+    + void dispense()
+    + void refund()
+}
+
+class ItemSelectedState {
+    + ItemSelectedState(VendingMachine machine)
+    + void insertCoin(Coin coin)
+    + void selectItem(String code)
+    + void dispense()
+    + void refund()
+}
+
+class HasMoneyState {
+    + HasMoneyState(VendingMachine machine)
+    + void insertCoin(Coin coin)
+    + void selectItem(String code)
+    + void dispense()
+    + void refund()
+}
+
+class DispensingState {
+    + DispensingState(VendingMachine machine)
+    + void insertCoin(Coin coin)
+    + void selectItem(String code)
+    + void dispense()
+    + void refund()
+}
+
+VendingMachine --> Inventory: uses >
+VendingMachine --> Item: manages >
+Inventory --> Item: manages >
+VendingMachine --> State: uses >
+State <|-- IdleState
+State <|-- ItemSelectedState
+State <|-- HasMoneyState
+State <|-- DispensingState
+
+@enduml
+```

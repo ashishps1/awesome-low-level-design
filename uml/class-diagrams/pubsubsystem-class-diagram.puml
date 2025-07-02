@@ -1,0 +1,83 @@
+```plantuml
+@startuml
+
+title Pubsubsystem - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Message {
+    - final String content
+    + Message(String content)
+    + String getContent()
+    + String toString()
+}
+
+class Broker {
+    - final Map<String, Topic> topics
+    + void createTopic(String name)
+    + void subscribe(String topicName, Subscriber subscriber)
+    + void unsubscribe(String topicName, Subscriber subscriber)
+    + void publish(String topicName, Message message)
+}
+
+class Topic {
+    - final String name
+    - final Set<Subscriber> subscribers
+    + Topic(String name)
+    + String getName()
+    + void addSubscriber(Subscriber subscriber)
+    + void removeSubscriber(Subscriber subscriber)
+    + void broadcast(Message message)
+}
+
+class Dispatcher {
+    - static final ExecutorService executor
+    + static void dispatch(Subscriber subscriber, Message message)
+    + static void shutdown()
+}
+
+class Publisher {
+    - final String id
+    - final Broker broker
+    + Publisher(String id, Broker broker)
+    + void publish(String topic, String payload)
+    + String getId()
+}
+
+interface Subscriber {
+    + void consume(Message message)
+}
+
+class LoggingSubscriber {
+    - final String name
+    + LoggingSubscriber(String name)
+    + void consume(Message message)
+}
+
+class PrintSubscriber {
+    - final String name
+    + PrintSubscriber(String name)
+    + void consume(Message message)
+}
+
+Broker --> Topic: manages >
+Topic --> Subscriber: uses >
+Broker --> Publisher: manages >
+Publisher --> Message: creates >
+Dispatcher --> Subscriber: uses >
+Dispatcher --> Message: uses >
+Subscriber <|.. LoggingSubscriber: implements
+Subscriber <|.. PrintSubscriber: implements
+
+@enduml
+```

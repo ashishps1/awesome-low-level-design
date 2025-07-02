@@ -1,0 +1,131 @@
+```plantuml
+@startuml
+
+title Social Networking Service - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Post {
+    - final String id
+    - final User author
+    - final String content
+    - final Timestamp timestamp
+    - final Map<String, Like> userIdLikeMap
+    - final List<Comment> comments
+    + Post(User author, String content)
+    + synchronized void like(User user)
+    + void comment(User user, String text)
+    + int getLikeCount()
+    + List<Like> getLikes()
+    + int getCommentCount()
+    + List<Comment> getComments()
+    + String getId()
+    + User getAuthor()
+    + String getContent()
+    + Timestamp getTimestamp()
+}
+
+class User {
+    - final String id
+    - final String name
+    - final String email
+    - final String password
+    - final String bio
+    - final Set<User> friends
+    - final Map<String, Post> postsMap
+    - final List<FriendRequest> friendRequests
+    - final List<Notification> notifications
+    + User(String name, String email, String password, String bio)
+    + void addFriend(User user)
+    + boolean isFriend(User user)
+    + void addPost(Post post)
+    + Post getPost(String postId)
+    + List<Post> getPosts()
+    + void receiveRequest(FriendRequest req)
+    + FriendRequest getRequestFrom(User user)
+    + void addNotification(Notification notification)
+    + List<Notification> getNotifications()
+    + String getId()
+    + String getName()
+    + String getEmail()
+    + String getPassword()
+    + String getBio()
+    + List<User> getFriends()
+}
+
+class Like {
+    - final User user
+    - final Timestamp timestamp
+    + Like(User user)
+}
+
+class Comment {
+    - final String id
+    - final User user
+    - final String text
+    - final Timestamp timestamp
+    + Comment(User user, String text)
+    + String getId()
+    + User getUser()
+    + String getText()
+    + Timestamp getTimestamp()
+}
+
+class Notification {
+    - final String id
+    - final User user
+    - final NotificationType type
+    - final String content
+    - final Timestamp timestamp
+    + Notification(User user, NotificationType type, String content)
+    + String getId()
+    + String getUserId()
+    + NotificationType getType()
+    + String getContent()
+    + Timestamp getTimestamp()
+}
+
+class FriendRequest {
+    - final User from
+    - final User to
+    - FriendRequestStatus status
+    + FriendRequest(User from, User to)
+    + void accept()
+    + void reject()
+    + User getFrom()
+    + User getTo()
+    + FriendRequestStatus getStatus()
+}
+
+enum NotificationType {
+    FRIEND_REQUEST,
+    FRIEND_REQUEST_ACCEPTED,
+    LIKE,
+    COMMENT,
+    MENTION
+}
+
+enum FriendRequestStatus {
+    PENDING, ACCEPTED, REJECTED
+}
+
+User --> Post: creates >
+Post --> Like: manages >
+Post --> Comment: manages >
+User --> FriendRequest: handles >
+User --> Notification: receives >
+FriendRequest --> User: from >
+FriendRequest --> User: to >
+
+@enduml
+```

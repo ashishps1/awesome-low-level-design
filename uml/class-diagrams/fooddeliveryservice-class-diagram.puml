@@ -1,0 +1,123 @@
+```plantuml
+@startuml
+
+title Food Delivery Service - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class FoodDeliveryService {
+    - static FoodDeliveryService instance
+    - final Map<String, Customer> customers
+    - final Map<String, Restaurant> restaurants
+    - final Map<String, Order> orders
+    - final Map<String, DeliveryAgent> deliveryAgents
+    + static synchronized FoodDeliveryService getInstance()
+    + Customer registerCustomer(String name, String email, String phone)
+    + Restaurant registerRestaurant(String name, String address)
+    + DeliveryAgent registerDeliveryAgent(String name, String phone)
+    + List<String> getAvailableRestaurants()
+    + List<String> getRestaurantMenu(String restaurantId)
+    + void addMenuItem(String restaurantId, String name, String description, double price)
+    + Order placeOrder(String userId, String restaurantId, List<String> itemNames)
+    + void updateOrderStatus(String orderId, OrderStatus status)
+    + void cancelOrder(String orderId)
+    + synchronized void assignDeliveryAgent(String orderId)
+}
+
+class Customer {
+    - final String id
+    - final String name
+    - final String email
+    - final String phone
+    + Customer(String name, String email, String phone)
+    + String getId()
+}
+
+class Restaurant {
+    - final String id
+    - final String name
+    - final String address
+    - final List<MenuItem> menu
+    + Restaurant(String id, String name, String address, List<MenuItem> menu)
+    + Restaurant(String name, String address)
+    + void addMenuItem(MenuItem item)
+    + void removeMenuItem(MenuItem item)
+    + String getId()
+    + String getName()
+    + List<MenuItem> getMenu()
+}
+
+class MenuItem {
+    - final String id
+    - final String name
+    - final String description
+    - final double price
+    - boolean available
+    + MenuItem(String name, String description, double price)
+    + void setAvailable(boolean available)
+    + String getName()
+    + String getMenuItem()
+}
+
+class DeliveryAgent {
+    - final String id
+    - final String name
+    - final String phone
+    - boolean available
+    + DeliveryAgent(String id, String name, String phone)
+    + DeliveryAgent(String name, String phone)
+    + void setAvailable(boolean available)
+    + synchronized boolean isAvailable()
+    + synchronized void assign()
+    + synchronized void release()
+    + String getId()
+    + String getName()
+}
+
+class Order {
+    - final String id
+    - final Customer customer
+    - final Restaurant restaurant
+    - final List<MenuItem> orderItems
+    - OrderStatus status
+    - DeliveryAgent deliveryAgent
+    + Order(String id, Customer customer, Restaurant restaurant)
+    + Order(Customer customer, Restaurant restaurant, List<MenuItem> items)
+    + void addItem(MenuItem item)
+    + void removeItem(MenuItem item)
+    + void updateStatus(OrderStatus status)
+    + void assignDeliveryAgent(DeliveryAgent agent)
+    + String getId()
+    + OrderStatus getStatus()
+    + DeliveryAgent getDeliveryAgent()
+}
+
+enum OrderStatus {
+    PENDING,
+    CONFIRMED,
+    PREPARING,
+    OUT_FOR_DELIVERY,
+    DELIVERED,
+    CANCELLED
+}
+
+FoodDeliveryService --> Customer: manages >
+FoodDeliveryService --> Restaurant: manages >
+FoodDeliveryService --> Order: manages >
+Restaurant --> MenuItem: uses >
+Order --> Customer: references >
+Order --> Restaurant: references >
+Order --> DeliveryAgent: references >
+
+@enduml
+```

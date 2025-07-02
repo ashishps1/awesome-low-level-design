@@ -1,0 +1,73 @@
+```plantuml
+@startuml
+
+title Coffee Vending Machine - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class CoffeeVendingMachine {
+    - static final CoffeeVendingMachine instance
+    - final Map<String, CoffeeRecipe> recipes
+    - final IngredientStore ingredientStore
+    - final Dispenser dispenser
+    - final PaymentProcessor paymentProcessor
+    + static CoffeeVendingMachine getInstance()
+    + void displayMenu()
+    + synchronized CoffeeRecipe selectCoffee(String coffeeName)
+    + synchronized void dispenseCoffee(CoffeeRecipe coffeeRecipe, Payment payment)
+    + void refillIngredient(String ingredient, int quantity)
+    + void showIngredients()
+}
+
+class CoffeeRecipe {
+    - final String name
+    - final double price
+    - final Map<String, Integer> recipe
+    + CoffeeRecipe(String name, double price, Map<String, Integer> recipe)
+    + String getName()
+    + double getPrice()
+    + Map<String, Integer> getRecipe()
+}
+
+class IngredientStore {
+    - final Map<String, Integer> inventory
+    + synchronized void refill(String ingredient, int quantity)
+    + boolean hasEnoughIngredient(Map<String, Integer> required)
+    + synchronized void consume(Map<String, Integer> required)
+    + synchronized int getLevel(String ingredient)
+    + synchronized Map<String, Integer> getAllIngredients()
+}
+
+class Payment {
+    - final double amount
+    + Payment(double amount)
+    + double getAmount()
+}
+
+class PaymentProcessor {
+    + double process(double price, double paid)
+}
+
+class Dispenser {
+    + void prepareDrink(CoffeeRecipe recipe)
+}
+
+CoffeeVendingMachine --> CoffeeRecipe: manages >
+CoffeeVendingMachine --> IngredientStore: uses >
+CoffeeVendingMachine --> Dispenser: uses >
+CoffeeVendingMachine --> PaymentProcessor: uses >
+CoffeeRecipe --> IngredientStore: uses >
+Payment "1" --> "1" CoffeeRecipe: references >
+
+@enduml
+```

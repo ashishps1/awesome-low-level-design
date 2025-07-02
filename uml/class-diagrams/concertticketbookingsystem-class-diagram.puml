@@ -1,0 +1,113 @@
+```plantuml
+@startuml
+
+title Concert Ticket Booking System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class ConcertTicketBookingSystem {
+    - static ConcertTicketBookingSystem instance
+    - final Map<String, Concert> concerts
+    - final Map<String, Booking> bookings
+    - final Object lock
+    + static synchronized ConcertTicketBookingSystem getInstance()
+    + void addConcert(Concert concert)
+    + Concert getConcert(String concertId)
+    + List<Concert> searchConcerts(String artist, String venue, LocalDateTime dateTime)
+    + Booking bookTickets(User user, Concert concert, List<Seat> seats)
+    + void cancelBooking(String bookingId)
+}
+
+class Concert {
+    - final String id
+    - final String artist
+    - final String venue
+    - final LocalDateTime dateTime
+    - final List<Seat> seats
+    + Concert(String id, String artist, String venue, LocalDateTime dateTime, List<Seat> seats)
+    + String getId()
+    + String getArtist()
+    + String getVenue()
+    + LocalDateTime getDateTime()
+    + List<Seat> getSeats()
+}
+
+class Booking {
+    - final String id
+    - final User user
+    - final Concert concert
+    - final List<Seat> seats
+    - final double totalPrice
+    - BookingStatus status
+    + Booking(String id, User user, Concert concert, List<Seat> seats)
+    + void confirmBooking()
+    + void cancelBooking()
+    + String getId()
+    + User getUser()
+    + Concert getConcert()
+    + List<Seat> getSeats()
+    + double getTotalPrice()
+    + BookingStatus getStatus()
+}
+
+class User {
+    - final String id
+    - final String name
+    - final String email
+    + User(String id, String name, String email)
+}
+
+class Seat {
+    - final String id
+    - final String seatNumber
+    - final SeatType seatType
+    - final double price
+    - SeatStatus status
+    + Seat(String id, String seatNumber, SeatType seatType, double price)
+    + synchronized void book()
+    + synchronized void release()
+    + double getPrice()
+    + String getId()
+    + String getSeatNumber()
+    + SeatType getSeatType()
+    + SeatStatus getStatus()
+}
+
+enum SeatType {
+    REGULAR,
+    PREMIUM,
+    VIP
+}
+
+enum SeatStatus {
+    AVAILABLE,
+    BOOKED,
+    RESERVED
+}
+
+enum BookingStatus {
+    PENDING,
+    CONFIRMED,
+    CANCELLED
+}
+
+ConcertTicketBookingSystem --> Concert: manages >
+ConcertTicketBookingSystem --> Booking: manages >
+Concert --> Seat: contains >
+Booking --> User: references >
+Booking --> Concert: references >
+Seat --> SeatType: uses >
+Seat --> SeatStatus: uses >
+
+@enduml
+```

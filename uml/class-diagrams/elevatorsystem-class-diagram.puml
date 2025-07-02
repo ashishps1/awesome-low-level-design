@@ -1,0 +1,58 @@
+```plantuml
+@startuml
+
+title Elevator System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Elevator {
+    - final int id
+    - final int capacity
+    - int currentFloor
+    - Direction direction
+    - final List<Request> requests
+    + Elevator(int id, int capacity)
+    + synchronized void addRequest(Request request)
+    + synchronized Request getNextRequest()
+    + synchronized void processRequests()
+    - void processRequest(Request request)
+    + int getCurrentFloor()
+    + Direction getDirection()
+}
+
+class ElevatorController {
+    - final List<Elevator> elevators
+    + ElevatorController(int numElevators, int capacity)
+    + void requestElevator(int sourceFloor, int destinationFloor)
+    - Elevator findOptimalElevator(int sourceFloor, int destinationFloor)
+}
+
+class Request {
+    - final int sourceFloor
+    - final int destinationFloor
+    + Request(int sourceFloor, int destinationFloor)
+    + int getSourceFloor()
+    + int getDestinationFloor()
+}
+
+enum Direction {
+    UP,
+    DOWN
+}
+
+ElevatorController --> Elevator: controls >
+Elevator --> Request: handles >
+Request --> Direction: uses >
+
+@enduml
+```

@@ -1,0 +1,128 @@
+```plantuml
+@startuml
+
+title Digital Wallet Service - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class DigitalWallet {
+    - static DigitalWallet instance
+    - final Map<String, User> users
+    - final Map<String, Account> accounts
+    - final Map<String, PaymentMethod> paymentMethods
+    + static synchronized DigitalWallet getInstance()
+    + void createUser(User user)
+    + User getUser(String userId)
+    + void createAccount(Account account)
+    + Account getAccount(String accountId)
+    + void addPaymentMethod(PaymentMethod paymentMethod)
+    + PaymentMethod getPaymentMethod(String paymentMethodId)
+    + synchronized void transferFunds(Account sourceAccount, Account destinationAccount, BigDecimal amount, Currency currency)
+    + List<Transaction> getTransactionHistory(Account account)
+    - String generateTransactionId()
+}
+
+class User {
+    - final String id
+    - final String name
+    - final String email
+    - final String password
+    - final List<Account> accounts
+    + User(String id, String name, String email, String password)
+    + void addAccount(Account account)
+    + void removeAccount(Account account)
+    + String getId()
+}
+
+class Account {
+    - final String id
+    - final User user
+    - final String accountNumber
+    - final Currency currency
+    - BigDecimal balance
+    - final List<Transaction> transactions
+    + Account(String id, User user, String accountNumber, Currency currency)
+    + synchronized void deposit(BigDecimal amount)
+    + synchronized void withdraw(BigDecimal amount)
+    + synchronized void addTransaction(Transaction transaction)
+    + String getId()
+    + User getUser()
+    + String getAccountNumber()
+    + Currency getCurrency()
+    + BigDecimal getBalance()
+    + List<Transaction> getTransactions()
+}
+
+class PaymentMethod {
+    # final String id
+    # final User user
+    + PaymentMethod(String id, User user)
+    + abstract boolean processPayment(BigDecimal amount, Currency currency)
+    + String getId()
+    + User getUser()
+}
+
+class CreditCard {
+    - final String cardNumber
+    - final String expirationDate
+    - final String cvv
+    + CreditCard(String id, User user, String cardNumber, String expirationDate, String cvv)
+    + boolean processPayment(BigDecimal amount, Currency currency)
+}
+
+class BankAccount {
+    - final String accountNumber
+    - final String routingNumber
+    + BankAccount(String id, User user, String accountNumber, String routingNumber)
+    + boolean processPayment(BigDecimal amount, Currency currency)
+}
+
+class Transaction {
+    - final String id
+    - final Account sourceAccount
+    - final Account destinationAccount
+    - final BigDecimal amount
+    - final Currency currency
+    - final LocalDateTime timestamp
+    + Transaction(String id, Account sourceAccount, Account destinationAccount, BigDecimal amount, Currency currency)
+    + String getId()
+    + Account getSourceAccount()
+    + Account getDestinationAccount()
+    + BigDecimal getAmount()
+    + Currency getCurrency()
+    + LocalDateTime getTimestamp()
+}
+
+class InsufficientFundsException {
+    + InsufficientFundsException(String message)
+}
+
+enum Currency {
+    USD,
+    EUR,
+    GBP,
+    JPY
+}
+
+PaymentMethod <|-- CreditCard: implements
+PaymentMethod <|-- BankAccount: implements
+DigitalWallet --> User: manages >
+DigitalWallet --> Account: manages >
+DigitalWallet --> PaymentMethod: manages >
+Account --> User: belongs to >
+Transaction --> Account: involves >
+Transaction --> Currency: is in >
+Account --> Transaction: records >
+
+@enduml
+```

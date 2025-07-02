@@ -1,0 +1,135 @@
+```plantuml
+title Movie Ticket Booking System - Class Diagram
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Show {
+    - final String id
+    - final Movie movie
+    - final Theater theater
+    - final LocalDateTime startTime
+    - final LocalDateTime endTime
+    - final Map<String, Seat> seats
+    + Show(String id, Movie movie, Theater theater, LocalDateTime startTime, LocalDateTime endTime, Map<String, Seat> seats)
+    + String getId()
+    + Movie getMovie()
+    + Theater getTheater()
+    + LocalDateTime getStartTime()
+    + LocalDateTime getEndTime()
+    + Map<String, Seat> getSeats()
+}
+
+class Theater {
+    - final String id
+    - final String name
+    - final String location
+    - final List<Show> shows
+    + Theater(String id, String name, String location, List<Show> shows)
+}
+
+class User {
+    - final String id
+    - final String name
+    - final String email
+    + User(String id, String name, String email)
+}
+
+class MovieTicketBookingSystem {
+    - static MovieTicketBookingSystem instance
+    - final List<Movie> movies
+    - final List<Theater> theaters
+    - final Map<String, Show> shows
+    - final Map<String, Booking> bookings
+    - static final String BOOKING_ID_PREFIX
+    - static final AtomicLong bookingCounter
+    - MovieTicketBookingSystem()
+    + static synchronized MovieTicketBookingSystem getInstance()
+    + void addMovie(Movie movie)
+    + void addTheater(Theater theater)
+    + void addShow(Show show)
+    + List<Movie> getMovies()
+    + List<Theater> getTheaters()
+    + Show getShow(String showId)
+    + synchronized Booking bookTickets(User user, Show show, List<Seat> selectedSeats)
+    + synchronized void confirmBooking(String bookingId)
+    + synchronized void cancelBooking(String bookingId)
+}
+
+class Movie {
+    - final String id
+    - final String title
+    - final String description
+    - final int durationInMinutes
+    + Movie(String id, String title, String description, int durationInMinutes)
+    + int getDurationInMinutes()
+}
+
+class Booking {
+    - final String id
+    - final User user
+    - final Show show
+    - final List<Seat> seats
+    - final double totalPrice
+    - BookingStatus status
+    + Booking(String id, User user, Show show, List<Seat> seats, double totalPrice, BookingStatus status)
+    + void setStatus(BookingStatus status)
+    + String getId()
+    + User getUser()
+    + Show getShow()
+    + List<Seat> getSeats()
+    + double getTotalPrice()
+    + BookingStatus getStatus()
+}
+
+enum BookingStatus {
+    PENDING,
+    CONFIRMED,
+    CANCELLED
+}
+
+class Seat {
+    - final String id
+    - final int row
+    - final int column
+    - final SeatType type
+    - final double price
+    - SeatStatus status
+    + Seat(String id, int row, int column, SeatType type, double price, SeatStatus status)
+    + void setStatus(SeatStatus status)
+    + String getId()
+    + int getRow()
+    + int getColumn()
+    + SeatType getType()
+    + double getPrice()
+    + SeatStatus getStatus()
+}
+
+enum SeatType {
+    NORMAL,
+    PREMIUM
+}
+
+enum SeatStatus {
+    AVAILABLE,
+    BOOKED
+}
+
+Show --> Movie: shows >
+Show --> Theater: shows >
+MovieTicketBookingSystem --> Movie: manages >
+MovieTicketBookingSystem --> Theater: manages >
+MovieTicketBookingSystem --> Show: manages >
+MovieTicketBookingSystem --> Booking: manages >
+Booking --> User: references >
+Booking --> Show: references >
+Booking --> Seat: references >
+```

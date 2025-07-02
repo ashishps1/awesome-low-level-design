@@ -1,0 +1,50 @@
+```plantuml
+@startuml
+
+title LRUCache - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Node<K, V> {
+    - K key
+    - V value
+    - Node<K, V> prev
+    - Node<K, V> next
+    + Node(K key, V value)
+}
+
+class LRUCache<K, V> {
+    - final int capacity
+    - final Map<K, Node<K, V>> map
+    - final DoublyLinkedList<K, V> dll
+    + LRUCache(int capacity)
+    + synchronized V get(K key)
+    + synchronized void put(K key, V value)
+    + synchronized void remove(K key)
+}
+
+class DoublyLinkedList<K, V> {
+    - final Node<K, V> head
+    - final Node<K, V> tail
+    + DoublyLinkedList()
+    + void addFirst(Node<K, V> node)
+    + void remove(Node<K, V> node)
+    + void moveToFront(Node<K, V> node)
+    + Node<K, V> removeLast()
+}
+
+LRUCache --> Node: uses >
+DoublyLinkedList --> Node: uses >
+
+@enduml
+```

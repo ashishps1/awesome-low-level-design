@@ -1,0 +1,131 @@
+```plantuml
+@startuml
+
+title Chess Game - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class ChessGame {
+    - final Board board
+    - Player whitePlayer
+    - Player blackPlayer
+    - Player currentPlayer
+    + ChessGame()
+    + void setPlayers(String playerWhiteName, String playerBlackName)
+    + void start()
+    - void switchTurn()
+    - boolean isGameOver()
+    - Move getPlayerMove(Player player)
+    - void displayResult()
+}
+
+class Player {
+    - final String name
+    - final Color color
+    + Player(String name, Color color)
+    + Color getColor()
+    + String getName()
+}
+
+class Board {
+    - final Cell[][] board
+    + Board()
+    + Cell getCell(int row, int col)
+    + synchronized boolean movePiece(Move move)
+    + Piece getPiece(int row, int col)
+    + void setPiece(int row, int col, Piece piece)
+    + boolean isCheckmate(Color color)
+    + boolean isStalemate(Color color)
+}
+
+class Move {
+    - final Cell start
+    - final Cell end
+    + Move(Cell start, Cell end)
+    + Cell getStart()
+    + Cell getEnd()
+}
+
+class Cell {
+    - final int row
+    - final int col
+    - Piece piece
+    + Cell(int row, int col)
+    + boolean isOccupied()
+    + Piece getPiece()
+    + void setPiece(Piece piece)
+    + int getRow()
+    + int getCol()
+}
+
+class InvalidMoveException {
+    + InvalidMoveException(final String message)
+}
+
+class Piece {
+    # Color color
+    + Piece(Color color)
+    + abstract boolean canMove(Board board, Cell from, Cell to)
+    + Color getColor()
+}
+
+class Pawn {
+    + Pawn(Color color)
+    + boolean canMove(Board board, Cell from, Cell to)
+}
+
+class Rook {
+    + Rook(Color color)
+    + boolean canMove(Board board, Cell from, Cell to)
+}
+
+class Knight {
+    + Knight(Color color)
+    + boolean canMove(Board board, Cell from, Cell to)
+}
+
+class Bishop {
+    + Bishop(Color color)
+    + boolean canMove(Board board, Cell from, Cell to)
+}
+
+class Queen {
+    + Queen(Color color)
+    + boolean canMove(Board board, Cell from, Cell to)
+}
+
+class King {
+    + King(Color color)
+    + boolean canMove(Board board, Cell from, Cell to)
+}
+
+enum Color {
+    WHITE,
+    BLACK
+}
+
+ChessGame --> Player: has >
+ChessGame --> Board: uses >
+Board --> Cell: contains >
+Board --> Piece: contains >
+Move --> Cell: references >
+Cell --> Piece: references >
+Piece <|-- Pawn
+Piece <|-- Rook
+Piece <|-- Knight
+Piece <|-- Bishop
+Piece <|-- Queen
+Piece <|-- King
+
+@enduml
+```

@@ -1,0 +1,128 @@
+```plantuml
+@startuml
+
+title Splitwise - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Expense {
+    - final String expenseId
+    - final double amount
+    - final String description
+    - final Group group
+    - final User paidBy
+    - final List<Split> splits
+    - final Date createdAt
+    + Expense(double amount, String description, User paidBy)
+    + String getExpenseId()
+    + double getAmount()
+    + Date getCreatedAt()
+    + Group getGroup()
+    + String getDescription()
+    + User getPaidBy()
+    + List<Split> getSplits()
+}
+
+class Group {
+    - final String groupId
+    - final String name
+    - final List<User> members
+    - final Date createdAt
+    + Group(String name, List<User> members)
+    + String getGroupId()
+    + String getName()
+}
+
+class Split {
+    - final User user
+    - final double amount
+    + Split(User user, double amount)
+    + User getUser()
+    + double getAmount()
+}
+
+class SplitwiseService {
+    - static SplitwiseService instance
+    - final Map<String, User> users
+    - final Map<String, Group> groups
+    - final Map<String, Expense> expenses
+    - final BalanceSheet balanceSheet
+    + static synchronized SplitwiseService getInstance()
+    + User createUser(String name, String email)
+    + Group createGroup(String name, List<String> userIds)
+    + Expense addExpense(String description, double amount, String paidByUserId, String groupId, SplitType splitType, Map<String, Double> splitData)
+    + void settle(String fromUserId, String toUserId, double amount)
+    + void printBalances()
+    + void printBalanceForUser(String userId)
+    + synchronized void deleteExpense(String expenseId)
+}
+
+class User {
+    - final String userId
+    - final String name
+    - final String email
+    + User(String name, String email)
+    + String getUserId()
+    + String getName()
+}
+
+class BalanceSheet {
+    - final Map<User, Map<User, Double>> balances
+    + BalanceSheet()
+    + void updateBalance(User paidBy, List<Split> splits)
+    + void settleBalance(User payer, User payee, double amount)
+    + void printBalances()
+    + void printBalanceForUser(User user)
+}
+
+interface SplitStrategy {
+    + List<Split> calculateSplits(Map<User, Double> splitData, double totalAmount)
+}
+
+class EqualSplitStrategy {
+    + List<Split> calculateSplits(Map<User, Double> splitData, double totalAmount)
+}
+
+class PercentageSplitStrategy {
+    + List<Split> calculateSplits(Map<User, Double> splitData, double totalAmount)
+}
+
+class ExactSplitStrategy {
+    + List<Split> calculateSplits(Map<User, Double> splitData, double totalAmount)
+}
+
+class SplitStrategyFactory {
+    + static SplitStrategy getStrategy(SplitType splitType)
+}
+
+enum SplitType {
+    EQUAL,
+    EXACT,
+    PERCENTAGE
+}
+
+Expense --> Group: belongs to >
+Expense --> User: paid by >
+Expense --> Split: consists of >
+SplitwiseService --> User: manages >
+SplitwiseService --> Group: manages >
+SplitwiseService --> Expense: manages >
+BalanceSheet --> User: tracks >
+SplitStrategyFactory --> SplitStrategy: creates >
+
+SplitStrategy <|.. EqualSplitStrategy: implements
+SplitStrategy <|.. PercentageSplitStrategy: implements
+SplitStrategy <|.. ExactSplitStrategy: implements
+
+@enduml
+```

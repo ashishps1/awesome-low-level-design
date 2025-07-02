@@ -1,0 +1,77 @@
+```plantuml
+@startuml
+
+title Course Registration System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class CourseRegistrationSystem {
+    - static CourseRegistrationSystem instance
+    - final Map<String, Course> courses
+    - final Map<String, Student> students
+    - final List<Registration> registrations
+    + static synchronized CourseRegistrationSystem getInstance()
+    + Student registerStudent(String name, String email)
+    + Course addCourse(String code, String name, String instructor, int capacity)
+    + synchronized void enroll(String studentId, String courseCode)
+    + synchronized void drop(String studentId, String courseCode)
+    + List<Course> getAvailableCourses()
+    + List<Course> searchCourses(String query)
+}
+
+class Student {
+    - final String id
+    - final String name
+    - final String email
+    - final List<Course> enrolledCourses
+    + Student(String name, String email)
+    + void enroll(Course course)
+    + void drop(Course course)
+    + String getId()
+    + String getName()
+    + String getEmail()
+    + List<Course> getEnrolledCourses()
+}
+
+class Course {
+    - final String code
+    - final String name
+    - final String instructor
+    - final int maxCapacity
+    - final Set<Student> enrolledStudents
+    + Course(String code, String name, String instructor, int maxCapacity)
+    + synchronized void enroll(Student student)
+    + synchronized void drop(Student student)
+    + boolean isCourseAvailable()
+    + String getCode()
+    + String getName()
+    + String getInstructor()
+    + int getMaxCapacity()
+    + Set<Student> getEnrolledStudents()
+}
+
+class Registration {
+    - final Student student
+    - final Course course
+    - final Timestamp registrationTime
+    + Registration(Student student, Course course, Timestamp registrationTime)
+}
+
+CourseRegistrationSystem --> Student: manages >
+CourseRegistrationSystem --> Course: manages >
+CourseRegistrationSystem --> Registration: manages >
+Course --> Student: enrolls >
+Student --> Course: enrolls >
+
+@enduml
+```

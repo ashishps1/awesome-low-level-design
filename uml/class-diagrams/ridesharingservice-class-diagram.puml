@@ -1,0 +1,144 @@
+```plantuml
+@startuml
+
+title RideSharingService - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class RideSharingService {
+    - static RideSharingService instance
+    - final Map<String, Driver> drivers
+    - final Map<String, Rider> riders
+    - final Map<String, Trip> trips
+    + static synchronized RideSharingService getInstance()
+    + Driver registerDriver(String name, String contact, String licensePlate, Location location)
+    + Rider registerRider(String name, String contact)
+    + void updateDriverLocation(String driverId, Location location)
+    + synchronized Trip requestRide(String riderId, Location from, Location to)
+    + void acceptRide(String driverId, String tripId)
+    + void startRide(String tripId)
+    + synchronized void completeRide(String tripId)
+    + void cancelRide(String tripId)
+    + void makePayment(String tripId, Payment payment)
+}
+
+class Rider extends User {
+    - Trip currentTrip
+    + Rider(String name, String contact)
+    + synchronized void assignTrip(Trip trip)
+    + synchronized void completeTrip()
+    + Trip getCurrentTrip()
+}
+
+class Driver extends User {
+    - final String licensePlate
+    - Location location
+    - DriverStatus status
+    - Trip currentTrip
+    + Driver(String name, String contact, String licensePlate, Location location)
+    + synchronized void updateLocation(Location location)
+    + synchronized boolean isAvailable()
+    + synchronized void assignTrip(Trip trip)
+    + synchronized void completeTrip()
+    + void setLocation(Location location)
+    + void setStatus(DriverStatus status)
+    + Trip getCurrentTrip()
+    + String getLicensePlate()
+    + Location getLocation()
+    + DriverStatus getStatus()
+}
+
+class Trip {
+    - final String id
+    - Driver driver
+    - final Rider rider
+    - final Location origin
+    - final Location destination
+    - TripStatus status
+    - PaymentStatus paymentStatus
+    - double fare
+    + Trip(Rider rider, Location origin, Location destination)
+    + void complete()
+    + void markPayment()
+    + void assignDriver(Driver driver)
+    + void setStatus(TripStatus status)
+    + void setFare(double fare)
+    + String getId()
+    + Rider getRider()
+    + Driver getDriver()
+    + Location getOrigin()
+    + Location getDestination()
+    + TripStatus getStatus()
+    + double getFare()
+}
+
+class Location {
+    - final double latitude
+    - final double longitude
+    + Location(double latitude, double longitude)
+    + double distanceTo(Location other)
+}
+
+abstract class User {
+    - final String id
+    - final String name
+    - final String contact
+    + User(String name, String contact)
+    + String getId()
+    + String getName()
+    + String getContact()
+}
+
+interface Payment {
+    + void processPayment(double amount)
+}
+
+class CreditCardPayment {
+    + void processPayment(double amount)
+}
+
+class UPIPayment {
+    + void processPayment(double amount)
+}
+
+enum TripStatus {
+    REQUESTED,
+    ACCEPTED,
+    ONGOING,
+    COMPLETED,
+    CANCELLED
+}
+
+enum DriverStatus {
+    AVAILABLE,
+    BUSY
+}
+
+enum PaymentStatus {
+    PENDING,
+    COMPLETED,
+    FAILED
+}
+
+RideSharingService --> Driver: manages >
+RideSharingService --> Rider: manages >
+RideSharingService --> Trip: manages >
+Trip --> Rider: references >
+Trip --> Driver: references >
+Payment <|.. CreditCardPayment: implements
+Payment <|.. UPIPayment: implements
+User <|-- Rider: inherits >
+User <|-- Driver: inherits >
+
+@enduml
+```

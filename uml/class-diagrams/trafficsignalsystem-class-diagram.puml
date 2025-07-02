@@ -1,0 +1,87 @@
+```plantuml
+@startuml
+
+title Traffic Signal System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class TrafficSignalController {
+    - final Map<Direction, TrafficLight> signals
+    - final Map<Direction, Map<String, Integer>> signalDurations
+    - final ScheduledExecutorService scheduler
+    + TrafficSignalController(Map<Direction, TrafficLight> signals, Map<Direction, Map<String, Integer>> signalDurations)
+    + void start(Direction startDirection)
+    + void scheduleStateChange(TrafficLight light, Direction direction, SignalState nextState, int delaySeconds)
+    + int getSignalDuration(Direction direction, SignalState state)
+    + Direction getNextDirection(Direction current)
+    + TrafficLight getTrafficLight(Direction direction)
+    + void manualOverride(Direction direction)
+}
+
+class Intersection {
+    - final String id
+    - final Map<Direction, TrafficLight> signals
+    - final Map<Direction, Map<String, Integer>> signalDurations
+    - final TrafficSignalController controller
+    + Intersection(String id, Map<Direction, TrafficLight> signals, Map<Direction, Map<String, Integer>> signalDurations)
+    + void start(Direction startDirection)
+    + void manualOverride(Direction direction)
+    + TrafficLight getSignal(Direction direction)
+}
+
+class TrafficLight {
+    - SignalState state
+    - final Direction direction
+    + TrafficLight(Direction direction)
+    + void setState(SignalState state)
+    + SignalState getState()
+    + Direction getDirection()
+    + void handle(TrafficSignalController controller)
+}
+
+interface SignalState {
+    + void handle(TrafficLight light, TrafficSignalController controller, Direction direction)
+    + String getName()
+}
+
+class RedState {
+    + void handle(TrafficLight light, TrafficSignalController controller, Direction direction)
+    + String getName()
+}
+
+class GreenState {
+    + void handle(TrafficLight light, TrafficSignalController controller, Direction direction)
+    + String getName()
+}
+
+class YellowState {
+    + void handle(TrafficLight light, TrafficSignalController controller, Direction direction)
+    + String getName()
+}
+
+enum Direction {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+}
+
+TrafficSignalController --> TrafficLight: manages >
+Intersection --> TrafficLight: manages >
+TrafficLight --> SignalState: uses >
+SignalState <|.. RedState: implements
+SignalState <|.. GreenState: implements
+SignalState <|.. YellowState: implements
+
+@enduml
+```

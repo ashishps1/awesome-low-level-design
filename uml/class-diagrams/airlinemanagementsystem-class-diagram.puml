@@ -1,0 +1,168 @@
+```plantuml
+@startuml
+
+title Airline Management System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Aircraft {
+    - final String tailNumber
+    - final String model
+    - final int totalSeats
+    + Aircraft(String tailNumber, String model, int totalSeats)
+    + String getTailNumber()
+}
+
+class AirlineManagementSystem {
+    - final Map<String, Flight> flights
+    - final Map<String, Aircraft> aircrafts
+    - final Map<String, Passenger> passengers
+    - final FlightSearch flightSearch
+    - final BookingManager bookingManager
+    - final PaymentProcessor paymentProcessor
+    + Passenger addPassenger(String name, String email)
+    + Aircraft addAircraft(String tailNumber, String model, int totalSeats)
+    + Flight addFlight(String source, String destination, LocalDateTime departure, LocalDateTime arrival, String aircraftNumber)
+    + List<Flight> searchFlights(String source, String destination, LocalDate date)
+    + Booking bookFlight(String flightNumber, String passengerId, Seat seat, double price)
+    + void cancelBooking(String bookingNumber)
+    + void processPayment(Payment payment)
+}
+
+class Passenger {
+    - final String id
+    - final String name
+    - final String email
+    + Passenger(String name, String email)
+    + String getId()
+}
+
+class Flight {
+    - final String flightNumber
+    - final String source
+    - final String destination
+    - final LocalDateTime departureTime
+    - final LocalDateTime arrivalTime
+    - final FlightStatus status
+    - final Aircraft aircraft
+    - final Map<String, Seat> seats
+    - final List<Seat> availableSeats
+    + Flight(String source, String destination, LocalDateTime departureTime, LocalDateTime arrivalTime, Aircraft aircraft)
+    + synchronized boolean isSeatAvailable(String seatNo)
+    + synchronized void reserveSeat(String seatNo)
+    + synchronized void releaseSeat(String seatNo)
+    + String getSource()
+    + String getDestination()
+    + LocalDateTime getDepartureTime()
+    + String getFlightNumber()
+    + LocalDateTime getArrivalTime()
+    + List<Seat> getAvailableSeats()
+}
+
+class Booking {
+    - final String id
+    - final Flight flight
+    - final Passenger passenger
+    - final Seat seat
+    - final double price
+    - BookingStatus status
+    + Booking(Flight flight, Passenger passenger, Seat seat, double price)
+    + void cancel()
+    + String getId()
+}
+
+class BookingManager {
+    - static BookingManager instance
+    - final Map<String, Booking> bookings
+    - final Object lock
+    + static synchronized BookingManager getInstance()
+    + Booking createBooking(Flight flight, Passenger passenger, Seat seat, double price)
+    + void cancelBooking(String bookingNumber)
+}
+
+class FlightSearch {
+    - final List<Flight> flights
+    + FlightSearch()
+    + void addFlight(Flight flight)
+    + List<Flight> searchFlights(String source, String destination, LocalDate date)
+}
+
+class Payment {
+    - final String paymentId
+    - final String paymentMethod
+    - final double amount
+    - PaymentStatus status
+    + Payment(String paymentId, String paymentMethod, double amount)
+    + void processPayment()
+}
+
+class PaymentProcessor {
+    - static PaymentProcessor instance
+    + static synchronized PaymentProcessor getInstance()
+    + void processPayment(Payment payment)
+}
+
+enum BookingStatus {
+    CONFIRMED,
+    CANCELLED,
+    PENDING,
+    EXPIRED
+}
+
+enum FlightStatus {
+    ON_TIME,
+    DELAYED,
+    CANCELLED
+}
+
+enum SeatStatus {
+    AVAILABLE,
+    RESERVED,
+    OCCUPIED
+}
+
+enum SeatType {
+    ECONOMY,
+    PREMIUM_ECONOMY,
+    BUSINESS,
+    FIRST_CLASS
+}
+
+class Seat {
+    - final String seatNumber
+    - final SeatType type
+    - SeatStatus status
+    + Seat(String seatNumber, SeatType type)
+    + String getSeatNumber()
+    + void reserve()
+    + void release()
+    + synchronized boolean isBooked()
+}
+
+AirlineManagementSystem --> Passenger: manages >
+AirlineManagementSystem --> Flight: manages >
+AirlineManagementSystem --> Booking: manages >
+AirlineManagementSystem --> Payment: manages >
+Flight --> Aircraft: uses >
+Booking --> Flight: references >
+Booking --> Passenger: references >
+BookingManager --> Booking: manages >
+FlightSearch --> Flight: manages >
+Seat --> SeatType: uses >
+Seat --> SeatStatus: uses >
+Payment <|.. PaymentProcessor: uses >
+BookingStatus <|.. Booking: uses >
+FlightStatus <|.. Flight: uses >
+
+@enduml
+```

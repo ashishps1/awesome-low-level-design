@@ -1,0 +1,158 @@
+```plantuml
+@startuml
+
+title Atm - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class ATM {
+    - static ATM INSTANCE
+    - final BankService bankService
+    - final CashDispenser cashDispenser
+    - static final AtomicLong transactionCounter
+    - ATMState currentState
+    - Card currentCard
+    + static ATM getInstance()
+    + void changeState(ATMState newState)
+    + void setCurrentCard(Card card)
+    + void insertCard(String cardNumber)
+    + void enterPin(String pin)
+    + void selectOperation(OperationType op, int... args)
+    + Card getCard(String cardNumber)
+    + boolean authenticate(String pin)
+    + void checkBalance()
+    + void withdrawCash(int amount)
+    + void depositCash(int amount)
+    + Card getCurrentCard()
+    + BankService getBankService()
+}
+
+class Card {
+    - final String cardNumber
+    - final String pin
+    + Card(String cardNumber, String pin)
+    + String getCardNumber()
+    + String getPin()
+}
+
+class CashDispenser {
+    - final DispenseChain chain
+    + CashDispenser(DispenseChain chain)
+    + synchronized void dispenseCash(int amount)
+    + synchronized boolean canDispenseCash(int amount)
+}
+
+class Account {
+    - final String accountNumber
+    - double balance
+    - Map<String, Card> cards
+    + Account(String accountNumber, double balance)
+    + String getAccountNumber()
+    + double getBalance()
+    + Map<String, Card> getCards()
+    + synchronized void deposit(double amount)
+    + synchronized boolean withdraw(double amount)
+}
+
+class BankService {
+    - final Map<String, Account> accounts
+    - final Map<String, Card> cards
+    - final Map<Card, Account> cardAccountMap
+    + BankService()
+    + Account createAccount(String accountNumber, double initialBalance)
+    + Card createCard(String cardNumber, String pin)
+    + boolean authenticate(Card card, String pin)
+    + Card getCard(String cardNumber)
+    + double getBalance(Card card)
+    + void withdrawMoney(Card card, double amount)
+    + void depositMoney(Card card, double amount)
+    + void linkCardToAccount(Card card, Account account)
+}
+
+class ATMState {
+    + void insertCard(ATM atm, String cardNumber)
+    + void enterPin(ATM atm, String pin)
+    + void selectOperation(ATM atm, OperationType op, int... args)
+    + void ejectCard(ATM atm)
+}
+
+class HasCardState {
+    + void insertCard(ATM atm, String cardNumber)
+    + void enterPin(ATM atm, String pin)
+    + void selectOperation(ATM atm, OperationType op, int... args)
+    + void ejectCard(ATM atm)
+}
+
+class AuthenticatedState {
+    + void insertCard(ATM atm, String cardNumber)
+    + void enterPin(ATM atm, String pin)
+    + void selectOperation(ATM atm, OperationType op, int... args)
+    + void ejectCard(ATM atm)
+}
+
+class IdleState {
+    + void insertCard(ATM atm, String cardNumber)
+    + void enterPin(ATM atm, String pin)
+    + void selectOperation(ATM atm, OperationType op, int... args)
+    + void ejectCard(ATM atm)
+}
+
+interface DispenseChain {
+    + void setNextChain(DispenseChain nextChain)
+    + void dispense(int amount)
+    + boolean canDispense(int amount)
+}
+
+abstract class NoteDispenser {
+    - DispenseChain nextChain
+    - final int noteValue
+    - int numNotes
+    + NoteDispenser(int noteValue, int numNotes)
+    + void setNextChain(DispenseChain nextChain)
+    + synchronized void dispense(int amount)
+    + synchronized boolean canDispense(int amount)
+}
+
+class NoteDispenser100 {
+    + NoteDispenser100(int numNotes)
+}
+
+class NoteDispenser50 {
+    + NoteDispenser50(int numNotes)
+}
+
+class NoteDispenser20 {
+    + NoteDispenser20(int numNotes)
+}
+
+enum OperationType {
+    CHECK_BALANCE,
+    WITHDRAW_CASH,
+    DEPOSIT_CASH
+}
+
+ATM --> BankService: uses >
+ATM --> CashDispenser: contains >
+ATM --> Card: uses >
+ATMState <|.. HasCardState: implements
+ATMState <|.. AuthenticatedState: implements
+ATMState <|.. IdleState: implements
+CashDispenser --> DispenseChain: uses >
+NoteDispenser <|.. NoteDispenser100: extends
+NoteDispenser <|.. NoteDispenser50: extends
+NoteDispenser <|.. NoteDispenser20: extends
+BankService --> Account: manages >
+BankService --> Card: manages >
+
+@enduml
+```

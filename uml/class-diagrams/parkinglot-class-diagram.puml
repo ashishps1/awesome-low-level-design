@@ -1,0 +1,146 @@
+```plantuml
+@startuml
+
+title Parkinglot - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class ParkingLot {
+    - static final ParkingLot INSTANCE
+    - final List<ParkingFloor> floors
+    - final Map<String, ParkingTicket> activeTickets
+    - FeeStrategy feeStrategy
+    + static synchronized ParkingLot getInstance()
+    + void addFloor(ParkingFloor floor)
+    + void setFeeStrategy(FeeStrategy feeStrategy)
+    + synchronized ParkingTicket parkVehicle(Vehicle vehicle) throws Exception
+    + synchronized double unparkVehicle(String license) throws Exception
+}
+
+class ParkingFloor {
+    - final int floorNumber
+    - final List<ParkingSpot> parkingSpots
+    + ParkingFloor(int floorNumber, List<ParkingSpot> spots)
+    + synchronized Optional<ParkingSpot> getAvailableSpot(Vehicle vehicle)
+    + int getFloorNumber()
+}
+
+class ParkingTicket {
+    - final String ticketId
+    - final Vehicle vehicle
+    - final ParkingSpot spot
+    - final long entryTimestamp
+    - long exitTimestamp
+    + ParkingTicket(Vehicle vehicle, ParkingSpot spot)
+    + String getTicketId()
+    + Vehicle getVehicle()
+    + ParkingSpot getSpot()
+    + long getEntryTimestamp()
+    + long getExitTimestamp()
+    + void setExitTimestamp()
+}
+
+interface FeeStrategy {
+    + double calculateFee(ParkingTicket parkingTicket)
+}
+
+class FlatRateFeeStrategy {
+    - static final double RATE_PER_HOUR
+    + double calculateFee(ParkingTicket parkingTicket)
+}
+
+class VehicleBasedFeeStrategy {
+    - final Map<VehicleType, Double> hourlyRates
+    + double calculateFee(ParkingTicket parkingTicket)
+}
+
+abstract class Vehicle {
+    - String licensePlate
+    - VehicleType type
+    + Vehicle(String licensePlate, VehicleType type)
+    + String getLicenseNumber()
+    + VehicleType getType()
+}
+
+class Car {
+    + Car(String license)
+}
+
+class Bike {
+    + Bike(String license)
+}
+
+class Truck {
+    + Truck(String license)
+}
+
+enum VehicleType {
+    CAR,
+    BIKE,
+    TRUCK
+}
+
+abstract class ParkingSpot {
+    - final String spotId
+    - boolean isOccupied
+    - Vehicle vehicle
+    + ParkingSpot(String spotId)
+    + synchronized boolean isAvailable()
+    + synchronized boolean assignVehicle(Vehicle vehicle)
+    + synchronized void removeVehicle()
+    + Vehicle getVehicle()
+    + String getSpotId()
+    + abstract boolean canFitVehicle(Vehicle vehicle)
+}
+
+class BikeSpot {
+    + BikeSpot(String spotId)
+    + boolean canFitVehicle(Vehicle vehicle)
+}
+
+class CompactSpot {
+    + CompactSpot(String spotId)
+    + boolean canFitVehicle(Vehicle vehicle)
+}
+
+class LargeSpot {
+    + LargeSpot(String spotId)
+    + boolean canFitVehicle(Vehicle vehicle)
+}
+
+enum ParkingSpotType {
+    COMPACT,
+    LARGE,
+    BIKE
+}
+
+class ParkingSpotFactory {
+    + static ParkingSpot createParkingSpot(ParkingSpotType type, String spotId)
+}
+
+ParkingLot --> ParkingFloor: manages >
+ParkingFloor --> ParkingSpot: contains >
+ParkingLot --> ParkingTicket: manages >
+ParkingTicket --> Vehicle: references >
+Vehicle <|-- Car: inherits
+Vehicle <|-- Bike: inherits
+Vehicle <|-- Truck: inherits
+ParkingSpot <|-- BikeSpot: inherits
+ParkingSpot <|-- CompactSpot: inherits
+ParkingSpot <|-- LargeSpot: inherits
+FeeStrategy <|.. FlatRateFeeStrategy: implements
+FeeStrategy <|.. VehicleBasedFeeStrategy: implements
+ParkingSpotFactory --> ParkingSpotType: uses >
+
+@enduml
+```

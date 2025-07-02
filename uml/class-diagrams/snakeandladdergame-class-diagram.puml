@@ -1,0 +1,75 @@
+```plantuml
+@startuml
+
+title Snake And Ladder Game - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Snake {
+    - final int head
+    - final int tail
+    + Snake(int head, int tail)
+    + int getHead()
+    + int getTail()
+}
+
+class Ladder {
+    - final int start
+    - final int end
+    + Ladder(int start, int end)
+    + int getStart()
+    + int getEnd()
+}
+
+class Dice {
+    - final int minValue
+    - final int maxValue
+    + Dice(int minValue, int maxValue)
+    + int roll()
+}
+
+class Player {
+    - final String name
+    - int position
+    + Player(String name)
+    + String getName()
+    + int getPosition()
+    + void setPosition(int position)
+}
+
+class Game {
+    - final Board board
+    - final Queue<Player> players
+    - final Dice dice
+    + Game(Builder builder)
+    + void play()
+    - boolean isGameOver()
+}
+
+class Board {
+    - final int boardSize
+    - final Map<Integer, Integer> snakes
+    - final Map<Integer, Integer> ladders
+    + Board(int boardSize, List<Snake> snakeList, List<Ladder> ladderList)
+    + int getBoardSize()
+    + int getNextPosition(int currentPosition)
+}
+
+Game --> Board: uses >
+Game --> Player: uses >
+Game --> Dice: uses >
+Board --> Snake: uses >
+Board --> Ladder: uses >
+
+@enduml
+```

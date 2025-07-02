@@ -1,0 +1,94 @@
+```plantuml
+@startuml
+
+title Logging Framework - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Logger {
+    - LogLevel minLevel
+    - final List<LogAppender> appenders
+    - final ExecutorService executor
+    + Logger(LogLevel minLevel, List<LogAppender> appenders)
+    + void log(LogLevel level, String msg)
+    + void setMinLevel(LogLevel minLevel)
+    + void shutdown()
+    + void debug(String message)
+    + void info(String message)
+    + void warn(String message)
+    + void error(String message)
+    + void fatal(String message)
+}
+
+class LogManager {
+    - static volatile Logger logger
+    + static Logger getLogger()
+}
+
+class LogMessage {
+    - final LogLevel level
+    - final String message
+    - final long timestamp
+    - final String threadName
+    + LogMessage(LogLevel level, String message)
+    + LogLevel getLevel()
+    + String getMessage()
+    + long getTimestamp()
+    + String getThreadName()
+    + String toString()
+}
+
+enum LogLevel {
+    DEBUG,
+    INFO,
+    WARN,
+    ERROR,
+    FATAL
+    + boolean isAsSevereAs(LogLevel other)
+}
+
+interface LogAppender {
+    + void append(LogMessage logMessage)
+}
+
+class ConsoleAppender {
+    - final LogFormatter formatter
+    + ConsoleAppender(LogFormatter formatter)
+    + void append(LogMessage logMessage)
+}
+
+class FileAppender {
+    - FileWriter writer
+    - final LogFormatter formatter
+    + FileAppender(String filePath, LogFormatter formatter)
+    + synchronized void append(LogMessage logMessage)
+}
+
+interface LogFormatter {
+    + String format(LogMessage message)
+}
+
+class SimpleFormatter {
+    + String format(LogMessage message)
+}
+
+Logger --> LogManager: uses >
+Logger --> LogAppender: uses >
+LogAppender <|.. ConsoleAppender: implements
+LogAppender <|.. FileAppender: implements
+LogFormatter <|.. SimpleFormatter: implements
+LogMessage --> LogLevel: references >
+LogLevel --> Logger: uses >
+
+@enduml
+```

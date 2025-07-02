@@ -1,0 +1,91 @@
+```plantuml
+@startuml
+
+title File Directory - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class FileSystem {
+    - DirectoryNode root
+    + FileSystem()
+    - DirectoryNode traverse(String path, boolean createMissingDirs)
+    + void mkdir(String path)
+    + void addFile(String filePath, String content)
+    + List<AbstractNode> searchNodes(String directoryPath, NodeSearchStrategy strategy, Map<String, Object> params)
+}
+
+class AbstractNode {
+    - String name
+    - Date createdAt
+    + AbstractNode(String name)
+    + String getName()
+    + Date getCreatedAt()
+}
+
+class FileNode {
+    - String content
+    - int size
+    + FileNode(String name)
+    + void appendContent(String newContent)
+    + String readContent()
+    + int getSize()
+}
+
+class DirectoryNode {
+    - Map<String, AbstractNode> children
+    + DirectoryNode(String name)
+    + void addNode(AbstractNode node)
+    + List<AbstractNode> getChildren()
+    + AbstractNode getNode(String name)
+}
+
+interface NodeSearchStrategy {
+    + List<AbstractNode> search(DirectoryNode directory, Map<String, Object> params)
+}
+
+class FilenameAndSizeSearchStrategy {
+    - NodeFilterChain filterChain
+    + FilenameAndSizeSearchStrategy()
+    + List<AbstractNode> search(DirectoryNode directory, Map<String, Object> params)
+}
+
+class NodeFilterChain {
+    - List<NodeFilter> filters
+    + NodeFilterChain()
+    + void addFilter(NodeFilter filter)
+    + boolean applyFilters(AbstractNode node, Map<String, Object> params)
+}
+
+interface NodeFilter {
+    + boolean apply(AbstractNode node, Map<String, Object> params)
+}
+
+class FilenameFilter {
+    + boolean apply(AbstractNode node, Map<String, Object> params)
+}
+
+class FileSizeFilter {
+    + boolean apply(AbstractNode node, Map<String, Object> params)
+}
+
+FileSystem --> DirectoryNode: uses >
+FileSystem --> AbstractNode: traverses >
+DirectoryNode --> AbstractNode: contains >
+DirectoryNode --> FileNode: contains >
+NodeSearchStrategy <|.. FilenameAndSizeSearchStrategy: implements
+NodeFilterChain --> NodeFilter: uses >
+NodeFilter <|.. FilenameFilter: implements
+NodeFilter <|.. FileSizeFilter: implements
+
+@enduml
+```

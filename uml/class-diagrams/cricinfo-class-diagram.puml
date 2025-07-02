@@ -1,0 +1,146 @@
+```plantuml
+@startuml
+
+title Cricinfo - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Team {
+    - final String id
+    - final String name
+    - final List<Player> players
+    + Team(String id, String name, List<Player> players)
+}
+
+class Over {
+    - final int overNumber
+    - final List<Ball> balls
+    + Over(int overNumber)
+    + void addBall(Ball ball)
+    + int getOverNumber()
+    + List<Ball> getBalls()
+}
+
+class MatchService {
+    - static MatchService instance
+    - final Map<String, Match> matches
+    + static synchronized MatchService getInstance()
+    + void addMatch(Match match)
+    + Match getMatch(String matchId)
+    + List<Match> getAllMatches()
+    + void updateMatchStatus(String matchId, MatchStatus status)
+}
+
+class CricinfoSystem {
+    - final MatchService matchService
+    - final ScorecardService scorecardService
+    + CricinfoSystem()
+    + void addMatch(Match match)
+    + Match getMatch(String matchId)
+    + List<Match> getAllMatches()
+    + void updateMatchStatus(String matchId, MatchStatus status)
+    + void createScorecard(Match match)
+    + Scorecard getScorecard(String scorecardId)
+    + void updateScore(String scorecardId, String teamId, int score)
+    + void addInnings(String scorecardId, Innings innings)
+}
+
+class Scorecard {
+    - final String id
+    - final Match match
+    - final Map<String, Integer> teamScores
+    - final List<Innings> innings
+    + Scorecard(String id, Match match)
+    + void updateScore(String teamId, int score)
+    + void addInnings(Innings innings)
+    + String getId()
+    + Match getMatch()
+    + Map<String, Integer> getTeamScores()
+    + List<Innings> getInnings()
+}
+
+class Player {
+    - final String id
+    - final String name
+    - final String role
+    + Player(String id, String name, String role)
+}
+
+class Match {
+    - final String id
+    - final String title
+    - final String venue
+    - final LocalDateTime startTime
+    - final List<Team> teams
+    - MatchStatus status
+    - Scorecard scorecard
+    + Match(String id, String title, String venue, LocalDateTime startTime, List<Team> teams)
+    + String getId()
+    + void setStatus(MatchStatus status)
+    + String getTitle()
+}
+
+class Ball {
+    - final int ballNumber
+    - final String bowler
+    - final String batsman
+    - final String result
+    + Ball(int ballNumber, String bowler, String batsman, String result)
+    + int getBallNumber()
+    + String getBatsman()
+    + String getBowler()
+    + String getResult()
+}
+
+class Innings {
+    - final String id
+    - final String battingTeamId
+    - final String bowlingTeamId
+    - final List<Over> overs
+    + Innings(String id, String battingTeamId, String bowlingTeamId)
+    + void addOver(Over over)
+    + String getId()
+    + List<Over> getOvers()
+    + String getBattingTeamId()
+    + String getBowlingTeamId()
+}
+
+class ScorecardService {
+    - static ScorecardService instance
+    - final Map<String, Scorecard> scorecards
+    - final AtomicInteger scorecardIdCounter
+    + static synchronized ScorecardService getInstance()
+    + synchronized void createScorecard(Match match)
+    + Scorecard getScorecard(String scorecardId)
+    + void updateScore(String scorecardId, String teamId, int score)
+    + void addInnings(String scorecardId, Innings innings)
+}
+
+enum MatchStatus {
+    SCHEDULED,
+    IN_PROGRESS,
+    COMPLETED,
+    ABANDONED
+}
+
+Team --> Player: contains >
+Over --> Ball: contains >
+MatchService --> Match: manages >
+CricinfoSystem --> MatchService: uses >
+CricinfoSystem --> ScorecardService: uses >
+Scorecard --> Match: linked to >
+Scorecard --> Innings: maintains >
+Innings --> Over: contains >
+
+@enduml
+```

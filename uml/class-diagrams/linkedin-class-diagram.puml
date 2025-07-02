@@ -1,0 +1,154 @@
+\```plantuml
+@startuml
+
+title LinkedIn - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Message {
+    - final String id
+    - final User sender
+    - final User receiver
+    - final String content
+    - final Date timestamp
+    + Message(User sender, User receiver, String content)
+}
+
+class Skill {
+    - String name
+}
+
+class Profile {
+    - String profilePictureUrl
+    - String headline
+    - String summary
+    - List<Experience> experiences
+    - List<Education> educations
+    - List<Skill> skills
+    + void setSummary(String summary)
+    + void setHeadline(String headline)
+    + String getProfilePictureUrl()
+    + String getHeadline()
+    + String getSummary()
+    + List<Experience> getExperiences()
+    + List<Education> getEducations()
+    + List<Skill> getSkills()
+}
+
+class Notification {
+    - final String id
+    - final User user
+    - final NotificationType type
+    - final String content
+    - final Date timestamp
+    + Notification(User user, NotificationType type, String content)
+    + String getId()
+    + User getUser()
+    + NotificationType getType()
+    + String getContent()
+}
+
+class LinkedInService {
+    - static LinkedInService instance
+    - final Map<String, User> users
+    - final Map<String, JobPosting> jobPostings
+    - final Map<String, List<Notification>> notifications
+    + static synchronized LinkedInService getInstance()
+    + User registerUser(String name, String email, String password)
+    + User loginUser(String email, String password)
+    + void sendConnectionRequest(User sender, User receiver)
+    + void acceptConnectionRequest(User user, User connectionUser)
+    + List<User> searchUsers(String keyword)
+    + JobPosting postJobListing(String title, String company, String description, String location)
+    + List<JobPosting> searchJobPostings(String keyword)
+    + void sendMessage(User sender, User receiver, String content)
+    + List<Notification> getNotifications(String userId)
+}
+
+class User {
+    - final String id
+    - final String name
+    - final String email
+    - final String password
+    - Profile profile
+    - final List<Connection> connections
+    - final List<Message> inbox
+    - final List<Message> sentMessages
+    - final List<Notification> notifications
+    + User(String name, String email, String password)
+    + void setProfile(Profile profile)
+    + void addNotification(Notification notification)
+    + void addToInbox(Message message)
+    + void addToSentMessages(Message message)
+    + String getId()
+    + String getName()
+    + String getEmail()
+    + String getPassword()
+    + Profile getProfile()
+    + List<Connection> getConnections()
+    + List<Message> getInbox()
+    + List<Notification> getNotifications()
+}
+
+class Experience {
+    - String title
+    - String company
+    - String startDate
+    - String endDate
+    - String description
+}
+
+class Connection {
+    - final User user
+    - final Timestamp connectionDate
+    + Connection(User user, Timestamp connectionDate)
+    + User getUser()
+    + Timestamp getConnectionDate()
+}
+
+class JobPosting {
+    - final String id
+    - final String title
+    - final String company
+    - final String description
+    - final String location
+    - final Date postDate
+    - final Map<String, User> applicants
+    + JobPosting(String title, String company, String description, String location)
+    + void apply(User user)
+    + String getId()
+    + String getTitle()
+    + String getDescription()
+    + String getLocation()
+    + List<User> getApplicants()
+}
+
+enum NotificationType {
+    CONNECTION_REQUEST,
+    MESSAGE,
+    JOB_POSTING
+}
+
+LinkedInService --> User: manages >
+LinkedInService --> JobPosting: manages >
+LinkedInService --> Notification: manages >
+User --> Profile: has >
+User --> Connection: has >
+User --> Message: has >
+User --> Notification: has >
+Notification --> User: references >
+Connection --> User: references >
+JobPosting --> User: manages applicants >
+
+@enduml
+```

@@ -1,0 +1,106 @@
+```plantuml
+@startuml
+
+title Car Rental System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class CarRentalSystem {
+    - static CarRentalSystem instance
+    - final Map<String, Car> cars
+    - final Map<String, Reservation> reservations
+    - final PaymentProcessor paymentProcessor
+    + static synchronized CarRentalSystem getInstance()
+    + void addCar(Car car)
+    + void removeCar(String licensePlate)
+    + List<Car> searchCars(String make, String model, LocalDate startDate, LocalDate endDate)
+    + synchronized Reservation makeReservation(Customer customer, Car car, LocalDate startDate, LocalDate endDate)
+    + synchronized void cancelReservation(String reservationId)
+    + boolean processPayment(Reservation reservation)
+    - boolean isCarAvailable(Car car, LocalDate startDate, LocalDate endDate)
+    - String generateReservationId()
+}
+
+class Car {
+    - final String make
+    - final String model
+    - final int year
+    - final String licensePlate
+    - final double rentalPricePerDay
+    - boolean available
+    + Car(String make, String model, int year, String licensePlate, double rentalPricePerDay)
+    + double getRentalPricePerDay()
+    + String getLicensePlate()
+    + String getMake()
+    + String getModel()
+    + boolean isAvailable()
+    + void setAvailable(boolean available)
+}
+
+class Customer {
+    - final String name
+    - final String contactInfo
+    - final String driversLicenseNumber
+    + Customer(String name, String contactInfo, String driversLicenseNumber)
+}
+
+class Reservation {
+    - final String reservationId
+    - final Customer customer
+    - final Car car
+    - final LocalDate startDate
+    - final LocalDate endDate
+    - final double totalPrice
+    + Reservation(String reservationId, Customer customer, Car car, LocalDate startDate, LocalDate endDate)
+    + LocalDate getStartDate()
+    + LocalDate getEndDate()
+    + Car getCar()
+    + double getTotalPrice()
+    + String getReservationId()
+}
+
+interface PaymentProcessor {
+    + boolean processPayment(double amount)
+}
+
+class CreditCardPaymentProcessor {
+    + boolean processPayment(double amount)
+}
+
+class PayPalPaymentProcessor {
+    + boolean processPayment(double amount)
+}
+
+enum CarType {
+    SUV,
+    SEDAN,
+    HATCHBACK
+}
+
+enum CarStatus {
+    AVAILABLE,
+    BOOKED,
+    MAINTENANCE
+}
+
+CarRentalSystem --> Car: manages >
+CarRentalSystem --> Reservation: manages >
+CarRentalSystem --> Customer: manages >
+CarRentalSystem --> PaymentProcessor: uses >
+Reservation --> Customer: references >
+Reservation --> Car: references >
+PaymentProcessor <|.. CreditCardPaymentProcessor: implements
+PaymentProcessor <|.. PayPalPaymentProcessor: implements
+
+@enduml
+```

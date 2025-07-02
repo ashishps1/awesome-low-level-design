@@ -1,0 +1,122 @@
+```plantuml
+@startuml
+
+title Online Stock Brokerage System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+abstract class Order {
+    - final String orderId
+    - final Account account
+    - final Stock stock
+    - final int quantity
+    - final double price
+    - OrderStatus status
+    + Order(String orderId, Account account, Stock stock, int quantity, double price)
+    + abstract void execute()
+}
+
+class StockBroker {
+    - static StockBroker instance
+    - final Map<String, Account> accounts
+    - final Map<String, Stock> stocks
+    - final Queue<Order> orderQueue
+    - final AtomicInteger accountIdCounter
+    + static synchronized StockBroker getInstance()
+    + void createAccount(User user, double initialBalance)
+    + Account getAccount(String accountId)
+    + void addStock(Stock stock)
+    + Stock getStock(String symbol)
+    + void placeOrder(Order order)
+}
+
+class Account {
+    - final String accountId
+    - final User user
+    - double balance
+    - final Portfolio portfolio
+    + Account(String accountId, User user, double initialBalance)
+    + synchronized void deposit(double amount)
+    + synchronized void withdraw(double amount)
+    + String getAccountId()
+    + User getUser()
+    + double getBalance()
+    + Portfolio getPortfolio()
+}
+
+class Stock {
+    - final String symbol
+    - final String name
+    - double price
+    + Stock(String symbol, String name, double price)
+    + synchronized void updatePrice(double newPrice)
+    + String getSymbol()
+    + String getName()
+    + double getPrice()
+}
+
+class BuyOrder {
+    + BuyOrder(String orderId, Account account, Stock stock, int quantity, double price)
+    + void execute()
+}
+
+class SellOrder {
+    + SellOrder(String orderId, Account account, Stock stock, int quantity, double price)
+    + void execute()
+}
+
+class User {
+    - final String userId
+    - final String name
+    - final String email
+    + User(String userId, String name, String email)
+}
+
+class Portfolio {
+    - final Account account
+    - final Map<String, Integer> holdings
+    + Portfolio(Account account)
+    + synchronized void addStock(Stock stock, int quantity)
+    + synchronized void removeStock(Stock stock, int quantity)
+    + Map<String, Integer> getHoldings()
+}
+
+enum OrderStatus {
+    PENDING,
+    EXECUTED,
+    REJECTED
+}
+
+class InsufficientFundsException extends RuntimeException {
+    + InsufficientFundsException(String message)
+}
+
+class InsufficientStockException extends RuntimeException {
+    + InsufficientStockException(String message)
+}
+
+Order <|-- BuyOrder
+Order <|-- SellOrder
+StockBroker --> Account: manages >
+StockBroker --> Stock: manages >
+StockBroker --> Order: manages >
+Account --> User: references >
+Portfolio --> Stock: manages >
+Portfolio --> Account: belongs to >
+BuyOrder --> InsufficientFundsException: triggers >
+SellOrder --> InsufficientFundsException: triggers >
+OrderStatus <|-- Order: uses >
+Portfolio --> InsufficientStockException: triggers >
+
+@enduml
+```

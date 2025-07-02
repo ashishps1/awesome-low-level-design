@@ -1,0 +1,145 @@
+```plantuml
+@startuml
+
+title Music Streaming Service - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class Song {
+    - final String id
+    - final String title
+    - final Artist artist
+    - final Album album
+    - final Duration duration
+    + Song(String title, Artist artist, Album album, Duration duration)
+    + String getId()
+    + String getTitle()
+    + Artist getArtist()
+    + String getArtistName()
+    + Album getAlbum()
+}
+
+class Album {
+    - final String id
+    - final String title
+    - final Artist artist
+    - final List<Song> songs
+    + Album(String title, Artist artist)
+    + void addSong(Song song)
+    + void addSongs(List<Song> songs)
+    + List<Song> getSongs()
+    + String getId()
+    + String getTitle()
+    + Artist getArtist()
+}
+
+class MusicRecommender {
+    - static MusicRecommender instance
+    - final Map<String, List<Song>> userRecommendations
+    + static synchronized MusicRecommender getInstance()
+    + List<Song> recommendSongs(User user)
+}
+
+class User {
+    - final String id
+    - final String username
+    - final String password
+    - final Map<String, Playlist> playlists
+    - final PlaybackSession playback
+    + User(String username, String password)
+    + Playlist createPlaylist(String name)
+    + void removePlaylist(String name)
+    + void play(Song song)
+    + void pause()
+    + String getId()
+    + String getUsername()
+    + String getPassword()
+    + Playlist getPlaylist(String playlistId)
+    + List<Playlist> getPlaylists()
+}
+
+class Artist {
+    - final String id
+    - final String name
+    - final List<Album> albums
+    + Artist(String name)
+    + String getId()
+    + String getName()
+    + void addAlbum(Album album)
+    + void addAlbums(List<Album> albums)
+    + List<Album> getAlbums()
+}
+
+class Playlist {
+    - final String id
+    - final String name
+    - final User owner
+    - final List<Song> songs
+    + Playlist(String name, User owner)
+    + void addSong(Song song)
+    + void removeSong(Song song)
+    + List<Song> getSongs()
+    + String getId()
+    + String getName()
+}
+
+class UserManager {
+    - static UserManager instance
+    - final Map<String, User> users
+    + static synchronized UserManager getInstance()
+    + void registerUser(User user)
+    + Map<String, User> getUsers()
+    + User getUser(String userId)
+    + Playlist getUserPlaylist(String userId, String playlistId)
+}
+
+class MusicLibrary {
+    - static MusicLibrary instance
+    - final Map<String, Song> songs
+    - final Map<String, Album> albums
+    - final Map<String, Artist> artists
+    + static synchronized MusicLibrary getInstance()
+    + void addSong(Song song)
+    + void addAlbum(Album album)
+    + void addArtist(Artist artist)
+    + Song getSong(String songId)
+    + List<Song> getSongs()
+    + Album getAlbum(String albumId)
+    + Artist getArtist(String artistId)
+}
+
+class PlaybackSession {
+    - Song currentSong
+    - boolean isPlaying
+    - int currentTime
+    + synchronized void play(Song song)
+    + synchronized void pause()
+    + void seekTo(int time)
+    + synchronized Song getCurrentSong()
+    + synchronized boolean isPlaying()
+}
+
+MusicRecommender --> User: recommends >
+User --> Playlist: owns >
+User --> PlaybackSession: uses >
+Playlist --> Song: contains >
+Album --> Song: contains >
+Album --> Artist: by >
+Song --> Artist: by >
+MusicLibrary --> Song: manages >
+MusicLibrary --> Album: manages >
+MusicLibrary --> Artist: manages >
+UserManager --> User: manages >
+
+@enduml
+```

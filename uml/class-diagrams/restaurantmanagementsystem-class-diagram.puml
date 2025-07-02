@@ -1,0 +1,161 @@
+```plantuml
+@startuml
+
+title Restaurant Management System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class RestaurantManagementSystem {
+    - static RestaurantManagementSystem instance
+    - final Map<String, MenuItem> menu
+    - final Map<String, Order> orders
+    - final List<Reservation> reservations
+    - final Map<Integer, Payment> payments
+    - final List<Staff> staff
+    - final Map<Integer, Table> tables
+    + static synchronized RestaurantManagementSystem getInstance()
+    + MenuItem addMenuItem(String name, double price)
+    + void removeMenuItem(String itemName)
+    + List<MenuItem> getMenu()
+    + void addTable(int tableId, int capacity)
+    + Table reserveTable(int tableId)
+    + Order placeOrder(int tableId, List<OrderItem> items)
+    + void markOrderPreparing(String orderId)
+    + void markOrderReady(String orderId)
+    + void markOrderServed(String orderId)
+    + Bill getBill(String orderId)
+    + void makePayment(Bill bill, Payment payment)
+    + Reservation makeReservation(String customerName, String contactNumber, int partySize, Timestamp reservationTime)
+    + void cancelReservation(Reservation reservation)
+    + void addStaff(Staff staff)
+    + void removeStaff(Staff staff)
+}
+
+class Order {
+    - final String id
+    - final List<OrderItem> items
+    - OrderStatus status
+    - final Table table
+    + Order(Table table, List<OrderItem> items)
+    + void markPreparing()
+    + void markReady()
+    + void markServed()
+    + void markPaid()
+    + double calculateTotal()
+    + void setStatus(OrderStatus status)
+    + String getId()
+    + List<OrderItem> getItems()
+    + OrderStatus getStatus()
+}
+
+class OrderItem {
+    - final MenuItem item
+    - final int quantity
+    + OrderItem(MenuItem item, int quantity)
+    + double getSubtotal()
+    + MenuItem getItem()
+}
+
+class Reservation {
+    - final String id
+    - final String customerName
+    - final String contactNumber
+    - final int partySize
+    - final Timestamp reservationTime
+    + Reservation(String customerName, String contactNumber, int partySize, Timestamp reservationTime)
+}
+
+class MenuItem {
+    - final String name
+    - final double price
+    - final boolean available
+    + MenuItem(String name, double price)
+    + String getName()
+    + double getPrice()
+    + boolean isAvailable()
+}
+
+class Staff {
+    - final int id
+    - final String name
+    - final String role
+    - final String contactNumber
+    + Staff(int id, String name, String role, String contactNumber)
+}
+
+class Table {
+    - final int id
+    - final int capacity
+    - boolean isReserved
+    + Table(int id, int capacity)
+    + synchronized void reserve()
+    + synchronized void release()
+    + synchronized boolean isAvailable()
+    + int getId()
+}
+
+class Bill {
+    - final String orderId
+    - final double totalAmount
+    - PaymentStatus paymentStatus
+    + Bill(String orderId, double totalAmount)
+    + void markPaymentCompleted()
+    + void markPaymentFailed()
+    + double getTotalAmount()
+    + String getOrderId()
+}
+
+interface Payment {
+    + boolean processPayment(double amount)
+}
+
+class CreditCardPayment {
+    + boolean processPayment(double amount)
+}
+
+class CashPayment {
+    + boolean processPayment(double amount)
+}
+
+class UPIPayment {
+    + boolean processPayment(double amount)
+}
+
+enum OrderStatus {
+    PENDING,
+    PREPARING,
+    READY,
+    SERVED,
+    PAID,
+    CANCELLED
+}
+
+enum PaymentStatus {
+    PENDING,
+    COMPLETED,
+    FAILED
+}
+
+RestaurantManagementSystem --> MenuItem: manages >
+RestaurantManagementSystem --> Order: manages >
+RestaurantManagementSystem --> Reservation: manages >
+RestaurantManagementSystem --> Staff: manages >
+RestaurantManagementSystem --> Table: manages >
+Order --> OrderItem: contains >
+Order --> Table: reference >
+Payment <|.. CreditCardPayment: implements
+Payment <|.. CashPayment: implements
+Payment <|.. UPIPayment: implements
+
+@enduml
+```

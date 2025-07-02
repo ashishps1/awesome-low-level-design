@@ -1,0 +1,70 @@
+```plantuml
+@startuml
+
+title Voting System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class VotingSystem {
+    - static volatile VotingSystem instance
+    - final Map<String, Voter> voters
+    - final Map<String, Candidate> candidates
+    - final Map<String, AtomicInteger> voteCount
+    - final Set<String> votedVoters
+    - final ReadWriteLock votingLock
+    - volatile boolean isVotingOpen
+    - final BlockingQueue<VoteRecord> voteAuditLog
+    + static VotingSystem getInstance()
+    + void registerVoter(String voterId, String name, String password)
+    + void registerCandidate(String candidateId, String name, String party)
+    + void startVoting()
+    + void endVoting()
+    + boolean castVote(String voterId, String candidateId)
+    + Map<String, Integer> getCurrentResults()
+    + List<VoteRecord> getAuditLog()
+}
+
+class Voter {
+    - final String id
+    - final String name
+    - final String password
+    + Voter(String id, String name, String password)
+    + String getId()
+    + String getName()
+}
+
+class Candidate {
+    - final String id
+    - final String name
+    - final String party
+    + Candidate(String id, String name, String party)
+    + String getId()
+    + String getName()
+}
+
+class VoteRecord {
+    - final String voterId
+    - final String candidateId
+    - final long timestamp
+    + VoteRecord(String voterId, String candidateId, long timestamp)
+    + String toString()
+}
+
+VotingSystem --> Voter: manages >
+VotingSystem --> Candidate: manages >
+VotingSystem --> VoteRecord: tracks >
+VoteRecord --> Voter: references >
+VoteRecord --> Candidate: references >
+
+@enduml
+```

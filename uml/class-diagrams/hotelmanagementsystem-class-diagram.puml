@@ -1,0 +1,119 @@
+```plantuml
+@startuml
+
+title Hotel Management System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class HotelManagementSystem {
+    - static HotelManagementSystem instance
+    - final Map<String, Guest> guests
+    - final Map<String, Room> rooms
+    - final Map<String, Reservation> reservations
+    + static synchronized HotelManagementSystem getInstance()
+    + void addGuest(Guest guest)
+    + Guest getGuest(String guestId)
+    + void addRoom(Room room)
+    + Room getRoom(String roomId)
+    + synchronized Reservation bookRoom(Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate)
+    + synchronized void cancelReservation(String reservationId)
+    + synchronized void checkIn(String reservationId)
+    + synchronized void checkOut(String reservationId, Payment payment)
+    - String generateReservationId()
+}
+
+class Room {
+    - final String id
+    - final RoomType type
+    - final double price
+    - RoomStatus status
+    + Room(String id, RoomType type, double price)
+    + synchronized void book()
+    + synchronized void checkIn()
+    + synchronized void checkOut()
+    + String getId()
+    + RoomType getType()
+    + double getPrice()
+    + RoomStatus getStatus()
+}
+
+class Reservation {
+    - final String id
+    - final Guest guest
+    - final Room room
+    - final LocalDate checkInDate
+    - final LocalDate checkOutDate
+    - ReservationStatus status
+    + Reservation(String id, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate)
+    + synchronized void cancel()
+    + String getId()
+    + Guest getGuest()
+    + Room getRoom()
+    + LocalDate getCheckInDate()
+    + LocalDate getCheckOutDate()
+    + ReservationStatus getStatus()
+}
+
+class Guest {
+    - final String id
+    - final String name
+    - final String email
+    - final String phoneNumber
+    + Guest(String id, String name, String email, String phoneNumber)
+    + String getId()
+    + String getName()
+    + String getEmail()
+    + String getPhoneNumber()
+}
+
+interface Payment {
+    + boolean processPayment(double amount)
+}
+
+class CreditCardPayment {
+    + boolean processPayment(double amount)
+}
+
+class CashPayment {
+    + boolean processPayment(double amount)
+}
+
+enum RoomType {
+    SINGLE,
+    DOUBLE,
+    DELUXE,
+    SUITE
+}
+
+enum RoomStatus {
+    AVAILABLE,
+    BOOKED,
+    OCCUPIED
+}
+
+enum ReservationStatus {
+    CONFIRMED,
+    CANCELLED
+}
+
+HotelManagementSystem --> Guest: manages >
+HotelManagementSystem --> Room: manages >
+HotelManagementSystem --> Reservation: manages >
+Room --> RoomType: uses >
+Reservation --> Guest: references >
+Reservation --> Room: references >
+Payment <|.. CreditCardPayment: implements
+Payment <|.. CashPayment: implements
+
+@enduml
+```

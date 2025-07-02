@@ -1,0 +1,111 @@
+```plantuml
+@startuml
+
+title Library Management System - Class Diagram
+
+caption © algomaster.io
+
+skinparam backgroundColor white
+skinparam wrapWidth 500
+
+skinparam class {
+  BackgroundColor #00D084
+  BorderColor black
+  ArrowColor black
+  FontSize 18
+}
+
+class LibraryManagementSystem {
+    - static LibraryManagementSystem instance
+    - final Catalog catalog
+    - final Map<String, Book> books
+    - final Map<String, Member> members
+    - final Map<String, Loan> loans
+    - static final int MAX_BOOKS_PER_MEMBER
+    + static synchronized LibraryManagementSystem getInstance()
+    + BookCopy addBookCopy(String isbn, String title, String authorName)
+    + Member registerMember(String name, String contactInfo)
+    + synchronized boolean borrowBook(String memberId, String barcode)
+    + synchronized boolean returnBook(String memberId, String barcode)
+    + List<Book> searchByTitle(String title)
+    + List<Book> searchByAuthor(String author)
+}
+
+class Catalog {
+    - final Map<String, List<BookCopy>> byTitle
+    - final Map<String, List<BookCopy>> byAuthor
+    - final Map<String, List<BookCopy>> byIsbn
+    - final Map<String, BookCopy> bookCopiesByBarcode
+    + synchronized void add(BookCopy copy)
+    + synchronized List<BookCopy> getBookCopiesByTitle(String title)
+    + BookCopy getBookCopyByBarcode(String barcode)
+    + synchronized List<Book> searchByTitle(String title)
+    + synchronized List<Book> searchByAuthor(String author)
+    + synchronized List<Book> searchByIsbn(String isbn)
+}
+
+class Book {
+    - final String isbn
+    - final String title
+    - final String author
+    + Book(String isbn, String title, String author)
+    + String getIsbn()
+    + String getTitle()
+    + String getAuthor()
+}
+
+class Member {
+    - final String id
+    - final String name
+    - final String contactInfo
+    - final List<Loan> loans
+    + Member(String name, String contactInfo)
+    + int getBorrowedCount()
+    + synchronized void addLoan(Loan loan)
+    + synchronized void removeLoan(Loan loan)
+    + List<Loan> getLoans()
+    + String getId()
+    + String getName()
+}
+
+class Loan {
+    - final String id
+    - final BookCopy copy
+    - final Member member
+    - final LocalDate borrowDate
+    - final LocalDate dueDate
+    - boolean active
+    - static final int MAX_BORROW_DAYS
+    + Loan(BookCopy copy, Member member)
+    + void closeLoan()
+    + String getId()
+    + BookCopy getCopy()
+}
+
+class BookCopy {
+    - final String barCode
+    - final Book book
+    - BookStatus status
+    + BookCopy(Book book)
+    + synchronized boolean isAvailable()
+    + synchronized void markBorrowed()
+    + synchronized void markAvailable()
+    + Book getBook()
+    + String getBarCode()
+}
+
+enum BookStatus {
+    AVAILABLE, BORROWED, RESERVED, LOST
+}
+
+LibraryManagementSystem --> Catalog: manages >
+LibraryManagementSystem --> Member: manages >
+LibraryManagementSystem --> Loan: manages >
+Catalog --> BookCopy: uses >
+Catalog --> Book: uses >
+BookCopy --> Book: references >
+Loan --> BookCopy: references >
+Loan --> Member: references >
+
+@enduml
+```
