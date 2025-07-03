@@ -9,6 +9,7 @@ public class SellOrder extends Order {
     public void execute() {
         // Check if the user has sufficient quantity of the stock to sell
         // Update portfolio and perform necessary actions
+        account.getPortfolio().removeStock(stock, quantity);
         double totalProceeds = quantity * price;
         account.deposit(totalProceeds);
         status = OrderStatus.EXECUTED;
