@@ -71,7 +71,7 @@ Car is stopping...
 
 ## **Multiple Inheritance with Interfaces**
 
-Unlike classes, Java **does not support multiple inheritance** with classes, but it does support **multiple inheritance** with interfaces.
+Unlike C++, Java **does not support multiple inheritance** with classes, but it does support **multiple inheritance** with interfaces.
 
 ```java
 // First interface
