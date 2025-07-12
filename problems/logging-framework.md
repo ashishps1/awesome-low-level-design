@@ -18,6 +18,7 @@
 #### [C++ Implementation](../solutions/cpp/loggingframework/)
 #### [C# Implementation](../solutions/csharp/loggingframework/)
 #### [Go Implementation](../solutions/golang/loggingframework/)
+#### [TypeScript Implementation](../solutions/typescript/src/LoggingFramework/)
 
 ## Classes, Interfaces and Enumerations
 1. The **LogLevel** enum defines the different log levels supported by the logging framework.
