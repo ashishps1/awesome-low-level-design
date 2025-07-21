@@ -2,7 +2,7 @@ from transaction import Transaction
 from account import Account
 
 class DepositTransaction(Transaction):
-    def __init__(self, transaction_id, account, amount):
+    def __init__(self, transaction_id, account: Account, amount):
         super().__init__(transaction_id, account, amount)
 
     def execute(self):
