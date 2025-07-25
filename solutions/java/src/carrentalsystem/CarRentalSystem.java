@@ -22,7 +22,7 @@ public class CarRentalSystem {
         paymentProcessor = new CreditCardPaymentProcessor();
     }
 
-    public static synchronized CarRentalSystem getInstance() {
+    public static CarRentalSystem getInstance() {
         return instance;
     }
 
