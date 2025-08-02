@@ -8,5 +8,6 @@ class SellOrder(Order):
         # Check if the user has sufficient quantity of the stock to sell
         # Update portfolio and perform necessary actions
         total_proceeds = self.quantity * self.price
+        self.account.get_portfolio().remove_stock(self.stock, self.quantity)
         self.account.deposit(total_proceeds)
         self.status = OrderStatus.EXECUTED
