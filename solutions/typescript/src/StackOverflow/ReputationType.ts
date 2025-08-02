@@ -1,0 +1,7 @@
+export enum ReputationTypeEnum {
+  QUESTION_UPVOTE = 5,
+  QUESTION_DOWNVOTE = -2,
+  ANSWER_UPVOTE = 10,
+  ANSWER_DOWNVOTE = -2,
+  ANSWER_ACCEPTED = 15,
+}
