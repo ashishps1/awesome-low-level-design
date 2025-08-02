@@ -11,6 +11,7 @@ public class BuyOrder extends Order {
         if (account.getBalance() >= totalCost) {
             account.withdraw(totalCost);
             // Update portfolio and perform necessary actions
+            account.getPortfolio().addStock(stock, quantity);
             status = OrderStatus.EXECUTED;
         } else {
             status = OrderStatus.REJECTED;
