@@ -54,16 +54,18 @@ public class RestaurantManagementSystem {
 
     public Table reserveTable(int tableId) {
         Table table = tables.get(tableId);
-        if (table == null) throw new IllegalArgumentException("Invalid table ID");
+        if (table == null) {
+            throw new IllegalArgumentException("Invalid table ID");
+        }
         table.reserve();
         return table;
     }
 
     public Order placeOrder(int tableId, List<OrderItem> items) {
         Table table = tables.get(tableId);
-        if (table == null || table.isAvailable())
+        if (table == null || !table.isAvailable()) {
             throw new IllegalStateException("Table not reserved or invalid");
-
+        }
         Order order = new Order(table, items);
         orders.put(order.getId(), order);
         notifyKitchen(order);
@@ -89,17 +91,14 @@ public class RestaurantManagementSystem {
 
     public Bill getBill(String orderId) {
         Order order = orders.get(orderId);
-
         if (order.getStatus() == OrderStatus.PAID)
             throw new IllegalStateException("Order already paid");
-
         order.markPaid();
         return new Bill(order.getId(), order.calculateTotal());
     }
 
     public void makePayment(Bill bill, Payment payment) {
         Order order = orders.get(bill.getOrderId());
-
         if (payment.processPayment(bill.getTotalAmount())) {
             bill.markPaymentCompleted();
             order.markPaid();
