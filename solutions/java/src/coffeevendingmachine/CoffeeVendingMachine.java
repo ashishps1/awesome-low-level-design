@@ -73,4 +73,8 @@ public class CoffeeVendingMachine {
         System.out.println("Ingredient Levels:");
         ingredientStore.getAllIngredients().forEach((k, v) -> System.out.println(k + ": " + v));
     }
+
+    public Map<String, Integer> showIngredientsMap() {
+        return ingredientStore.getAllIngredients();
+    }
 }
