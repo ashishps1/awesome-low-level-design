@@ -9,6 +9,14 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 
 👉 For a better and more comprehensive experience, checkout the [LLD page at AlgoMaster.io](https://algomaster.io/learn/lld)
 
+## 📖 Comprehensive Documentation
+
+For a structured learning path, detailed explanations of concepts, design patterns, problem statements, and solutions, please see our new comprehensive documentation:
+
+**➡️ [View Full Documentation (DOCUMENTATION.md)](DOCUMENTATION.md)**
+
+This new documentation aims to provide a beginner-friendly, systematic guide to all the content in this repository.
+
 ## 📌 Fundamental Concepts
 
 - [Basics OOP Concepts](https://blog.algomaster.io/p/basic-oop-concepts-explained-with-code)
