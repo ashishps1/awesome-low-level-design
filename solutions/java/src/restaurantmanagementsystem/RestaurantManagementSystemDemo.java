@@ -1,42 +1,50 @@
 package restaurantmanagementsystem;
 
-import restaurantmanagementsystem.decorator.Bill;
-import restaurantmanagementsystem.model.*;
+import restaurantmanagementsystem.payment.CreditCardPayment;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class RestaurantManagementSystemDemo {
-    public static void main(String[] args) {
-        // --- 1. System Setup using the Restaurant Singleton ---
-        System.out.println("=== Initializing Restaurant System ===");
-        RestaurantManagementSystemFacade rmsFacade = RestaurantManagementSystemFacade.getInstance();
+    public static void run() {
+        RestaurantManagementSystem restaurantManagementSystem = RestaurantManagementSystem.getInstance();
 
-        // --- 2. Add table and staff ---
-        Table table1 = rmsFacade.addTable(1, 4);
-        Chef chef1 = rmsFacade.addChef("CHEF01", "Gordon");
-        Waiter waiter1 = rmsFacade.addWaiter("W01", "Alice");
+        // Add menu items
+        MenuItem menuItem1 = restaurantManagementSystem.addMenuItem("Burger", 9.99);
+        MenuItem menuItem2 = restaurantManagementSystem.addMenuItem("Pizza", 12.99);
+        MenuItem menuItem3 = restaurantManagementSystem.addMenuItem("Salad", 7.99);
 
-        // --- 3. Add menu items ---
-        MenuItem pizza = rmsFacade.addMenuItem("PIZZA01", "Margherita Pizza", 12.50);
-        MenuItem pasta = rmsFacade.addMenuItem("PASTA01", "Carbonara Pasta", 15.00);
-        MenuItem coke = rmsFacade.addMenuItem("DRINK01", "Coke", 2.50);
-        System.out.println("Initialization Complete.\n");
+        // Add tables
+        restaurantManagementSystem.addTable(1, 4);
+        restaurantManagementSystem.addTable(2, 2);
 
-        // --- 4. Scenario: A waiter takes an order for a table ---
-        // The Command Pattern is used inside the rmsFacade.takeOrder() method.
-        System.out.println("=== SCENARIO 1: Taking an order ===");
-        Order order1 = rmsFacade.takeOrder(table1.getId(), waiter1.getId(), List.of(pizza.getId(), coke.getId()));
-        System.out.println("Order taken successfully. Order ID: " + order1.getOrderId());
+        // Place an order
+        Order order = restaurantManagementSystem.placeOrder(1, List.of(
+                new OrderItem(menuItem1, 1),
+                new OrderItem(menuItem3, 2)
+        ));
 
-        // --- 5. Scenario: Chef prepares food and notifies waiter ---
-        System.out.println("\n=== SCENARIO 2: Chef prepares, Waiter gets notified ===");
-        rmsFacade.markItemsAsReady(order1.getOrderId());
-        rmsFacade.serveOrder(waiter1.getId(), order1.getOrderId());
+        // Update order status
+        restaurantManagementSystem.markOrderPreparing(order.getId());
+        restaurantManagementSystem.markOrderReady(order.getId());
+        restaurantManagementSystem.markOrderServed(order.getId());
 
-        // --- 5. Scenario: Generate a bill with taxes and service charges ---
-        // The Decorator Pattern is used inside rmsFacade.generateBill().
-        System.out.println("\n=== SCENARIO 3: Generating the bill ===");
-        Bill finalBill = rmsFacade.generateBill(order1.getOrderId());
-        finalBill.printBill();
+        // Process payment
+        Bill bill = restaurantManagementSystem.getBill(order.getId());
+        restaurantManagementSystem.makePayment(bill, new CreditCardPayment());
+
+        // Make a reservation
+        Reservation reservation = restaurantManagementSystem.makeReservation("John Doe", "1234567890", 4, new Timestamp(System.currentTimeMillis()));
+
+        // Add staff
+        restaurantManagementSystem.addStaff(new Staff(1, "Alice", "Manager", "9876543210"));
+        restaurantManagementSystem.addStaff(new Staff(2, "Bob", "Chef", "5432109876"));
+
+        // Get menu
+        List<MenuItem> menu = restaurantManagementSystem.getMenu();
+        System.out.println("Menu:");
+        for (MenuItem item : menu) {
+            System.out.println(item.getName() + " - $" + item.getPrice());
+        }
     }
 }

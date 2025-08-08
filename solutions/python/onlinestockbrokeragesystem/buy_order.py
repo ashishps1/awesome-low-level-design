@@ -10,6 +10,7 @@ class BuyOrder(Order):
         if self.account.get_balance() >= total_cost:
             self.account.withdraw(total_cost)
             # Update portfolio and perform necessary actions
+            self.account.get_portfolio().add_stock(self.stock, self.quantity)
             self.status = OrderStatus.EXECUTED
         else:
             self.status = OrderStatus.REJECTED
