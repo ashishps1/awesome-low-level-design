@@ -1,25 +1,56 @@
 package coffeevendingmachine;
 
+import coffeevendingmachine.enums.CoffeeType;
+import coffeevendingmachine.enums.Ingredient;
+import coffeevendingmachine.enums.ToppingType;
+
+import java.util.List;
+
 public class CoffeeVendingMachineDemo {
-    public static void run() {
-        CoffeeVendingMachine coffeeVendingMachine = CoffeeVendingMachine.getInstance();
+    public static void main(String[] args) {
+        CoffeeVendingMachine machine = CoffeeVendingMachine.getInstance();
+        Inventory inventory = Inventory.getInstance();
 
-        coffeeVendingMachine.refillIngredient("Water", 120);
-        coffeeVendingMachine.refillIngredient("Milk", 70);
-        coffeeVendingMachine.refillIngredient("Coffee", 150);
+        // --- Initial setup: Refill inventory ---
+        System.out.println("=== Initializing Vending Machine ===");
+        inventory.addStock(Ingredient.COFFEE_BEANS, 50);
+        inventory.addStock(Ingredient.WATER, 500);
+        inventory.addStock(Ingredient.MILK, 200);
+        inventory.addStock(Ingredient.SUGAR, 100);
+        inventory.addStock(Ingredient.CARAMEL_SYRUP, 50);
+        inventory.printInventory();
 
-        // Display coffee menu
-        coffeeVendingMachine.displayMenu();
+        // --- Scenario 1: Successful Purchase of a Latte ---
+        System.out.println("\n--- SCENARIO 1: Buy a Latte (Success) ---");
+        machine.selectCoffee(CoffeeType.LATTE, List.of());
+        machine.insertMoney(200);
+        machine.insertMoney(50); // Total 250, price is 220
+        machine.dispenseCoffee();
+        inventory.printInventory();
 
-        // Simulate user requests
-        CoffeeRecipe espresso = coffeeVendingMachine.selectCoffee("Espresso");
-        coffeeVendingMachine.dispenseCoffee(espresso, new Payment(3.0));
+        // --- Scenario 2: Purchase with Insufficient Funds & Cancellation ---
+        System.out.println("\n--- SCENARIO 2: Buy Espresso (Insufficient Funds & Cancel) ---");
+        machine.selectCoffee(CoffeeType.ESPRESSO, List.of());
+        machine.insertMoney(100); // Price is 150
+        machine.dispenseCoffee(); // Should fail
+        machine.cancel(); // Should refund 100
+        inventory.printInventory(); // Should be unchanged
 
-        CoffeeRecipe cappuccino = coffeeVendingMachine.selectCoffee("Cappuccino");
-        coffeeVendingMachine.dispenseCoffee(cappuccino, new Payment(3.5));
+        // --- Scenario 3: Attempt to Buy with Insufficient Ingredients ---
+        System.out.println("\n--- SCENARIO 3: Buy Cappuccino (Out of Milk) ---");
+        inventory.printInventory();
+        machine.selectCoffee(CoffeeType.CAPPUCCINO, List.of(ToppingType.CARAMEL_SYRUP, ToppingType.EXTRA_SUGAR));
+        machine.insertMoney(300);
+        machine.dispenseCoffee(); // Should fail and refund
+        inventory.printInventory();
 
-
-        CoffeeRecipe latte = coffeeVendingMachine.selectCoffee("Latte");
-        coffeeVendingMachine.dispenseCoffee(latte, new Payment(4.0));
+        // --- Refill and final test ---
+        System.out.println("\n--- REFILLING AND FINAL TEST ---");
+        inventory.addStock(Ingredient.MILK, 200);
+        inventory.printInventory();
+        machine.selectCoffee(CoffeeType.LATTE, List.of(ToppingType.CARAMEL_SYRUP));
+        machine.insertMoney(250);
+        machine.dispenseCoffee();
+        inventory.printInventory();
     }
 }

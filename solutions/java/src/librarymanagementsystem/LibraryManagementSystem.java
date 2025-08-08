@@ -1,99 +1,89 @@
 package librarymanagementsystem;
 
+import librarymanagementsystem.enums.ItemType;
+import librarymanagementsystem.factory.ItemFactory;
+import librarymanagementsystem.models.BookCopy;
+import librarymanagementsystem.models.LibraryItem;
+import librarymanagementsystem.models.Member;
+import librarymanagementsystem.strategy.SearchStrategy;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LibraryManagementSystem {
-    private static LibraryManagementSystem instance;
-    private final Catalog catalog;
-    private final Map<String, Book> books;
-    private final Map<String, Member> members;
-    private final Map<String, Loan> loans;
-    private static final int MAX_BOOKS_PER_MEMBER = 5;
+    private static final LibraryManagementSystem INSTANCE = new LibraryManagementSystem();
+    private final Map<String, LibraryItem> catalog = new HashMap<>();
+    private final Map<String, Member> members = new HashMap<>();
+    private final Map<String, BookCopy> copies = new HashMap<>();
 
-    private LibraryManagementSystem() {
-        catalog = new Catalog();
-        books = new ConcurrentHashMap<>();
-        members = new ConcurrentHashMap<>();
-        loans = new ConcurrentHashMap<>();
-    }
+    private LibraryManagementSystem() {}
+    public static LibraryManagementSystem getInstance() { return INSTANCE; }
 
-    public static synchronized LibraryManagementSystem getInstance() {
-        if (instance == null) {
-            instance = new LibraryManagementSystem();
+    // --- Item Management ---
+    public List<BookCopy> addItem(ItemType type, String id, String title, String author, int numCopies) {
+        List<BookCopy> bookCopies = new ArrayList<>();
+        LibraryItem item = ItemFactory.createItem(type, id, title, author);
+        catalog.put(id, item);
+        for (int i = 0; i < numCopies; i++) {
+            String copyId = id + "-c" + (i + 1);
+            BookCopy copy = new BookCopy(copyId, item);
+            copies.put(copyId, new BookCopy(copyId, item));
+            bookCopies.add(copy);
         }
-        return instance;
+        System.out.println("Added " + numCopies + " copies of '" + title + "'");
+        return bookCopies;
     }
 
-    public BookCopy addBookCopy(String isbn, String title, String authorName) {
-        Book book = books.getOrDefault(isbn, new Book(isbn, title, authorName));
-        books.put(book.getIsbn(), book);
-        BookCopy copy = new BookCopy(book);
-        catalog.add(copy);
-        return copy;
-    }
-
-    public Member registerMember(String name, String contactInfo) {
-        Member member = new Member(name, contactInfo);
-        members.put(member.getId(), member);
+    // --- User Management ---
+    public Member addMember(String id, String name) {
+        Member member = new Member(id, name);
+        members.put(id, member);
         return member;
     }
 
-    public synchronized boolean borrowBook(String memberId, String barcode) {
+    // --- Core Actions ---
+    public void checkout(String memberId, String copyId) {
         Member member = members.get(memberId);
-        BookCopy bookCopy = catalog.getBookCopyByBarcode(barcode);
-
-        if (member == null || bookCopy == null) {
-            System.out.println("Error: Invalid member or book.");
-            return false;
+        BookCopy copy = copies.get(copyId);
+        if (member != null && copy != null) {
+            copy.checkout(member);
+        } else {
+            System.out.println("Error: Invalid member or copy ID.");
         }
-
-        if (member.getBorrowedCount() >= MAX_BOOKS_PER_MEMBER) {
-            System.out.println("Error: Member has reached the borrowing limit\n");
-            return false;
-        }
-
-        bookCopy.markBorrowed();
-        Loan loan = new Loan(bookCopy, member);
-        member.addLoan(loan);
-        loans.put(loan.getId(), loan);
-
-        System.out.printf("Successfully borrowed %s by %s\n", bookCopy.getBook().getTitle(), member.getName());
-
-        return true;
     }
 
-    public synchronized boolean returnBook(String memberId, String barcode) {
+    public void returnItem(String copyId) {
+        BookCopy copy = copies.get(copyId);
+        if (copy != null) {
+            copy.returnItem();
+        } else {
+            System.out.println("Error: Invalid copy ID.");
+        }
+    }
+
+    public void placeHold(String memberId, String itemId) {
         Member member = members.get(memberId);
-        BookCopy bookCopy = catalog.getBookCopyByBarcode(barcode);
-
-        if (member == null || bookCopy == null) {
-            System.out.println("Error: Invalid member or book.");
-            return false;
+        LibraryItem item = catalog.get(itemId);
+        if (member != null && item != null) {
+            // Place hold on any copy that is checked out
+            item.getCopies().stream()
+                    .filter(c -> !c.isAvailable())
+                    .findFirst()
+                    .ifPresent(copy -> copy.placeHold(member));
         }
-
-        Loan loanToRemove = member.getLoans().stream()
-                .filter(loan -> loan.getCopy().getBarCode().equals(barcode))
-                .findFirst()
-                .orElse(null);
-
-
-        if (loanToRemove != null) {
-            member.removeLoan(loanToRemove);
-            bookCopy.markAvailable();
-            System.out.printf("Successfully returned %s by %s\n", bookCopy.getBook().getTitle(), member.getName());
-            return true;
-        }
-
-        return false;
     }
 
-    public List<Book> searchByTitle(String title) {
-        return catalog.searchByTitle(title);
+    // --- Search (Using Strategy Pattern) ---
+    public List<LibraryItem> search(String query, SearchStrategy strategy) {
+        return strategy.search(query, new ArrayList<>(catalog.values()));
     }
 
-    public List<Book> searchByAuthor(String author) {
-        return catalog.searchByAuthor(author);
+    public void printCatalog() {
+        System.out.println("\n--- Library Catalog ---");
+        catalog.values().forEach(item -> System.out.printf("ID: %s, Title: %s, Author/Publisher: %s, Available: %d\n",
+                item.getId(), item.getTitle(), item.getAuthorOrPublisher(), item.getAvailableCopyCount()));
+        System.out.println("-----------------------\n");
     }
 }

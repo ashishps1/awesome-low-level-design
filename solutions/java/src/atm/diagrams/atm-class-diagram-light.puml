@@ -1,0 +1,132 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+skinparam backgroundColor transparent
+skinparam wrapWidth 500
+skinparam roundCorner 15
+skinparam defaultFontSize 20
+skinparam defaultFontColor black
+skinparam ArrowColor black
+skinparam Padding 2
+skinparam dpi 70
+skinparam nodesep 90
+skinparam ranksep 120
+
+skinparam class {
+  BackgroundColor #00d084
+  BorderColor black
+  ArrowColor black
+  FontSize 25
+  BorderThickness 2
+  ArrowThickness 3
+}
+
+class ATMSystem {
+  - transactionCounter: AtomicLong
+  - currentState: ATMState
+  - currentCard: Card
+  - cashDispenser: CashDispenser
+  - INSTANCE: ATMSystem
+  - bankService: BankService
+  + selectOperation(OperationType, int[]): void
+  + getCard(String): Card
+  + enterPin(String): void
+  + depositCash(int): void
+  + changeState(ATMState): void
+  + getCurrentCard(): Card
+  + withdrawCash(int): void
+  + getInstance(): ATMSystem
+  + checkBalance(): void
+  + authenticate(String): boolean
+  + getBankService(): BankService
+  + setCurrentCard(Card): void
+  + insertCard(String): void
+}
+interface ATMState << interface >> {
+  + insertCard(ATMSystem, String): void
+  + enterPin(ATMSystem, String): void
+  + selectOperation(ATMSystem, OperationType, int[]): void
+  + ejectCard(ATMSystem): void
+}
+class Account {
+  - cards: Map<String, Card>
+  - balance: double
+  - accountNumber: String
+  + withdraw(double): boolean
+  + deposit(double): void
+}
+class AuthenticatedState {
+}
+class BankService {
+  - cards: Map<String, Card>
+  - cardAccountMap: Map<Card, Account>
+  - accounts: Map<String, Account>
+  + linkCardToAccount(Card, Account): void
+  + getBalance(Card): double
+  + depositMoney(Card, double): void
+  + createAccount(String, double): Account
+  + createCard(String, String): Card
+  + getCard(String): Card
+  + withdrawMoney(Card, double): void
+  + authenticate(Card, String): boolean
+}
+class Card {
+  - cardNumber: String
+  - pin: String
+}
+class CashDispenser {
+  - chain: DispenseChain
+  + canDispenseCash(int): boolean
+  + dispenseCash(int): void
+}
+interface DispenseChain << interface >> {
+  + dispense(int): void
+  + setNextChain(DispenseChain): void
+  + canDispense(int): boolean
+}
+class HasCardState {
+}
+class IdleState {
+}
+abstract class NoteDispenser {
+  - noteValue: int
+  - nextChain: DispenseChain
+  - numNotes: int
+  + dispense(int): void
+  + canDispense(int): boolean
+  + setNextChain(DispenseChain): void
+}
+class NoteDispenser100
+class NoteDispenser20
+class NoteDispenser50
+enum OperationType << enumeration >> {
+  + WITHDRAW_CASH
+  + DEPOSIT_CASH
+  + CHECK_BALANCE
+}
+
+class ATMDemo #00bfff {
+    + main(String)
+}
+
+ATMSystem                *-[plain]--> ATMState
+ATMSystem                *-[plain]--> BankService
+ATMSystem                *-[plain]-> Card
+ATMSystem                *-[plain]--> CashDispenser
+ATMSystem                -[plain]right-> OperationType
+Account            *-[plain]--> Card
+ATMState           ^-[dashed]- AuthenticatedState
+BankService        *-[plain]--> Account
+BankService        *-[plain]-> Card
+CashDispenser      *-[plain]-> DispenseChain
+ATMState           ^-[dashed]- HasCardState
+ATMState           ^-[dashed]- IdleState
+DispenseChain      ^-[dashed]- NoteDispenser
+NoteDispenser      *-[plain]-> DispenseChain
+NoteDispenser      ^-[plain]- NoteDispenser100
+NoteDispenser      ^-[plain]- NoteDispenser20
+NoteDispenser      ^-[plain]- NoteDispenser50
+ATMDemo            -[plain]right-> ATMSystem
+@enduml

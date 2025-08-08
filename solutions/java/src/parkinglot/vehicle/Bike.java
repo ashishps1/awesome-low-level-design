@@ -1,7 +1,7 @@
 package parkinglot.vehicle;
 
 public class Bike extends Vehicle {
-    public Bike(String license) {
-        super(license, VehicleType.BIKE);
+    public Bike(String licenseNumber) {
+        super(licenseNumber, VehicleSize.SMALL);
     }
 }

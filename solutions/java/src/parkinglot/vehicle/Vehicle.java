@@ -1,16 +1,16 @@
 package parkinglot.vehicle;
 
 public abstract class Vehicle {
-    protected String licensePlate;
-    protected VehicleType type;
+    private final String licenseNumber;
+    private final VehicleSize size;
 
-    public Vehicle(String licensePlate, VehicleType type) {
-        this.licensePlate = licensePlate;
-        this.type = type;
+    public Vehicle(String licenseNumber, VehicleSize size) {
+        this.licenseNumber = licenseNumber;
+        this.size = size;
     }
 
-    public String getLicenseNumber() { return licensePlate; }
-    public VehicleType getType() {
-        return type;
+    public String getLicenseNumber() { return licenseNumber; }
+    public VehicleSize getSize() {
+        return size;
     }
 }

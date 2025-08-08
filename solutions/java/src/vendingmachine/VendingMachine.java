@@ -1,16 +1,19 @@
 package vendingmachine;
 
-import vendingmachine.states.*;
+import vendingmachine.entity.Inventory;
+import vendingmachine.entity.Item;
+import vendingmachine.enums.Coin;
+import vendingmachine.state.*;
 
 public class VendingMachine {
     private final static VendingMachine INSTANCE = new VendingMachine();
     private final Inventory inventory = new Inventory();
-    private State currentState;
+    private VendingMachineState currentVendingMachineState;
     private int balance = 0;
     private String selectedItemCode;
 
     public VendingMachine() {
-        currentState = new IdleState(this);
+        currentVendingMachineState = new IdleState(this);
     }
 
     public static VendingMachine getInstance() {
@@ -18,7 +21,7 @@ public class VendingMachine {
     }
 
     public void insertCoin(Coin coin) {
-        currentState.insertCoin(coin);
+        currentVendingMachineState.insertCoin(coin);
     }
 
     public Item addItem(String code, String name, int price, int quantity) {
@@ -28,11 +31,11 @@ public class VendingMachine {
     }
 
     public void selectItem(String code) {
-        currentState.selectItem(code);
+        currentVendingMachineState.selectItem(code);
     }
 
     public void dispense() {
-        currentState.dispense();
+        currentVendingMachineState.dispense();
     }
 
     public void dispenseItem() {
@@ -71,8 +74,8 @@ public class VendingMachine {
         this.selectedItemCode = code;
     }
 
-    public void setState(State state) {
-        this.currentState = state;
+    public void setState(VendingMachineState vendingMachineState) {
+        this.currentVendingMachineState = vendingMachineState;
     }
 
     // Getters for states and inventory

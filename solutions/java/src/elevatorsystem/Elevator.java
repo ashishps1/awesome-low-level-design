@@ -1,94 +1,89 @@
 package elevatorsystem;
 
+import elevatorsystem.enums.Direction;
+import elevatorsystem.models.Request;
+import elevatorsystem.observer.ElevatorObserver;
+import elevatorsystem.state.ElevatorState;
+import elevatorsystem.state.IdleState;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Elevator {
+public class Elevator implements Runnable {
     private final int id;
-    private final int capacity;
-    private int currentFloor;
-    private Direction direction;
-    private final List<Request> requests;
+    private AtomicInteger currentFloor;
+    private ElevatorState state;
+    private volatile boolean isRunning = true;
 
-    public Elevator(int id, int capacity) {
+    private final TreeSet<Integer> upRequests;
+    private final TreeSet<Integer> downRequests;
+
+    // Observer Pattern: List of observers
+    private final List<ElevatorObserver> observers = new ArrayList<>();
+
+    public Elevator(int id) {
         this.id = id;
-        this.capacity = capacity;
-        this.currentFloor = 0;
-        this.direction = Direction.UP;
-        this.requests = new ArrayList<>();
+        this.currentFloor = new AtomicInteger(1);
+        this.upRequests = new TreeSet<>();
+        this.downRequests = new TreeSet<>((a, b) -> b - a);
+        this.state = new IdleState();
     }
 
+    // --- Observer Pattern Methods ---
+    public void addObserver(ElevatorObserver observer) {
+        observers.add(observer);
+        observer.update(this); // Send initial state
+    }
+
+    public void notifyObservers() {
+        for (ElevatorObserver observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // --- State Pattern Methods ---
+    public void setState(ElevatorState state) {
+        this.state = state;
+        notifyObservers(); // Notify observers on direction change
+    }
+
+    public void move() {
+        state.move(this);
+    }
+
+    // --- Request Handling ---
     public synchronized void addRequest(Request request) {
-        if (requests.size() < capacity) {
-            requests.add(request);
-            System.out.println("Elevator " + id + " added request: " + request);
-            notifyAll();
-        }
+        System.out.println("Elevator " + id + " processing: " + request);
+        state.addRequest(this, request);
     }
 
-    public synchronized Request getNextRequest() {
-        while (requests.isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return requests.removeFirst();
+    // --- Getters and Setters ---
+    public int getId() { return id; }
+    public int getCurrentFloor() { return currentFloor.get(); }
+
+    public void setCurrentFloor(int floor) {
+        this.currentFloor.set(floor);
+        notifyObservers(); // Notify observers on floor change
     }
 
-    public synchronized void processRequests() {
-        while (true) {
-            while (!requests.isEmpty()) {
-                Request request = getNextRequest();
-                processRequest(request);
-            }
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    public Direction getDirection() { return state.getDirection(); }
+    public TreeSet<Integer> getUpRequests() { return upRequests; }
+    public TreeSet<Integer> getDownRequests() { return downRequests; }
+    public boolean isRunning() { return isRunning; }
+    public void stopElevator() { this.isRunning = false; }
 
-    private void processRequest(Request request) {
-        int startFloor = currentFloor;
-        int endFloor = request.getDestinationFloor();
-
-        if (startFloor < endFloor) {
-            direction = Direction.UP;
-            for (int i = startFloor; i <= endFloor; i++) {
-                currentFloor = i;
-                System.out.println("Elevator " + id + " reached floor " + currentFloor);
-                try {
-                    Thread.sleep(1000); // Simulating elevator movement
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else if (startFloor > endFloor) {
-            direction = Direction.DOWN;
-            for (int i = startFloor; i >= endFloor; i--) {
-                currentFloor = i;
-                System.out.println("Elevator " + id + " reached floor " + currentFloor);
-                try {
-                    Thread.sleep(1000); // Simulating elevator movement
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
+    @Override
     public void run() {
-        processRequests();
-    }
-
-    public int getCurrentFloor() {
-        return currentFloor;
-    }
-
-    public Direction getDirection() {
-        return direction;
+        while (isRunning) {
+            move();
+            try {
+                Thread.sleep(1000); // Simulate movement time
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                isRunning = false;
+            }
+        }
     }
 }

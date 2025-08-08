@@ -19,7 +19,7 @@ Design and implement a Vending Machine system that allows users to select produc
 
 ## Core Entities
 
-- **VendingMachine:** Main class that manages inventory, state transitions, item selection, and payment.
+- **VendingMachine:** Main class that manages inventory, vendingMachineState transitions, item selection, and payment.
 - **Product:** Represents a item with a name and price.
 - **Inventory:** Manages the stock of products.
 - **Coin / Note:** Represents accepted denominations for payment.
@@ -55,7 +55,7 @@ Design and implement a Vending Machine system that allows users to select produc
 
 ### 6. IdleState, ReadyState, DispenseState, ReturnChangeState
 - **Implements:** VendingMachineState
-- **Behavior:** Each state handles allowed operations and transitions.
+- **Behavior:** Each vendingMachineState handles allowed operations and transitions.
 
 ---
 

@@ -1,36 +1,38 @@
 package atm;
 
+import atm.enums.OperationType;
+
 public class ATMDemo {
-    public static void run() {
-        ATM atm = ATM.getInstance();
+    public static void main(String[] args) {
+        ATMSystem atmSystem = ATMSystem.getInstance();
 
         // Perform Check Balance operation
-        atm.insertCard("1234-5678-9012-3456");
-        atm.enterPin("1234");
-        atm.selectOperation(OperationType.CHECK_BALANCE); // $1000
+        atmSystem.insertCard("1234-5678-9012-3456");
+        atmSystem.enterPin("1234");
+        atmSystem.selectOperation(OperationType.CHECK_BALANCE); // $1000
 
         // Perform Withdraw Cash operation
-        atm.insertCard("1234-5678-9012-3456");
-        atm.enterPin("1234");
-        atm.selectOperation(OperationType.WITHDRAW_CASH, 570);
+        atmSystem.insertCard("1234-5678-9012-3456");
+        atmSystem.enterPin("1234");
+        atmSystem.selectOperation(OperationType.WITHDRAW_CASH, 570);
 
         // Perform Deposit Cash operation
-        atm.insertCard("1234-5678-9012-3456");
-        atm.enterPin("1234");
-        atm.selectOperation(OperationType.DEPOSIT_CASH, 200);
+        atmSystem.insertCard("1234-5678-9012-3456");
+        atmSystem.enterPin("1234");
+        atmSystem.selectOperation(OperationType.DEPOSIT_CASH, 200);
 
         // Perform Check Balance operation
-        atm.insertCard("1234-5678-9012-3456");
-        atm.enterPin("1234");
-        atm.selectOperation(OperationType.CHECK_BALANCE); // $630
+        atmSystem.insertCard("1234-5678-9012-3456");
+        atmSystem.enterPin("1234");
+        atmSystem.selectOperation(OperationType.CHECK_BALANCE); // $630
 
         // Perform Withdraw Cash more than balance
-        atm.insertCard("1234-5678-9012-3456");
-        atm.enterPin("1234");
-        atm.selectOperation(OperationType.WITHDRAW_CASH, 700); // Insufficient balance
+        atmSystem.insertCard("1234-5678-9012-3456");
+        atmSystem.enterPin("1234");
+        atmSystem.selectOperation(OperationType.WITHDRAW_CASH, 700); // Insufficient balance
 
         // Insert Incorrect PIN
-        atm.insertCard("1234-5678-9012-3456");
-        atm.enterPin("3425");
+        atmSystem.insertCard("1234-5678-9012-3456");
+        atmSystem.enterPin("3425");
     }
 }

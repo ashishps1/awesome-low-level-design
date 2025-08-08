@@ -38,7 +38,7 @@ Design and implement an ATM (Automated Teller Machine) system that allows users 
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/atm-class-diagram.png)
+![](../../../../uml-diagrams/class-diagrams/atmSystem-class-diagram.png)
 
 ### 1. ATM
 - **Fields:** BankingService bankService, CashDispenser cashDispenser
@@ -77,15 +77,15 @@ Design and implement an ATM (Automated Teller Machine) system that allows users 
 ```java
 BankingService bankService = new BankingService();
 CashDispenser cashDispenser = new CashDispenser(10000);
-ATM atm = new ATM(bankService, cashDispenser);
+ATM atmSystem = new ATM(bankService, cashDispenser);
 
 bankService.createAccount("1234567890", 1000.0);
 Card card = new Card("1234567890", "1234");
-atm.authenticateUser(card);
+atmSystem.authenticateUser(card);
 
-double balance = atm.checkBalance("1234567890");
-atm.withdrawCash("1234567890", 500.0);
-atm.depositCash("1234567890", 200.0);
+double balance = atmSystem.checkBalance("1234567890");
+atmSystem.withdrawCash("1234567890", 500.0);
+atmSystem.depositCash("1234567890", 200.0);
 ```
 
 ---

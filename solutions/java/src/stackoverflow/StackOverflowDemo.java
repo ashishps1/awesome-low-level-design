@@ -1,68 +1,66 @@
 package stackoverflow;
 
-import java.util.Arrays;
+import stackoverflow.enums.VoteType;
+import stackoverflow.entities.Answer;
+import stackoverflow.entities.Question;
+import stackoverflow.entities.Tag;
+import stackoverflow.entities.User;
+import stackoverflow.strategy.SearchStrategy;
+import stackoverflow.strategy.TagSearchStrategy;
+import stackoverflow.strategy.UserSearchStrategy;
+
 import java.util.List;
+import java.util.Set;
 
 public class StackOverflowDemo {
-    public static void run() {
-        StackOverflow stackOverflow = StackOverflow.getInstance();
+    public static void main(String[] args) {
+        StackOverflowService service = new StackOverflowService();
 
-        // Create users
-        User alice = stackOverflow.createUser("Alice", "alice@example.com");
-        User bob = stackOverflow.createUser("Bob", "bob@example.com");
-        User charlie = stackOverflow.createUser("Charlie", "charlie@example.com");
+        // 1. Create Users
+        User alice = service.createUser("Alice");
+        User bob = service.createUser("Bob");
+        User charlie = service.createUser("Charlie");
 
-        // Alice asks a question
-        Question javaQuestion = stackOverflow.postQuestion(alice.getUserId(), "What is polymorphism in Java?",
-                "Can someone explain polymorphism in Java with an example?",
-                Arrays.asList("java", "oop"));
+        // 2. Alice posts a question
+        System.out.println("--- Alice posts a question ---");
+        Tag javaTag = new Tag("java");
+        Tag designPatternsTag = new Tag("design-patterns");
+        Set<Tag> tags = Set.of(javaTag, designPatternsTag);
+        Question question = service.postQuestion(alice.getId(), "How to implement Observer Pattern?", "Details about Observer Pattern...", tags);
+        printReputations(alice, bob, charlie);
 
-        // Bob answers Alice's question
-        Answer bobAnswer = stackOverflow.postAnswer(bob.getUserId(), javaQuestion.getId(),
-                "Polymorphism in Java is the ability of an object to take on many forms...");
+        // 3. Bob and Charlie post answers
+        System.out.println("\n--- Bob and Charlie post answers ---");
+        Answer bobAnswer = service.postAnswer(bob.getId(), question.getId(), "You can use the java.util.Observer interface.");
+        Answer charlieAnswer = service.postAnswer(charlie.getId(), question.getId(), "A better way is to create your own Observer interface.");
+        printReputations(alice, bob, charlie);
 
-        // Charlie comments on the question
-        stackOverflow.addComment(charlie.getUserId(), javaQuestion, "Great question! I'm also interested in learning about this.");
+        // 4. Voting happens
+        System.out.println("\n--- Voting Occurs ---");
+        service.voteOnPost(alice.getId(), question.getId(), VoteType.UPVOTE); // Alice upvotes her own question
+        service.voteOnPost(bob.getId(), charlieAnswer.getId(), VoteType.UPVOTE); // Bob upvotes Charlie's answer
+        service.voteOnPost(alice.getId(), bobAnswer.getId(), VoteType.DOWNVOTE); // Alice downvotes Bob's answer
+        printReputations(alice, bob, charlie);
 
-        // Alice comments on Bob's answer
-        stackOverflow.addComment(alice.getUserId(), bobAnswer, "Thanks for the explanation! Could you provide a code example?");
+        // 5. Alice accepts Charlie's answer
+        System.out.println("\n--- Alice accepts Charlie's answer ---");
+        service.acceptAnswer(question.getId(), charlieAnswer.getId());
+        printReputations(alice, bob, charlie);
 
-        // Charlie votes on the question and answer
-        stackOverflow.vote(charlie.getUserId(), javaQuestion, VoteType.UPVOTE);
-        stackOverflow.vote(charlie.getUserId(), bobAnswer, VoteType.UPVOTE);
+        // 6. Search for questions
+        System.out.println("\n--- (C) Combined Search: Questions by 'Alice' with tag 'java' ---");
+        List<SearchStrategy> filtersC = List.of(
+                new UserSearchStrategy(alice),
+                new TagSearchStrategy(javaTag)
+        );
+        List<Question> searchResults = service.searchQuestions(filtersC);
+        searchResults.forEach(q -> System.out.println("  - Found: " + q.getTitle()));
+    }
 
-        // Alice accepts Bob's answer
-        stackOverflow.acceptAnswer(bobAnswer.getId());
-
-        // Print out the current state
-        System.out.println("Question: " + javaQuestion.getTitle());
-        System.out.println("Asked by: " + javaQuestion.getAuthor().getName());
-        System.out.println("Tags: " + javaQuestion.getTags().stream().map(Tag::getName).reduce((a, b) -> a + ", " + b).orElse(""));
-        System.out.println("Votes: " + javaQuestion.getVoteCount());
-        System.out.println("Comments: " + javaQuestion.getComments().size());
-        System.out.println("\nAnswer by " + bobAnswer.getAuthor().getName() + ":");
-        System.out.println(bobAnswer.getContent());
-        System.out.println("Votes: " + bobAnswer.getVoteCount());
-        System.out.println("Accepted: " + bobAnswer.isAccepted());
-        System.out.println("Comments: " + bobAnswer.getComments().size());
-
-        System.out.println("\nUser Reputations:");
-        System.out.println("Alice: " + alice.getReputation());
-        System.out.println("Bob: " + bob.getReputation());
-        System.out.println("Charlie: " + charlie.getReputation());
-
-        // Search questions by keyword
-        System.out.println("\nSearch Results for 'java':");
-        List<Question> searchResults = stackOverflow.searchQuestions("java");
-        for (Question q : searchResults) {
-            System.out.println(q.getTitle());
-        }
-
-        // Search questions by user
-        System.out.println("\nAlice's Questions:");
-        List<Question> bobQuestions = stackOverflow.getQuestionsByUser(alice.getUserId());
-        for (Question q : bobQuestions) {
-            System.out.println(q.getTitle());
+    private static void printReputations(User... users) {
+        System.out.println("--- Current Reputations ---");
+        for(User user : users) {
+            System.out.printf("%s: %d\n", user.getName(), user.getReputation());
         }
     }
 }

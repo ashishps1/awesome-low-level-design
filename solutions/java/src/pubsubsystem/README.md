@@ -22,7 +22,7 @@ Design and implement a Publish-Subscribe (Pub/Sub) system that allows publishers
 
 - **Broker:** Manages topics, subscriptions, and message delivery.
 - **Topic:** Represents a topic to which messages can be published and subscribers can subscribe.
-- **Publisher:** Publishes messages to topics via the broker.
+- **Publisher:** Publishes messages to topics via the pubSubService.
 - **Subscriber (interface):** Interface for all subscribers, defines the `consume(Message)` method.
 - **PrintSubscriber:** A subscriber that prints received messages.
 - **LoggingSubscriber:** A subscriber that logs received messages.
@@ -46,7 +46,7 @@ Design and implement a Publish-Subscribe (Pub/Sub) system that allows publishers
 - **Methods:** addSubscriber(Subscriber), removeSubscriber(Subscriber), publish(Message)
 
 ### 3. Publisher
-- **Fields:** String name, Broker broker
+- **Fields:** String name, Broker pubSubService
 - **Methods:** publish(String topic, String payload)
 
 ### 4. Subscriber (interface)
@@ -75,16 +75,16 @@ Design and implement a Publish-Subscribe (Pub/Sub) system that allows publishers
 ## Example Usage
 
 ```java
-Broker broker = new Broker();
-broker.createTopic("topic1");
-broker.createTopic("topic2");
+Broker pubSubService = new Broker();
+pubSubService.createTopic("topic1");
+pubSubService.createTopic("topic2");
 
-Publisher publisher1 = new Publisher("publisher1", broker);
+Publisher publisher1 = new Publisher("publisher1", pubSubService);
 Subscriber subscriber1 = new PrintSubscriber("PrintSubscriber1");
 Subscriber subscriber2 = new LoggingSubscriber("LoggingSubscriber2");
 
-broker.subscribe("topic1", subscriber1);
-broker.subscribe("topic2", subscriber2);
+pubSubService.subscribe("topic1", subscriber1);
+pubSubService.subscribe("topic2", subscriber2);
 
 publisher1.publish("topic1", "Hello Topic1!");
 publisher1.publish("topic2", "Hello Topic2!");
@@ -102,6 +102,6 @@ See `PubSubSystemDemo.java` for a sample usage and simulation of the pub/sub sys
 
 - **Add new subscriber types:** Implement the `Subscriber` interface for custom processing.
 - **Add new message types:** Extend the `Message` class for richer payloads.
-- **Add filtering or transformation:** Enhance the broker or topic to support message filtering or transformation.
+- **Add filtering or transformation:** Enhance the pubSubService or topic to support message filtering or transformation.
 
 ---

@@ -1,90 +1,101 @@
 package cricinfo;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
+import cricinfo.enums.PlayerRole;
+import cricinfo.enums.WicketType;
+import cricinfo.entity.*;
+import cricinfo.observer.CommentaryDisplay;
+import cricinfo.observer.ScorecardDisplay;
+import cricinfo.observer.UserNotifier;
+import cricinfo.strategy.T20FormatStrategy;
+
 import java.util.List;
-import java.util.Map;
 
 public class CricinfoDemo {
-    public static void run() {
-        // Create teams
-        List<Player> team1Players = Arrays.asList(
-                new Player("P101", "Player 1", "Batsman"),
-                new Player("P102", "Player 2", "Bowler"),
-                new Player("P103", "Player 3", "All-rounder")
-        );
-        List<Player> team2Players = Arrays.asList(
-                new Player("P201", "Player 4", "Batsman"),
-                new Player("P202", "Player 5", "Bowler"),
-                new Player("P203", "Player 6", "All-rounder")
-        );
-        Team team1 = new Team("T1", "Team 1", team1Players);
-        Team team2 = new Team("T2", "Team 2", team2Players);
-        List<Team> teams = Arrays.asList(team1, team2);
+    public static void main(String[] args) {
+        // Get the Singleton service instance
+        CricInfoService service = CricInfoService.getInstance();
 
-        // Create a match
-        Match match = new Match("M001", "Match 1", "Venue 1", LocalDateTime.now(), teams);
+        // 1. Setup Players and Teams
+        Player p1 = service.addPlayer("P1", "Virat", PlayerRole.BATSMAN);
+        Player p2 = service.addPlayer("P2", "Rohit", PlayerRole.BATSMAN);
+        Player p3 = service.addPlayer("P3", "Bumrah", PlayerRole.BOWLER);
+        Player p4 = service.addPlayer("P4", "Jadeja", PlayerRole.ALL_ROUNDER);
 
-        // Create Cricinfo system
-        CricinfoSystem cricinfoSystem = new CricinfoSystem();
+        Player p5 = service.addPlayer("P5", "Warner", PlayerRole.BATSMAN);
+        Player p6 = service.addPlayer("P6", "Smith", PlayerRole.BATSMAN);
+        Player p7 = service.addPlayer("P7", "Starc", PlayerRole.BOWLER);
+        Player p8 = service.addPlayer("P8", "Maxwell", PlayerRole.ALL_ROUNDER);
 
-        // Add the match to the system
-        cricinfoSystem.addMatch(match);
+        Team india = new Team("T1", "India", List.of(p1, p2, p3, p4));
+        Team australia = new Team("T2", "Australia", List.of(p5, p6, p7, p8));
 
-        // Create a scorecard for the match
-        cricinfoSystem.createScorecard(match);
+        // 2. Create a T20 Match using the service
+        Match t20Match = service.createMatch(india, australia, new T20FormatStrategy());
+        String matchId = t20Match.getId();
 
-        // Get the scorecard
-        String scorecardId = "SC-M001-0001";
-        Scorecard scorecard = cricinfoSystem.getScorecard(scorecardId);
+        // 3. Create and subscribe observers
+        ScorecardDisplay scorecard = new ScorecardDisplay();
+        CommentaryDisplay commentary = new CommentaryDisplay();
+        UserNotifier notifier = new UserNotifier();
 
-        // Update scores
-        cricinfoSystem.updateScore(scorecardId, "T1", 100);
-        cricinfoSystem.updateScore(scorecardId, "T2", 75);
+        service.subscribeToMatch(matchId, scorecard);
+        service.subscribeToMatch(matchId, commentary);
+        service.subscribeToMatch(matchId, notifier);
 
-        // Create innings
-        Innings innings1 = new Innings("I1", "T1", "T2");
-        Innings innings2 = new Innings("I2", "T2", "T1");
+        // 4. Start the match
+        service.startMatch(matchId);
 
-        // Add overs to innings
-        Over over1 = new Over(1);
-        over1.addBall(new Ball(1, "P202", "P101", "4"));
-        over1.addBall(new Ball(2, "P202", "P101", "6"));
-        innings1.addOver(over1);
+        System.out.println("\n--- SIMULATING FIRST INNINGS ---");
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p7).facedBy(p1).withRuns(2).build());
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p7).facedBy(p1).withRuns(1).build());
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p7).facedBy(p2).withRuns(6).build());
 
-        Over over2 = new Over(2);
-        over2.addBall(new Ball(1, "P102", "P201", "1"));
-        over2.addBall(new Ball(2, "P102", "P201", "0"));
-        innings1.addOver(over2);
+        Wicket p2Wicket = new Wicket.Builder(WicketType.BOWLED, p2).build();
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p7).facedBy(p2).withRuns(0).withWicket(p2Wicket).build());
 
-        // Add innings to the scorecard
-        cricinfoSystem.addInnings(scorecardId, innings1);
-        cricinfoSystem.addInnings(scorecardId, innings2);
+        Wicket p3Wicket = new Wicket.Builder(WicketType.LBW, p3).build();
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p7).facedBy(p3).withRuns(0).withWicket(p3Wicket).build());
 
-        // Get the updated scorecard
-        Scorecard updatedScorecard = cricinfoSystem.getScorecard(scorecardId);
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p7).facedBy(p4).withRuns(4).build());
 
-        // Display the scorecard
-        System.out.println("Scorecard ID: " + updatedScorecard.getId());
-        System.out.println("Match: " + updatedScorecard.getMatch().getTitle());
-        System.out.println("Team Scores:");
-        for (Map.Entry<String, Integer> entry : updatedScorecard.getTeamScores().entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-        System.out.println("Innings:");
-        for (Innings innings : updatedScorecard.getInnings()) {
-            System.out.println("Innings ID: " + innings.getId());
-            System.out.println("Batting Team: " + innings.getBattingTeamId());
-            System.out.println("Bowling Team: " + innings.getBowlingTeamId());
-            System.out.println("Overs:");
-            for (Over over : innings.getOvers()) {
-                System.out.println("Over " + over.getOverNumber());
-                for (Ball ball : over.getBalls()) {
-                    System.out.println("Ball " + ball.getBallNumber() + ": " +
-                            ball.getBowler() + " to " + ball.getBatsman() + " - " + ball.getResult());
-                }
-            }
-            System.out.println();
-        }
+        Wicket p4Wicket = new Wicket.Builder(WicketType.CAUGHT, p4).caughtBy(p6).build();
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p7).facedBy(p4).withRuns(0).withWicket(p4Wicket).build());
+
+        // The system is now in an IN_BREAK state
+        System.out.println("\n\n--- INNINGS BREAK ---");
+        System.out.println("Players are off the field. Preparing for the second innings.");
+
+        // 2. Start the second innings
+        service.startNextInnings(matchId);
+
+        System.out.println("\n--- SIMULATING SECOND INNINGS ---");
+        // Simulate a few balls of the second innings to show it works
+        // Now Australia is batting (p5, p6) and India is bowling (p3)
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p3).facedBy(p5).withRuns(4).build());
+
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p3).facedBy(p5).withRuns(1).build());
+
+        Wicket p5Wicket = new Wicket.Builder(WicketType.BOWLED, p5).build();
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p3).facedBy(p5).withRuns(0).withWicket(p5Wicket).build());
+
+        Wicket p7Wicket = new Wicket.Builder(WicketType.LBW, p7).build();
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p3).facedBy(p7).withRuns(0).withWicket(p7Wicket).build());
+
+        Wicket p8Wicket = new Wicket.Builder(WicketType.STUMPED, p8).build();
+        service.processBallUpdate(matchId, new Ball.BallBuilder()
+                .bowledBy(p3).facedBy(p8).withRuns(0).withWicket(p8Wicket).build());
+
+        service.endMatch(matchId);
     }
 }

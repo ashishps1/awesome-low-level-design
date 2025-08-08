@@ -1,36 +1,36 @@
 package atm.state;
 
-import atm.ATM;
-import atm.Card;
-import atm.OperationType;
+import atm.ATMSystem;
+import atm.entities.Card;
+import atm.enums.OperationType;
 
 public class IdleState implements ATMState {
     @Override
-    public void insertCard(ATM atm, String cardNumber) {
+    public void insertCard(ATMSystem atmSystem, String cardNumber) {
         System.out.println("\nCard has been inserted.");
-        Card card = atm.getCard(cardNumber);
+        Card card = atmSystem.getCard(cardNumber);
 
         if (card == null) {
-            ejectCard(atm);
+            ejectCard(atmSystem);
         } else {
-            atm.setCurrentCard(card);
-            atm.changeState(new HasCardState());
+            atmSystem.setCurrentCard(card);
+            atmSystem.changeState(new HasCardState());
         }
     }
 
     @Override
-    public void enterPin(ATM atm, String pin) {
+    public void enterPin(ATMSystem atmSystem, String pin) {
         System.out.println("Error: Please insert a card first.");
     }
 
     @Override
-    public void selectOperation(ATM atm, OperationType op, int... args) {
+    public void selectOperation(ATMSystem atmSystem, OperationType op, int... args) {
         System.out.println("Error: Please insert a card first.");
     }
 
     @Override
-    public void ejectCard(ATM atm) {
+    public void ejectCard(ATMSystem atmSystem) {
         System.out.println("Error: Card not found.");
-        atm.setCurrentCard(null);
+        atmSystem.setCurrentCard(null);
     }
 }

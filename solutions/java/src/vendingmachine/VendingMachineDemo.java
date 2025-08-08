@@ -1,7 +1,9 @@
 package vendingmachine;
 
+import vendingmachine.enums.Coin;
+
 public class VendingMachineDemo {
-    public static void run() {
+    public static void main(String[] args) {
         VendingMachine vendingMachine = VendingMachine.getInstance();
 
         // Add products to the inventory

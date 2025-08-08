@@ -1,7 +1,8 @@
 package pubsubsystem.subscriber;
 
-import pubsubsystem.Message;
+import pubsubsystem.entities.Message;
 
 public interface Subscriber {
-    void consume(Message message);
+    String getId();
+    void onMessage(Message message);
 }

@@ -1,11 +1,11 @@
 package atm.state;
 
-import atm.ATM;
-import atm.OperationType;
+import atm.ATMSystem;
+import atm.enums.OperationType;
 
 public interface ATMState {
-    void insertCard(ATM atm, String cardNumber);
-    void enterPin(ATM atm, String pin);
-    void selectOperation(ATM atm, OperationType op, int... args);
-    void ejectCard(ATM atm);
+    void insertCard(ATMSystem atmSystem, String cardNumber);
+    void enterPin(ATMSystem atmSystem, String pin);
+    void selectOperation(ATMSystem atmSystem, OperationType op, int... args);
+    void ejectCard(ATMSystem atmSystem);
 }
