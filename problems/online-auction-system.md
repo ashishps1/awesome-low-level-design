@@ -15,7 +15,7 @@ This system allows for the creation and management of auctions, user participati
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/onlineauctionsystem-class-diagram.png)
+![](../class-diagrams/onlineauctionsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/onlineauctionsystem/) 

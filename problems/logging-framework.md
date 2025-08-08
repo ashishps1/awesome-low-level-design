@@ -10,7 +10,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/loggingframework-class-diagram.png)
+![](../class-diagrams/loggingframework-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/loggingframework/) 

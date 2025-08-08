@@ -11,7 +11,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/coffeevendingmachine-class-diagram.png)
+![](../class-diagrams/coffeevendingmachine-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/coffeevendingmachine/) 

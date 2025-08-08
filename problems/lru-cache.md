@@ -10,7 +10,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/lrucache-class-diagram.png)
+![](../class-diagrams/lrucache-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/lrucache/) 

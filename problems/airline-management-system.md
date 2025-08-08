@@ -13,7 +13,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/airlinemanagementsystem-class-diagram.png)
+![](../class-diagrams/airlinemanagementsystem-class-diagram.png)
 
 ## Implementations
 

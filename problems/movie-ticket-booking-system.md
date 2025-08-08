@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/movieticketbookingsystem-class-diagram.png)
+![](../class-diagrams/movieticketbookingsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/movieticketbookingsystem/) 

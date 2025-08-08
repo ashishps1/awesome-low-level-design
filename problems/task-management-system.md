@@ -11,7 +11,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/taskmanagementsystem-class-diagram.png)
+![](../class-diagrams/taskmanagementsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/taskmanagementsystem/) 

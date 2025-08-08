@@ -10,7 +10,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/parkinglot-class-diagram.png)
+![](../class-diagrams/parkinglot-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/parkinglot/) 

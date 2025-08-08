@@ -10,7 +10,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/stackoverflow-class-diagram.png)
+![](../class-diagrams/stackoverflow-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/stackoverflow/) 

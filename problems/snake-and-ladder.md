@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/snakeandladdergame-class-diagram.png)
+![](../class-diagrams/snakeandladdergame-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/snakeandladdergame/) 

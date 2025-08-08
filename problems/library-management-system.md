@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/librarymanagementsystem-class-diagram.png)
+![](../class-diagrams/librarymanagementsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/librarymanagementsystem/) 

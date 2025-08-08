@@ -10,7 +10,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/atm-class-diagram.png)
+![](../class-diagrams/atm-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/atm/) 

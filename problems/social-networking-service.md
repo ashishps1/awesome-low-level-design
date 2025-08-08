@@ -30,7 +30,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/socialnetworkingservice-class-diagram.png)
+![](../class-diagrams/socialnetworkingservice-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/socialnetworkingservice/) 

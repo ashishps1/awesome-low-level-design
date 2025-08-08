@@ -11,7 +11,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/courseregistrationsystem-class-diagram.png)
+![](../class-diagrams/courseregistrationsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/courseregistrationsystem/) 

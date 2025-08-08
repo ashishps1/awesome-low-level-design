@@ -11,7 +11,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/vendingmachine-class-diagram.png)
+![](../class-diagrams/vendingmachine-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/vendingmachine/) 

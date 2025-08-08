@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/hotelmanagementsystem-class-diagram.png)
+![](../class-diagrams/hotelmanagementsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/hotelmanagementsystem/) 

@@ -11,7 +11,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/elevatorsystem-class-diagram.png)
+![](../class-diagrams/elevatorsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/elevatorsystem/) 

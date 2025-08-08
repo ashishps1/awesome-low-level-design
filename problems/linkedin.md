@@ -29,7 +29,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/linkedin-class-diagram.png)
+![](../class-diagrams/linkedin-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/linkedin/) 

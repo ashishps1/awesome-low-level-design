@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/digitalwalletservice-class-diagram.png)
+![](../class-diagrams/digitalwalletservice-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/digitalwalletservice/) 

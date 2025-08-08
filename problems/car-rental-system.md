@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/carrentalsystem-class-diagram.png)
+![](../class-diagrams/carrentalsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/carrentalsystem/) 

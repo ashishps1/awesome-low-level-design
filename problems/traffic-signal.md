@@ -10,7 +10,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/trafficsignalsystem-class-diagram.png)
+![](../class-diagrams/trafficsignalsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/trafficsignalsystem/) 

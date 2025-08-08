@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/chessgame-class-diagram.png)
+![](../class-diagrams/chessgame-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/chessgame/) 

@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/musicstreamingservice-class-diagram.png)
+![](../class-diagrams/musicstreamingservice-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/musicstreamingservice/) 

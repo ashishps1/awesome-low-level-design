@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/fooddeliveryservice-class-diagram.png)
+![](../class-diagrams/fooddeliveryservice-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/fooddeliveryservice/) 

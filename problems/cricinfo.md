@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/cricinfo-class-diagram.png)
+![](../class-diagrams/cricinfo-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/cricinfo/) 

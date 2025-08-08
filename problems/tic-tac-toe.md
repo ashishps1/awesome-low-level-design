@@ -11,7 +11,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/tictactoe-class-diagram.png)
+![](../class-diagrams/tictactoe-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/tictactoe/) 

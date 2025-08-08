@@ -11,7 +11,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/restaurantmanagementsystem-class-diagram.png)
+![](../class-diagrams/restaurantmanagementsystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/restaurantmanagementsystem/) 

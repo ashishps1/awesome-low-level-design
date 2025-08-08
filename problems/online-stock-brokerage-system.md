@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/onlinestockbrokeragesystem-class-diagram.png)
+![](../class-diagrams/onlinestockbrokeragesystem-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/onlinestockbrokeragesystem/) 

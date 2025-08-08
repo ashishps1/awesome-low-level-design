@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../uml-diagrams/class-diagrams/onlineshoppingservice-class-diagram.png)
+![](../class-diagrams/onlineshoppingservice-class-diagram.png)
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/onlineshoppingservice/)
