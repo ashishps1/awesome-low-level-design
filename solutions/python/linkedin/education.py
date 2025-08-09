@@ -1,7 +1,9 @@
 class Education:
-    def __init__(self, school: str, degree: str, field_of_study: str, start_date: str, end_date: str):
+    def __init__(self, school: str, degree: str, start_year: int, end_year: int):
         self.school = school
         self.degree = degree
-        self.field_of_study = field_of_study
-        self.start_date = start_date
-        self.end_date = end_date
+        self.start_year = start_year
+        self.end_year = end_year
+
+    def __str__(self) -> str:
+        return f"{self.degree}, {self.school} ({self.start_year} - {self.end_year})"

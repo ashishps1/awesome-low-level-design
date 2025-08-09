@@ -2,25 +2,21 @@ from lru_cache import LRUCache
 
 class LRUCacheDemo:
     @staticmethod
-    def run():
-        cache = LRUCache(3)
+    def main():
+        cache: LRUCache[str, int] = LRUCache(3)
 
-        cache.put(1, "Value 1")
-        cache.put(2, "Value 2")
-        cache.put(3, "Value 3")
+        cache.put("a", 1)
+        cache.put("b", 2)
+        cache.put("c", 3)
 
-        print(cache.get(1))  # Output: Value 1
-        print(cache.get(2))  # Output: Value 2
+        # Accessing 'a' makes it the most recently used
+        print(cache.get("a"))  # 1
 
-        cache.put(4, "Value 4")
+        # Adding 'd' will cause 'b' (the current LRU item) to be evicted
+        cache.put("d", 4)
 
-        print(cache.get(3))  # Output: None
-        print(cache.get(4))  # Output: Value 4
-
-        cache.put(2, "Updated Value 2")
-
-        print(cache.get(1))  # Output: Value 1
-        print(cache.get(2))  # Output: Updated Value 2
+        # Trying to get 'b' should now return None
+        print(cache.get("b"))  # None
 
 if __name__ == "__main__":
-    LRUCacheDemo.run()
+    LRUCacheDemo.main()

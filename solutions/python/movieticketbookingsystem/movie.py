@@ -1,10 +1,14 @@
-class Movie:
-    def __init__(self, movie_id: str, title: str, description: str, duration_in_minutes: int):
-        self._id = movie_id
-        self._title = title
-        self._description = description
-        self._duration_in_minutes = duration_in_minutes
+from movie_observer import MovieSubject
 
-    @property
-    def duration_in_minutes(self) -> int:
-        return self._duration_in_minutes
+class Movie(MovieSubject):
+    def __init__(self, movie_id: str, title: str, duration_in_minutes: int):
+        super().__init__()
+        self.id = movie_id
+        self.title = title
+        self.duration_in_minutes = duration_in_minutes
+
+    def get_id(self) -> str:
+        return self.id
+
+    def get_title(self) -> str:
+        return self.title

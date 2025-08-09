@@ -1,30 +1,39 @@
-from portfolio import Portfolio
-from exceptions import InsufficientFundsException
+import threading
+from typing import Dict
+from exceptions import InsufficientFundsException, InsufficientStockException
 
 class Account:
-    def __init__(self, account_id, user, initial_balance):
-        self.account_id = account_id
-        self.user = user
-        self.balance = initial_balance
-        self.portfolio = Portfolio(self)
+    def __init__(self, initial_cash: float):
+        self.balance = initial_cash
+        self.portfolio: Dict[str, int] = {}  # Stock symbol -> quantity
+        self.lock = threading.Lock()
 
-    def deposit(self, amount):
-        self.balance += amount
-
-    def withdraw(self, amount):
-        if self.balance >= amount:
+    def debit(self, amount: float) -> None:
+        with self.lock:
+            if self.balance < amount:
+                raise InsufficientFundsException(f"Insufficient funds to debit {amount}")
             self.balance -= amount
-        else:
-            raise InsufficientFundsException("Insufficient funds in the account.")
 
-    def get_account_id(self):
-        return self.account_id
+    def credit(self, amount: float) -> None:
+        with self.lock:
+            self.balance += amount
 
-    def get_user(self):
-        return self.user
+    def add_stock(self, symbol: str, quantity: int) -> None:
+        with self.lock:
+            self.portfolio[symbol] = self.portfolio.get(symbol, 0) + quantity
 
-    def get_balance(self):
+    def remove_stock(self, symbol: str, quantity: int) -> None:
+        with self.lock:
+            current_quantity = self.portfolio.get(symbol, 0)
+            if current_quantity < quantity:
+                raise InsufficientStockException(f"Not enough {symbol} stock to sell.")
+            self.portfolio[symbol] = current_quantity - quantity
+
+    def get_balance(self) -> float:
         return self.balance
 
-    def get_portfolio(self):
-        return self.portfolio
+    def get_portfolio(self) -> Dict[str, int]:
+        return self.portfolio.copy()
+
+    def get_stock_quantity(self, symbol: str) -> int:
+        return self.portfolio.get(symbol, 0)

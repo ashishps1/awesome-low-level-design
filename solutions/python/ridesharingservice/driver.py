@@ -1,50 +1,39 @@
-from enum import Enum
+from vehicle import Vehicle
+from location import Location
+from enums import DriverStatus, TripStatus
+from trip import Trip
+from typing import TYPE_CHECKING
+from user import User
 
-class DriverStatus(Enum):
-    AVAILABLE = 1
-    BUSY = 2
+if TYPE_CHECKING:
+    from trip import Trip
 
-class Driver:
-    def __init__(self, id, name, contact, license_plate, location, status):
-        self.id = id
-        self.name = name
-        self.contact = contact
-        self.license_plate = license_plate
-        self.location = location
-        self.status = status
-
-    def set_id(self, id):
-        self.id = id
-
-    def set_name(self, name):
-        self.name = name
-
-    def set_contact(self, contact):
-        self.contact = contact
-
-    def set_license_plate(self, license_plate):
-        self.license_plate = license_plate
-
-    def set_location(self, location):
-        self.location = location
-
-    def set_status(self, status):
-        self.status = status
-
-    def get_id(self):
-        return self.id
-
-    def get_name(self):
-        return self.name
-
-    def get_contact(self):
-        return self.contact
-
-    def get_license_plate(self):
-        return self.license_plate
-
-    def get_location(self):
-        return self.location
-
-    def get_status(self):
-        return self.status
+class Driver(User):
+    def __init__(self, name: str, contact: str, vehicle: Vehicle, initial_location: Location):
+        super().__init__(name, contact)
+        self._vehicle = vehicle
+        self._current_location = initial_location
+        self._status = DriverStatus.OFFLINE  # Default status
+    
+    def get_vehicle(self) -> Vehicle:
+        return self._vehicle
+    
+    def get_status(self) -> DriverStatus:
+        return self._status
+    
+    def set_status(self, status: DriverStatus):
+        self._status = status
+        print(f"Driver {self.get_name()} is now {status.value}")
+    
+    def get_current_location(self) -> Location:
+        return self._current_location
+    
+    def set_current_location(self, current_location: Location):
+        self._current_location = current_location
+    
+    def on_update(self, trip: 'Trip'):
+        print(f"--- Notification for Driver {self.get_name()} ---")
+        print(f"  Trip {trip.get_id()} status: {trip.get_status().value}.")
+        if trip.get_status() == TripStatus.REQUESTED:
+            print("  A new ride is available for you to accept.")
+        print("--------------------------------\n")

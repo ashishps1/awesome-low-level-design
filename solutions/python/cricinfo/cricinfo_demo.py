@@ -1,89 +1,95 @@
-from datetime import datetime
-from player import Player
+from cricinfo_service import CricInfoService
+from enums import PlayerRole, WicketType
+from match_format_strategy import T20FormatStrategy
 from team import Team
-from match import Match
-from cricinfo_system import CricinfoSystem
-from innings import Innings
-from over import Over
 from ball import Ball
+from wicket import Wicket
+from match_observer import CommentaryDisplay, ScorecardDisplay, UserNotifier
 
 class CricinfoDemo:
     @staticmethod
-    def run():
-        # Create teams
-        team1_players = [
-            Player("P101", "Player 1", "Batsman"),
-            Player("P102", "Player 2", "Bowler"),
-            Player("P103", "Player 3", "All-rounder")
-        ]
-        team2_players = [
-            Player("P201", "Player 4", "Batsman"),
-            Player("P202", "Player 5", "Bowler"),
-            Player("P203", "Player 6", "All-rounder")
-        ]
-        team1 = Team("T1", "Team 1", team1_players)
-        team2 = Team("T2", "Team 2", team2_players)
-        teams = [team1, team2]
+    def main():
+        service = CricInfoService.get_instance()
 
-        # Create a match
-        match = Match("M001", "Match 1", "Venue 1", datetime.now(), teams)
+        # Setup Players and Teams
+        p1 = service.add_player("P1", "Virat", PlayerRole.BATSMAN)
+        p2 = service.add_player("P2", "Rohit", PlayerRole.BATSMAN)
+        p3 = service.add_player("P3", "Bumrah", PlayerRole.BOWLER)
+        p4 = service.add_player("P4", "Jadeja", PlayerRole.ALL_ROUNDER)
 
-        # Create Cricinfo system
-        cricinfo_system = CricinfoSystem()
+        p5 = service.add_player("P5", "Warner", PlayerRole.BATSMAN)
+        p6 = service.add_player("P6", "Smith", PlayerRole.BATSMAN)
+        p7 = service.add_player("P7", "Starc", PlayerRole.BOWLER)
+        p8 = service.add_player("P8", "Maxwell", PlayerRole.ALL_ROUNDER)
 
-        # Add the match to the system
-        cricinfo_system.add_match(match)
+        india = Team("T1", "India", [p1, p2, p3, p4])
+        australia = Team("T2", "Australia", [p5, p6, p7, p8])
 
-        # Create a scorecard for the match
-        cricinfo_system.create_scorecard(match)
+        # Create a T20 Match
+        t20_match = service.create_match(india, australia, T20FormatStrategy())
+        match_id = t20_match.get_id()
 
-        # Get the scorecard
-        scorecard_id = "SC-M001-0001"
-        scorecard = cricinfo_system.get_scorecard(scorecard_id)
+        # Create and subscribe observers
+        scorecard = ScorecardDisplay()
+        commentary = CommentaryDisplay()
+        notifier = UserNotifier()
 
-        # Update scores
-        cricinfo_system.update_score(scorecard_id, "T1", 100)
-        cricinfo_system.update_score(scorecard_id, "T2", 75)
+        service.subscribe_to_match(match_id, scorecard)
+        service.subscribe_to_match(match_id, commentary)
+        service.subscribe_to_match(match_id, notifier)
 
-        # Create innings
-        innings1 = Innings("I1", "T1", "T2")
-        innings2 = Innings("I2", "T2", "T1")
+        # Start the match
+        service.start_match(match_id)
 
-        # Add overs to innings
-        over1 = Over(1)
-        over1.add_ball(Ball(1, "P202", "P101", "4"))
-        over1.add_ball(Ball(2, "P202", "P101", "6"))
-        innings1.add_over(over1)
+        print("\n--- SIMULATING FIRST INNINGS ---")
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p7).faced_by(p1).with_runs(2).build())
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p7).faced_by(p1).with_runs(1).build())
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p7).faced_by(p2).with_runs(6).build())
 
-        over2 = Over(2)
-        over2.add_ball(Ball(1, "P102", "P201", "1"))
-        over2.add_ball(Ball(2, "P102", "P201", "0"))
-        innings1.add_over(over2)
+        p2_wicket = Wicket.Builder(WicketType.BOWLED, p2).build()
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p7).faced_by(p2).with_runs(0).with_wicket(p2_wicket).build())
 
-        # Add innings to the scorecard
-        cricinfo_system.add_innings(scorecard_id, innings1)
-        cricinfo_system.add_innings(scorecard_id, innings2)
+        p3_wicket = Wicket.Builder(WicketType.LBW, p3).build()
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p7).faced_by(p3).with_runs(0).with_wicket(p3_wicket).build())
 
-        # Get the updated scorecard
-        updated_scorecard = cricinfo_system.get_scorecard(scorecard_id)
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p7).faced_by(p4).with_runs(4).build())
 
-        # Display the scorecard
-        print("Scorecard ID:", updated_scorecard.get_id())
-        print("Match:", updated_scorecard.get_match().get_title())
-        print("Team Scores:")
-        for team_id, score in updated_scorecard.get_team_scores().items():
-            print(f"{team_id}: {score}")
-        print("Innings:")
-        for innings in updated_scorecard.get_innings():
-            print("Innings ID:", innings.get_id())
-            print("Batting Team:", innings.get_batting_team_id())
-            print("Bowling Team:", innings.get_bowling_team_id())
-            print("Overs:")
-            for over in innings.get_overs():
-                print("Over", over.get_over_number())
-                for ball in over.get_balls():
-                    print(f"Ball {ball.get_ball_number()}: {ball.get_bowler()} to {ball.get_batsman()} - {ball.get_result()}")
-                print()
+        p4_wicket = Wicket.Builder(WicketType.CAUGHT, p4).caught_by(p6).build()
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p7).faced_by(p4).with_runs(0).with_wicket(p4_wicket).build())
+
+        print("\n\n--- INNINGS BREAK ---")
+        print("Players are off the field. Preparing for the second innings.")
+
+        # Start the second innings
+        service.start_next_innings(match_id)
+
+        print("\n--- SIMULATING SECOND INNINGS ---")
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p3).faced_by(p5).with_runs(4).build())
+
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p3).faced_by(p5).with_runs(1).build())
+
+        p5_wicket = Wicket.Builder(WicketType.BOWLED, p5).build()
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p3).faced_by(p5).with_runs(0).with_wicket(p5_wicket).build())
+
+        p7_wicket = Wicket.Builder(WicketType.LBW, p7).build()
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p3).faced_by(p7).with_runs(0).with_wicket(p7_wicket).build())
+
+        p8_wicket = Wicket.Builder(WicketType.STUMPED, p8).build()
+        service.process_ball_update(match_id, Ball.BallBuilder()
+                                   .bowled_by(p3).faced_by(p8).with_runs(0).with_wicket(p8_wicket).build())
+
+        service.end_match(match_id)
 
 if __name__ == "__main__":
-    CricinfoDemo.run()
+    CricinfoDemo.main()

@@ -1,22 +1,17 @@
 class MenuItem:
-    def __init__(self, id, name, description, price, available):
-        self.id = id
-        self.name = name
-        self.description = description
-        self.price = price
-        self.available = available
-
-    def get_id(self):
-        return self.id
-
-    def get_name(self):
-        return self.name
-
-    def get_description(self):
-        return self.description
-
-    def get_price(self):
-        return self.price
-
-    def is_available(self):
-        return self.available
+    def __init__(self, item_id: str, name: str, price: float):
+        self._id = item_id
+        self._name = name
+        self._price = price
+    
+    def get_id(self) -> str:
+        return self._id
+    
+    def get_name(self) -> str:
+        return self._name
+    
+    def get_price(self) -> float:
+        return self._price
+    
+    def __str__(self) -> str:
+        return f"MenuItem(id={self._id}, name={self._name}, price=${self._price:.2f})"

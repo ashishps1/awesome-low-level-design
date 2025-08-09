@@ -1,0 +1,16 @@
+from enum import Enum
+
+class OrderStatus(Enum):
+    PENDING_PAYMENT = "PENDING_PAYMENT"
+    PLACED = "PLACED"
+    SHIPPED = "SHIPPED"
+    DELIVERED = "DELIVERED"
+    CANCELLED = "CANCELLED"
+    RETURNED = "RETURNED"
+
+class ProductCategory(Enum):
+    ELECTRONICS = "ELECTRONICS"
+    BOOKS = "BOOKS"
+    CLOTHING = "CLOTHING"
+    HOME_GOODS = "HOME_GOODS"
+    GROCERY = "GROCERY"

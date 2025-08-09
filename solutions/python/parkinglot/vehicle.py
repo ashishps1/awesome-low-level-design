@@ -1,10 +1,13 @@
 from abc import ABC
-from vehicle_type import VehicleType
+from vehicle_size import VehicleSize
 
 class Vehicle(ABC):
-    def __init__(self, license_plate: str, vehicle_type: VehicleType):
-        self.license_plate = license_plate
-        self.type = vehicle_type
+    def __init__(self, license_number: str, size: VehicleSize):
+        self.license_number = license_number
+        self.size = size
 
-    def get_type(self) -> VehicleType:
-        return self.type
+    def get_license_number(self) -> str:
+        return self.license_number
+
+    def get_size(self) -> VehicleSize:
+        return self.size

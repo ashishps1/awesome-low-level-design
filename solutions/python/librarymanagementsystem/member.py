@@ -1,31 +1,33 @@
 from typing import List
-from book import Book
+from loan import Loan
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from library_item import LibraryItem
+    from loan import Loan
 
 class Member:
-    def __init__(self, member_id: str, name: str, contact_info: str):
-        self._member_id = member_id
-        self._name = name
-        self._contact_info = contact_info
-        self._borrowed_books = []
+    def __init__(self, member_id: str, name: str):
+        self.id = member_id
+        self.name = name
+        self.loans: List['Loan'] = []
 
-    @property
-    def member_id(self) -> str:
-        return self._member_id
+    def update(self, item: 'LibraryItem') -> None:
+        """Observer update method"""
+        print(f"NOTIFICATION for {self.name}: The book '{item.get_title()}' you placed a hold on is now available!")
 
-    @property
-    def name(self) -> str:
-        return self._name
+    def add_loan(self, loan: 'Loan') -> None:
+        self.loans.append(loan)
 
-    @property
-    def contact_info(self) -> str:
-        return self._contact_info
+    def remove_loan(self, loan: 'Loan') -> None:
+        if loan in self.loans:
+            self.loans.remove(loan)
 
-    @property
-    def borrowed_books(self) -> List[Book]:
-        return self._borrowed_books
+    def get_id(self) -> str:
+        return self.id
 
-    def borrow_book(self, book: Book):
-        self._borrowed_books.append(book)
+    def get_name(self) -> str:
+        return self.name
 
-    def return_book(self, book: Book):
-        self._borrowed_books.remove(book)
+    def get_loans(self) -> List['Loan']:
+        return self.loans

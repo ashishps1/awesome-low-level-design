@@ -1,31 +1,21 @@
 class MenuItem:
-    def __init__(self, item_id: str, name: str, description: str, price: float):
-        self._id = item_id
-        self._name = name
-        self._description = description
-        self._price = price
-        self._available = True
+    def __init__(self, item_id: str, name: str, price: float):
+        self.id = item_id
+        self.name = name
+        self.price = price
+        self.available = True
 
-    @property
-    def id(self) -> str:
-        return self._id
+    def get_id(self) -> str:
+        return self.id
 
-    @property
-    def name(self) -> str:
-        return self._name
+    def set_available(self, available: bool):
+        self.available = available
 
-    @property
-    def description(self) -> str:
-        return self._description
+    def get_name(self) -> str:
+        return self.name
 
-    @property
-    def price(self) -> float:
-        return self._price
+    def get_price(self) -> float:
+        return self.price
 
-    @property
-    def available(self) -> bool:
-        return self._available
-
-    @available.setter
-    def available(self, available: bool):
-        self._available = available
+    def get_menu_item(self) -> str:
+        return f"Name: {self.name}, Price: {self.price}"

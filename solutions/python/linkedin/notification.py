@@ -1,35 +1,21 @@
+from enums import NotificationType
+import uuid
 from datetime import datetime
-from enum import Enum
-
-class NotificationType(Enum):
-    CONNECTION_REQUEST = "CONNECTION_REQUEST"
-    MESSAGE = "MESSAGE"
-    JOB_POSTING = "JOB_POSTING"
 
 class Notification:
-    def __init__(self, notification_id: str, user, type: NotificationType, content: str, timestamp: datetime):
-        self._id = notification_id
-        self._user = user
-        self._type = type
-        self._content = content
-        self._timestamp = timestamp
+    def __init__(self, member_id: str, notification_type: NotificationType, content: str):
+        self.id = str(uuid.uuid4())
+        self.member_id = member_id
+        self.type = notification_type
+        self.content = content
+        self.created_at = datetime.now()
+        self._is_read = False
 
-    @property
-    def id(self) -> str:
-        return self._id
+    def get_content(self) -> str:
+        return self.content
 
-    @property
-    def user(self):
-        return self._user
+    def mark_as_read(self) -> None:
+        self._is_read = True
 
-    @property
-    def type(self) -> NotificationType:
-        return self._type
-
-    @property
-    def content(self) -> str:
-        return self._content
-
-    @property
-    def timestamp(self) -> datetime:
-        return self._timestamp
+    def is_read(self) -> bool:
+        return self._is_read

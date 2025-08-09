@@ -1,17 +1,15 @@
-from abc import ABC, abstractmethod
-from user import User
+from typing import TYPE_CHECKING
 
-class Split(ABC):
-    def __init__(self, user: User):
-        self.user = user
-        self.amount = 0.0
+if TYPE_CHECKING:
+    from user import User
 
-    @abstractmethod
+class Split:
+    def __init__(self, user: 'User', amount: float):
+        self._user = user
+        self._amount = amount
+    
+    def get_user(self) -> 'User':
+        return self._user
+    
     def get_amount(self) -> float:
-        pass
-
-    def set_amount(self, amount: float):
-        self.amount = amount
-
-    def get_user(self) -> User:
-        return self.user
+        return self._amount

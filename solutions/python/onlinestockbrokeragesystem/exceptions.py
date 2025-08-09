@@ -1,5 +1,7 @@
 class InsufficientFundsException(Exception):
-    pass
+    def __init__(self, message: str):
+        super().__init__(message)
 
 class InsufficientStockException(Exception):
-    pass
+    def __init__(self, message: str):
+        super().__init__(message)

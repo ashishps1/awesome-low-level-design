@@ -1,93 +1,111 @@
-from typing import List, Dict
-from uuid import uuid4
+import threading
+from typing import Dict, List, Optional
 from customer import Customer
-from restaurant import Restaurant
-from order import Order, OrderStatus
 from delivery_agent import DeliveryAgent
-from menu_item import MenuItem
+from delivery_assignment_strategy import DeliveryAssignmentStrategy
+from order import Order
+from restaurant import Restaurant
+from restaurant_search_strategy import RestaurantSearchStrategy
+from order_status import OrderStatus
+from address import Address
+from order_item import OrderItem
+from menu import Menu
 
 class FoodDeliveryService:
     _instance = None
+    _lock = threading.Lock()
 
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance.customers = {}
-            cls._instance.restaurants = {}
-            cls._instance.orders = {}
-            cls._instance.delivery_agents = {}
-        return cls._instance
+    def __init__(self):
+        if FoodDeliveryService._instance is not None:
+            raise Exception("This class is a singleton!")
+        self.customers: Dict[str, Customer] = {}
+        self.restaurants: Dict[str, Restaurant] = {}
+        self.delivery_agents: Dict[str, DeliveryAgent] = {}
+        self.orders: Dict[str, Order] = {}
+        self.assignment_strategy: Optional[DeliveryAssignmentStrategy] = None
 
     @staticmethod
     def get_instance():
         if FoodDeliveryService._instance is None:
-            FoodDeliveryService()
+            with FoodDeliveryService._lock:
+                if FoodDeliveryService._instance is None:
+                    FoodDeliveryService._instance = FoodDeliveryService()
         return FoodDeliveryService._instance
 
-    def register_customer(self, customer: Customer):
-        self.customers[customer.id] = customer
+    def set_assignment_strategy(self, assignment_strategy: DeliveryAssignmentStrategy):
+        self.assignment_strategy = assignment_strategy
 
-    def register_restaurant(self, restaurant: Restaurant):
-        self.restaurants[restaurant.id] = restaurant
+    def register_customer(self, name: str, phone: str, address: Address) -> Customer:
+        customer = Customer(name, phone, address)
+        self.customers[customer.get_id()] = customer
+        return customer
 
-    def register_delivery_agent(self, agent: DeliveryAgent):
-        self.delivery_agents[agent.id] = agent
+    def register_restaurant(self, name: str, address: Address) -> Restaurant:
+        restaurant = Restaurant(name, address)
+        self.restaurants[restaurant.get_id()] = restaurant
+        return restaurant
 
-    def get_available_restaurants(self) -> List[Restaurant]:
-        return list(self.restaurants.values())
+    def register_delivery_agent(self, name: str, phone: str, initial_location: Address) -> DeliveryAgent:
+        delivery_agent = DeliveryAgent(name, phone, initial_location)
+        self.delivery_agents[delivery_agent.get_id()] = delivery_agent
+        return delivery_agent
 
-    def get_restaurant_menu(self, restaurant_id: str) -> List[MenuItem]:
-        restaurant = self.restaurants.get(restaurant_id)
-        if restaurant:
-            return restaurant.menu
-        return []
-
-    def place_order(self, customer_id: str, restaurant_id: str, items: List[MenuItem]) -> Order:
+    def place_order(self, customer_id: str, restaurant_id: str, items: List[OrderItem]) -> Order:
         customer = self.customers.get(customer_id)
         restaurant = self.restaurants.get(restaurant_id)
-        if customer and restaurant:
-            order = Order(self.generate_order_id(), customer, restaurant)
-            for item in items:
-                order.add_item(item)
-            self.orders[order.id] = order
-            self.notify_restaurant(order)
-            return order
-        return None
+        if customer is None or restaurant is None:
+            raise KeyError("Customer or Restaurant not found.")
 
-    def update_order_status(self, order_id: str, status: OrderStatus):
+        order = Order(customer, restaurant, items)
+        self.orders[order.get_id()] = order
+        customer.add_order_to_history(order)
+        print(f"Order {order.get_id()} placed by {customer.get_name()} at {restaurant.get_name()}.")
+        order.set_status(OrderStatus.PENDING)
+        return order
+
+    def update_order_status(self, order_id: str, new_status: OrderStatus):
         order = self.orders.get(order_id)
-        if order:
-            order.set_status(status)
-            self.notify_customer(order)
-            if status == OrderStatus.CONFIRMED:
-                self.assign_delivery_agent(order)
+        if order is None:
+            raise KeyError("Order not found.")
+
+        order.set_status(new_status)
+
+        if new_status == OrderStatus.READY_FOR_PICKUP:
+            self.assign_delivery(order)
 
     def cancel_order(self, order_id: str):
         order = self.orders.get(order_id)
-        if order and order.status == OrderStatus.PENDING:
-            order.set_status(OrderStatus.CANCELLED)
-            self.notify_customer(order)
-            self.notify_restaurant(order)
+        if order is None:
+            print(f"ERROR: Order with ID {order_id} not found.")
+            return
 
-    def notify_customer(self, order: Order):
-        # Send notification to the customer about the order status update
-        pass
+        if order.cancel():
+            print(f"SUCCESS: Order {order_id} has been successfully canceled.")
+        else:
+            print(f"FAILED: Order {order_id} could not be canceled. Its status is: {order.get_status().value}")
 
-    def notify_restaurant(self, order: Order):
-        # Send notification to the restaurant about the new order or order status update
-        pass
+    def assign_delivery(self, order: Order):
+        available_agents = list(self.delivery_agents.values())
 
-    def assign_delivery_agent(self, order: Order):
-        for agent in self.delivery_agents.values():
-            if agent.available:
-                agent.available = False
-                order.assign_delivery_agent(agent)
-                self.notify_delivery_agent(order)
-                break
+        best_agent = self.assignment_strategy.find_agent(order, available_agents)
+        if best_agent:
+            order.assign_delivery_agent(best_agent)
+            distance = best_agent.get_current_location().distance_to(order.get_restaurant().get_address())
+            print(f"Agent {best_agent.get_name()} (dist: {distance:.2f}) assigned to order {order.get_id()}.")
+            order.set_status(OrderStatus.OUT_FOR_DELIVERY)
+        else:
+            print(f"No available delivery agents found for order {order.get_id()}")
 
-    def notify_delivery_agent(self, order: Order):
-        # Send notification to the delivery agent about the assigned order
-        pass
+    def search_restaurants(self, strategies: List[RestaurantSearchStrategy]) -> List[Restaurant]:
+        results = list(self.restaurants.values())
 
-    def generate_order_id(self) -> str:
-        return "ORD" + uuid4().hex[:8].upper()
+        for strategy in strategies:
+            results = strategy.filter(results)
+
+        return results
+
+    def get_restaurant_menu(self, restaurant_id: str) -> Menu:
+        restaurant = self.restaurants.get(restaurant_id)
+        if restaurant is None:
+            raise KeyError(f"Restaurant with ID {restaurant_id} not found.")
+        return restaurant.get_menu()

@@ -1,17 +1,13 @@
+import uuid
+
 class User:
-    def __init__(self, user_id: str, name: str, email: str):
-        self._id = user_id
-        self._name = name
-        self._email = email
+    def __init__(self, name: str, email: str):
+        self.id = str(uuid.uuid4())
+        self.name = name
+        self.email = email
 
-    @property
-    def id(self) -> str:
-        return self._id
+    def get_id(self) -> str:
+        return self.id
 
-    @property
-    def name(self) -> str:
-        return self._name
-
-    @property
-    def email(self) -> str:
-        return self._email
+    def get_name(self) -> str:
+        return self.name

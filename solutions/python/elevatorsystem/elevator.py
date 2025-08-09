@@ -1,55 +1,80 @@
-import time
-from threading import Lock, Condition
-from request import Request
+import threading
+from typing import Set
 from direction import Direction
-
+from request import Request
+from elevator_state import ElevatorState, IdleState
+from elevator_observer import ElevatorObserver
+import time
 
 class Elevator:
-    def __init__(self, id: int, capacity: int):
-        self.id = id
-        self.capacity = capacity
+    def __init__(self, elevator_id: int):
+        self.id = elevator_id
         self.current_floor = 1
-        self.current_direction = Direction.UP
-        self.requests = []
-        self.lock = Lock()
-        self.condition = Condition(self.lock)
+        self.current_floor_lock = threading.Lock()
+        self.state = IdleState()
+        self.is_running = True
+        
+        self.up_requests = set()
+        self.down_requests = set()
+        
+        # Observer Pattern: List of observers
+        self.observers = []
 
+    # --- Observer Pattern Methods ---
+    def add_observer(self, observer: ElevatorObserver):
+        self.observers.append(observer)
+        observer.update(self)  # Send initial state
+
+    def notify_observers(self):
+        for observer in self.observers:
+            observer.update(self)
+
+    # --- State Pattern Methods ---
+    def set_state(self, state: ElevatorState):
+        self.state = state
+        self.notify_observers()  # Notify observers on direction change
+
+    def move(self):
+        self.state.move(self)
+
+    # --- Request Handling ---
     def add_request(self, request: Request):
-        with self.lock:
-            if len(self.requests) < self.capacity:
-                self.requests.append(request)
-                print(
-                    f"Elevator {self.id} added request: {request.source_floor} to {request.destination_floor}"
-                )
-                self.condition.notify_all()
+        print(f"Elevator {self.id} processing: {request}")
+        self.state.add_request(self, request)
 
-    def get_next_request(self) -> Request:
-        with self.lock:
-            while not self.requests:
-                self.condition.wait()
-            return self.requests.pop(0)
+    # --- Getters and Setters ---
+    def get_id(self) -> int:
+        return self.id
 
-    def process_requests(self):
-        while True:
-            request = self.get_next_request()  # This will wait until there's a request
-            self.process_request(request)
+    def get_current_floor(self) -> int:
+        with self.current_floor_lock:
+            return self.current_floor
 
-    def process_request(self, request: Request):
-        start_floor = self.current_floor
-        end_floor = request.destination_floor
+    def set_current_floor(self, floor: int):
+        with self.current_floor_lock:
+            self.current_floor = floor
+        self.notify_observers()  # Notify observers on floor change
 
-        if start_floor < end_floor:
-            self.current_direction = Direction.UP
-            for i in range(start_floor, end_floor + 1):
-                self.current_floor = i
-                print(f"Elevator {self.id} reached floor {self.current_floor}")
-                time.sleep(1)  # Simulating elevator movement
-        elif start_floor > end_floor:
-            self.current_direction = Direction.DOWN
-            for i in range(start_floor, end_floor - 1, -1):
-                self.current_floor = i
-                print(f"Elevator {self.id} reached floor {self.current_floor}")
-                time.sleep(1)  # Simulating elevator movement
+    def get_direction(self) -> Direction:
+        return self.state.get_direction()
+
+    def get_up_requests(self) -> Set[int]:
+        return self.up_requests
+
+    def get_down_requests(self) -> Set[int]:
+        return self.down_requests
+
+    def is_elevator_running(self) -> bool:
+        return self.is_running
+
+    def stop_elevator(self):
+        self.is_running = False
 
     def run(self):
-        self.process_requests()
+        while self.is_running:
+            self.move()
+            try:
+                time.sleep(1)  # Simulate movement time
+            except KeyboardInterrupt:
+                self.is_running = False
+                break

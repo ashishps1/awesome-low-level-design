@@ -1,13 +1,17 @@
 import threading
+from dispense_chain import DispenseChain
 
 class CashDispenser:
-    def __init__(self, initial_cash):
-        self.cash_available = initial_cash
-        self.lock = threading.Lock()
-
-    def dispense_cash(self, amount):
-        with self.lock:
-            if amount > self.cash_available:
-                raise ValueError("Insufficient cash available in the ATM.")
-            self.cash_available -= amount
-            print("Cash dispensed:", amount)
+    def __init__(self, chain: DispenseChain):
+        self._chain = chain
+        self._lock = threading.Lock()
+    
+    def dispense_cash(self, amount: int):
+        with self._lock:
+            self._chain.dispense(amount)
+    
+    def can_dispense_cash(self, amount: int) -> bool:
+        with self._lock:
+            if amount % 10 != 0:
+                return False
+            return self._chain.can_dispense(amount)

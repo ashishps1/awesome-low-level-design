@@ -1,22 +1,24 @@
-class Customer:
-    def __init__(self, customer_id: str, name: str, email: str, phone: str):
-        self._id = customer_id
-        self._name = name
-        self._email = email
-        self._phone = phone
+from user import User
+from address import Address
+from typing import List
+from typing import TYPE_CHECKING
 
-    @property
-    def id(self) -> str:
-        return self._id
+if TYPE_CHECKING:
+    from order import Order
 
-    @property
-    def name(self) -> str:
-        return self._name
+class Customer(User):
+    def __init__(self, name: str, phone: str, address: Address):
+        super().__init__(name, phone)
+        self.address = address
+        self.order_history: List['Order'] = []
 
-    @property
-    def email(self) -> str:
-        return self._email
+    def add_order_to_history(self, order: 'Order'):
+        self.order_history.append(order)
 
-    @property
-    def phone(self) -> str:
-        return self._phone
+    def get_address(self) -> Address:
+        return self.address
+
+    def on_update(self, order: 'Order'):
+        print(f"--- Notification for Customer {self.get_name()} ---")
+        print(f"  Order {order.get_id()} is now {order.get_status().value}.")
+        print("-------------------------------------\n")

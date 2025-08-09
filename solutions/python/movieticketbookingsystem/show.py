@@ -1,38 +1,27 @@
 from datetime import datetime
-from typing import Dict
 from movie import Movie
-from theater import Theater
-from seat import Seat
+from screen import Screen
+from pricing_strategy import PricingStrategy
 
 class Show:
-    def __init__(self, show_id: str, movie: Movie, theater: Theater, start_time: datetime, end_time: datetime, seats: Dict[str, Seat]):
-        self._id = show_id
-        self._movie = movie
-        self._theater = theater
-        self._start_time = start_time
-        self._end_time = end_time
-        self._seats = seats
+    def __init__(self, show_id: str, movie: Movie, screen: Screen, start_time: datetime, pricing_strategy: PricingStrategy):
+        self.id = show_id
+        self.movie = movie
+        self.screen = screen
+        self.start_time = start_time
+        self.pricing_strategy = pricing_strategy
 
-    @property
-    def id(self) -> str:
-        return self._id
+    def get_id(self) -> str:
+        return self.id
 
-    @property
-    def movie(self) -> Movie:
-        return self._movie
+    def get_movie(self) -> Movie:
+        return self.movie
 
-    @property
-    def theater(self) -> Theater:
-        return self._theater
+    def get_screen(self) -> Screen:
+        return self.screen
 
-    @property
-    def start_time(self) -> datetime:
-        return self._start_time
+    def get_start_time(self) -> datetime:
+        return self.start_time
 
-    @property
-    def end_time(self) -> datetime:
-        return self._end_time
-
-    @property
-    def seats(self) -> Dict[str, Seat]:
-        return self._seats
+    def get_pricing_strategy(self) -> PricingStrategy:
+        return self.pricing_strategy
