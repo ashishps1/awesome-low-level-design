@@ -1,39 +1,82 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace OnlineAuctionSystem
+public class AuctionSystemDemo
 {
-    public class AuctionSystemDemo
+    public static void Main(string[] args)
     {
-        public static void Run()
+        AuctionService auctionService = AuctionService.GetInstance();
+
+        User alice = auctionService.CreateUser("Alice");
+        User bob = auctionService.CreateUser("Bob");
+        User carol = auctionService.CreateUser("Carol");
+
+        Console.WriteLine("=============================================");
+        Console.WriteLine("        Online Auction System Demo           ");
+        Console.WriteLine("=============================================");
+
+        DateTime endTime = DateTime.Now.AddSeconds(10);
+        Auction laptopAuction = auctionService.CreateAuction(
+            "Vintage Laptop",
+            "A rare 1990s laptop, in working condition.",
+            100.00m,
+            endTime
+        );
+        Console.WriteLine();
+
+        try
         {
-            var auctionSystem = AuctionSystem.GetInstance();
+            auctionService.PlaceBid(laptopAuction.GetId(), alice.GetId(), 110.00m);
+            Thread.Sleep(500);
 
-            // Register users
-            var user1 = new User("1", "John Doe", "john@example.com");
-            var user2 = new User("2", "Jane Smith", "jane@example.com");
-            auctionSystem.RegisterUser(user1);
-            auctionSystem.RegisterUser(user2);
+            auctionService.PlaceBid(laptopAuction.GetId(), bob.GetId(), 120.00m);
+            Thread.Sleep(500);
 
-            // Create auction listings
-            var listing1 = new AuctionListing("1", "Item 1", "Description 1", 100.0, 60000, user1);
-            var listing2 = new AuctionListing("2", "Item 2", "Description 2", 50.0, 120000, user2);
-            auctionSystem.CreateAuctionListing(listing1);
-            auctionSystem.CreateAuctionListing(listing2);
+            auctionService.PlaceBid(laptopAuction.GetId(), carol.GetId(), 125.00m);
+            Thread.Sleep(500);
 
-            // Search auction listings
-            List<AuctionListing> searchResults = auctionSystem.SearchAuctionListings("Item");
-            Console.WriteLine("Search Results:");
-            foreach (var listing in searchResults)
-            {
-                Console.WriteLine(listing.ItemName);
-            }
+            auctionService.PlaceBid(laptopAuction.GetId(), alice.GetId(), 150.00m);
 
-            // Place bids
-            var bid1 = new Bid("1", user2, 150.0);
-            var bid2 = new Bid("2", user1, 200.0);
-            auctionSystem.PlaceBid(listing1.Id, bid1);
-            auctionSystem.PlaceBid(listing1.Id, bid2);
+            Console.WriteLine("\n--- Waiting for auction to end automatically... ---");
+            Thread.Sleep(2000);
         }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occurred during bidding: {e.Message}");
+        }
+
+        Console.WriteLine("\n--- Post-Auction Information ---");
+        Auction endedAuction = auctionService.GetAuction(laptopAuction.GetId());
+
+        if (endedAuction.GetWinningBid() != null)
+        {
+            Console.WriteLine($"Final Winner: {endedAuction.GetWinningBid().GetBidder().GetName()}");
+            Console.WriteLine($"Winning Price: ${endedAuction.GetWinningBid().GetAmount():F2}");
+        }
+        else
+        {
+            Console.WriteLine("The auction ended with no winner.");
+        }
+
+        Console.WriteLine("\nFull Bid History:");
+        foreach (Bid bid in endedAuction.GetBidHistory())
+        {
+            Console.WriteLine(bid.ToString());
+        }
+
+        Console.WriteLine("\n--- Attempting to bid on an ended auction ---");
+        try
+        {
+            auctionService.PlaceBid(laptopAuction.GetId(), bob.GetId(), 200.00m);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"CAUGHT EXPECTED ERROR: {e.Message}");
+        }
+
+        auctionService.Shutdown();
     }
 }

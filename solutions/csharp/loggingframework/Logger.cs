@@ -1,60 +1,94 @@
-using System;
-
-namespace LoggingFramework
+class Logger
 {
-    public class Logger
+    private readonly string name;
+    private LogLevel? level;
+    private readonly Logger parent;
+    private readonly List<ILogAppender> appenders;
+    private bool additivity = true;
+
+    public Logger(string name, Logger parent)
     {
-        private static readonly Logger _instance = new Logger();
-        private LoggerConfig _config;
+        this.name = name;
+        this.parent = parent;
+        this.appenders = new List<ILogAppender>();
+    }
 
-        private Logger()
-        {
-            // Private constructor to enforce singleton pattern
-            _config = new LoggerConfig(LogLevel.INFO, new ConsoleAppender());
-        }
+    public void AddAppender(ILogAppender appender)
+    {
+        appenders.Add(appender);
+    }
 
-        public static Logger GetInstance()
-        {
-            return _instance;
-        }
+    public List<ILogAppender> GetAppenders()
+    {
+        return new List<ILogAppender>(appenders);
+    }
 
-        public void SetConfig(LoggerConfig config)
-        {
-            _config = config;
-        }
+    public void SetLevel(LogLevel minLevel)
+    {
+        this.level = minLevel;
+    }
 
-        public void Log(LogLevel level, string message)
+    public void SetAdditivity(bool additivity)
+    {
+        this.additivity = additivity;
+    }
+
+    public LogLevel GetEffectiveLevel()
+    {
+        for (Logger logger = this; logger != null; logger = logger.parent)
         {
-            if (level >= _config.LogLevel)
+            LogLevel? currentLevel = logger.level;
+            if (currentLevel.HasValue)
             {
-                LogMessage logMessage = new LogMessage(level, message);
-                _config.LogAppender.Append(logMessage);
+                return currentLevel.Value;
             }
         }
+        return LogLevel.DEBUG; // Default root level
+    }
 
-        public void Debug(string message)
+    public void Log(LogLevel messageLevel, string message)
+    {
+        if (messageLevel.IsGreaterOrEqual(GetEffectiveLevel()))
         {
-            Log(LogLevel.DEBUG, message);
+            LogMessage logMessage = new LogMessage(messageLevel, this.name, message);
+            CallAppenders(logMessage);
         }
+    }
 
-        public void Info(string message)
+    private void CallAppenders(LogMessage logMessage)
+    {
+        if (appenders.Count > 0)
         {
-            Log(LogLevel.INFO, message);
+            LogManager.GetInstance().GetProcessor().Process(logMessage, this.appenders);
         }
+        if (additivity && parent != null)
+        {
+            parent.CallAppenders(logMessage);
+        }
+    }
 
-        public void Warning(string message)
-        {
-            Log(LogLevel.WARNING, message);
-        }
+    public void Debug(string message)
+    {
+        Log(LogLevel.DEBUG, message);
+    }
 
-        public void Error(string message)
-        {
-            Log(LogLevel.ERROR, message);
-        }
+    public void Info(string message)
+    {
+        Log(LogLevel.INFO, message);
+    }
 
-        public void Fatal(string message)
-        {
-            Log(LogLevel.FATAL, message);
-        }
+    public void Warn(string message)
+    {
+        Log(LogLevel.WARN, message);
+    }
+
+    public void Error(string message)
+    {
+        Log(LogLevel.ERROR, message);
+    }
+
+    public void Fatal(string message)
+    {
+        Log(LogLevel.FATAL, message);
     }
 }

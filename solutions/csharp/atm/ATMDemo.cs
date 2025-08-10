@@ -1,31 +1,40 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
 
-namespace ATM
+public class ATMDemo
 {
-    public class ATMDemo
+    public static void Main(string[] args)
     {
-        public static void Run()
-        {
-            var bankingService = new BankingService();
-            var cashDispenser = new CashDispenser(10000);
-            var atm = new ATM(bankingService, cashDispenser);
+        ATM atm = ATM.GetInstance();
 
-            // Create sample accounts
-            bankingService.CreateAccount("1234567890", 1000.0);
-            bankingService.CreateAccount("9876543210", 500.0);
+        // Perform Check Balance operation
+        atm.InsertCard("1234-5678-9012-3456");
+        atm.EnterPin("1234");
+        atm.SelectOperation(OperationType.CHECK_BALANCE); // $1000
 
-            // Perform ATM operations
-            var card = new Card("1234567890", "1234");
-            atm.AuthenticateUser(card);
+        // Perform Withdraw Cash operation
+        atm.InsertCard("1234-5678-9012-3456");
+        atm.EnterPin("1234");
+        atm.SelectOperation(OperationType.WITHDRAW_CASH, 570);
 
-            double balance = atm.CheckBalance("1234567890");
-            Console.WriteLine("Account balance: " + balance);
+        // Perform Deposit Cash operation
+        atm.InsertCard("1234-5678-9012-3456");
+        atm.EnterPin("1234");
+        atm.SelectOperation(OperationType.DEPOSIT_CASH, 200);
 
-            atm.WithdrawCash("1234567890", 500.0);
-            atm.DepositCash("9876543210", 200.0);
+        // Perform Check Balance operation
+        atm.InsertCard("1234-5678-9012-3456");
+        atm.EnterPin("1234");
+        atm.SelectOperation(OperationType.CHECK_BALANCE); // $630
 
-            balance = atm.CheckBalance("1234567890");
-            Console.WriteLine("Updated account balance: " + balance);
-        }
+        // Perform Withdraw Cash more than balance
+        atm.InsertCard("1234-5678-9012-3456");
+        atm.EnterPin("1234");
+        atm.SelectOperation(OperationType.WITHDRAW_CASH, 700); // Insufficient balance
+
+        // Insert Incorrect PIN
+        atm.InsertCard("1234-5678-9012-3456");
+        atm.EnterPin("3425");
     }
 }

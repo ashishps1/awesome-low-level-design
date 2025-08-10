@@ -1,34 +1,67 @@
-using System;
-
-namespace TrafficSignalSystem
+class TrafficLight
 {
-    public class TrafficLight
+    private readonly int intersectionId;
+    private readonly Direction direction;
+    private LightColor currentColor;
+    private ISignalState currentState;
+    private ISignalState nextState;
+    private readonly List<ITrafficObserver> observers = new List<ITrafficObserver>();
+
+    public TrafficLight(int intersectionId, Direction direction)
     {
-        public string Id { get; }
-        public Signal CurrentSignal { get; private set; }
-        public int RedDuration { get; set; }
-        public int YellowDuration { get; set; }
-        public int GreenDuration { get; set; }
+        this.intersectionId = intersectionId;
+        this.direction = direction;
+        this.currentState = new RedState(); // Default state is Red
+        this.currentState.Handle(this);
+    }
 
-        public TrafficLight(string id, int redDuration, int yellowDuration, int greenDuration)
-        {
-            Id = id;
-            RedDuration = redDuration;
-            YellowDuration = yellowDuration;
-            GreenDuration = greenDuration;
-            CurrentSignal = Signal.RED;
-        }
+    // This is called by the IntersectionController to initiate a G-Y-R cycle
+    public void StartGreen()
+    {
+        this.currentState = new GreenState();
+        this.currentState.Handle(this);
+    }
 
-        public void ChangeSignal(Signal newSignal)
+    // This is called by the IntersectionController to transition from G->Y or Y->R
+    public void Transition()
+    {
+        this.currentState = this.nextState;
+        this.currentState.Handle(this);
+    }
+
+    public void SetColor(LightColor color)
+    {
+        if (this.currentColor != color)
         {
-            CurrentSignal = newSignal;
+            this.currentColor = color;
             NotifyObservers();
         }
+    }
 
-        private void NotifyObservers()
+    public void SetNextState(ISignalState state)
+    {
+        this.nextState = state;
+    }
+
+    public LightColor GetCurrentColor() => currentColor;
+    public Direction GetDirection() => direction;
+
+    // Observer pattern methods
+    public void AddObserver(ITrafficObserver observer)
+    {
+        observers.Add(observer);
+    }
+
+    public void RemoveObserver(ITrafficObserver observer)
+    {
+        observers.Remove(observer);
+    }
+
+    private void NotifyObservers()
+    {
+        foreach (var observer in observers)
         {
-            // Notify observers (e.g., roads) about the signal change
-            Console.WriteLine($"Traffic light {Id} changed to {CurrentSignal}");
+            observer.Update(intersectionId, direction, currentColor);
         }
     }
 }

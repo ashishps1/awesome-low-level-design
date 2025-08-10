@@ -1,0 +1,4 @@
+interface IOrderCommand
+{
+    void Execute();
+}

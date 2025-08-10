@@ -1,139 +1,141 @@
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
-namespace FoodDeliveryService
+class FoodDeliveryService
 {
-    public class FoodDeliveryService
+    private static volatile FoodDeliveryService instance;
+    private static readonly object lockObject = new object();
+    private readonly ConcurrentDictionary<string, Customer> customers = new ConcurrentDictionary<string, Customer>();
+    private readonly ConcurrentDictionary<string, Restaurant> restaurants = new ConcurrentDictionary<string, Restaurant>();
+    private readonly ConcurrentDictionary<string, DeliveryAgent> deliveryAgents = new ConcurrentDictionary<string, DeliveryAgent>();
+    private readonly ConcurrentDictionary<string, Order> orders = new ConcurrentDictionary<string, Order>();
+    private IDeliveryAssignmentStrategy assignmentStrategy;
+
+    private FoodDeliveryService() { }
+
+    public static FoodDeliveryService GetInstance()
     {
-        private static FoodDeliveryService _instance;
-        private readonly ConcurrentDictionary<string, Customer> _customers;
-        private readonly ConcurrentDictionary<string, Restaurant> _restaurants;
-        private readonly ConcurrentDictionary<string, Order> _orders;
-        private readonly ConcurrentDictionary<string, DeliveryAgent> _deliveryAgents;
-
-        private FoodDeliveryService()
+        if (instance == null)
         {
-            _customers = new ConcurrentDictionary<string, Customer>();
-            _restaurants = new ConcurrentDictionary<string, Restaurant>();
-            _orders = new ConcurrentDictionary<string, Order>();
-            _deliveryAgents = new ConcurrentDictionary<string, DeliveryAgent>();
-        }
-
-        public static FoodDeliveryService Instance
-        {
-            get
+            lock (lockObject)
             {
-                if (_instance == null)
-                {
-                    _instance = new FoodDeliveryService();
-                }
-                return _instance;
+                if (instance == null)
+                    instance = new FoodDeliveryService();
             }
         }
+        return instance;
+    }
 
-        public void RegisterCustomer(Customer customer)
+    public void SetAssignmentStrategy(IDeliveryAssignmentStrategy assignmentStrategy)
+    {
+        this.assignmentStrategy = assignmentStrategy;
+    }
+
+    public Customer RegisterCustomer(string name, string phone, Address address)
+    {
+        Customer customer = new Customer(name, phone, address);
+        customers.TryAdd(customer.GetId(), customer);
+        return customer;
+    }
+
+    public Restaurant RegisterRestaurant(string name, Address address)
+    {
+        Restaurant restaurant = new Restaurant(name, address);
+        restaurants.TryAdd(restaurant.GetId(), restaurant);
+        return restaurant;
+    }
+
+    public DeliveryAgent RegisterDeliveryAgent(string name, string phone, Address initialLocation)
+    {
+        DeliveryAgent deliveryAgent = new DeliveryAgent(name, phone, initialLocation);
+        deliveryAgents.TryAdd(deliveryAgent.GetId(), deliveryAgent);
+        return deliveryAgent;
+    }
+
+    public Order PlaceOrder(string customerId, string restaurantId, List<OrderItem> items)
+    {
+        if (!customers.TryGetValue(customerId, out Customer customer) ||
+            !restaurants.TryGetValue(restaurantId, out Restaurant restaurant))
         {
-            _customers[customer.Id] = customer;
+            throw new KeyNotFoundException("Customer or Restaurant not found.");
         }
 
-        public void RegisterRestaurant(Restaurant restaurant)
+        Order order = new Order(customer, restaurant, items);
+        orders.TryAdd(order.GetId(), order);
+        customer.AddOrderToHistory(order);
+        Console.WriteLine($"Order {order.GetId()} placed by {customer.GetName()} at {restaurant.GetName()}.");
+        order.SetStatus(OrderStatus.PENDING);
+        return order;
+    }
+
+    public void UpdateOrderStatus(string orderId, OrderStatus newStatus)
+    {
+        if (!orders.TryGetValue(orderId, out Order order))
         {
-            _restaurants[restaurant.Id] = restaurant;
+            throw new KeyNotFoundException("Order not found.");
         }
 
-        public void RegisterDeliveryAgent(DeliveryAgent agent)
+        order.SetStatus(newStatus);
+
+        if (newStatus == OrderStatus.READY_FOR_PICKUP)
         {
-            _deliveryAgents[agent.Id] = agent;
+            AssignDelivery(order);
+        }
+    }
+
+    public void CancelOrder(string orderId)
+    {
+        if (!orders.TryGetValue(orderId, out Order order))
+        {
+            Console.WriteLine($"ERROR: Order with ID {orderId} not found.");
+            return;
         }
 
-        public List<Restaurant> GetAvailableRestaurants()
+        if (order.Cancel())
         {
-            return new List<Restaurant>(_restaurants.Values);
+            Console.WriteLine($"SUCCESS: Order {orderId} has been successfully canceled.");
+        }
+        else
+        {
+            Console.WriteLine($"FAILED: Order {orderId} could not be canceled. Its status is: {order.GetStatus()}");
+        }
+    }
+
+    private void AssignDelivery(Order order)
+    {
+        List<DeliveryAgent> availableAgents = deliveryAgents.Values.ToList();
+
+        DeliveryAgent agent = assignmentStrategy.FindAgent(order, availableAgents);
+        if (agent != null)
+        {
+            order.AssignDeliveryAgent(agent);
+            double distance = agent.GetCurrentLocation().DistanceTo(order.GetRestaurant().GetAddress());
+            Console.WriteLine($"Agent {agent.GetName()} (dist: {distance:F2}) assigned to order {order.GetId()}.");
+            order.SetStatus(OrderStatus.OUT_FOR_DELIVERY);
+        }
+        else
+        {
+            Console.WriteLine($"No available delivery agents found for order {order.GetId()}");
+        }
+    }
+
+    public List<Restaurant> SearchRestaurants(List<IRestaurantSearchStrategy> strategies)
+    {
+        List<Restaurant> results = restaurants.Values.ToList();
+
+        foreach (var strategy in strategies)
+        {
+            results = strategy.Filter(results);
         }
 
-        public List<MenuItem> GetRestaurantMenu(string restaurantId)
-        {
-            if (_restaurants.TryGetValue(restaurantId, out var restaurant))
-            {
-                return restaurant.Menu;
-            }
-            return new List<MenuItem>();
-        }
+        return results;
+    }
 
-        public Order PlaceOrder(string customerId, string restaurantId, List<OrderItem> items)
+    public Menu GetRestaurantMenu(string restaurantId)
+    {
+        if (!restaurants.TryGetValue(restaurantId, out Restaurant restaurant))
         {
-            if (_customers.TryGetValue(customerId, out var customer) && _restaurants.TryGetValue(restaurantId, out var restaurant))
-            {
-                var order = new Order(GenerateOrderId(), customer, restaurant);
-                foreach (var item in items)
-                {
-                    order.AddItem(item);
-                }
-                _orders[order.Id] = order;
-                NotifyRestaurant(order);
-                Console.WriteLine($"Order placed: {order.Id}");
-                return order;
-            }
-            return null;
+            throw new KeyNotFoundException($"Restaurant with ID {restaurantId} not found.");
         }
-
-        public void UpdateOrderStatus(string orderId, OrderStatus status)
-        {
-            if (_orders.TryGetValue(orderId, out var order))
-            {
-                order.SetStatus(status);
-                NotifyCustomer(order);
-                if (status == OrderStatus.CONFIRMED)
-                {
-                    AssignDeliveryAgent(order);
-                }
-            }
-        }
-
-        public void CancelOrder(string orderId)
-        {
-            if (_orders.TryGetValue(orderId, out var order) && order.Status == OrderStatus.PENDING)
-            {
-                order.SetStatus(OrderStatus.CANCELLED);
-                NotifyCustomer(order);
-                NotifyRestaurant(order);
-                Console.WriteLine($"Order cancelled: {order.Id}");
-            }
-        }
-
-        private void NotifyCustomer(Order order)
-        {
-            // Send notification to the customer about the order status update
-        }
-
-        private void NotifyRestaurant(Order order)
-        {
-            // Send notification to the restaurant about the new order or order status update
-        }
-
-        private void AssignDeliveryAgent(Order order)
-        {
-            foreach (var agent in _deliveryAgents.Values)
-            {
-                if (agent.Available)
-                {
-                    agent.SetAvailable(false);
-                    order.AssignDeliveryAgent(agent);
-                    NotifyDeliveryAgent(order);
-                    break;
-                }
-            }
-        }
-
-        private void NotifyDeliveryAgent(Order order)
-        {
-            // Send notification to the delivery agent about the assigned order
-        }
-
-        private string GenerateOrderId()
-        {
-            return "ORD" + Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-        }
+        return restaurant.GetMenu();
     }
 }

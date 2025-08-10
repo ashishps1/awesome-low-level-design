@@ -1,0 +1,5 @@
+enum ItemType
+{
+    BOOK,
+    MAGAZINE
+}
