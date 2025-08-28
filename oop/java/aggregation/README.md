@@ -32,6 +32,10 @@ class Professor {
         this.subject = subject;
     }
     
+    public String getName(){
+        return name;
+    }
+    
     public void teach() {
         System.out.println(name + " is teaching " + subject);
     }
@@ -53,7 +57,7 @@ class University {
     public void showProfessors() {
         System.out.println("Professors at " + universityName + ":");
         for (Professor professor : professors) {
-            System.out.println(" - " + professor.name);
+            System.out.println(" - " + professor.getName());
         }
     }
 }
