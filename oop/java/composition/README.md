@@ -69,12 +69,8 @@ class Car {
 }
 
 public class CompositionExample {
-    public static void main(String[] args) {
-        Engine engine = new Engine(150);
-        Wheel wheel = new Wheel("Alloy");
-        Transmission transmission = new Transmission("Automatic");
-        
-        Car car = new Car(engine, wheel, transmission);
+    public static void main(String[] args) {        
+        Car car = new Car(new Engine(150), new Wheel("Alloy"), new Transmission("Automatic"));
         car.drive();
     }
 }
