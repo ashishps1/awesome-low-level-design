@@ -3,7 +3,7 @@ package hotelmanagementsystem.specification;
 import hotelmanagementsystem.enums.RoomType;
 import hotelmanagementsystem.model.Room;
 
-public class RoomTypeSpecification extends AbstractSpecification<Room> {
+public class RoomTypeSpecification implements Specification<Room> {
     private final RoomType type;
 
     public RoomTypeSpecification(RoomType type) {
