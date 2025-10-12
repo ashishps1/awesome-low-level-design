@@ -95,26 +95,31 @@ Design and implement an Online Stock Brokerage System that allows users to buy a
 ### 9. OrderStatus (Enum)
 - **Values:** PENDING, EXECUTED, CANCELLED, FAILED
 
+## Class Design
+
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/onlineStockBrokerageSystem-class-diagram.png)
 ---
 
 ## Example Usage
 
 ```java
-StockBroker broker = new StockBroker();
+StockBroker pubSubService = new StockBroker();
 
 // Create a user account
 User user = new User("John Doe", "john@example.com");
-Account account = broker.createAccount(user);
+Account account = pubSubService.createAccount(user);
 
 // Deposit funds
 account.deposit(10000.0);
 
 // Place a buy order
-Stock stock = broker.getStock("AAPL");
-BuyOrder buyOrder = broker.placeBuyOrder(account, stock, 10);
+Stock stock = pubSubService.getStock("AAPL");
+BuyOrder buyOrder = pubSubService.placeBuyOrder(account, stock, 10);
 
 // Place a sell order
-SellOrder sellOrder = broker.placeSellOrder(account, stock, 5);
+SellOrder sellOrder = pubSubService.placeSellOrder(account, stock, 5);
 
 // Get portfolio
 Portfolio portfolio = account.getPortfolio();
@@ -141,7 +146,7 @@ See `StockBrokerageSystemDemo.java` for a sample usage and simulation of the sto
 
 ## Design Patterns Used
 
-- **Singleton Pattern:** For the stock broker instance
+- **Singleton Pattern:** For the stock pubSubService instance
 - **Factory Pattern:** For creating different types of orders
 - **Observer Pattern:** For stock price updates
 - **Strategy Pattern:** For different order execution strategies

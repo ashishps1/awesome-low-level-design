@@ -1,15 +1,19 @@
+import uuid
+
 class User:
-    def __init__(self, user_id, name, email):
-        self.id = user_id
-        self.name = name
-        self.email = email
-
-    # Getters and setters
-    def get_id(self):
-        return self.id
-
-    def get_email(self):
-        return self.email
-
-    def get_name(self):
-        return self.name
+    def __init__(self, name: str, email: str):
+        self._id = str(uuid.uuid4())
+        self._name = name
+        self._email = email
+    
+    @property
+    def id(self) -> str:
+        return self._id
+    
+    @property
+    def email(self) -> str:
+        return self._email
+    
+    @property
+    def name(self) -> str:
+        return self._name

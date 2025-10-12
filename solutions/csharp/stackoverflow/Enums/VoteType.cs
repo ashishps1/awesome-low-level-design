@@ -1,0 +1,5 @@
+enum VoteType
+{
+    UPVOTE,
+    DOWNVOTE
+}

@@ -9,6 +9,10 @@
 6. The game should handle player turns and validate moves to ensure they are legal.
 7. The game should detect and announce the winner or a draw at the end of the game.
 
+## UML Class Diagram
+
+![](../class-diagrams/tictactoe-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/tictactoe/) 
 #### [Python Implementation](../solutions/python/tictactoe/)

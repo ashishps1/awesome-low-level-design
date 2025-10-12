@@ -6,13 +6,16 @@ import java.util.Scanner;
 
 public class ChessGame {
     private final Board board;
-    private final Player whitePlayer, blackPlayer;
+    private Player whitePlayer, blackPlayer;
     private Player currentPlayer;
 
     public ChessGame() {
         board = new Board();
-        this.whitePlayer = new Player(Color.WHITE);
-        this.blackPlayer = new Player(Color.BLACK);
+    }
+
+    public void setPlayers(String playerWhiteName, String playerBlackName) {
+        this.whitePlayer = new Player(playerWhiteName, Color.WHITE);
+        this.blackPlayer = new Player(playerBlackName, Color.BLACK);
         this.currentPlayer = whitePlayer;
     }
 
@@ -20,7 +23,7 @@ public class ChessGame {
         // Game loop
         while (!isGameOver()) {
             Player player = currentPlayer;
-            System.out.println(player.getColor() + "'s turn.");
+            System.out.println(player.getName() + "'s turn.");
             // Get move from the player
             Move move = getPlayerMove(player);
             // Make the move on the board

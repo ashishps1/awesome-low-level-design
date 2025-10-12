@@ -1,49 +1,73 @@
-namespace RideSharingService
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class RideSharingServiceDemo
 {
-    public class RideSharingServiceDemo
+    public static void Main()
     {
-        public static void Run()
+        // 1. Setup the system using singleton instance
+        var service = RideSharingService.Instance;
+        service.SetDriverMatchingStrategy(new NearestDriverMatchingStrategy());
+        service.SetPricingStrategy(new VehicleBasedPricingStrategy());
+
+        // 2. Register riders and drivers
+        var alice = service.RegisterRider("Alice", "123-456-7890");
+
+        var bobVehicle = new Vehicle("KA01-1234", "Toyota Prius", RideType.SEDAN);
+        var bob = service.RegisterDriver("Bob", "243-987-2860", bobVehicle, new Location(1.0, 1.0));
+
+        var charlieVehicle = new Vehicle("KA02-5678", "Honda CRV", RideType.SUV);
+        var charlie = service.RegisterDriver("Charlie", "313-486-2691", charlieVehicle, new Location(2.0, 2.0));
+
+        var davidVehicle = new Vehicle("KA03-9012", "Honda CRV", RideType.SEDAN);
+        var david = service.RegisterDriver("David", "613-586-3241", davidVehicle, new Location(1.2, 1.2));
+
+        // 3. Drivers go online
+        bob.SetStatus(DriverStatus.ONLINE);
+        charlie.SetStatus(DriverStatus.ONLINE);
+        david.SetStatus(DriverStatus.ONLINE);
+
+        // David is online but will be too far for the first request
+        david.SetCurrentLocation(new Location(10.0, 10.0));
+
+        // 4. Alice requests a ride
+        var pickupLocation = new Location(0.0, 0.0);
+        var dropoffLocation = new Location(5.0, 5.0);
+
+        // Rider wants a SEDAN
+        var trip1 = service.RequestRide(alice.Id, pickupLocation, dropoffLocation, RideType.SEDAN);
+
+        if (trip1 != null)
         {
-            var rideService = RideService.GetInstance();
+            // 5. One of the nearby drivers accepts the ride
+            service.AcceptRide(bob.Id, trip1.Id);
 
-            // Create passengers
-            var passenger1 = new Passenger(1, "John Doe", "1234567890", new Location(37.7749, -122.4194));
-            var passenger2 = new Passenger(2, "Jane Smith", "9876543210", new Location(37.7860, -122.4070));
-            rideService.AddPassenger(passenger1);
-            rideService.AddPassenger(passenger2);
+            // 6. The trip progresses
+            service.StartTrip(trip1.Id);
+            service.EndTrip(trip1.Id);
+        }
 
-            // Create drivers
-            var driver1 = new Driver(1, "Alice Johnson", "4567890123", "ABC123", new Location(37.7749, -122.4194), DriverStatus.AVAILABLE);
-            var driver2 = new Driver(2, "Bob Williams", "7890123456", "XYZ789", new Location(37.7860, -122.4070), DriverStatus.AVAILABLE);
-            rideService.AddDriver(driver1);
-            rideService.AddDriver(driver2);
+        Console.WriteLine("\n--- Checking Trip History ---");
+        Console.WriteLine($"Alice's trip history: {alice.TripHistory.Count} trips");
+        Console.WriteLine($"Bob's trip history: {bob.TripHistory.Count} trips");
 
-            // Passenger 1 requests a ride
-            rideService.RequestRide(passenger1, passenger1.Location, new Location(37.7887, -122.4098));
+        // --- Second ride request ---
+        Console.WriteLine("\n=============================================");
+        var harry = service.RegisterRider("Harry", "167-342-7834");
 
-            // Driver 1 accepts the ride
-            if (rideService.GetRequestedRides().TryDequeue(out var ride))
-            {
-                rideService.AcceptRide(driver1, ride);
-            }
+        // Harry requests an SUV
+        var trip2 = service.RequestRide(harry.Id,
+            new Location(2.5, 2.5),
+            new Location(8.0, 8.0),
+            RideType.SUV);
 
-            // Start the ride
-            rideService.StartRide(ride);
-
-            // Complete the ride
-            rideService.CompleteRide(ride);
-
-            // Passenger 2 requests a ride
-            rideService.RequestRide(passenger2, passenger2.Location, new Location(37.7749, -122.4194));
-
-            // Driver 2 accepts the ride
-            if (rideService.GetRequestedRides().TryDequeue(out var ride2))
-            {
-                rideService.AcceptRide(driver2, ride2);
-            }
-
-            // Passenger 2 cancels the ride
-            rideService.CancelRide(ride2);
+        if (trip2 != null)
+        {
+            // Only Charlie is available for an SUV ride
+            service.AcceptRide(charlie.Id, trip2.Id);
+            service.StartTrip(trip2.Id);
+            service.EndTrip(trip2.Id);
         }
     }
 }

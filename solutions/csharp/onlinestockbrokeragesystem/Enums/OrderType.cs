@@ -1,0 +1,5 @@
+enum OrderType
+{
+    MARKET,
+    LIMIT
+}

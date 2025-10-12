@@ -10,6 +10,10 @@
 7. The system should handle payment processing for reservations.
 8. The system should be able to handle concurrent reservations and ensure data consistency.
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/carrentalsystem-class-diagram.png)
+
 ## Classes, Interfaces and Enumerations
 1. The **Car** class represents a car in the rental system, with properties such as make, model, year, license plate number, rental price per day, and availability status.
 2. The **Customer** class represents a customer, with properties like name, contact information, and driver's license number.

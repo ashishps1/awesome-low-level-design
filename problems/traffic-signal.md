@@ -8,12 +8,17 @@
 5. The system should be able to detect and handle emergency situations, such as an ambulance or fire truck approaching the intersection.
 6. The system should be scalable and extensible to support additional features and functionality.
 
+## UML Class Diagram
+
+![](../class-diagrams/trafficsignalsystem-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/trafficsignalsystem/) 
 #### [Python Implementation](../solutions/python/trafficsignalsystem/)
 #### [C++ Implementation](../solutions/cpp/trafficsignalsystem/)
 #### [C# Implementation](../solutions/csharp/trafficsignalsystem/)
 #### [Go Implementation](../solutions/golang/trafficsignalsystem/)
+#### [TypeScript Implementation](../solutions/typescript/src/TrafficSignalSystem/) 
 
 ## Classes, Interfaces and Enumerations
 1. The **Signal** enum represents the different states of a traffic light: red, yellow, and green.

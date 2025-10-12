@@ -1,16 +1,13 @@
-namespace LRUCacheNamespace
+class Node<K, V>
 {
-    public class Node<K, V>
-    {
-        public K Key { get; }
-        public V Value { get; set; }
-        public Node<K, V> Prev { get; set; }
-        public Node<K, V> Next { get; set; }
+    public K key;
+    public V value;
+    public Node<K, V> prev;
+    public Node<K, V> next;
 
-        public Node(K key, V value)
-        {
-            Key = key;
-            Value = value;
-        }
+    public Node(K key, V value)
+    {
+        this.key = key;
+        this.value = value;
     }
 }

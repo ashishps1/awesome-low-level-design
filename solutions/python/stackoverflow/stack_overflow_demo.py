@@ -1,83 +1,60 @@
-from stack_overflow import StackOverflow
+from stack_overflow_service import StackOverflowService
+from enums import VoteType
+from search_strategy import UserSearchStrategy, TagSearchStrategy
+from tag import Tag
 
 class StackOverflowDemo:
     @staticmethod
-    def run():
-        system = StackOverflow()
+    def main():
+        service = StackOverflowService()
 
-        # Create users
-        alice = system.create_user("Alice", "alice@example.com")
-        bob = system.create_user("Bob", "bob@example.com")
-        charlie = system.create_user("Charlie", "charlie@example.com")
+        # 1. Create Users
+        alice = service.create_user("Alice")
+        bob = service.create_user("Bob")
+        charlie = service.create_user("Charlie")
 
-        # Alice asks a question
-        java_question = system.ask_question(alice, "What is polymorphism in Java?",
-                                            "Can someone explain polymorphism in Java with an example?",
-                                            ["java", "oop"])
+        # 2. Alice posts a question
+        print("--- Alice posts a question ---")
+        java_tag = Tag("java")
+        design_patterns_tag = Tag("design-patterns")
+        tags = {java_tag, design_patterns_tag}
+        question = service.post_question(alice.get_id(), "How to implement Observer Pattern?", "Details about Observer Pattern...", tags)
+        StackOverflowDemo.print_reputations(alice, bob, charlie)
 
-        # Bob answers Alice's question
-        bob_answer = system.answer_question(bob, java_question,
-                                            "Polymorphism in Java is the ability of an object to take on many forms...")
+        # 3. Bob and Charlie post answers
+        print("\n--- Bob and Charlie post answers ---")
+        bob_answer = service.post_answer(bob.get_id(), question.get_id(), "You can use the java.util.Observer interface.")
+        charlie_answer = service.post_answer(charlie.get_id(), question.get_id(), "A better way is to create your own Observer interface.")
+        StackOverflowDemo.print_reputations(alice, bob, charlie)
 
-        # Charlie comments on the question
-        system.add_comment(charlie, java_question, "Great question! I'm also interested in learning about this.")
+        # 4. Voting happens
+        print("\n--- Voting Occurs ---")
+        service.vote_on_post(alice.get_id(), question.get_id(), VoteType.UPVOTE)  # Alice upvotes her own question
+        service.vote_on_post(bob.get_id(), charlie_answer.get_id(), VoteType.UPVOTE)  # Bob upvotes Charlie's answer
+        service.vote_on_post(alice.get_id(), bob_answer.get_id(), VoteType.DOWNVOTE)  # Alice downvotes Bob's answer
+        StackOverflowDemo.print_reputations(alice, bob, charlie)
 
-        # Alice comments on Bob's answer
-        system.add_comment(alice, bob_answer, "Thanks for the explanation! Could you provide a code example?")
+        # 5. Alice accepts Charlie's answer
+        print("\n--- Alice accepts Charlie's answer ---")
+        service.accept_answer(question.get_id(), charlie_answer.get_id())
+        StackOverflowDemo.print_reputations(alice, bob, charlie)
 
-        # Charlie votes on the question and answer
-        system.vote_question(charlie, java_question, 1)  # Upvote
-        system.vote_answer(charlie, bob_answer, 1)  # Upvote
-
-        # Alice accepts Bob's answer
-        system.accept_answer(bob_answer)
-
-        # Bob asks another question
-        python_question = system.ask_question(bob, "How to use list comprehensions in Python?",
-                                            "I'm new to Python and I've heard about list comprehensions. Can someone explain how to use them?",
-                                            ["python", "list-comprehension"])
-
-        # Alice answers Bob's question
-        alice_answer = system.answer_question(alice, python_question,
-                                            "List comprehensions in Python provide a concise way to create lists...")
-
-        # Charlie votes on Bob's question and Alice's answer
-        system.vote_question(charlie, python_question, 1)  # Upvote
-        system.vote_answer(charlie, alice_answer, 1)  # Upvote
-
-        # Print out the current state
-        print(f"Question: {java_question.title}")
-        print(f"Asked by: {java_question.author.username}")
-        print(f"Tags: {', '.join(tag.name for tag in java_question.tags)}")
-        print(f"Votes: {java_question.get_vote_count()}")
-        print(f"Comments: {len(java_question.get_comments())}")
-        print(f"\nAnswer by {bob_answer.author.username}:")
-        print(bob_answer.content)
-        print(f"Votes: {bob_answer.get_vote_count()}")
-        print(f"Accepted: {bob_answer.is_accepted}")
-        print(f"Comments: {len(bob_answer.get_comments())}")
-
-        print("\nUser Reputations:")
-        print(f"Alice: {alice.reputation}")
-        print(f"Bob: {bob.reputation}")
-        print(f"Charlie: {charlie.reputation}")
-
-        # Demonstrate search functionality
-        print("\nSearch Results for 'java':")
-        search_results = system.search_questions("java")
+        # 6. Search for questions
+        print("\n--- (C) Combined Search: Questions by 'Alice' with tag 'java' ---")
+        filters_c = [
+            UserSearchStrategy(alice),
+            TagSearchStrategy(java_tag)
+        ]
+        search_results = service.search_questions(filters_c)
         for q in search_results:
-            print(q.title)
+            print(f"  - Found: {q.get_title()}")
 
-        print("\nSearch Results for 'python':")
-        search_results = system.search_questions("python")
-        for q in search_results:
-            print(q.title)
+    @staticmethod
+    def print_reputations(*users):
+        print("--- Current Reputations ---")
+        for user in users:
+            print(f"{user.get_name()}: {user.get_reputation()}")
 
-        # Demonstrate getting questions by user
-        print("\nBob's Questions:")
-        bob_questions = system.get_questions_by_user(bob)
-        for q in bob_questions:
-            print(q.title)
 
 if __name__ == "__main__":
-    StackOverflowDemo.run()
+    StackOverflowDemo.main()

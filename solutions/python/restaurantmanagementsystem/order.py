@@ -1,35 +1,26 @@
-from enum import Enum
-from datetime import datetime
-
-class OrderStatus(Enum):
-    PENDING = 1
-    PREPARING = 2
-    READY = 3
-    COMPLETED = 4
-    CANCELLED = 5
+from order_item import OrderItem
+from typing import List
 
 class Order:
-    def __init__(self, id, items, total_amount, status, timestamp):
-        self.id = id
-        self.items = items
-        self.total_amount = total_amount
-        self.status = status
-        self.timestamp = timestamp
-
-    def set_status(self, status):
-        self.status = status
-
-    def get_id(self):
-        return self.id
-
-    def get_items(self):
-        return self.items
-
-    def get_total_amount(self):
-        return self.total_amount
-
-    def get_status(self):
-        return self.status
-
-    def get_timestamp(self):
-        return self.timestamp
+    def __init__(self, order_id: int, table_id: int):
+        self._order_id = order_id
+        self._table_id = table_id
+        self._items: List[OrderItem] = []
+    
+    def add_item(self, item: OrderItem):
+        self._items.append(item)
+    
+    def get_total_price(self) -> float:
+        return sum(item.menu_item.get_price() for item in self._items)
+    
+    @property
+    def order_id(self) -> int:
+        return self._order_id
+    
+    @property
+    def table_id(self) -> int:
+        return self._table_id
+    
+    @property
+    def order_items(self) -> List[OrderItem]:
+        return self._items

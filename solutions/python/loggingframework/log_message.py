@@ -1,19 +1,26 @@
-import time
+import threading
+from datetime import datetime
+from log_level import LogLevel
 
 class LogMessage:
-    def __init__(self, level, message):
+    def __init__(self, level: LogLevel, logger_name: str, message: str):
+        self.timestamp = datetime.now()
         self.level = level
+        self.logger_name = logger_name
         self.message = message
-        self.timestamp = int(time.time() * 1000)
-    
-    def get_level(self):
-        return self.level
-    
-    def get_message(self):
-        return self.message
-    
-    def get_timestamp(self):
+        self.thread_name = threading.current_thread().name
+
+    def get_timestamp(self) -> datetime:
         return self.timestamp
-    
-    def __str__(self):
-        return f"[{self.level}] {self.timestamp} - {self.message}"
+
+    def get_level(self) -> LogLevel:
+        return self.level
+
+    def get_logger_name(self) -> str:
+        return self.logger_name
+
+    def get_thread_name(self) -> str:
+        return self.thread_name
+
+    def get_message(self) -> str:
+        return self.message

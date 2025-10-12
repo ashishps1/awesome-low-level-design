@@ -1,109 +1,84 @@
 package vendingmachine;
 
+import vendingmachine.entity.Inventory;
+import vendingmachine.entity.Item;
+import vendingmachine.enums.Coin;
+import vendingmachine.state.*;
+
 public class VendingMachine {
-    private static VendingMachine instance;
-    Inventory inventory;
-    private final VendingMachineState idleState;
-    private final VendingMachineState readyState;
-    private final VendingMachineState dispenseState;
-    private final VendingMachineState returnChangeState;
-    private VendingMachineState currentState;
-    private Product selectedProduct;
-    private double totalPayment;
+    private final static VendingMachine INSTANCE = new VendingMachine();
+    private final Inventory inventory = new Inventory();
+    private VendingMachineState currentVendingMachineState;
+    private int balance = 0;
+    private String selectedItemCode;
 
-    private VendingMachine() {
-        inventory = new Inventory();
-        idleState = new IdleState(this);
-        readyState = new ReadyState(this);
-        dispenseState = new DispenseState(this);
-        returnChangeState = new ReturnChangeState(this);
-        currentState = idleState;
-        selectedProduct = null;
-        totalPayment = 0.0;
+    public VendingMachine() {
+        currentVendingMachineState = new IdleState(this);
     }
 
-    public static synchronized VendingMachine getInstance() {
-        if (instance == null) {
-            instance = new VendingMachine();
-        }
-        return instance;
-    }
-
-    public Product addProduct(String name, double price, int quantity) {
-        Product product = new Product(name, price);
-        inventory.addProduct(product, quantity);
-        return product;
-    }
-
-    public void selectProduct(Product product) {
-        currentState.selectProduct(product);
+    public static VendingMachine getInstance() {
+        return INSTANCE;
     }
 
     public void insertCoin(Coin coin) {
-        currentState.insertCoin(coin);
+        currentVendingMachineState.insertCoin(coin);
     }
 
-    public void insertNote(Note note) {
-        currentState.insertNote(note);
+    public Item addItem(String code, String name, int price, int quantity) {
+        Item item = new Item(code, name, price);
+        inventory.addItem(code, item, quantity);
+        return item;
     }
 
-    public void dispenseProduct() {
-        currentState.dispenseProduct();
+    public void selectItem(String code) {
+        currentVendingMachineState.selectItem(code);
     }
 
-    public void returnChange() {
-        currentState.returnChange();
+    public void dispense() {
+        currentVendingMachineState.dispense();
     }
 
-    void setState(VendingMachineState state) {
-        currentState = state;
+    public void dispenseItem() {
+        Item item = inventory.getItem(selectedItemCode);
+        if (balance >= item.getPrice()) {
+            inventory.reduceStock(selectedItemCode);
+            balance -= item.getPrice();
+            System.out.println("Dispensed: " + item.getName());
+            if (balance > 0) {
+                System.out.println("Returning change: " + balance);
+            }
+        }
+        reset();
+        setState(new IdleState(this));
     }
 
-    Inventory getInventory() {
-        return inventory;
+    public void refundBalance() {
+        System.out.println("Refunding: " + balance);
+        balance = 0;
     }
 
-    VendingMachineState getIdleState() {
-        return idleState;
+    public void reset() {
+        selectedItemCode = null;
+        balance = 0;
     }
 
-    VendingMachineState getReadyState() {
-        return readyState;
+    public void addBalance(int value) {
+        balance += value;
     }
 
-    VendingMachineState getDispenseState() {
-        return dispenseState;
+    public Item getSelectedItem() {
+        return inventory.getItem(selectedItemCode);
     }
 
-    VendingMachineState getReturnChangeState() {
-        return returnChangeState;
+    public void setSelectedItemCode(String code) {
+        this.selectedItemCode = code;
     }
 
-    Product getSelectedProduct() {
-        return selectedProduct;
+    public void setState(VendingMachineState vendingMachineState) {
+        this.currentVendingMachineState = vendingMachineState;
     }
 
-    void setSelectedProduct(Product product) {
-        selectedProduct = product;
-    }
-
-    void resetSelectedProduct() {
-        selectedProduct = null;
-    }
-
-    double getTotalPayment() {
-        return totalPayment;
-    }
-
-    void addCoin(Coin coin) {
-        totalPayment += coin.getValue();
-    }
-
-    void addNote(Note note) {
-        totalPayment += note.getValue();
-    }
-
-    void resetPayment() {
-        totalPayment = 0.0;
-    }
+    // Getters for states and inventory
+    public Inventory getInventory() { return inventory; }
+    public int getBalance() { return balance; }
 }

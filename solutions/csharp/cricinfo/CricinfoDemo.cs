@@ -1,97 +1,87 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Cricinfo
+public class CricinfoDemo
 {
-    public class CricinfoDemo
+    public static void Main()
     {
-        public static void Run()
-        {
-            // Create teams
-            List<Player> team1Players = new List<Player>
-            {
-                new Player("P101", "Player 1", "Batsman"),
-                new Player("P102", "Player 2", "Bowler"),
-                new Player("P103", "Player 3", "All-rounder")
-            };
+        var service = CricInfoService.GetInstance();
 
-            List<Player> team2Players = new List<Player>
-            {
-                new Player("P201", "Player 4", "Batsman"),
-                new Player("P202", "Player 5", "Bowler"),
-                new Player("P203", "Player 6", "All-rounder")
-            };
+        // Setup Players and Teams
+        var p1 = service.AddPlayer("P1", "Virat", PlayerRole.BATSMAN);
+        var p2 = service.AddPlayer("P2", "Rohit", PlayerRole.BATSMAN);
+        var p3 = service.AddPlayer("P3", "Bumrah", PlayerRole.BOWLER);
+        var p4 = service.AddPlayer("P4", "Jadeja", PlayerRole.ALL_ROUNDER);
 
-            Team team1 = new Team("T1", "Team 1", team1Players);
-            Team team2 = new Team("T2", "Team 2", team2Players);
-            List<Team> teams = new List<Team> { team1, team2 };
+        var p5 = service.AddPlayer("P5", "Warner", PlayerRole.BATSMAN);
+        var p6 = service.AddPlayer("P6", "Smith", PlayerRole.BATSMAN);
+        var p7 = service.AddPlayer("P7", "Starc", PlayerRole.BOWLER);
+        var p8 = service.AddPlayer("P8", "Maxwell", PlayerRole.ALL_ROUNDER);
 
-            // Create a match
-            Match match = new Match("M001", "Match 1", "Venue 1", DateTime.Now, teams);
+        var india = new Team("T1", "India", new List<Player> { p1, p2, p3, p4 });
+        var australia = new Team("T2", "Australia", new List<Player> { p5, p6, p7, p8 });
 
-            // Create Cricinfo system
-            CricinfoSystem cricinfoSystem = new CricinfoSystem();
+        // Create a T20 Match
+        var t20Match = service.CreateMatch(india, australia, new T20FormatStrategy());
+        string matchId = t20Match.GetId();
 
-            // Add the match to the system
-            cricinfoSystem.AddMatch(match);
+        // Create and subscribe observers
+        var scorecard = new ScorecardDisplay();
+        var commentary = new CommentaryDisplay();
+        var notifier = new UserNotifier();
 
-            // Create a scorecard for the match
-            cricinfoSystem.CreateScorecard(match);
+        service.SubscribeToMatch(matchId, scorecard);
+        service.SubscribeToMatch(matchId, commentary);
+        service.SubscribeToMatch(matchId, notifier);
 
-            // Get the scorecard
-            string scorecardId = "SC-M001-0001";
-            Scorecard scorecard = cricinfoSystem.GetScorecard(scorecardId);
+        // Start the match
+        service.StartMatch(matchId);
 
-            // Update scores
-            cricinfoSystem.UpdateScore(scorecardId, "T1", 100);
-            cricinfoSystem.UpdateScore(scorecardId, "T2", 75);
+        Console.WriteLine("\n--- SIMULATING FIRST INNINGS ---");
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p7).WithFacedBy(p2).WithRuns(6).Build());
 
-            // Create innings
-            Innings innings1 = new Innings("I1", "T1", "T2");
-            Innings innings2 = new Innings("I2", "T2", "T1");
+        var p2Wicket = new WicketBuilder(WicketType.BOWLED, p2).Build();
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p7).WithFacedBy(p2).WithRuns(0).WithWicket(p2Wicket).Build());
 
-            // Add overs to innings
-            Over over1 = new Over(1);
-            over1.AddBall(new Ball(1, "P202", "P101", "4"));
-            over1.AddBall(new Ball(2, "P202", "P101", "6"));
-            innings1.AddOver(over1);
+        var p3Wicket = new WicketBuilder(WicketType.LBW, p3).Build();
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p7).WithFacedBy(p3).WithRuns(0).WithWicket(p3Wicket).Build());
 
-            Over over2 = new Over(2);
-            over2.AddBall(new Ball(1, "P102", "P201", "1"));
-            over2.AddBall(new Ball(2, "P102", "P201", "0"));
-            innings1.AddOver(over2);
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p7).WithFacedBy(p4).WithRuns(4).Build());
 
-            // Add innings to the scorecard
-            cricinfoSystem.AddInnings(scorecardId, innings1);
-            cricinfoSystem.AddInnings(scorecardId, innings2);
+        var p4Wicket = new WicketBuilder(WicketType.CAUGHT, p4).WithCaughtBy(p6).Build();
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p7).WithFacedBy(p4).WithRuns(0).WithWicket(p4Wicket).Build());
 
-            // Display the scorecard
-            Console.WriteLine("Scorecard ID: " + scorecard.GetId());
-            Console.WriteLine("Match: " + scorecard.GetMatch().GetTitle());
-            Console.WriteLine("Team Scores:");
-            foreach (var entry in scorecard.GetTeamScores())
-            {
-                Console.WriteLine(entry.Key + ": " + entry.Value);
-            }
+        Console.WriteLine("\n\n--- INNINGS BREAK ---");
+        Console.WriteLine("Players are off the field. Preparing for the second innings.");
 
-            Console.WriteLine("Innings:");
-            foreach (Innings innings in scorecard.GetInnings())
-            {
-                Console.WriteLine("Innings ID: " + innings.GetId());
-                Console.WriteLine("Batting Team: " + innings.GetBattingTeamId());
-                Console.WriteLine("Bowling Team: " + innings.GetBowlingTeamId());
-                Console.WriteLine("Overs:");
-                foreach (Over over in innings.GetOvers())
-                {
-                    Console.WriteLine("Over " + over.GetOverNumber());
-                    foreach (Ball ball in over.GetBalls())
-                    {
-                        Console.WriteLine("Ball " + ball.GetBallNumber() + ": " +
-                                          ball.GetBowler() + " to " + ball.GetBatsman() + " - " + ball.GetResult());
-                    }
-                }
-                Console.WriteLine();
-            }
-        }
+        // Start the second innings
+        service.StartNextInnings(matchId);
+
+        Console.WriteLine("\n--- SIMULATING SECOND INNINGS ---");
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p3).WithFacedBy(p5).WithRuns(4).Build());
+
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p3).WithFacedBy(p5).WithRuns(1).Build());
+
+        var p5Wicket = new WicketBuilder(WicketType.BOWLED, p5).Build();
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p3).WithFacedBy(p5).WithRuns(0).WithWicket(p5Wicket).Build());
+
+        var p7Wicket = new WicketBuilder(WicketType.LBW, p7).Build();
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p3).WithFacedBy(p7).WithRuns(0).WithWicket(p7Wicket).Build());
+
+        var p8Wicket = new WicketBuilder(WicketType.STUMPED, p8).Build();
+        service.ProcessBallUpdate(matchId, new BallBuilder()
+                                   .WithBowledBy(p3).WithFacedBy(p8).WithRuns(0).WithWicket(p8Wicket).Build());
+
+        service.EndMatch(matchId);
     }
 }

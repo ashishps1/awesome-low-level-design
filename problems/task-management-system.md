@@ -9,12 +9,17 @@
 6. The system should handle concurrent access to tasks and ensure data consistency.
 7. The system should be extensible to accommodate future enhancements and new features.
 
+## UML Class Diagram
+
+![](../class-diagrams/taskmanagementsystem-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/taskmanagementsystem/) 
 #### [Python Implementation](../solutions/python/taskmanagementsystem/)
 #### [C++ Implementation](../solutions/cpp/taskmanagementsystem/)
 #### [C# Implementation](../solutions/csharp/taskmanagementsystem/)
 #### [Go Implementation](../solutions/golang/taskmanagementsystem/)
+#### [TypeScript Implementation](../solutions/typescript/src/TaskManagement/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user in the task management system, with properties such as id, name, and email.

@@ -1,87 +1,60 @@
-using System;
-using System.Collections.Generic;
-
-namespace LRUCacheNamespace
+class LRUCache<K, V>
 {
-    public class LRUCache<K, V>
+    private readonly int capacity;
+    private readonly Dictionary<K, Node<K, V>> map;
+    private readonly DoublyLinkedList<K, V> dll;
+    private readonly object lockObject = new object();
+
+    public LRUCache(int capacity)
     {
-        private readonly int _capacity;
-        private readonly Dictionary<K, Node<K, V>> _cache;
-        private readonly Node<K, V> _head;
-        private readonly Node<K, V> _tail;
+        this.capacity = capacity;
+        this.map = new Dictionary<K, Node<K, V>>();
+        this.dll = new DoublyLinkedList<K, V>();
+    }
 
-        public LRUCache(int capacity)
+    public V Get(K key)
+    {
+        lock (lockObject)
         {
-            _capacity = capacity;
-            _cache = new Dictionary<K, Node<K, V>>(capacity);
-
-            // Initialize head and tail dummy nodes
-            _head = new Node<K, V>(default, default);
-            _tail = new Node<K, V>(default, default);
-            _head.Next = _tail;
-            _tail.Prev = _head;
+            if (!map.ContainsKey(key)) return default(V);
+            Node<K, V> node = map[key];
+            dll.MoveToFront(node);
+            return node.value;
         }
+    }
 
-        public V Get(K key)
+    public void Put(K key, V value)
+    {
+        lock (lockObject)
         {
-            if (!_cache.TryGetValue(key, out var node))
+            if (map.ContainsKey(key))
             {
-                return default; // Key doesn't exist, return null
-            }
-
-            MoveToHead(node); // Move the accessed node to the head
-            return node.Value;
-        }
-
-        public void Put(K key, V value)
-        {
-            if (_cache.TryGetValue(key, out var node))
-            {
-                node.Value = value; // Update the value
-                MoveToHead(node);
+                Node<K, V> node = map[key];
+                node.value = value;
+                dll.MoveToFront(node);
             }
             else
             {
-                var newNode = new Node<K, V>(key, value);
-                _cache[key] = newNode;
-                AddToHead(newNode);
-
-                if (_cache.Count > _capacity)
+                if (map.Count == capacity)
                 {
-                    var removedNode = RemoveTail();
-                    _cache.Remove(removedNode.Key);
+                    Node<K, V> lru = dll.RemoveLast();
+                    if (lru != null) map.Remove(lru.key);
                 }
+                Node<K, V> newNode = new Node<K, V>(key, value);
+                dll.AddFirst(newNode);
+                map[key] = newNode;
             }
         }
+    }
 
-        private void AddToHead(Node<K, V> node)
+    public void Remove(K key)
+    {
+        lock (lockObject)
         {
-            node.Prev = _head;
-            node.Next = _head.Next;
-            _head.Next.Prev = node;
-            _head.Next = node;
-        }
-
-        private void RemoveNode(Node<K, V> node)
-        {
-            var prevNode = node.Prev;
-            var nextNode = node.Next;
-
-            prevNode.Next = nextNode;
-            nextNode.Prev = prevNode;
-        }
-
-        private void MoveToHead(Node<K, V> node)
-        {
-            RemoveNode(node);
-            AddToHead(node);
-        }
-
-        private Node<K, V> RemoveTail()
-        {
-            var node = _tail.Prev;
-            RemoveNode(node);
-            return node;
+            if (!map.ContainsKey(key)) return;
+            Node<K, V> node = map[key];
+            dll.Remove(node);
+            map.Remove(key);
         }
     }
 }

@@ -29,7 +29,7 @@ Design and implement a Movie Ticket Booking System that allows users to book mov
    - Manage different seat types
 
 5. **Booking Management:**
-   - Process ticket bookings
+   - Process parkingTicket bookings
    - Handle booking cancellations
    - Manage booking status
 
@@ -73,6 +73,9 @@ Design and implement a Movie Ticket Booking System that allows users to book mov
   - getBookings()
   - updateProfile()
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/MovieTicketBookingSystem-class-diagram.png)
 ---
 
 ## Example Usage
@@ -98,13 +101,13 @@ Booking booking = system.bookTicket(user, show, seats);
 
 ## Demo
 
-See `MovieTicketBookingDemo.java` for a sample usage and simulation of the movie ticket booking system.
+See `MovieTicketBookingDemo.java` for a sample usage and simulation of the movie parkingTicket booking system.
 
 ---
 
 ## Extending the Framework
 
-- **Add payment processing:** Integrate payment gateway for ticket purchases
+- **Add payment processing:** Integrate payment gateway for parkingTicket purchases
 - **Add seat selection UI:** Implement interactive seat selection interface
 - **Add pricing tiers:** Support different pricing for different seat types
 - **Add show scheduling:** Implement advanced show scheduling algorithms

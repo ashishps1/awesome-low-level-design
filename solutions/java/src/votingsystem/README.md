@@ -28,17 +28,25 @@ Design and implement a Voting System that allows voters to cast votes for candid
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/votingsystem-class-diagram.png)
+
 ### 1. VotingSystem
+
 - **Fields:** Map<Integer, Voter> voters, Map<Integer, Candidate> candidates, Map<Integer, VoteRecord> voteRecords
 - **Methods:** registerVoter(Voter), registerCandidate(Candidate), castVote(int voterId, int candidateId), tallyResults(), displayResults(), hasVoted(int voterId)
 
 ### 2. Voter
+
 - **Fields:** int id, String name
 
 ### 3. Candidate
+
 - **Fields:** int id, String name
 
 ### 4. VoteRecord
+
 - **Fields:** int voterId, int candidateId
 
 ---

@@ -74,6 +74,10 @@ Design and implement a Digital Wallet Service that allows users to manage their 
 
 ---
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/digitalwalletservice-class-diagram.png)
+
 ## Example Usage
 
 ```java

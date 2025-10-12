@@ -12,27 +12,26 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 ## 📌 Fundamental Concepts
 
 - [Basics OOP Concepts](https://blog.algomaster.io/p/basic-oop-concepts-explained-with-code)
+- [DRY Principle](https://algomaster.io/learn/lld/dry)
+- [YAGNI Principle](https://algomaster.io/learn/lld/yagni)
+- [KISS Principle](https://algomaster.io/learn/lld/kiss)
 - [SOLID Principles with Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [SOLID Principles with Code](https://blog.algomaster.io/p/solid-principles-explained-with-code)
-- [DRY Principle](https://blog.algomaster.io/p/082450d8-0e7b-4447-a8dc-b7308e45f048)
-- [YAGNI Principle](https://blog.algomaster.io/p/8c3c7da7-885b-4a9c-a6e4-70ee02de4772)
-- [KISS Principle](https://blog.algomaster.io/p/21b57678-b351-4ed4-b390-3b6308af2f7d)
-- [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 
 ## ⚙️ Design Patterns
 
 | **Creational Patterns**                                                       | **Structural Patterns**                                         | **Behavioral Patterns**                                                               |
 | ----------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [Singleton](https://blog.algomaster.io/p/singleton-design-pattern)            | [Adapter](https://blog.algomaster.io/p/ce091479-c602-4c07-b7ba-315c643b31d8)     | [Iterator](https://blog.algomaster.io/p/a8044933-cdd1-4a7a-81c0-f941a2d47941)                         |
-| [Factory Method](https://blog.algomaster.io/p/32c487c2-ce5b-4c26-8a57-89997912e97e)     | [Bridge](https://blog.algomaster.io/p/da6bed34-61a6-4853-9573-df12cec335b7)       | [Observer](https://blog.algomaster.io/p/bc60ce42-3f17-486f-aa36-4bd5264837e8)                         |
-| [Abstract Factory](https://blog.algomaster.io/p/1def92f0-b234-416f-a25b-10bf81842883) | [Composite](https://blog.algomaster.io/p/dc485272-63ba-41d0-8a5d-6171a760ec90) | [Strategy](https://blog.algomaster.io/p/9c9932d8-80ad-4848-bf28-d6e01892a011)                         |
-| [Builder](https://blog.algomaster.io/p/4ed26a8e-df4f-455c-b9dc-205324050693)                   | [Decorator](https://blog.algomaster.io/p/bea993d1-bb12-4b71-9019-fa304c833f7d) | [Command](https://blog.algomaster.io/p/ec986937-1a35-4a34-b8ff-ed755efbe923)                           |
-| [Prototype](https://blog.algomaster.io/p/805a1c41-ce91-4518-95de-711627074c56)               | [Facade](https://blog.algomaster.io/p/aa8096d1-9fec-470c-b1ef-aade9ee7e199)       | [State](https://blog.algomaster.io/p/8df5aaae-268d-436f-8c42-88989e50ca92)                               |
-|                                                                               | [Flyweight](https://blog.algomaster.io/p/b23456b8-615c-4cb8-a785-60247070d6e5) | [Template Method](https://blog.algomaster.io/p/f1bf0594-7b16-480c-b213-3fd8b1d3e811)           |
-|                                                                               | [Proxy](https://blog.algomaster.io/p/c58eb4ce-a8ad-48dd-b003-dae454e02897)         | [Visitor](https://blog.algomaster.io/p/651650fc-8d45-46bc-a946-9bf801cdabb8)                           |
-|                                                                               |                                                                 | [Mediator](https://blog.algomaster.io/p/953decb8-84b0-4628-889e-02a42f4e0749)                         |
-|                                                                               |                                                                 | [Memento](https://blog.algomaster.io/p/9a2b4b07-a061-4b1e-b700-8275c35d2d68)                           |
-|                                                                               |                                                                 | [Chain of Responsibility](https://blog.algomaster.io/p/8302dc37-637e-4566-947e-13fdc773cf0b) |
+| [Singleton](https://algomaster.io/learn/lld/singleton)            | [Adapter](https://algomaster.io/learn/lld/adapter)     | [Iterator](https://algomaster.io/learn/lld/iterator)                         |
+| [Factory Method](https://algomaster.io/learn/lld/factory-method)     | [Bridge](https://algomaster.io/learn/lld/bridge)       | [Observer](https://algomaster.io/learn/lld/observer)                         |
+| [Abstract Factory](https://algomaster.io/learn/lld/abstract-factory) | [Composite](https://algomaster.io/learn/lld/composite) | [Strategy](https://algomaster.io/learn/lld/strategy)                         |
+| [Builder](https://algomaster.io/learn/lld/builder)                   | [Decorator](https://algomaster.io/learn/lld/decorator) | [Command](https://algomaster.io/learn/lld/command)                           |
+| [Prototype](https://algomaster.io/learn/lld/prototype)               | [Facade](https://algomaster.io/learn/lld/facade)       | [State](https://algomaster.io/learn/lld/state)                               |
+|                                                                               | [Flyweight](https://algomaster.io/learn/lld/flyweight) | [Template Method](https://algomaster.io/learn/lld/template-method)           |
+|                                                                               | [Proxy](https://algomaster.io/learn/lld/proxy)         | [Visitor](https://algomaster.io/learn/lld/visitor)                           |
+|                                                                               |                                                                 | [Mediator](https://algomaster.io/learn/lld/mediator)                         |
+|                                                                               |                                                                 | [Memento](https://algomaster.io/learn/lld/memento)                           |
+|                                                                               |                                                                 | [Chain of Responsibility](https://algomaster.io/learn/lld/chain-of-responsibility) |
 
 ## 🗂️ UML
 - [Class Diagram](https://blog.algomaster.io/p/uml-class-diagram-explained-with-examples)
@@ -87,23 +86,23 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Music Streaming Service like Spotify](problems/music-streaming-service.md)
 - [Design Online Food Delivery Service like Swiggy](problems/food-delivery-service.md)
 
-## 📚 Books
+## 📇 Courses
+- [Master LLD Interviews - AlgoMaster.io](https://algomaster.io/learn/lld/what-is-lld)
 
+## 📚 Books
 - [Head First Design Patterns](https://www.amazon.in/dp/9385889753)
 - [Clean Code](https://www.amazon.in/dp/B001GSTOAM)
 - [Refactoring: Improving the Design of Existing Code](https://www.amazon.in/dp/0134757599)
 
 ## 📩 Newsletter
-
 - [AlgoMaster Newsletter](https://blog.algomaster.io/)
 
 ## Additional resources
-
+- [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 - [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 - [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
 
 ## 🤝 Contributing
-
 Contributions are welcome! If you'd like to add a new problem, improve existing content, or fix errors:
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature-name`

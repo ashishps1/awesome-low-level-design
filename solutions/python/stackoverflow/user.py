@@ -1,37 +1,23 @@
-from question import Question
-from answer import Answer
-from comment import Comment
+import threading
+import uuid
 
 class User:
-    def __init__(self, user_id, username, email):
-        self.id = user_id
-        self.username = username
-        self.email = email
+    def __init__(self, name: str):
+        self.id = str(uuid.uuid4())
+        self.name = name
         self.reputation = 0
-        self.questions = []
-        self.answers = []
-        self.comments = []
+        self._lock = threading.Lock()
 
-    def ask_question(self, title, content, tags):
-        question = Question(self, title, content, tags)
-        self.questions.append(question)
-        self.update_reputation(5)  # Gain 5 reputation for asking a question
-        return question
+    def update_reputation(self, change: int):
+        with self._lock:
+            self.reputation += change
 
-    def answer_question(self, question, content):
-        answer = Answer(self, question, content)
-        self.answers.append(answer)
-        question.add_answer(answer)
-        self.update_reputation(10)  # Gain 10 reputation for answering
-        return answer
+    def get_id(self) -> str:
+        return self.id
 
-    def comment_on(self, commentable, content):
-        comment = Comment(self, content)
-        self.comments.append(comment)
-        commentable.add_comment(comment)
-        self.update_reputation(2)  # Gain 2 reputation for commenting
-        return comment
+    def get_name(self) -> str:
+        return self.name
 
-    def update_reputation(self, value):
-        self.reputation += value
-        self.reputation = max(0, self.reputation)  # Ensure reputation doesn't go below 0
+    def get_reputation(self) -> int:
+        with self._lock:
+            return self.reputation

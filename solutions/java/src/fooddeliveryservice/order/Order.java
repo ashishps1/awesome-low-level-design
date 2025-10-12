@@ -1,6 +1,9 @@
 package fooddeliveryservice.order;
 
-import fooddeliveryservice.*;
+import fooddeliveryservice.entity.Customer;
+import fooddeliveryservice.entity.DeliveryAgent;
+import fooddeliveryservice.entity.Restaurant;
+import fooddeliveryservice.observer.OrderObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,51 +13,50 @@ public class Order {
     private final String id;
     private final Customer customer;
     private final Restaurant restaurant;
-    private final List<MenuItem> orderItems;
+    private final List<OrderItem> items;
     private OrderStatus status;
     private DeliveryAgent deliveryAgent;
+    private final List<OrderObserver> observers = new ArrayList<>();
 
-    public Order(String id, Customer customer, Restaurant restaurant) {
-        this.id = id;
+    public Order(Customer customer, Restaurant restaurant, List<OrderItem> items) {
+        this.id = UUID.randomUUID().toString();
         this.customer = customer;
         this.restaurant = restaurant;
-        this.orderItems = new ArrayList<>();
+        this.items = items;
         this.status = OrderStatus.PENDING;
+        addObserver(customer);
+        addObserver(restaurant);
     }
 
-    public Order(Customer customer, Restaurant restaurant, List<MenuItem> items) {
-        this.id = "ORD" + UUID.randomUUID().toString().toUpperCase();
-        this.customer = customer;
-        this.restaurant = restaurant;
-        this.orderItems = items;
-        this.status = OrderStatus.PENDING;
+    public void addObserver(OrderObserver observer) { observers.add(observer); }
+    private void notifyObservers() { observers.forEach(o -> o.onUpdate(this)); }
+
+    public void setStatus(OrderStatus newStatus) {
+        if (this.status != newStatus) {
+            this.status = newStatus;
+            notifyObservers();
+        }
     }
 
-    public void addItem(MenuItem item) {
-        orderItems.add(item);
-    }
-
-    public void removeItem(MenuItem item) {
-        orderItems.remove(item);
-    }
-
-    public void updateStatus(OrderStatus status) {
-        this.status = status;
+    public boolean cancel() {
+        // Only allow cancellation if the order is still in the PENDING state.
+        if (this.status == OrderStatus.PENDING) {
+            setStatus(OrderStatus.CANCELLED);
+            return true;
+        }
+        return false;
     }
 
     public void assignDeliveryAgent(DeliveryAgent agent) {
-        deliveryAgent = agent;
+        this.deliveryAgent = agent;
+        addObserver(agent);
+        agent.setAvailable(false); // Mark agent as busy
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public DeliveryAgent getDeliveryAgent() {
-        return deliveryAgent;
-    }
+    // Getters
+    public String getId() { return id; }
+    public OrderStatus getStatus() { return status; }
+    public Customer getCustomer() { return customer; }
+    public Restaurant getRestaurant() { return restaurant; }
+    public DeliveryAgent getDeliveryAgent() { return deliveryAgent; }
 }

@@ -1,75 +1,74 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
-namespace LinkedInNamespace
+public class LinkedInDemo
 {
-    public class LinkedInDemo
+    public static void Main(string[] args)
     {
-        public static void Run()
+        var system = LinkedInSystem.GetInstance();
+
+        // 1. Create Members using the Builder Pattern
+        Console.WriteLine("--- 1. Member Registration ---");
+        var alice = new MemberBuilder("Alice", "alice@example.com")
+            .WithSummary("Senior Software Engineer with 10 years of experience.")
+            .AddExperience(new Experience("Sr. Software Engineer", "Google", "2018-01-01", null))
+            .AddExperience(new Experience("Software Engineer", "Microsoft", "2014-06-01", "2017-12-31"))
+            .AddEducation(new Education("Princeton University", "M.S. in Computer Science", 2012, 2014))
+            .Build();
+
+        var bob = new MemberBuilder("Bob", "bob@example.com")
+            .WithSummary("Product Manager at Stripe.")
+            .AddExperience(new Experience("Product Manager", "Stripe", "2020-02-01", null))
+            .AddEducation(new Education("MIT", "B.S. in Business Analytics", 2015, 2019))
+            .Build();
+
+        var charlie = new MemberBuilder("Charlie", "charlie@example.com").Build();
+
+        system.RegisterMember(alice);
+        system.RegisterMember(bob);
+        system.RegisterMember(charlie);
+
+        alice.DisplayProfile();
+
+        // 2. Connection Management
+        Console.WriteLine("\n--- 2. Connection Management ---");
+        string requestId1 = system.SendConnectionRequest(alice, bob);
+        string requestId2 = system.SendConnectionRequest(alice, charlie);
+
+        bob.ViewNotifications();
+
+        Console.WriteLine("\nBob accepts Alice's request.");
+        system.AcceptConnectionRequest(requestId1);
+        Console.WriteLine("Alice and Bob are now connected.");
+
+        // 3. Posting and News Feed
+        Console.WriteLine("\n--- 3. Posting & News Feed ---");
+        bob.DisplayProfile();
+        system.CreatePost(bob.GetId(), "Excited to share we've launched our new feature! #productmanagement");
+
+        system.ViewNewsFeed(alice.GetId());
+        system.ViewNewsFeed(charlie.GetId());
+
+        // 4. Interacting with a Post
+        Console.WriteLine("\n--- 4. Post Interaction & Notifications ---");
+        var bobsPost = system.GetLatestPostByMember(bob.GetId());
+        if (bobsPost != null)
         {
-            var linkedInService = LinkedInService.GetInstance();
+            bobsPost.AddLike(alice);
+            bobsPost.AddComment(alice, "This looks amazing! Great work!");
+        }
 
-            // User registration
-            var user1 = new User("1", "John Doe", "john@example.com", "password", new Profile());
-            var user2 = new User("2", "Jane Smith", "jane@example.com", "password", new Profile());
-            linkedInService.RegisterUser(user1);
-            linkedInService.RegisterUser(user2);
+        bob.ViewNotifications();
 
-            // User login
-            var loggedInUser = linkedInService.LoginUser("john@example.com", "password");
-            Console.WriteLine(loggedInUser != null ? $"User logged in: {loggedInUser.Name}" : "Invalid email or password.");
-
-            // Update user profile
-            var profile = new Profile
-            {
-                Headline = "Software Engineer",
-                Summary = "Passionate about coding and problem-solving."
-            };
-            loggedInUser.Profile = profile;
-            linkedInService.UpdateUserProfile(loggedInUser);
-
-            // Send connection request
-            linkedInService.SendConnectionRequest(user1, user2);
-
-            // Accept connection request
-            linkedInService.AcceptConnectionRequest(user2, user1);
-
-            // Post a job listing
-            var jobPosting = new JobPosting("1", "Software Developer", "We are hiring!", new List<string> { "Java", "Python" }, "San Francisco", DateTime.Now);
-            linkedInService.PostJobListing(jobPosting);
-
-            // Search for users
-            var searchResults = linkedInService.SearchUsers("John");
-            Console.WriteLine("Search Results:");
-            foreach (var user in searchResults)
-            {
-                Console.WriteLine($"Name: {user.Name}");
-                Console.WriteLine($"Headline: {user.Profile.Headline}");
-                Console.WriteLine();
-            }
-
-            // Search for job postings
-            var jobPostingResults = linkedInService.SearchJobPostings("Software");
-            Console.WriteLine("Job Posting Results:");
-            foreach (var posting in jobPostingResults)
-            {
-                Console.WriteLine($"Title: {posting.Title}");
-                Console.WriteLine($"Description: {posting.Description}");
-                Console.WriteLine();
-            }
-
-            // Send a message
-            linkedInService.SendMessage(user1, user2, "Hi Jane, hope you're doing well!");
-
-            // Get notifications
-            var notifications = linkedInService.GetNotifications(user2.Id);
-            Console.WriteLine("Notifications:");
-            foreach (var notification in notifications)
-            {
-                Console.WriteLine($"Type: {notification.Type}");
-                Console.WriteLine($"Content: {notification.Content}");
-                Console.WriteLine();
-            }
+        // 5. Searching for Members
+        Console.WriteLine("\n--- 5. Member Search ---");
+        var searchResults = system.SearchMemberByName("ali");
+        Console.WriteLine("Search results for 'ali':");
+        foreach (var member in searchResults)
+        {
+            Console.WriteLine($" - {member.GetName()}");
         }
     }
 }

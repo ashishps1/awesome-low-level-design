@@ -10,6 +10,10 @@
 7. The system should be scalable to handle a large number of products and users.
 8. The system should provide a user-friendly interface for a seamless shopping experience.
 
+## UML Class Diagram
+
+![](../class-diagrams/onlineshoppingservice-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/onlineshoppingservice/)
 #### [Python Implementation](../solutions/python/onlineshoppingservice/)

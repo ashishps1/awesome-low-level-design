@@ -28,6 +28,10 @@
 - The system should be designed to handle a large number of concurrent users and high traffic load.
 - The system should be scalable and efficient in terms of resource utilization.
 
+## UML Class Diagram
+
+![](../class-diagrams/socialnetworkingservice-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/socialnetworkingservice/) 
 #### [Python Implementation](../solutions/python/socialnetworkingservice/)

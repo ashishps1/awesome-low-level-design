@@ -1,136 +1,141 @@
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
-
-namespace Splitwise
+class SplitwiseService
 {
-    public class SplitwiseService
+    private static SplitwiseService instance;
+    private static readonly object lockObject = new object();
+    private readonly Dictionary<string, User> users = new Dictionary<string, User>();
+    private readonly Dictionary<string, Group> groups = new Dictionary<string, Group>();
+
+    private SplitwiseService() { }
+
+    public static SplitwiseService GetInstance()
     {
-        private static SplitwiseService instance;
-        private readonly ConcurrentDictionary<string, User> users;
-        private readonly ConcurrentDictionary<string, Group> groups;
-
-        // Replace AtomicInteger with a simple int
-        private static int transactionCounter = 0;
-
-        private static readonly string TRANSACTION_ID_PREFIX = "TXN";
-
-        private SplitwiseService()
+        if (instance == null)
         {
-            users = new ConcurrentDictionary<string, User>();
-            groups = new ConcurrentDictionary<string, Group>();
-        }
-
-        public static SplitwiseService GetInstance()
-        {
-            if (instance == null)
+            lock (lockObject)
             {
-                instance = new SplitwiseService();
-            }
-            return instance;
-        }
-
-        public void AddUser(User user)
-        {
-            users.TryAdd(user.Id, user);
-        }
-
-        public void AddGroup(Group group)
-        {
-            groups.TryAdd(group.Id, group);
-        }
-
-        public void AddExpense(string groupId, Expense expense)
-        {
-            if (groups.TryGetValue(groupId, out var group))
-            {
-                group.AddExpense(expense);
-                SplitExpense(expense);
-                UpdateBalances(expense);
-            }
-        }
-
-        private void SplitExpense(Expense expense)
-        {
-            double totalAmount = expense.Amount;
-            var splits = expense.Splits;
-            int totalSplits = splits.Count;
-
-            double splitAmount = totalAmount / totalSplits;
-            foreach (var split in splits)
-            {
-                if (split is EqualSplit)
+                if (instance == null)
                 {
-                    split.Amount = splitAmount;
-                }
-                else if (split is PercentSplit percentSplit)
-                {
-                    split.Amount = totalAmount * percentSplit.Percent / 100.0;
+                    instance = new SplitwiseService();
                 }
             }
         }
+        return instance;
+    }
 
-        private void UpdateBalances(Expense expense)
+    public User AddUser(string name, string email)
+    {
+        User user = new User(name, email);
+        users[user.GetId()] = user;
+        return user;
+    }
+
+    public Group AddGroup(string name, List<User> members)
+    {
+        Group group = new Group(name, members);
+        groups[group.GetId()] = group;
+        return group;
+    }
+
+    public User GetUser(string id)
+    {
+        return users.TryGetValue(id, out User user) ? user : null;
+    }
+
+    public Group GetGroup(string id)
+    {
+        return groups.TryGetValue(id, out Group group) ? group : null;
+    }
+
+    public void CreateExpense(ExpenseBuilder builder)
+    {
+        lock (lockObject)
         {
-            foreach (var split in expense.Splits)
-            {
-                var paidBy = expense.PaidBy;
-                var user = split.User;
-                double amount = split.Amount;
+            Expense expense = builder.Build();
+            User paidBy = expense.GetPaidBy();
 
-                if (!paidBy.Equals(user))
+            foreach (Split split in expense.GetSplits())
+            {
+                User participant = split.GetUser();
+                double amount = split.GetAmount();
+
+                if (!paidBy.Equals(participant))
                 {
-                    UpdateBalance(paidBy, user, amount);
-                    UpdateBalance(user, paidBy, -amount);
+                    paidBy.GetBalanceSheet().AdjustBalance(participant, amount);
+                    participant.GetBalanceSheet().AdjustBalance(paidBy, -amount);
                 }
             }
+
+            Console.WriteLine($"Expense '{expense.GetDescription()}' of amount {expense.GetAmount()} created.");
+        }
+    }
+
+    public void SettleUp(string payerId, string payeeId, double amount)
+    {
+        lock (lockObject)
+        {
+            User payer = users[payerId];
+            User payee = users[payeeId];
+            Console.WriteLine($"{payer.GetName()} is settling up {amount} with {payee.GetName()}");
+
+            // Settlement is like a reverse expense. payer owes less to payee.
+            payee.GetBalanceSheet().AdjustBalance(payer, -amount);
+            payer.GetBalanceSheet().AdjustBalance(payee, amount);
+        }
+    }
+
+    public void ShowBalanceSheet(string userId)
+    {
+        User user = users[userId];
+        user.GetBalanceSheet().ShowBalances();
+    }
+
+    public List<Transaction> SimplifyGroupDebts(string groupId)
+    {
+        Group group = groups[groupId];
+        if (group == null)
+        {
+            throw new ArgumentException("Group not found");
         }
 
-        private void UpdateBalance(User user1, User user2, double amount)
+        // Calculate net balance for each member within the group context
+        Dictionary<User, double> netBalances = new Dictionary<User, double>();
+        foreach (User member in group.GetMembers())
         {
-            string key = GetBalanceKey(user1, user2);
-            user1.Balances.AddOrUpdate(key, amount, (k, v) => v + amount);
-        }
-
-        private string GetBalanceKey(User user1, User user2)
-        {
-            return user1.Id + ":" + user2.Id;
-        }
-
-        public void SettleBalance(string userId1, string userId2)
-        {
-            if (users.TryGetValue(userId1, out var user1) && users.TryGetValue(userId2, out var user2))
+            double balance = 0;
+            foreach (var entry in member.GetBalanceSheet().GetBalances())
             {
-                string key = GetBalanceKey(user1, user2);
-                double balance = user1.Balances.GetValueOrDefault(key, 0.0);
-
-                if (balance > 0)
+                // Consider only balances with other group members
+                if (group.GetMembers().Contains(entry.Key))
                 {
-                    CreateTransaction(user1, user2, balance);
-                    user1.Balances[key] = 0.0;
-                    user2.Balances[GetBalanceKey(user2, user1)] = 0.0;
-                }
-                else if (balance < 0)
-                {
-                    CreateTransaction(user2, user1, -balance);
-                    user1.Balances[key] = 0.0;
-                    user2.Balances[GetBalanceKey(user2, user1)] = 0.0;
+                    balance += entry.Value;
                 }
             }
+            netBalances[member] = balance;
         }
 
-        private void CreateTransaction(User sender, User receiver, double amount)
+        // Separate into creditors and debtors
+        var creditors = netBalances.Where(e => e.Value > 0).OrderByDescending(e => e.Value).ToList();
+        var debtors = netBalances.Where(e => e.Value < 0).OrderBy(e => e.Value).ToList();
+
+        List<Transaction> transactions = new List<Transaction>();
+        int i = 0, j = 0;
+
+        while (i < creditors.Count && j < debtors.Count)
         {
-            string transactionId = GenerateTransactionId();
-            var transaction = new Transaction(transactionId, sender, receiver, amount);
-            // Process transaction (e.g., store it or notify users)
+            var creditor = creditors[i];
+            var debtor = debtors[j];
+
+            double amountToSettle = Math.Min(creditor.Value, -debtor.Value);
+            transactions.Add(new Transaction(debtor.Key, creditor.Key, amountToSettle));
+
+            // Update the values
+            creditors[i] = new KeyValuePair<User, double>(creditor.Key, creditor.Value - amountToSettle);
+            debtors[j] = new KeyValuePair<User, double>(debtor.Key, debtor.Value + amountToSettle);
+
+            if (Math.Abs(creditors[i].Value) < 0.01) i++;
+            if (Math.Abs(debtors[j].Value) < 0.01) j++;
         }
 
-        // Replace AtomicInteger logic with Interlocked.Increment
-        private string GenerateTransactionId()
-        {
-            int transactionNumber = Interlocked.Increment(ref transactionCounter);
-            return TRANSACTION_ID_PREFIX + transactionNumber.ToString("D6");
-        }
+        return transactions;
     }
 }

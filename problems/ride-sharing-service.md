@@ -10,6 +10,10 @@
 7. The system should provide real-time tracking of ongoing rides and notify passengers and drivers about ride status updates.
 8. The system should handle concurrent requests and ensure data consistency.
 
+## UML Class Diagram
+
+![](../class-diagrams/ridesharingservice-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/ridesharingservice/) 
 #### [Python Implementation](../solutions/python/ridesharingservice/)

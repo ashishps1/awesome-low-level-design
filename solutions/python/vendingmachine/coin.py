@@ -1,7 +1,10 @@
 from enum import Enum
 
 class Coin(Enum):
-    PENNY = 0.01
-    NICKEL = 0.05
-    DIME = 0.1
-    QUARTER = 0.25
+    PENNY = 1
+    NICKEL = 5
+    DIME = 10
+    QUARTER = 25
+
+    def get_value(self) -> int:
+        return self.value

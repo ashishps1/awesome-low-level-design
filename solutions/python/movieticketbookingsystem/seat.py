@@ -1,39 +1,27 @@
-from seat_type import SeatType
-from seat_status import SeatStatus
+from enums import SeatStatus, SeatType
 
 class Seat:
-    def __init__(self, seat_id: str, row: int, column: int, seat_type: SeatType, price: float, status: SeatStatus):
-        self._id = seat_id
-        self._row = row
-        self._column = column
-        self._type = seat_type
-        self._price = price
-        self._status = status
+    def __init__(self, seat_id: str, row: int, col: int, seat_type: SeatType):
+        self.id = seat_id
+        self.row = row
+        self.col = col
+        self.type = seat_type
+        self.status = SeatStatus.AVAILABLE
 
-    @property
-    def id(self) -> str:
-        return self._id
+    def get_id(self) -> str:
+        return self.id
 
-    @property
-    def row(self) -> int:
-        return self._row
+    def get_row(self) -> int:
+        return self.row
 
-    @property
-    def column(self) -> int:
-        return self._column
+    def get_col(self) -> int:
+        return self.col
 
-    @property
-    def type(self) -> SeatType:
-        return self._type
+    def get_type(self) -> SeatType:
+        return self.type
 
-    @property
-    def price(self) -> float:
-        return self._price
+    def get_status(self) -> SeatStatus:
+        return self.status
 
-    @property
-    def status(self) -> SeatStatus:
-        return self._status
-
-    @status.setter
-    def status(self, status: SeatStatus):
-        self._status = status
+    def set_status(self, status: SeatStatus) -> None:
+        self.status = status

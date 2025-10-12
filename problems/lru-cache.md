@@ -8,6 +8,10 @@
 3. The cache should be thread-safe, allowing concurrent access from multiple threads.
 4. The cache should be efficient in terms of time complexity for both put and get operations, ideally O(1).
 
+## UML Class Diagram
+
+![](../class-diagrams/lrucache-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/lrucache/) 
 #### [Python Implementation](../solutions/python/lrucache/)

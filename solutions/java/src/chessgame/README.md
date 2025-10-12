@@ -35,6 +35,10 @@ Design and implement a Chess Game that allows two players to play chess on a sta
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/chessgame-class-diagram.png)
+
 ### 1. ChessGame
 - **Fields:** Board board, Player[] players, int currentPlayerIndex, boolean isGameOver
 - **Methods:** start(), makeMove(Move), switchPlayer(), isCheck(), isCheckmate(), isStalemate(), getCurrentPlayer()

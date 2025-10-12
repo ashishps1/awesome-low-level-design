@@ -1,31 +1,36 @@
-from typing import List
+import uuid
+from order_observer import OrderObserver
+from address import Address
+from menu import Menu
 from menu_item import MenuItem
+from typing import TYPE_CHECKING
 
-class Restaurant:
-    def __init__(self, restaurant_id: str, name: str, address: str, menu: List[MenuItem]):
-        self._id = restaurant_id
-        self._name = name
-        self._address = address
-        self._menu = menu
+if TYPE_CHECKING:
+    from order import Order
 
-    @property
-    def id(self) -> str:
-        return self._id
+class Restaurant(OrderObserver):
+    def __init__(self, name: str, address: Address):
+        self.id = str(uuid.uuid4())
+        self.name = name
+        self.address = address
+        self.menu = Menu()
 
-    @property
-    def name(self) -> str:
-        return self._name
+    def get_id(self) -> str:
+        return self.id
 
-    @property
-    def address(self) -> str:
-        return self._address
+    def get_name(self) -> str:
+        return self.name
 
-    @property
-    def menu(self) -> List[MenuItem]:
-        return self._menu
+    def get_address(self) -> Address:
+        return self.address
 
-    def add_menu_item(self, item: MenuItem):
-        self._menu.append(item)
+    def get_menu(self) -> Menu:
+        return self.menu
 
-    def remove_menu_item(self, item: MenuItem):
-        self._menu.remove(item)
+    def add_to_menu(self, item: MenuItem):
+        self.menu.add_item(item)
+
+    def on_update(self, order: 'Order'):
+        print(f"--- Notification for Restaurant {self.name} ---")
+        print(f"  Order {order.get_id()} has been updated to {order.get_status().value}.")
+        print("----------------------------------------\n")

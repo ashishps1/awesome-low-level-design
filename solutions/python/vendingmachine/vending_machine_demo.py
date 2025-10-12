@@ -1,60 +1,42 @@
 from vending_machine import VendingMachine
-from product import Product
 from coin import Coin
-from note import Note
 
 class VendingMachineDemo:
     @staticmethod
-    def run():
+    def main():
         vending_machine = VendingMachine.get_instance()
 
         # Add products to the inventory
-        coke = Product("Coke", 1.5)
-        pepsi = Product("Pepsi", 1.5)
-        water = Product("Water", 1.0)
-
-        vending_machine.inventory.add_product(coke, 5)
-        vending_machine.inventory.add_product(pepsi, 3)
-        vending_machine.inventory.add_product(water, 2)
+        vending_machine.add_item("A1", "Coke", 25, 3)
+        vending_machine.add_item("A2", "Pepsi", 25, 2)
+        vending_machine.add_item("B1", "Water", 10, 5)
 
         # Select a product
-        vending_machine.select_product(coke)
+        print("\n--- Step 1: Select an item ---")
+        vending_machine.select_item("A1")
 
         # Insert coins
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-
-        # Insert a note
-        vending_machine.insert_note(Note.FIVE)
+        print("\n--- Step 2: Insert coins ---")
+        vending_machine.insert_coin(Coin.DIME)  # 10
+        vending_machine.insert_coin(Coin.DIME)  # 10
+        vending_machine.insert_coin(Coin.NICKEL)  # 5
 
         # Dispense the product
-        vending_machine.dispense_product()
+        print("\n--- Step 3: Dispense item ---")
+        vending_machine.dispense()  # Should dispense Coke
 
-        # Return change
-        vending_machine.return_change()
+        # Select another item
+        print("\n--- Step 4: Select another item ---")
+        vending_machine.select_item("B1")
 
-        # Select another product
-        vending_machine.select_product(pepsi)
-
-        # Insert insufficient payment
-        vending_machine.insert_coin(Coin.QUARTER)
+        # Insert more amount
+        print("\n--- Step 5: Insert more than needed ---")
+        vending_machine.insert_coin(Coin.QUARTER)  # 25
 
         # Try to dispense the product
-        vending_machine.dispense_product()
+        print("\n--- Step 6: Dispense and return change ---")
+        vending_machine.dispense()
 
-        # Insert more coins
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-
-        # Dispense the product
-        vending_machine.dispense_product()
-
-        # Return change
-        vending_machine.return_change()
 
 if __name__ == "__main__":
-    VendingMachineDemo.run()
+    VendingMachineDemo.main()

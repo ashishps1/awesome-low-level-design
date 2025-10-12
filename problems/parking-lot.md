@@ -8,12 +8,17 @@
 5. The system should track the availability of parking spots and provide real-time information to customers.
 6. The system should handle multiple entry and exit points and support concurrent access.
 
+## UML Class Diagram
+
+![](../class-diagrams/parkinglot-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/parkinglot/) 
 #### [Python Implementation](../solutions/python/parkinglot/)
 #### [C++ Implementation](../solutions/cpp/parkinglot/)
 #### [C# Implementation](../solutions/csharp/parkinglot/)
 #### [Go Implementation](../solutions/golang/parkinglot/)
+#### [TypeScript Implementation](../solutions/typescript/src/ParkingLot/)
 
 ## Classes, Interfaces and Enumerations
 1. The **ParkingLot** class follows the Singleton pattern to ensure only one instance of the parking lot exists. It maintains a list of levels and provides methods to park and unpark vehicles.

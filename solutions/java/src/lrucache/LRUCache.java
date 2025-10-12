@@ -3,66 +3,44 @@ package lrucache;
 import java.util.HashMap;
 import java.util.Map;
 
-class LRUCache<K, V> {
+public class LRUCache<K, V> {
     private final int capacity;
-    private final Map<K, Node<K, V>> cache;
-    private final Node<K, V> head;
-    private final Node<K, V> tail;
+    private final Map<K, Node<K, V>> map;
+    private final DoublyLinkedList<K, V> dll;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        cache = new HashMap<>(capacity);
-        head = new Node<>(null, null);
-        tail = new Node<>(null, null);
-        head.next = tail;
-        tail.prev = head;
+        this.map = new HashMap<>();
+        this.dll = new DoublyLinkedList<>();
     }
 
     public synchronized V get(K key) {
-        Node<K, V> node = cache.get(key);
-        if (node == null) {
-            return null;
-        }
-        moveToHead(node);
+        if (!map.containsKey(key)) return null;
+        Node<K, V> node = map.get(key);
+        dll.moveToFront(node);
         return node.value;
     }
 
     public synchronized void put(K key, V value) {
-        Node<K, V> node = cache.get(key);
-        if (node != null) {
+        if (map.containsKey(key)) {
+            Node<K, V> node = map.get(key);
             node.value = value;
-            moveToHead(node);
+            dll.moveToFront(node);
         } else {
-            node = new Node<>(key, value);
-            cache.put(key, node);
-            addToHead(node);
-            if (cache.size() > capacity) {
-                Node<K, V> removedNode = removeTail();
-                cache.remove(removedNode.key);
+            if (map.size() == capacity) {
+                Node<K, V> lru = dll.removeLast();
+                if (lru != null) map.remove(lru.key);
             }
+            Node<K, V> newNode = new Node<>(key, value);
+            dll.addFirst(newNode);
+            map.put(key, newNode);
         }
     }
 
-    private void addToHead(Node<K, V> node) {
-        node.prev = head;
-        node.next = head.next;
-        head.next.prev = node;
-        head.next = node;
-    }
-
-    private void removeNode(Node<K, V> node) {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-    }
-
-    private void moveToHead(Node<K, V> node) {
-        removeNode(node);
-        addToHead(node);
-    }
-
-    private Node<K, V> removeTail() {
-        Node<K, V> node = tail.prev;
-        removeNode(node);
-        return node;
+    public synchronized void remove(K key) {
+        if (!map.containsKey(key)) return;
+        Node<K, V> node = map.get(key);
+        dll.remove(node);
+        map.remove(key);
     }
 }

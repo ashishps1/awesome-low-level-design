@@ -32,6 +32,10 @@ Design and implement a Snake and Ladder Game that allows multiple players to pla
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/SnakeAndLadderGame-class-diagram.png)
+
 ### 1. SnakeAndLadderGame
 - **Fields:** Board board, List<Player> players, Dice dice, boolean isGameOver
 - **Methods:** start(), playTurn(), movePlayer(Player, int steps), checkWin(Player), getCurrentPlayer()

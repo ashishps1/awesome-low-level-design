@@ -1,28 +1,35 @@
-from typing import List
+from typing import List, Optional
 from experience import Experience
 from education import Education
-from skill import Skill
 
 class Profile:
     def __init__(self):
-        self.profile_picture: str = ""
-        self.headline: str = ""
-        self.summary: str = ""
+        self.summary: Optional[str] = None
         self.experiences: List[Experience] = []
         self.educations: List[Education] = []
-        self.skills: List[Skill] = []
 
-    def set_summary(self, summary: str):
+    def set_summary(self, summary: str) -> None:
         self.summary = summary
 
-    def set_headline(self, headline: str):
-        self.headline = headline
-
-    def add_experience(self, experience: Experience):
+    def add_experience(self, experience: Experience) -> None:
         self.experiences.append(experience)
 
-    def add_education(self, education: Education):
+    def add_education(self, education: Education) -> None:
         self.educations.append(education)
 
-    def add_skill(self, skill: Skill):
-        self.skills.append(skill)
+    def display(self) -> None:
+        print(f"  Summary: {self.summary if self.summary else 'N/A'}")
+
+        print("  Experience:")
+        if not self.experiences:
+            print("    - None")
+        else:
+            for exp in self.experiences:
+                print(f"    - {exp}")
+
+        print("  Education:")
+        if not self.educations:
+            print("    - None")
+        else:
+            for edu in self.educations:
+                print(f"    - {edu}")

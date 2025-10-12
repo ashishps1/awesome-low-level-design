@@ -1,0 +1,200 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+skinparam backgroundColor transparent
+skinparam wrapWidth 500
+skinparam roundCorner 15
+skinparam defaultFontSize 20
+skinparam defaultFontColor black
+skinparam ArrowColor black
+skinparam Padding 2
+skinparam dpi 80
+skinparam nodesep 80
+skinparam ranksep 120
+
+skinparam class {
+  BackgroundColor #00d084
+  BorderColor black
+  ArrowColor black
+  FontSize 25
+  BorderThickness 2
+  ArrowThickness 3
+}
+
+class ChronologicalSortStrategy {
+  + sort(List<Post>): List<Post>
+}
+class Comment {
+  - text: String
+  - createdAt: LocalDateTime
+  - author: Member
+  + getText(): String
+  + getAuthor(): Member
+}
+class Connection {
+  - toMember: Member
+  - acceptedAt: LocalDateTime
+  - fromMember: Member
+  - requestedAt: LocalDateTime
+  - status: ConnectionStatus
+  + getStatus(): ConnectionStatus
+  + getFromMember(): Member
+  + getToMember(): Member
+  + setStatus(ConnectionStatus): void
+}
+class ConnectionService {
+  - notificationService: NotificationService
+  - connectionRequests: Map<String, Connection>
+  + sendRequest(Member, Member): String
+  + acceptRequest(String): void
+}
+enum ConnectionStatus << enumeration >> {
+  + WITHDRAWN
+  + PENDING
+  + REJECTED
+  + ACCEPTED
+}
+class Education {
+  - endYear: int
+  - degree: String
+  - school: String
+  - startYear: int
+  + toString(): String
+}
+class Experience {
+  - title: String
+  - company: String
+  - endDate: LocalDate
+  - startDate: LocalDate
+  + toString(): String
+}
+interface FeedSortingStrategy << interface >> {
+  + sort(List<Post>): List<Post>
+}
+class Like {
+  - member: Member
+  - createdAt: LocalDateTime
+  + getMember(): Member
+}
+class LinkedInSystem {
+  - newsFeedService: NewsFeedService
+  - searchService: SearchService
+  - members: Map<String, Member>
+  - connectionService: ConnectionService
+  - instance: LinkedInSystem
+  + registerMember(Member): void
+  + getMember(String): Member
+  + getInstance(): LinkedInSystem
+  + createPost(String, String): void
+  + sendConnectionRequest(Member, Member): String
+  + acceptConnectionRequest(String): void
+  + viewNewsFeed(String): void
+  + searchMemberByName(String): List<Member>
+  + getLatestPostByMember(String): Post
+}
+class Member {
+  - profile: Profile
+  - notifications: List<Notification>
+  - id: String
+  - email: String
+  - connections: Set<Member>
+  - name: String
+  + viewNotifications(): void
+  + update(Notification): void
+  + addConnection(Member): void
+  + displayProfile(): void
+}
+class NewsFeed {
+  - posts: List<Post>
+  + display(FeedSortingStrategy): void
+}
+class NewsFeedService {
+  - allPosts: Map<String, List<Post>>
+  + getMemberPosts(Member): List<Post>
+  + addPost(Member, Post): void
+  + displayFeedForMember(Member, FeedSortingStrategy): void
+}
+class Notification {
+  - createdAt: LocalDateTime
+  - id: String
+  - type: NotificationType
+  - content: String
+  - isRead: boolean
+  - memberId: String
+  + isRead(): boolean
+  + markAsRead(): void
+}
+interface NotificationObserver << interface >> {
+  + update(Notification): void
+}
+class NotificationService {
+  + sendNotification(Member, Notification): void
+}
+enum NotificationType << enumeration >> {
+  + CONNECTION_REQUEST
+  + POST_LIKE
+  + POST_COMMENT
+}
+class Post {
+  - likes: List<Like>
+  - comments: List<Comment>
+  - createdAt: LocalDateTime
+  - content: String
+  - author: Member
+  - id: String
+  + addComment(Member, String): void
+  + addLike(Member): void
+}
+class Profile {
+  - summary: String
+  - educations: List<Education>
+  - experiences: List<Experience>
+  + addExperience(Experience): void
+  + display(): void
+  + setSummary(String): void
+  + addEducation(Education): void
+}
+class SearchService {
+  - members: Collection<Member>
+  + searchByName(String): List<Member>
+}
+abstract class Subject {
+  - observers: List<NotificationObserver>
+  + removeObserver(NotificationObserver): void
+  + addObserver(NotificationObserver): void
+  + notifyObservers(Notification): void
+}
+
+class LinkedInDemo #00bfff {
+    + main(String)
+}
+
+FeedSortingStrategy       ^-[dashed]- ChronologicalSortStrategy
+Comment                   *-[plain]-> Member
+Connection                *-[plain]-> ConnectionStatus
+Connection                *-[plain]-> Member
+ConnectionService         *-[plain]-> Connection
+ConnectionService         *-[plain]-> NotificationService
+Like                      *-[plain]-> Member
+LinkedInSystem            *-[plain]--> ConnectionService
+LinkedInSystem            *-[plain]-> Member
+LinkedInSystem            *-[plain]-> NewsFeedService
+NewsFeedService           -[plain]-> FeedSortingStrategy
+LinkedInSystem            *-[plain]-> SearchService
+Member                    *-[plain]-> Notification
+Member                     -[dashed]-^  NotificationObserver
+Member                    *-[plain]-> Profile
+NewsFeed                  *-[plain]-> Post
+Notification              *-[plain]-> NotificationType
+Post                      *-[plain]-> Comment
+Post                      *-[plain]-> Like
+Post                      *-[plain]-> Member
+Post                       -[plain]-^  Subject
+Profile                   *-[plain]left-> Education
+Profile                   *-[plain]-> Experience
+SearchService             *-[plain]-> Member
+Subject                   *-[plain]-> NotificationObserver
+LinkedInDemo              *-[plain]right-> LinkedInSystem
+@enduml

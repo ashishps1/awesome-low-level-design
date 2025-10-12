@@ -29,6 +29,10 @@ Design and implement a Coffee Vending Machine system that can serve different ty
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/coffeevendingmachine-class-diagram.png)
+
 ### 1. CoffeeVendingMachine
 - **Fields:** ingredientStore, paymentProcessor, Map<String, CoffeeRecipe> recipes, Dispenser
 - **Methods:** selectCoffee(String), makeCoffee(String, Payment), refillIngredient(String, int), addRecipe(CoffeeRecipe), etc.

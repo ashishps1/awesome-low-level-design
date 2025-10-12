@@ -30,6 +30,10 @@ Design and implement a Library Management System that allows members to borrow a
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/LibraryManagementSystem-class-diagram.png)
+
 ### 1. LibraryManagementSystem
 - **Fields:** List<Book> books, List<Member> members, List<Loan> loans, Catalog catalog
 - **Methods:** addBook(Book), addMember(Member), borrowBook(Member, Book), returnBook(Member, BookCopy), getLoans(Member), searchBooks(String query), etc.

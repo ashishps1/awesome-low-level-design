@@ -8,12 +8,17 @@
 5. The logging framework should be thread-safe to handle concurrent logging from multiple threads.
 6. It should be extensible to accommodate new log levels and output destinations in the future.
 
+## UML Class Diagram
+
+![](../class-diagrams/loggingframework-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/loggingframework/) 
 #### [Python Implementation](../solutions/python/loggingframework/)
 #### [C++ Implementation](../solutions/cpp/loggingframework/)
 #### [C# Implementation](../solutions/csharp/loggingframework/)
 #### [Go Implementation](../solutions/golang/loggingframework/)
+#### [TypeScript Implementation](../solutions/typescript/src/LoggingFramework/)
 
 ## Classes, Interfaces and Enumerations
 1. The **LogLevel** enum defines the different log levels supported by the logging framework.

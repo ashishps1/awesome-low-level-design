@@ -10,7 +10,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isValidMove(Board board, Cell from, Cell to) {
+    public boolean canMove(Board board, Cell from, Cell to) {
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = Math.abs(to.getCol() - from.getCol());
 

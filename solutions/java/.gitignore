@@ -7,7 +7,7 @@ out/
 .apt_generated
 .classpath
 .factorypath
-.project
+.taskList
 .settings
 .springBeans
 .sts4-cache
@@ -27,3 +27,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+*.png
+**/diagrams/

@@ -1,60 +1,55 @@
-from concurrent.futures import ThreadPoolExecutor
+from staff import Chef, Waiter
+from table import Table
+from menu_item import MenuItem
+from typing import Dict, List, Optional
+import threading
+from menu import Menu
 
 class Restaurant:
     _instance = None
-    _lock = ThreadPoolExecutor(max_workers=1)
-
+    _lock = threading.Lock()
+    
     def __new__(cls):
-        if not cls._instance:
+        if cls._instance is None:
             with cls._lock:
-                if not cls._instance:
+                if cls._instance is None:
                     cls._instance = super().__new__(cls)
-                    cls._instance._initialize()
+                    cls._instance._initialized = False
         return cls._instance
-
-    def _initialize(self):
-        self.menu = []
-        self.orders = {}
-        self.reservations = []
-        self.payments = {}
-        self.staff = []
-
-    def add_menu_item(self, item):
-        self.menu.append(item)
-
-    def remove_menu_item(self, item):
-        self.menu.remove(item)
-
-    def get_menu(self):
-        return self.menu[:]
-
-    def place_order(self, order):
-        self.orders[order.get_id()] = order
-        self._notify_kitchen(order)
-
-    def update_order_status(self, order_id, status):
-        order = self.orders.get(order_id)
-        if order:
-            order.set_status(status)
-            self._notify_staff(order)
-
-    def make_reservation(self, reservation):
-        self.reservations.append(reservation)
-
-    def cancel_reservation(self, reservation):
-        self.reservations.remove(reservation)
-
-    def process_payment(self, payment):
-        self.payments[payment.get_id()] = payment
-
-    def add_staff(self, staff):
-        self.staff.append(staff)
-
-    def remove_staff(self, staff):
-        self.staff.remove(staff)
-
-    def _notify_kitchen(self, order):
-        pass
-
-    def _notify_staff(self, order):
-        pass
+    
+    def __init__(self):
+        if not self._initialized:
+            self._waiters: Dict[str, Waiter] = {}
+            self._chefs: Dict[str, Chef] = {}
+            self._tables: Dict[int, Table] = {}
+            self._menu = Menu()
+            self._initialized = True
+    
+    @classmethod
+    def get_instance(cls):
+        return cls()
+    
+    def add_waiter(self, waiter: Waiter):
+        self._waiters[waiter.id] = waiter
+    
+    def get_waiter(self, waiter_id: str) -> Optional[Waiter]:
+        return self._waiters.get(waiter_id)
+    
+    def add_chef(self, chef: Chef):
+        self._chefs[chef.id] = chef
+    
+    def get_chef(self, chef_id: str) -> Optional[Chef]:
+        return self._chefs.get(chef_id)
+    
+    def get_chefs(self) -> List[Chef]:
+        return list(self._chefs.values())
+    
+    def get_waiters(self) -> List[Waiter]:
+        return list(self._waiters.values())
+    
+    def add_table(self, table: Table):
+        self._tables[table.id] = table
+    
+    @property
+    def menu(self) -> Menu:
+        return self._menu

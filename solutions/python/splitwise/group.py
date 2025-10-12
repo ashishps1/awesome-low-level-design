@@ -1,28 +1,20 @@
-from typing import List
-from user import User
-from expense import Expense
+import uuid
+from typing import List, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from user import User
 
 class Group:
-    def __init__(self, group_id: str, name: str):
-        self.id = group_id
-        self.name = name
-        self.members: List[User] = []
-        self.expenses: List[Expense] = []
-
-    def add_member(self, user: User):
-        self.members.append(user)
-
-    def add_expense(self, expense: Expense):
-        self.expenses.append(expense)
-
+    def __init__(self, name: str, members: List['User']):
+        self._id = str(uuid.uuid4())
+        self._name = name
+        self._members = members
+    
     def get_id(self) -> str:
-        return self.id
-
+        return self._id
+    
     def get_name(self) -> str:
-        return self.name
-
-    def get_members(self) -> List[User]:
-        return self.members
-
-    def get_expenses(self) -> List[Expense]:
-        return self.expenses
+        return self._name
+    
+    def get_members(self) -> List['User']:
+        return self._members.copy()

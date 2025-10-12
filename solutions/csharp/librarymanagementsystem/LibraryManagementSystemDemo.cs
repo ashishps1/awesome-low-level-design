@@ -1,37 +1,68 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace LibraryManagementSystem
+public class LibraryManagementDemo
 {
-    public class LibraryManagementSystemDemo
+    public static void Main(string[] args)
     {
-        public static void Run()
+        var library = LibraryManagementSystem.GetInstance();
+
+        // === Setting up the Library ===
+        Console.WriteLine("=== Setting up the Library ===");
+
+        var hobbitCopies = library.AddItem(ItemType.BOOK, "B001", "The Hobbit", "J.R.R. Tolkien", 2);
+        var duneCopies = library.AddItem(ItemType.BOOK, "B002", "Dune", "Frank Herbert", 1);
+        var natGeoCopies = library.AddItem(ItemType.MAGAZINE, "M001", "National Geographic", "NatGeo Society", 3);
+
+        var alice = library.AddMember("MEM01", "Alice");
+        var bob = library.AddMember("MEM02", "Bob");
+        var charlie = library.AddMember("MEM03", "Charlie");
+        library.PrintCatalog();
+
+        // === Scenario 1: Searching (Strategy Pattern) ===
+        Console.WriteLine("\n=== Scenario 1: Searching for Items ===");
+        Console.WriteLine("Searching for title 'Dune':");
+        var titleResults = library.Search("Dune", new SearchByTitleStrategy());
+        foreach (var item in titleResults)
         {
-            LibraryManager libraryManager = LibraryManager.GetInstance();
-
-            // Add books to the catalog
-            libraryManager.AddBook(new Book("ISBN1", "Book 1", "Author 1", 2020));
-            libraryManager.AddBook(new Book("ISBN2", "Book 2", "Author 2", 2019));
-            libraryManager.AddBook(new Book("ISBN3", "Book 3", "Author 3", 2021));
-
-            // Register members
-            libraryManager.RegisterMember(new Member("M1", "John Doe", "john@example.com"));
-            libraryManager.RegisterMember(new Member("M2", "Jane Smith", "jane@example.com"));
-
-            // Borrow books
-            libraryManager.BorrowBook("M1", "ISBN1");
-            libraryManager.BorrowBook("M2", "ISBN2");
-
-            // Return books
-            libraryManager.ReturnBook("M1", "ISBN1");
-
-            // Search books
-            List<Book> searchResults = libraryManager.SearchBooks("Book");
-            Console.WriteLine("Search Results:");
-            foreach (Book book in searchResults)
-            {
-                Console.WriteLine($"{book.Title} by {book.Author}");
-            }
+            Console.WriteLine($"Found: {item.GetTitle()}");
         }
+
+        Console.WriteLine("\nSearching for author 'Tolkien':");
+        var authorResults = library.Search("Tolkien", new SearchByAuthorStrategy());
+        foreach (var item in authorResults)
+        {
+            Console.WriteLine($"Found: {item.GetTitle()}");
+        }
+
+        // === Scenario 2: Checkout and Return (State Pattern) ===
+        Console.WriteLine("\n\n=== Scenario 2: Checkout and Return ===");
+        library.Checkout(alice.GetId(), hobbitCopies[0].GetId());
+        library.Checkout(bob.GetId(), duneCopies[0].GetId());
+        library.PrintCatalog();
+
+        Console.WriteLine("Attempting to checkout an already checked-out book:");
+        library.Checkout(charlie.GetId(), hobbitCopies[0].GetId());
+
+        Console.WriteLine("\nAlice returns The Hobbit:");
+        library.ReturnItem(hobbitCopies[0].GetId());
+        library.PrintCatalog();
+
+        // === Scenario 3: Holds and Notifications (Observer Pattern) ===
+        Console.WriteLine("\n\n=== Scenario 3: Placing a Hold ===");
+        Console.WriteLine("Dune is checked out by Bob. Charlie places a hold.");
+        library.PlaceHold(charlie.GetId(), "B002");
+
+        Console.WriteLine("\nBob returns Dune. Charlie should be notified.");
+        library.ReturnItem(duneCopies[0].GetId());
+
+        Console.WriteLine("\nCharlie checks out the book that was on hold for him.");
+        library.Checkout(charlie.GetId(), duneCopies[0].GetId());
+
+        Console.WriteLine("\nTrying to check out the same on-hold item by another member (Alice):");
+        library.Checkout(alice.GetId(), duneCopies[0].GetId());
+
+        library.PrintCatalog();
     }
 }

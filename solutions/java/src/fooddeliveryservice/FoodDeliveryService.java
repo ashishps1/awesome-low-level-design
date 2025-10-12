@@ -1,156 +1,136 @@
 package fooddeliveryservice;
 
+import fooddeliveryservice.entity.*;
 import fooddeliveryservice.order.Order;
+import fooddeliveryservice.order.OrderItem;
 import fooddeliveryservice.order.OrderStatus;
+import fooddeliveryservice.search.RestaurantSearchStrategy;
+import fooddeliveryservice.strategy.DeliveryAssignmentStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FoodDeliveryService {
-    private static FoodDeliveryService instance;
-    private final Map<String, Customer> customers;
-    private final Map<String, Restaurant> restaurants;
-    private final Map<String, Order> orders;
-    private final Map<String, DeliveryAgent> deliveryAgents;
+    private static volatile FoodDeliveryService instance;
+    private final Map<String, Customer> customers = new ConcurrentHashMap<>();
+    private final Map<String, Restaurant> restaurants = new ConcurrentHashMap<>();
+    private final Map<String, DeliveryAgent> deliveryAgents = new ConcurrentHashMap<>();
+    private final Map<String, Order> orders = new ConcurrentHashMap<>();
+    private DeliveryAssignmentStrategy assignmentStrategy;
 
-    private FoodDeliveryService() {
-        customers = new ConcurrentHashMap<>();
-        restaurants = new ConcurrentHashMap<>();
-        orders = new ConcurrentHashMap<>();
-        deliveryAgents = new ConcurrentHashMap<>();
-    }
+    private FoodDeliveryService() {}
 
-    public static synchronized FoodDeliveryService getInstance() {
+    public static FoodDeliveryService getInstance() {
         if (instance == null) {
-            instance = new FoodDeliveryService();
+            synchronized (FoodDeliveryService.class) {
+                if (instance == null) instance = new FoodDeliveryService();
+            }
         }
         return instance;
     }
 
-    public Customer registerCustomer(String name, String email, String phone) {
-        Customer customer = new Customer(name, email, phone);
+    public void setAssignmentStrategy(DeliveryAssignmentStrategy assignmentStrategy) {
+        this.assignmentStrategy = assignmentStrategy;
+    }
+
+    // --- Registration ---
+    public Customer registerCustomer(String name, String phone, Address address) {
+        Customer customer = new Customer(name, phone, address);
         customers.put(customer.getId(), customer);
         return customer;
     }
 
-    public Restaurant registerRestaurant(String name, String address) {
+    public Restaurant registerRestaurant(String name, Address address) {
         Restaurant restaurant = new Restaurant(name, address);
         restaurants.put(restaurant.getId(), restaurant);
         return restaurant;
     }
 
-    public DeliveryAgent registerDeliveryAgent(String name, String phone) {
-        DeliveryAgent agent = new DeliveryAgent(name, phone);
-        deliveryAgents.put(agent.getId(), agent);
-        return agent;
+    public DeliveryAgent registerDeliveryAgent(String name, String phone, Address initialLocation) {
+        DeliveryAgent deliveryAgent = new DeliveryAgent(name, phone, initialLocation);
+        deliveryAgents.put(deliveryAgent.getId(), deliveryAgent);
+        return deliveryAgent;
     }
 
-    public List<String> getAvailableRestaurants() {
-        List<String> restaurantNames = new ArrayList<>();
-        for (Restaurant restaurant: restaurants.values()) {
-            restaurantNames.add(restaurant.getName());
-        }
-        return restaurantNames;
-    }
-
-    public List<String> getRestaurantMenu(String restaurantId) {
-        List<String> restaurantMenu = new ArrayList<>();
+    public Order placeOrder(String customerId, String restaurantId, List<OrderItem> items) {
+        Customer customer = customers.get(customerId);
         Restaurant restaurant = restaurants.get(restaurantId);
-        if (restaurant != null) {
-            for (MenuItem menuItem: restaurant.getMenu()) {
-                restaurantMenu.add(menuItem.getMenuItem());
-            }
-        }
-        return restaurantMenu;
+        if (customer == null || restaurant == null) throw new NoSuchElementException("Customer or Restaurant not found.");
+
+        Order order = new Order(customer, restaurant, items);
+        orders.put(order.getId(), order);
+        customer.addOrderToHistory(order);
+        System.out.printf("Order %s placed by %s at %s.\n", order.getId(), customer.getName(), restaurant.getName());
+        // Initial PENDING status is set in constructor and observers are notified.
+        order.setStatus(OrderStatus.PENDING);
+        return order;
     }
 
-    public void addMenuItem(String restaurantId, String name, String description, double price) {
-        Restaurant restaurant = restaurants.get(restaurantId);
-        if (restaurant == null) throw new IllegalArgumentException("Invalid restaurant");
-        restaurant.addMenuItem(new MenuItem(name, description, price));
-    }
-
-    public Order placeOrder(String userId, String restaurantId, List<String> itemNames) {
-        Customer customer = customers.get(userId);
-        Restaurant restaurant = restaurants.get(restaurantId);
-
-        if (customer != null && restaurant != null) {
-            List<MenuItem> items = restaurant.getMenu().stream()
-                    .filter(m -> itemNames.contains(m.getName()))
-                    .toList();
-
-            Order order = new Order(customer, restaurant, items);
-
-            orders.put(order.getId(), order);
-            notifyRestaurant(order);
-            System.out.println("Order placed: " + order.getId());
-
-            return order;
-        }
-
-        return null;
-    }
-
-    public void updateOrderStatus(String orderId, OrderStatus status) {
+    public void updateOrderStatus(String orderId, OrderStatus newStatus) {
         Order order = orders.get(orderId);
+        if (order == null)
+            throw new NoSuchElementException("Order not found.");
 
-        if (order != null) {
-            order.updateStatus(status);
+        order.setStatus(newStatus);
 
-            System.out.println("Order " + orderId + " updated to " + status);
-
-            notifyCustomer(order);
-
-            if (status == OrderStatus.DELIVERED && order.getDeliveryAgent() != null) {
-                order.getDeliveryAgent().release();
-            }
+        // If order is ready, find a delivery agent.
+        if (newStatus == OrderStatus.READY_FOR_PICKUP) {
+            assignDelivery(order);
         }
     }
 
     public void cancelOrder(String orderId) {
         Order order = orders.get(orderId);
-        if (order != null && order.getStatus() == OrderStatus.PENDING) {
-            order.updateStatus(OrderStatus.CANCELLED);
-            notifyCustomer(order);
-            notifyRestaurant(order);
-            System.out.println("Order cancelled: " + order.getId());
+        if (order == null) {
+            System.out.println("ERROR: Order with ID " + orderId + " not found.");
+            return;
+        }
+
+        // Delegate the cancellation logic to the Order object itself.
+        if (order.cancel()) {
+            System.out.println("SUCCESS: Order " + orderId + " has been successfully canceled.");
+        } else {
+            System.out.println("FAILED: Order " + orderId + " could not be canceled. Its status is: " + order.getStatus());
         }
     }
 
-    public synchronized void assignDeliveryAgent(String orderId) {
-        Order order = orders.get(orderId);
+    private void assignDelivery(Order order) {
+        List<DeliveryAgent> availableAgents = new ArrayList<>(deliveryAgents.values());
 
-        if(order == null) {
-            throw new IllegalArgumentException("Order not found");
+        assignmentStrategy.findAgent(order, availableAgents).ifPresentOrElse(
+                agent -> {
+                    order.assignDeliveryAgent(agent);
+                    System.out.printf("Agent %s (dist: %.2f) assigned to order %s.\n",
+                            agent.getName(),
+                            agent.getCurrentLocation().distanceTo(order.getRestaurant().getAddress()),
+                            order.getId());
+                    order.setStatus(OrderStatus.OUT_FOR_DELIVERY);
+                },
+                () -> System.out.println("No available delivery agents found for order " + order.getId())
+        );
+    }
+
+    public List<Restaurant> searchRestaurants(List<RestaurantSearchStrategy> strategies) {
+        // Start with the full list of restaurants
+        List<Restaurant> results = new ArrayList<>(restaurants.values());
+
+        // Sequentially apply each filter strategy
+        // We can also use chain of responsibility design pattern here
+        for (RestaurantSearchStrategy strategy : strategies) {
+            results = strategy.filter(results);
         }
 
-        for (DeliveryAgent agent : deliveryAgents.values()) {
-            if (agent.isAvailable()) {
-                agent.assign();
-                order.assignDeliveryAgent(agent);
-                notifyDeliveryAgent(order);
-                System.out.println("Agent " + agent.getName() + " assigned to order " + orderId);
-                return;
-            }
+        return results;
+    }
+
+    public Menu getRestaurantMenu(String restaurantId) {
+        Restaurant restaurant = restaurants.get(restaurantId);
+        if (restaurant == null) {
+            throw new NoSuchElementException("Restaurant with ID " + restaurantId + " not found.");
         }
-
-        throw new IllegalStateException("No available delivery agent");
-    }
-
-    private void notifyCustomer(Order order) {
-        // Send notification to the customer about the order status update
-        // ...
-    }
-
-    private void notifyRestaurant(Order order) {
-        // Send notification to the restaurant about the new order or order status update
-        // ...
-    }
-
-    private void notifyDeliveryAgent(Order order) {
-        // Send notification to the delivery agent about the assigned order
-        // ...
+        return restaurant.getMenu();
     }
 }

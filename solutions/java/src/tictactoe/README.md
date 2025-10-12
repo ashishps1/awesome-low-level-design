@@ -31,6 +31,10 @@ Design and implement a Tic Tac Toe game that allows two players to play on a NxN
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/tictactoe-class-diagram.png)
+
 ### 1. Game
 - **Fields:** Board board, Player[] players, int currentPlayerIndex, GameStatus status
 - **Methods:** play(), makeMove(int row, int col), checkWin(), checkDraw(), switchPlayer(), getCurrentPlayer()

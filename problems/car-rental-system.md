@@ -10,6 +10,10 @@
 7. The system should handle payment processing for reservations.
 8. The system should be able to handle concurrent reservations and ensure data consistency.
 
+## UML Class Diagram
+
+![](../class-diagrams/carrentalsystem-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/carrentalsystem/) 
 #### [Python Implementation](../solutions/python/carrentalsystem/)

@@ -8,12 +8,17 @@
 5. The system should assign reputation score to users based on their activity and the quality of their contributions.
 6. The system should handle concurrent access and ensure data consistency.
 
+## UML Class Diagram
+
+![](../class-diagrams/stackoverflow-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/stackoverflow/) 
 #### [Python Implementation](../solutions/python/stackoverflow/)
 #### [C++ Implementation](../solutions/cpp/stackoverflow/)
 #### [C# Implementation](../solutions/csharp/stackoverflow/)
 #### [Go Implementation](../solutions/golang/stackoverflow/)
+#### [TypeScript Implementation](../solutions/typescript/src/StackOverflow/)
 
 ## Classes, Interfaces and Enumerations
 1. The **User** class represents a user of the Stack Overflow system, with properties such as id, username, email, and reputation.

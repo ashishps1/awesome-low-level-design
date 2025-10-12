@@ -1,7 +1,5 @@
 package chessgame;
 
-import chessgame.pieces.Piece;
-
 public class Move {
     private final Cell start;
     private final Cell end;

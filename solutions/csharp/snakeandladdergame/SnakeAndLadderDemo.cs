@@ -1,21 +1,26 @@
 using System;
 using System.Collections.Generic;
 
-namespace SnakeAndLadderGame
+public class SnakeAndLadderDemo
 {
-    public class SnakeAndLadderDemo
+    public static void Main()
     {
-        public static void Run()
+        List<BoardEntity> boardEntities = new List<BoardEntity>
         {
-            GameManager gameManager = GameManager.GetInstance();
+            new Snake(17, 7), new Snake(54, 34),
+            new Snake(62, 19), new Snake(98, 79),
+            new Ladder(3, 38), new Ladder(24, 33),
+            new Ladder(42, 93), new Ladder(72, 84)
+        };
 
-            // Start game 1
-            List<string> players1 = new List<string> { "Player 1", "Player 2", "Player 3" };
-            gameManager.StartNewGame(players1);
+        List<string> players = new List<string> { "Alice", "Bob", "Charlie" };
 
-            // Start game 2
-            List<string> players2 = new List<string> { "Player 4", "Player 5" };
-            gameManager.StartNewGame(players2);
-        }
+        Game game = new GameBuilder()
+            .SetBoard(100, boardEntities)
+            .SetPlayers(players)
+            .SetDice(new Dice(1, 6))
+            .Build();            
+
+        game.Play();
     }
 }

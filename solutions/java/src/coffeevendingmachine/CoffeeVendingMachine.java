@@ -1,77 +1,67 @@
 package coffeevendingmachine;
 
-import java.util.HashMap;
-import java.util.Map;
+
+import coffeevendingmachine.decorator.CaramelSyrupDecorator;
+import coffeevendingmachine.decorator.ExtraSugarDecorator;
+import coffeevendingmachine.enums.CoffeeType;
+import coffeevendingmachine.enums.ToppingType;
+import coffeevendingmachine.factory.CoffeeFactory;
+import coffeevendingmachine.state.ReadyState;
+import coffeevendingmachine.state.VendingMachineState;
+import coffeevendingmachine.decorator.Coffee;
+
+import java.util.List;
 
 public class CoffeeVendingMachine {
-    private static final CoffeeVendingMachine instance = new CoffeeVendingMachine();
-    private final Map<String, CoffeeRecipe> recipes = new HashMap<>();
-    private final IngredientStore ingredientStore;
-    private final Dispenser dispenser;
-    private final PaymentProcessor paymentProcessor;
+    private static final CoffeeVendingMachine INSTANCE = new CoffeeVendingMachine();
+    private VendingMachineState state;
+    private Coffee selectedCoffee;
+    private int moneyInserted;
 
     private CoffeeVendingMachine() {
-        this.ingredientStore = new IngredientStore();
-        this.dispenser = new Dispenser();
-        this.paymentProcessor = new PaymentProcessor();
-        // Initialize default recipes
-        addDefaultRecipes();
-    }
-
-    private void addDefaultRecipes() {
-        recipes.put("Espresso", new CoffeeRecipe("Espresso", 2.5, Map.of("Water", 50, "Coffee", 20)));
-        recipes.put("Latte", new CoffeeRecipe("Latte", 3.0, Map.of("Water", 50, "Coffee", 20, "Milk", 30)));
-        recipes.put("Cappuccino", new CoffeeRecipe("Cappuccino", 3.5, Map.of("Water", 50, "Coffee", 20, "Milk", 40)));
-    }
-
-    private void addRecipe(String name, double price, Map<String, Integer> recipe) {
-        recipes.put(name, new CoffeeRecipe(name, price, recipe));
+        this.state = new ReadyState();
+        this.moneyInserted = 0;
     }
 
     public static CoffeeVendingMachine getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
-    public void displayMenu() {
-        System.out.println("Coffee Menu:");
-        for (String recipe : recipes.keySet()) {
-            System.out.println(recipe + " - $" + recipes.get(recipe).getPrice());
+    // --- Actions delegated to the current state ---
+    public void selectCoffee(CoffeeType type, List<ToppingType> toppings) {
+        // 1. Create the base coffee using the factory
+        Coffee coffee = CoffeeFactory.createCoffee(type);
+
+        // 2. Wrap it with decorators
+        for (ToppingType topping : toppings) {
+            switch (topping) {
+                case EXTRA_SUGAR:
+                    coffee = new ExtraSugarDecorator(coffee);
+                    break;
+                case CARAMEL_SYRUP:
+                    coffee = new CaramelSyrupDecorator(coffee);
+                    break;
+            }
         }
+        // Let the state handle the rest
+        this.state.selectCoffee(this, coffee);
     }
 
-    public synchronized CoffeeRecipe selectCoffee(String coffeeName) {
-        if (!recipes.containsKey(coffeeName)) {
-            throw new RuntimeException("Invalid coffee recipe: " + coffeeName);
-        }
+    public void insertMoney(int amount) { state.insertMoney(this, amount); }
+    public void dispenseCoffee() { state.dispenseCoffee(this); }
+    public void cancel() { state.cancel(this); }
 
-        return recipes.get(coffeeName);
-    }
+    // --- Getters and Setters used by State objects ---
+    public void setState(VendingMachineState state) { this.state = state; }
+    public VendingMachineState getState() { return state; }
+    public void setSelectedCoffee(Coffee selectedCoffee) { this.selectedCoffee = selectedCoffee; }
+    public Coffee getSelectedCoffee() { return selectedCoffee; }
+    public void setMoneyInserted(int moneyInserted) { this.moneyInserted = moneyInserted; }
+    public int getMoneyInserted() { return moneyInserted; }
 
-    public synchronized void dispenseCoffee(CoffeeRecipe coffeeRecipe, Payment payment) {
-        if(payment.getAmount() < coffeeRecipe.getPrice()) {
-            throw new RuntimeException("Insufficient payment for " + coffeeRecipe.getName() + ". Required: " + coffeeRecipe.getPrice());
-        }
-
-        if(!ingredientStore.hasEnoughIngredient(coffeeRecipe.getRecipe())) {
-            throw new RuntimeException("Insufficient ingredients to make " + coffeeRecipe.getName());
-        }
-
-        ingredientStore.consume(coffeeRecipe.getRecipe());
-        dispenser.prepareDrink(coffeeRecipe);
-
-        double change = paymentProcessor.process(coffeeRecipe.getPrice(), payment.getAmount());
-        if (change > 0) {
-            System.out.println("Please collect your change: $" + change);
-        }
-    }
-
-    public void refillIngredient(String ingredient, int quantity) {
-        ingredientStore.refill(ingredient, quantity);
-    }
-
-    public void showIngredients() {
-        System.out.println("Ingredient Levels:");
-        ingredientStore.getAllIngredients().forEach((k, v) -> System.out.println(k + ": " + v));
+    public void reset() {
+        this.selectedCoffee = null;
+        this.moneyInserted = 0;
     }
 
     public Map<String, Integer> showIngredientsMap() {

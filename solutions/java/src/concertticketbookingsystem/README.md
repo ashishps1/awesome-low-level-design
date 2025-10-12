@@ -31,6 +31,10 @@ Design and implement a Concert Ticket Booking System that allows users to book s
 
 ## Class Design
 
+## UML Class Diagram
+
+![](../../../../uml-diagrams/class-diagrams/concertticketbookingsystem-class-diagram.png)
+
 ### 1. ConcertTicketBookingSystem
 - **Fields:** List<Concert> concerts, List<Booking> bookings
 - **Methods:** addConcert(), bookSeat(), cancelBooking(), getAvailableSeats(), etc.
@@ -83,7 +87,7 @@ See `ConcertTicketBookingSystemDemo.java` for a sample usage and simulation of t
 
 ## Extending the Framework
 
-- **Add payment processing:** Integrate payment gateway for ticket purchases
+- **Add payment processing:** Integrate payment gateway for parkingTicket purchases
 - **Add waitlist functionality:** Handle seat waitlist when fully booked
 - **Add discount management:** Support for different pricing tiers and discounts
 - **Add notification system:** Send booking confirmations and updates

@@ -9,12 +9,17 @@
 6. The machine should track the inventory of ingredients and notify when they are running low.
 7. The machine should handle multiple user requests concurrently and ensure thread safety.
 
+## UML Class Diagram
+
+![](../class-diagrams/coffeevendingmachine-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/coffeevendingmachine/) 
 #### [Python Implementation](../solutions/python/coffeevendingmachine/)
 #### [C++ Implementation](../solutions/cpp/coffeevendingmachine/)
 #### [C# Implementation](../solutions/csharp/coffeevendingmachine/)
 #### [Go Implementation](../solutions/golang/coffeevendingmachine/)
+#### [TypeScript Implementation](../solutions/typescript/src/CoffeeVendingMachine/)
 
 ## Classes, Interfaces and Enumerations
 1. The **Coffee** class represents a coffee type with its name, price, and recipe (ingredients and their quantities).

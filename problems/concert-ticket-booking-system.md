@@ -10,6 +10,10 @@
 7. The system should generate booking confirmations and send them to users via email or SMS.
 8. The system should provide a waiting list functionality for sold-out concerts.
 
+## UML Class Diagram
+
+![](../class-diagrams/concertticketbookingsystem-class-diagram.png)
+
 ## Implementations
 #### [Java Implementation](../solutions/java/src/concertticketbookingsystem/) 
 #### [Python Implementation](../solutions/python/concertticketbookingsystem/)

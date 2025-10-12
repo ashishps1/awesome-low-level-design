@@ -1,49 +1,45 @@
+import threading
+from typing import TypeVar, Generic, Optional, Dict
+from dll import DoublyLinkedList
 from node import Node
 
-class LRUCache:
-    def __init__(self, capacity):
+K = TypeVar('K')
+V = TypeVar('V')
+
+class LRUCache(Generic[K, V]):
+    def __init__(self, capacity: int):
         self.capacity = capacity
-        self.cache = {}
-        self.head = Node(None, None)
-        self.tail = Node(None, None)
-        self.head.next = self.tail
-        self.tail.prev = self.head
+        self.map: Dict[K, Node[K, V]] = {}
+        self.dll: DoublyLinkedList[K, V] = DoublyLinkedList()
+        self.lock = threading.Lock()
 
-    def get(self, key):
-        if key in self.cache:
-            node = self.cache[key]
-            self._move_to_head(node)
+    def get(self, key: K) -> Optional[V]:
+        with self.lock:
+            if key not in self.map:
+                return None
+            node = self.map[key]
+            self.dll.move_to_front(node)
             return node.value
-        return None
 
-    def put(self, key, value):
-        if key in self.cache:
-            node = self.cache[key]
-            node.value = value
-            self._move_to_head(node)
-        else:
-            node = Node(key, value)
-            self.cache[key] = node
-            self._add_to_head(node)
-            if len(self.cache) > self.capacity:
-                removed_node = self._remove_tail()
-                del self.cache[removed_node.key]
+    def put(self, key: K, value: V) -> None:
+        with self.lock:
+            if key in self.map:
+                node = self.map[key]
+                node.value = value
+                self.dll.move_to_front(node)
+            else:
+                if len(self.map) == self.capacity:
+                    lru = self.dll.remove_last()
+                    if lru is not None:
+                        del self.map[lru.key]
+                new_node = Node(key, value)
+                self.dll.add_first(new_node)
+                self.map[key] = new_node
 
-    def _add_to_head(self, node):
-        node.prev = self.head
-        node.next = self.head.next
-        self.head.next.prev = node
-        self.head.next = node
-
-    def _remove_node(self, node):
-        node.prev.next = node.next
-        node.next.prev = node.prev
-
-    def _move_to_head(self, node):
-        self._remove_node(node)
-        self._add_to_head(node)
-
-    def _remove_tail(self):
-        node = self.tail.prev
-        self._remove_node(node)
-        return node
+    def remove(self, key: K) -> None:
+        with self.lock:
+            if key not in self.map:
+                return
+            node = self.map[key]
+            self.dll.remove(node)
+            del self.map[key]

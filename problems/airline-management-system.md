@@ -1,6 +1,7 @@
 # Designing an Airline Management System
 
 ## Requirements
+
 1. The airline management system should allow users to search for flights based on source, destination, and date.
 2. Users should be able to book flights, select seats, and make payments.
 3. The system should manage flight schedules, aircraft assignments, and crew assignments.
@@ -10,14 +11,24 @@
 7. The system should ensure data consistency and handle concurrent access to shared resources.
 8. The system should be scalable and extensible to accommodate future enhancements and new features.
 
+## UML Class Diagram
+
+![](../class-diagrams/airlinemanagementsystem-class-diagram.png)
+
 ## Implementations
-#### [Java Implementation](../solutions/java/src/airlinemanagementsystem/) 
+
+#### [Java Implementation](../solutions/java/src/airlinemanagementsystem/)
+
 #### [Python Implementation](../solutions/python/airlinemanagementsystem/)
+
 #### [C++ Implementation](../solutions/cpp/airlinemanagementsystem/)
+
 #### [C# Implementation](../solutions/csharp/airlinemanagementsystem/)
+
 #### [Go Implementation](../solutions/golang/airlinemanagementsystem/)
 
 ## Classes, Interfaces and Enumerations
+
 1. The **Flight** class represents a flight in the airline management system, with properties such as flight number, source, destination, departure time, arrival time, and available seats.
 2. The **Aircraft** class represents an aircraft, with properties like tail number, model, and total seats.
 3. The **Passenger** class represents a passenger, with properties such as ID, name, email, and phone number.
