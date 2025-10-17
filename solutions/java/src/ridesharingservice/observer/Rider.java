@@ -1,7 +1,7 @@
-package ridehailingservice.observer;
+package ridesharingservice.observer;
 
-import ridehailingservice.entities.Trip;
-import ridehailingservice.entities.User;
+import ridesharingservice.entities.Trip;
+import ridesharingservice.entities.User;
 
 public class Rider extends User {
     public Rider(String name, String contact) {

@@ -1,19 +1,19 @@
-package ridehailingservice;
-
-import ridehailingservice.enums.DriverStatus;
-import ridehailingservice.enums.RideType;
-import ridehailingservice.entities.Driver;
-import ridehailingservice.entities.Location;
-import ridehailingservice.entities.Trip;
-import ridehailingservice.entities.Vehicle;
-import ridehailingservice.observer.Rider;
-import ridehailingservice.strategy.matching.DriverMatchingStrategy;
-import ridehailingservice.strategy.pricing.PricingStrategy;
+package ridesharingservice;
 
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
+
+import ridesharingservice.entities.Driver;
+import ridesharingservice.entities.Location;
+import ridesharingservice.entities.Trip;
+import ridesharingservice.entities.Vehicle;
+import ridesharingservice.enums.DriverStatus;
+import ridesharingservice.enums.RideType;
+import ridesharingservice.observer.Rider;
+import ridesharingservice.strategy.matching.DriverMatchingStrategy;
+import ridesharingservice.strategy.pricing.PricingStrategy;
 
 public class RideSharingService {
     private static volatile RideSharingService instance;

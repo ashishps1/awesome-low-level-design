@@ -1,12 +1,12 @@
-package ridehailingservice.entities;
-
-import ridehailingservice.observer.Rider;
-import ridehailingservice.enums.TripStatus;
-import ridehailingservice.observer.TripObserver;
-import ridehailingservice.state.RequestedState;
-import ridehailingservice.state.TripState;
+package ridesharingservice.entities;
 
 import java.util.UUID;
+
+import ridesharingservice.enums.TripStatus;
+import ridesharingservice.observer.Rider;
+import ridesharingservice.observer.TripObserver;
+import ridesharingservice.state.RequestedState;
+import ridesharingservice.state.TripState;
 
 import java.util.ArrayList;
 import java.util.List;
