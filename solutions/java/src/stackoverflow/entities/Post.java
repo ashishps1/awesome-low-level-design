@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Post extends Content {
     private final AtomicInteger voteCount = new AtomicInteger(0);
     private final Map<String, VoteType> voters = new ConcurrentHashMap<>();
-    private final List<Comment> comments = new ArrayList<>();
-    private final List<PostObserver> observers = new ArrayList<>();
+    private final List<Comment> comments = new CopyOnWriteArrayList<>();
+    private final List<PostObserver> observers = new CopyOnWriteArrayList<>();
 
     public Post(String id, String body, User author) {
         super(id, body, author);
