@@ -13,7 +13,7 @@
 ![](../class-diagrams/trafficsignalsystem-class-diagram.png)
 
 ## Implementations
-#### [Java Implementation](../solutions/java/src/trafficsignalsystem/) 
+#### [Java Implementation](../solutions/java/src/trafficsignalcontrolsystem/)
 #### [Python Implementation](../solutions/python/trafficsignalsystem/)
 #### [C++ Implementation](../solutions/cpp/trafficsignalsystem/)
 #### [C# Implementation](../solutions/csharp/trafficsignalsystem/)
