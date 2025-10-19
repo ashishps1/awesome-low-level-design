@@ -11,7 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CarRentalSystem {
-    private static CarRentalSystem instance;
+    private static CarRentalSystem instance = new CarRentalSystem();
     private final Map<String, Car> cars;
     private final Map<String, Reservation> reservations;
     private final PaymentProcessor paymentProcessor;
@@ -22,10 +22,7 @@ public class CarRentalSystem {
         paymentProcessor = new CreditCardPaymentProcessor();
     }
 
-    public static synchronized CarRentalSystem getInstance() {
-        if (instance == null) {
-            instance = new CarRentalSystem();
-        }
+    public static CarRentalSystem getInstance() {
         return instance;
     }
 
