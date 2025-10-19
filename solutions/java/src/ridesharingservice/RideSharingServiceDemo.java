@@ -1,14 +1,14 @@
-package ridehailingservice;
+package ridesharingservice;
 
-import ridehailingservice.enums.DriverStatus;
-import ridehailingservice.enums.RideType;
-import ridehailingservice.entities.Driver;
-import ridehailingservice.entities.Location;
-import ridehailingservice.entities.Trip;
-import ridehailingservice.entities.Vehicle;
-import ridehailingservice.observer.Rider;
-import ridehailingservice.strategy.matching.NearestDriverMatchingStrategy;
-import ridehailingservice.strategy.pricing.VehicleBasedPricingStrategy;
+import ridesharingservice.entities.Driver;
+import ridesharingservice.entities.Location;
+import ridesharingservice.entities.Trip;
+import ridesharingservice.entities.Vehicle;
+import ridesharingservice.enums.DriverStatus;
+import ridesharingservice.enums.RideType;
+import ridesharingservice.observer.Rider;
+import ridesharingservice.strategy.matching.NearestDriverMatchingStrategy;
+import ridesharingservice.strategy.pricing.VehicleBasedPricingStrategy;
 
 public class RideSharingServiceDemo {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package ridehailingservice.enums;
+package ridesharingservice.enums;
 
 public enum DriverStatus {
     ONLINE,

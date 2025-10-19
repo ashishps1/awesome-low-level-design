@@ -1,7 +1,7 @@
-package ridehailingservice.strategy.pricing;
+package ridesharingservice.strategy.pricing;
 
-import ridehailingservice.entities.Location;
-import ridehailingservice.enums.RideType;
+import ridesharingservice.entities.Location;
+import ridesharingservice.enums.RideType;
 
 public class FlatRatePricingStrategy implements PricingStrategy {
     private static final double BASE_FARE = 5.0;

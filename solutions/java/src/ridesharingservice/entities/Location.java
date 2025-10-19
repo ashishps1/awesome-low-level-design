@@ -1,4 +1,4 @@
-package ridehailingservice.entities;
+package ridesharingservice.entities;
 
 public class Location {
     private final double latitude;

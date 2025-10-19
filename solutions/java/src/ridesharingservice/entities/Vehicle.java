@@ -1,6 +1,6 @@
-package ridehailingservice.entities;
+package ridesharingservice.entities;
 
-import ridehailingservice.enums.RideType;
+import ridesharingservice.enums.RideType;
 
 public class Vehicle {
     private final String licenseNumber;

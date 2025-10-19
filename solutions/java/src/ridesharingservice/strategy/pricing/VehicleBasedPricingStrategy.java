@@ -1,9 +1,9 @@
-package ridehailingservice.strategy.pricing;
-
-import ridehailingservice.entities.Location;
-import ridehailingservice.enums.RideType;
+package ridesharingservice.strategy.pricing;
 
 import java.util.Map;
+
+import ridesharingservice.entities.Location;
+import ridesharingservice.enums.RideType;
 
 public class VehicleBasedPricingStrategy implements PricingStrategy {
     private static final double BASE_FARE = 2.50;

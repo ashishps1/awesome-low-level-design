@@ -1,7 +1,7 @@
-package ridehailingservice.state;
+package ridesharingservice.state;
 
-import ridehailingservice.entities.Driver;
-import ridehailingservice.entities.Trip;
+import ridesharingservice.entities.Driver;
+import ridesharingservice.entities.Trip;
 
 public interface TripState {
     void request(Trip trip);

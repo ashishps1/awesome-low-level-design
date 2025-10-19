@@ -1,7 +1,7 @@
-package ridehailingservice.entities;
+package ridesharingservice.entities;
 
-import ridehailingservice.enums.DriverStatus;
-import ridehailingservice.enums.TripStatus;
+import ridesharingservice.enums.DriverStatus;
+import ridesharingservice.enums.TripStatus;
 
 public class Driver extends User {
     private Vehicle vehicle;

@@ -1,8 +1,8 @@
-package ridehailingservice.state;
+package ridesharingservice.state;
 
-import ridehailingservice.entities.Driver;
-import ridehailingservice.entities.Trip;
-import ridehailingservice.enums.TripStatus;
+import ridesharingservice.entities.Driver;
+import ridesharingservice.entities.Trip;
+import ridesharingservice.enums.TripStatus;
 
 public class RequestedState implements TripState {
     @Override
