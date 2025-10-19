@@ -1,87 +1,54 @@
-# Library Management System (LLD)
+# 📚 Library Management System
 
-## Problem Statement
-
-Design and implement a Library Management System that allows members to borrow and return books, manages book inventory, tracks loans, and supports catalog search.
+A comprehensive library management system demonstrating **Object-Oriented Programming (OOP)**, **SOLID principles**, and **Design Patterns** in Java.
 
 ---
 
-## Requirements
+## 🎯 Features
 
-- **Book Management:** The system manages a catalog of books, each with multiple copies.
-- **Member Management:** The system manages library members who can borrow and return books.
-- **Loan Management:** The system tracks which member has borrowed which book copy and when.
-- **Borrowing and Returning:** Members can borrow available book copies and return them.
-- **Catalog Search:** Members can search for books by title, author, or ISBN.
-- **Extensibility:** Easy to add new features such as reservations, fines, or notifications.
+### Core Features
+- ✅ **Book Management** - Add, update, remove, and search books
+- ✅ **Patron Management** - Register patrons with different membership types
+- ✅ **Lending System** - Checkout and return books with due date tracking
+- ✅ **Late Fee Calculation** - Automatic calculation of overdue fees
+- ✅ **Search Functionality** - Search books by title, author, or ISBN
 
----
-
-## Core Entities
-
-- **LibraryManagementSystem:** Main class that manages books, members, loans, and the catalog.
-- **Book:** Represents a book with title, author, ISBN, and other metadata.
-- **BookCopy:** Represents a physical copy of a book, with a unique copy ID and availability status.
-- **Member:** Represents a library member with a unique ID and name.
-- **Loan:** Represents a loan record for a book copy borrowed by a member.
-- **Catalog:** Manages the collection of books and supports search functionality.
+### Advanced Features
+- ✅ **Reservation System** - Reserve unavailable books with queue management
+- ✅ **Multi-Branch Support** - Manage multiple library branches
+- ✅ **Book Transfer** - Transfer books between branches
+- ✅ **Recommendation System** - Personalized book recommendations
+- ✅ **Notification System** - Notify patrons about due dates and availability
 
 ---
 
-## Class Design
+## 🏗️ Architecture
 
-## UML Class Diagram
-
-![](../../../../uml-diagrams/class-diagrams/LibraryManagementSystem-class-diagram.png)
-
-### 1. LibraryManagementSystem
-- **Fields:** List<Book> books, List<Member> members, List<Loan> loans, Catalog catalog
-- **Methods:** addBook(Book), addMember(Member), borrowBook(Member, Book), returnBook(Member, BookCopy), getLoans(Member), searchBooks(String query), etc.
-
-### 2. Book
-- **Fields:** String title, String author, String isbn, List<BookCopy> copies
-
-### 3. BookCopy
-- **Fields:** int copyId, Book book, boolean isAvailable
-
-### 4. Member
-- **Fields:** int id, String name, List<Loan> loans
-
-### 5. Loan
-- **Fields:** int id, Member member, BookCopy bookCopy, Date loanDate, Date returnDate
-
-### 6. Catalog
-- **Fields:** List<Book> books
-- **Methods:** searchByTitle(String), searchByAuthor(String), searchByISBN(String)
-
+### Project Structure
+librarymanagementsystem/ 
+    ├── models/ # Domain entities │
+    ├── Book.java │ 
+    ├── Patron.java │ 
+    ├── LoanRecord.java │ 
+    ├── Branch.java 
+ 
+│ └── Reservation.java │ ├── patterns/ # Design pattern implementations │ ├── observer/ # Observer Pattern (Notifications) │ │ ├── Observer.java │ │ ├── Subject.java │ │ ├── PatronObserver.java │ │ └── BookSubject.java │ │ │ ├── factory/ # Factory Pattern (Item Creation) │ │ ├── LibraryItem.java │ │ ├── BookItem.java │ │ ├── MagazineItem.java │ │ └── LibraryItemFactory.java │ │ │ └── strategy/ # Strategy Pattern (Late Fees) │ ├── LateFeeStrategy.java │ ├── BookLateFeeStrategy.java │ ├── MagazineLateFeeStrategy.java │ └── PremiumLateFeeStrategy.java │ ├── services/ # Business logic layer │ ├── BookService.java │ ├── PatronService.java │ ├── LoanService.java │ ├── ReservationService.java │ ├── BranchService.java │ ├── NotificationService.java │ └── RecommendationService.java │ ├── repositories/ # Data access layer │ ├── Repository.java │ ├── BookRepository.java │ ├── PatronRepository.java │ └── LoanRepository.java │ ├── exceptions/ # Custom exceptions │ ├── BookNotFoundException.java │ ├── PatronNotFoundException.java │ └── BookNotAvailableException.java │ ├── utils/ # Utility classes │ ├── IdGenerator.java │ └── Logger.java │ ├── LibraryManagementSystem.java # Main system (Facade) └── LibraryDemo.java # Demo application
 ---
 
-## Example Usage
+## 🎨 Design Patterns Implemented
 
+### 1. **Observer Pattern** 👁️
+**Purpose:** Notify patrons when reserved books become available
+
+**Implementation:**
+- `Subject` interface - Book availability notifications
+- `Observer` interface - Patron notification receiver
+- `PatronObserver` - Concrete observer for patrons
+- `NotificationService` - Manages observers
+
+**Usage:**
 ```java
-LibraryManagementSystem system = new LibraryManagementSystem();
-Book book = new Book("Effective Java", "Joshua Bloch", "978-0134685991");
-system.addBook(book);
-
-Member alice = new Member(1, "Alice");
-system.addMember(alice);
-
-system.borrowBook(alice, book);
-system.returnBook(alice, book.getCopies().get(0));
-```
-
----
-
-## Demo
-
-See `LibraryManagementSystemDemo.java` for a sample usage and simulation of the library management system.
-
----
-
-## Extending the Framework
-
-- **Add reservations:** Allow members to reserve books that are currently checked out.
-- **Add fines:** Track overdue books and calculate fines.
-- **Add notifications:** Notify members about due dates, reservations, or new arrivals.
-
----
+// Patron automatically notified when book is returned
+reservationService.reserveBook(isbn, patronId);
+// When book is returned, observer is notified
+library.returnBook(isbn, anotherPatronId);

@@ -1,0 +1,25 @@
+# Java compiled bytecode files
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build directories
+target/
+build/
+out/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
