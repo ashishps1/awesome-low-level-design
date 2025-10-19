@@ -126,8 +126,8 @@ classDiagram
         -String email
         -String phoneNumber
         -PatronType patronType
-        -List~LoanRecord~ borrowingHistory
-        -List~Book~ currentlyBorrowedBooks
+        -List borrowingHistory
+        -List currentlyBorrowedBooks
         -int maxBooksAllowed
         +canBorrowMoreBooks()
         +addBorrowedBook(Book)
@@ -152,7 +152,7 @@ classDiagram
         -String branchId
         -String branchName
         -String address
-        -Map~String,Book~ inventory
+        -Map inventory
         +addBook(Book)
         +removeBook(String)
         +getAvailableBooks()
@@ -228,7 +228,7 @@ classDiagram
     }
     
     class BookSubject {
-        -List~Observer~ observers
+        -List observers
         -String bookId
         +attach(Observer)
         +detach(Observer)
@@ -263,7 +263,7 @@ classDiagram
         +addBook(Book, String)
         +updateBook(Book)
         +removeBook(String)
-        +searchBooks(String) List~Book~
+        +searchBooks(String) List
     }
     
     class PatronService {
@@ -277,7 +277,7 @@ classDiagram
         -LoanRepository loanRepository
         +checkoutBook(String, String) LoanRecord
         +returnBook(String, String)
-        +getOverdueLoans() List~LoanRecord~
+        +getOverdueLoans() List
     }
     
     class ReservationService {
@@ -290,33 +290,33 @@ classDiagram
     class Repository {
         <<interface>>
         +save(T)
-        +findById(String) Optional~T~
+        +findById(String) Optional
         +delete(String)
-        +findAll() List~T~
+        +findAll() List
     }
     
     class BookRepository {
-        -Map~String,Book~ books
+        -Map books
         +save(Book)
-        +findById(String) Optional~Book~
-        +findByTitle(String) List~Book~
-        +findByAuthor(String) List~Book~
-        +findAvailableBooks() List~Book~
+        +findById(String) Optional
+        +findByTitle(String) List
+        +findByAuthor(String) List
+        +findAvailableBooks() List
     }
     
     class PatronRepository {
-        -Map~String,Patron~ patrons
+        -Map patrons
         +save(Patron)
-        +findById(String) Optional~Patron~
-        +findByType(PatronType) List~Patron~
+        +findById(String) Optional
+        +findByType(PatronType) List
     }
     
     class LoanRepository {
-        -Map~String,LoanRecord~ loans
+        -Map loans
         +save(LoanRecord)
-        +findById(String) Optional~LoanRecord~
-        +findByPatron(String) List~LoanRecord~
-        +findOverdueLoans() List~LoanRecord~
+        +findById(String) Optional
+        +findByPatron(String) List
+        +findOverdueLoans() List
     }
     
     %% Main System (Facade)
@@ -331,7 +331,7 @@ classDiagram
         +registerPatron(Patron)
         +checkoutBook(String, String)
         +returnBook(String, String)
-        +searchBooks(String) List~Book~
+        +searchBooks(String) List
     }
     
     %% Utility Classes
@@ -382,41 +382,41 @@ classDiagram
     }
     
     %% Relationships
-    Book ||--|| BookStatus : uses
-    Patron ||--|| PatronType : uses
-    LoanRecord ||--|| LoanStatus : uses
-    Reservation ||--|| ReservationStatus : uses
+    Book --> BookStatus
+    Patron --> PatronType
+    LoanRecord --> LoanStatus
+    Reservation --> ReservationStatus
     
-    LoanRecord ||--|| Book : references
-    LoanRecord ||--|| Patron : references
-    Book ||--|| Branch : located-in
+    LoanRecord --> Book
+    LoanRecord --> Patron
+    Book --> Branch
     
-    BookItem ..|> LibraryItem : implements
-    MagazineItem ..|> LibraryItem : implements
-    LibraryItemFactory ..> LibraryItem : creates
-    LibraryItemFactory ..> BookItem : creates
-    LibraryItemFactory ..> MagazineItem : creates
+    BookItem ..|> LibraryItem
+    MagazineItem ..|> LibraryItem
+    LibraryItemFactory --> LibraryItem
+    LibraryItemFactory --> BookItem
+    LibraryItemFactory --> MagazineItem
     
-    PatronObserver ..|> Observer : implements
-    BookSubject ..|> Subject : implements
-    BookSubject --> Observer : notifies
+    PatronObserver ..|> Observer
+    BookSubject ..|> Subject
+    BookSubject --> Observer
     
-    BookLateFeeStrategy ..|> LateFeeStrategy : implements
-    MagazineLateFeeStrategy ..|> LateFeeStrategy : implements
-    PremiumLateFeeStrategy ..|> LateFeeStrategy : implements
+    BookLateFeeStrategy ..|> LateFeeStrategy
+    MagazineLateFeeStrategy ..|> LateFeeStrategy
+    PremiumLateFeeStrategy ..|> LateFeeStrategy
     
-    BookService --> BookRepository : uses
-    PatronService --> PatronRepository : uses
-    LoanService --> LoanRepository : uses
+    BookService --> BookRepository
+    PatronService --> PatronRepository
+    LoanService --> LoanRepository
     
-    BookRepository ..|> Repository : implements
-    PatronRepository ..|> Repository : implements
-    LoanRepository ..|> Repository : implements
+    BookRepository ..|> Repository
+    PatronRepository ..|> Repository
+    LoanRepository ..|> Repository
     
-    LibraryManagementSystem --> BookService : uses
-    LibraryManagementSystem --> PatronService : uses
-    LibraryManagementSystem --> LoanService : uses
-    LibraryManagementSystem --> ReservationService : uses
-    LibraryManagementSystem --> BranchService : uses
-    LibraryManagementSystem --> RecommendationService : uses
+    LibraryManagementSystem --> BookService
+    LibraryManagementSystem --> PatronService
+    LibraryManagementSystem --> LoanService
+    LibraryManagementSystem --> ReservationService
+    LibraryManagementSystem --> BranchService
+    LibraryManagementSystem --> RecommendationService
 ```
