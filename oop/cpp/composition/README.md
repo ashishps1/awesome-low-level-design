@@ -52,7 +52,7 @@ private:
     Wheel wheel;
     Transmission transmission;
 public:
-    Car(Engine e, Wheel w, Transmission t) : engine(e), wheel(w), transmission(t) {}
+    Car() : engine(150), wheel("Alloy"), transmission("Automatic") {}
     void drive() {
         engine.start();
         wheel.rotate();
@@ -62,11 +62,7 @@ public:
 };
 
 int main() {
-    Engine engine(150);
-    Wheel wheel("Alloy");
-    Transmission transmission("Automatic");
-    
-    Car car(engine, wheel, transmission);
+    Car car;
     car.drive();
     return 0;
 }

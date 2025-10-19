@@ -85,12 +85,8 @@ class Car
 class CompositionExample
 {
     static void Main()
-    {
-        Engine engine = new Engine(150);
-        Wheel wheel = new Wheel("Alloy");
-        Transmission transmission = new Transmission("Automatic");
-        
-        Car car = new Car(engine, wheel, transmission);
+    {   
+        Car car = new Car(new Engine(150), new Wheel("Alloy"), new Transmission("Automatic"));
         car.Drive();
     }
 }

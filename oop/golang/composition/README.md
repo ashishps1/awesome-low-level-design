@@ -47,6 +47,14 @@ type Car struct {
     Transmission Transmission
 }
 
+func NewCar() Car {
+    return Car{
+        Engine:       Engine{Horsepower: 150},
+        Wheel:        Wheel{Type: "Alloy"},
+        Transmission: Transmission{Type: "Automatic"},
+    }
+}
+
 func (c Car) Drive() {
     c.Engine.Start()
     c.Wheel.Rotate()
@@ -55,11 +63,7 @@ func (c Car) Drive() {
 }
 
 func main() {
-    engine := Engine{Horsepower: 150}
-    wheel := Wheel{Type: "Alloy"}
-    transmission := Transmission{Type: "Automatic"}
-    
-    car := Car{Engine: engine, Wheel: wheel, Transmission: transmission}
+    car := NewCar()
     car.Drive()
 }
 ```
