@@ -54,10 +54,9 @@ public:
 };
 
 int main() {
-    Vehicle* myCar = new Car("Toyota");
+    unique_ptr<Vehicle> myCar = make_unique<Car>("Toyota");
     myCar->displayBrand();
     myCar->start();
-    delete myCar;
     return 0;
 }
 ```
@@ -108,14 +107,12 @@ public:
 };
 
 int main() {
-    Animal* myDog = new Dog();
+    unique_ptr<Animal> myDog = make_unique<Dog>();
     myDog->makeSound();
     
-    Animal* myCat = new Cat();
+    unique_ptr<Animal> myCat = make_unique<Cat>();
     myCat->makeSound();
     
-    delete myDog;
-    delete myCat;
     return 0;
 }
 ```
@@ -182,15 +179,14 @@ public:
 };
 
 int main() {
-    Payment* payment;
+    unique_ptr<Payment> payment;
     
-    payment = new CreditCardPayment(150.75);
+    payment = make_unique<CreditCardPayment>(150.75);
     payment->pay();
     
-    payment = new PayPalPayment(200.50);
+    payment = make_unique<PayPalPayment>(200.50);
     payment->pay();
     
-    delete payment;
     return 0;
 }
 ```
