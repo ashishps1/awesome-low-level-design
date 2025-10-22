@@ -30,6 +30,7 @@ An **abstract class** in C++ is a class that **cannot be instantiated**. It is u
 
 ```cpp
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // Abstract class
@@ -39,6 +40,7 @@ protected:
 public:
     Vehicle(string b) : brand(b) {}
     virtual void start() = 0; // Pure virtual function
+    virtual ~Vehicle() = default; // virtual destructor
     void displayBrand() {
         cout << "Brand: " << brand << endl;
     }
@@ -82,11 +84,13 @@ An **interface** in C++ is created using a class that contains **only pure virtu
 
 ```cpp
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // Defining an interface
 class Animal {
 public:
+    virtual ~Animal() = default; // virtual destructor
     virtual void makeSound() = 0; // Pure virtual function
 };
 
@@ -150,6 +154,7 @@ Abstraction is widely used in real-world applications, such as payment processin
 
 ```cpp
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // Abstract class for Payment
@@ -158,6 +163,7 @@ protected:
     double amount;
 public:
     Payment(double amt) : amount(amt) {}
+    virtual ~Payment() = default; // virtual destructor
     virtual void pay() = 0; // Abstract method
 };
 
