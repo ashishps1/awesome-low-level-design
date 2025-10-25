@@ -30,6 +30,7 @@ An **abstract class** in C++ is a class that **cannot be instantiated**. It is u
 
 ```cpp
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // Abstract class
@@ -39,6 +40,7 @@ protected:
 public:
     Vehicle(string b) : brand(b) {}
     virtual void start() = 0; // Pure virtual function
+    virtual ~Vehicle() = default; // virtual destructor
     void displayBrand() {
         cout << "Brand: " << brand << endl;
     }
@@ -54,10 +56,9 @@ public:
 };
 
 int main() {
-    Vehicle* myCar = new Car("Toyota");
+    unique_ptr<Vehicle> myCar = make_unique<Car>("Toyota");
     myCar->displayBrand();
     myCar->start();
-    delete myCar;
     return 0;
 }
 ```
@@ -83,11 +84,13 @@ An **interface** in C++ is created using a class that contains **only pure virtu
 
 ```cpp
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // Defining an interface
 class Animal {
 public:
+    virtual ~Animal() = default; // virtual destructor
     virtual void makeSound() = 0; // Pure virtual function
 };
 
@@ -108,14 +111,12 @@ public:
 };
 
 int main() {
-    Animal* myDog = new Dog();
+    unique_ptr<Animal> myDog = make_unique<Dog>();
     myDog->makeSound();
     
-    Animal* myCat = new Cat();
+    unique_ptr<Animal> myCat = make_unique<Cat>();
     myCat->makeSound();
     
-    delete myDog;
-    delete myCat;
     return 0;
 }
 ```
@@ -153,6 +154,7 @@ Abstraction is widely used in real-world applications, such as payment processin
 
 ```cpp
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // Abstract class for Payment
@@ -161,6 +163,7 @@ protected:
     double amount;
 public:
     Payment(double amt) : amount(amt) {}
+    virtual ~Payment() = default; // virtual destructor
     virtual void pay() = 0; // Abstract method
 };
 
@@ -182,15 +185,14 @@ public:
 };
 
 int main() {
-    Payment* payment;
+    unique_ptr<Payment> payment;
     
-    payment = new CreditCardPayment(150.75);
+    payment = make_unique<CreditCardPayment>(150.75);
     payment->pay();
     
-    payment = new PayPalPayment(200.50);
+    payment = make_unique<PayPalPayment>(200.50);
     payment->pay();
     
-    delete payment;
     return 0;
 }
 ```
