@@ -69,7 +69,6 @@ public class ParkingLot {
 
         ticket.setExitTimestamp();
         ticket.getSpot().unparkVehicle();
-        activeTickets.remove(ticket.getTicketId());
 
         Double parkingFee = feeStrategy.calculateFee(ticket);
 
