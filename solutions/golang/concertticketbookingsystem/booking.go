@@ -1,5 +1,7 @@
 package concertbookingsystem
 
+import "fmt"
+
 type Booking struct {
 	ID         string
 	User       *User
@@ -21,11 +23,19 @@ func NewBooking(id string, user *User, concert *Concert, seats []*Seat) *Booking
 	}
 }
 
-func (b *Booking) ConfirmBooking() {
+func (b *Booking) ConfirmBooking() error {
 	if b.Status == BookingStatusPending {
 		b.Status = BookingStatusConfirmed
 		// TODO: Send booking confirmation to user
+
+		for _, seat := range b.Seats {
+			if seat.status == StatusBooked {
+				return NewSeatNotAvailableError(fmt.Sprintf("Seat %s is already booked", seat.ID))
+			}
+			seat.status = StatusBooked
+		}
 	}
+	return nil
 }
 
 func (b *Booking) CancelBooking() {
