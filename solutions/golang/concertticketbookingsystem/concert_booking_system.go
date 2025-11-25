@@ -77,6 +77,7 @@ func (bs *ConcertTicketBookingSystem) BookTickets(user *User, concert *Concert, 
 			}
 			return nil, err
 		}
+		concert.LockManager.AddSeatLock(seat, 5*time.Minute)
 	}
 
 	// Create booking
@@ -122,19 +123,10 @@ func (bs *ConcertTicketBookingSystem) StartLockReleaser(concertId string) {
 	go func() {
 		ticker := time.NewTicker(time.Second)
 		for range ticker.C {
-			bs.releaseExpiredSeatLocks(bs.concerts[concertId].Seats)
+			concert := bs.concerts[concertId]
+			if concert != nil {
+				concert.LockManager.ReleaseExpiredLocks()
+			}
 		}
 	}()
-}
-
-func (bs *ConcertTicketBookingSystem) releaseExpiredSeatLocks(seats []*Seat) {
-	for _, seat := range seats {
-		seat.mu.Lock()
-
-		if seat.status == StatusReserved && time.Now().After(seat.LockUntil) {
-			seat.status = StatusAvailable
-			fmt.Printf("Release holded seat %s\n", seat.ID)
-		}
-		seat.mu.Unlock()
-	}
 }
