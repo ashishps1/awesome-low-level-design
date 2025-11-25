@@ -26,14 +26,13 @@ func NewSeat(id, seatNumber string, seatType SeatType, price float64) *Seat {
 	}
 }
 
-func (s *Seat) Hold(duration time.Duration) error {
+func (s *Seat) Hold() error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if s.status != StatusAvailable {
 		return NewSeatNotAvailableError(fmt.Sprintf("SeatNo: %s Not Available ", s.ID))
 	}
 	s.status = StatusReserved
-	s.LockUntil = time.Now().Add(duration)
 	return nil
 }
 

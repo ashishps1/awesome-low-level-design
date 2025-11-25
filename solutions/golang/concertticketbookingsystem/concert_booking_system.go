@@ -67,7 +67,7 @@ func (bs *ConcertTicketBookingSystem) BookTickets(user *User, concert *Concert, 
 
 	// Hold seats for the user
 	for _, seat := range seats {
-		if err := seat.Hold(time.Minute); err != nil {
+		if err := seat.Hold(); err != nil {
 			// Rollback previous bookings
 			for _, s := range seats {
 				if s == seat {
@@ -97,7 +97,6 @@ func (bs *ConcertTicketBookingSystem) BookTickets(user *User, concert *Concert, 
 		return nil, err
 	}
 
-	// Store booking
 	bs.bookings[bookingID] = booking
 
 	fmt.Printf("Booking %s - %d seats booked\n", booking.ID, len(booking.Seats))
