@@ -70,17 +70,32 @@ class CityGrid:
         Time Complexity: O(α(n)) amortized
         Space Complexity: O(1)
         
+        How it works:
+        1. Find roots of both elements
+        2. If already in same set, return False (no merge needed)
+        3. Attach smaller rank tree under larger rank tree (keeps tree balanced)
+        4. If ranks equal, increase rank of new root by 1
+        
         Returns:
             True if a and b were in different sets (merge happened), False otherwise
         """
-        ra, rb = self._find(a), self._find(b)
-        if ra == rb:
+        root_a = self._find(a)
+        root_b = self._find(b)
+        
+        # Already in same set - no merge needed
+        if root_a == root_b:
             return False
-        if self.rank[ra] < self.rank[rb]:
-            ra, rb = rb, ra
-        self.parent[rb] = ra
-        if self.rank[ra] == self.rank[rb]:
-            self.rank[ra] += 1
+        
+        # Attach smaller rank tree under larger rank tree
+        if self.rank[root_a] < self.rank[root_b]:
+            self.parent[root_a] = root_b
+        elif self.rank[root_a] > self.rank[root_b]:
+            self.parent[root_b] = root_a
+        else:
+            # Equal ranks - make one root and increase its rank
+            self.parent[root_b] = root_a
+            self.rank[root_a] += 1
+        
         return True
 
     def open_restaurant(self, r, c):
