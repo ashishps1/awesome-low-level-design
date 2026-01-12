@@ -100,7 +100,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Online Food Delivery Service like Swiggy](problems/food-delivery-service.md)
 
 ## 📇 Courses
-- [Master LLD Interviews - AlgoMaster.io](https://algomaster.io/learn/lld/what-is-lld)
+- [Master LLD Interviews - AlgoMaster.io](https://algomaster.io/learn/lld/course-introduction)
 
 ## 📚 Books
 - [Head First Design Patterns](https://www.amazon.in/dp/9385889753)
