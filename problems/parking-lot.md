@@ -7,6 +7,8 @@
 4. The system should assign a parking spot to a vehicle upon entry and release it when the vehicle exits.
 5. The system should track the availability of parking spots and provide real-time information to customers.
 6. The system should handle multiple entry and exit points and support concurrent access.
+7. The system should have multiple fee strategy (like hourly based, day based, etc).
+8. The system should have multiple parking strategy (nearest first, farthest first, best fit first, etc).
 
 ## UML Class Diagram
 
