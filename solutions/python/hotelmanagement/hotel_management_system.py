@@ -3,7 +3,8 @@ from typing import Dict, Optional
 from guest import Guest
 from datetime import date
 from room import Room, RoomStatus
-from reservation import Reservation, ReservationStatus
+from reservation import Reservation
+from reservation_status import ReservationStatus
 from payment import Payment
 import uuid
 
