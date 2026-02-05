@@ -54,11 +54,13 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [State Machine Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-state-machine-diagram/)
 
 ## ⏱️ Concurrency and Multi-threading Concepts
+### Concurrency 101
 - [Introduction to Concurrency](https://algomaster.io/learn/concurrency-interview/introduction-to-concurrency)
 - [Concurrency vs Parallelism](https://algomaster.io/learn/concurrency-interview/concurrency-vs-parallelism)
 - [Processes vs Threads](https://algomaster.io/learn/concurrency-interview/processes-vs-threads)
 - [Thread Lifecycle and States](https://algomaster.io/learn/concurrency-interview/thread-lifecycle-and-states)
 - [Race Conditions and Critical Sections](https://algomaster.io/learn/concurrency-interview/race-conditions-and-critical-sections)
+### Synchronization Primitives
 - [Mutex (Mutual Exclusion)](https://algomaster.io/learn/concurrency-interview/mutex)
 - [Semaphores](https://algomaster.io/learn/concurrency-interview/semaphores)
 - [Condition Variables](https://algomaster.io/learn/concurrency-interview/condition-variables)
@@ -66,8 +68,10 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Reentrant Locks](https://algomaster.io/learn/concurrency-interview/reentrant-locks)
 - [Try-Lock and Timed Locking](https://algomaster.io/learn/concurrency-interview/try-lock-and-timed-locking)
 - [Compare-and-Swap (CAS)](https://algomaster.io/learn/concurrency-interview/compare-and-swap)
+### Concurrency Challenges
 - [Deadlock](https://algomaster.io/learn/concurrency-interview/deadlock)
 - [Livelock](https://algomaster.io/learn/concurrency-interview/livelock)
+### Concurrency Patterns
 - [Signaling Pattern](https://algomaster.io/learn/concurrency-interview/signaling-pattern)
 - [Thread Pool Pattern](https://algomaster.io/learn/concurrency-interview/thread-pool-pattern)
 - [Producer-Consumer Pattern](https://algomaster.io/learn/concurrency-interview/producer-consumer-pattern)
