@@ -53,6 +53,26 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Activity Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-activity-diagram/)
 - [State Machine Diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-state-machine-diagram/)
 
+## ⏱️ Concurrency and Multi-threading Concepts
+- [Introduction to Concurrency](https://algomaster.io/learn/concurrency-interview/introduction-to-concurrency)
+- [Concurrency vs Parallelism](https://algomaster.io/learn/concurrency-interview/concurrency-vs-parallelism)
+- [Processes vs Threads](https://algomaster.io/learn/concurrency-interview/processes-vs-threads)
+- [Thread Lifecycle and States](https://algomaster.io/learn/concurrency-interview/thread-lifecycle-and-states)
+- [Race Conditions and Critical Sections](https://algomaster.io/learn/concurrency-interview/race-conditions-and-critical-sections)
+- [Mutex (Mutual Exclusion)](https://algomaster.io/learn/concurrency-interview/mutex)
+- [Semaphores](https://algomaster.io/learn/concurrency-interview/semaphores)
+- [Condition Variables](https://algomaster.io/learn/concurrency-interview/condition-variables)
+- [Coarse-grained vs Fine-grained Locking](https://algomaster.io/learn/concurrency-interview/coarse-vs-fine-grained-locking)
+- [Reentrant Locks](https://algomaster.io/learn/concurrency-interview/reentrant-locks)
+- [Try-Lock and Timed Locking](https://algomaster.io/learn/concurrency-interview/try-lock-and-timed-locking)
+- [Compare-and-Swap (CAS)](https://algomaster.io/learn/concurrency-interview/compare-and-swap)
+- [Deadlock](https://algomaster.io/learn/concurrency-interview/deadlock)
+- [Livelock](https://algomaster.io/learn/concurrency-interview/livelock)
+- [Signaling Pattern](https://algomaster.io/learn/concurrency-interview/signaling-pattern)
+- [Thread Pool Pattern](https://algomaster.io/learn/concurrency-interview/thread-pool-pattern)
+- [Producer-Consumer Pattern](https://algomaster.io/learn/concurrency-interview/producer-consumer-pattern)
+- [Reader-Writer Pattern](https://algomaster.io/learn/concurrency-interview/reader-writer-pattern)
+
 ## ✅ [How to Answer a LLD Interview Problem](https://blog.algomaster.io/p/how-to-answer-a-lld-interview-problem)
 <img src="images/interview-template.png" width="350" height="250">
 
@@ -98,6 +118,18 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Online Stock Brokerage System](problems/online-stock-brokerage-system.md)
 - [Design Music Streaming Service like Spotify](problems/music-streaming-service.md)
 - [Design Online Food Delivery Service like Swiggy](problems/food-delivery-service.md)
+
+## ⏱️ Concurrency and Multi-threading Problems
+
+- [Print FooBar Alternately](https://algomaster.io/learn/concurrency-interview/print-foobar-alternately)
+- [Print Zero Even Odd](https://algomaster.io/learn/concurrency-interview/print-zero-even-odd)
+- [Fizz Buzz Multithreaded](https://algomaster.io/learn/concurrency-interview/fizz-buzz-multithreaded)
+- [Building H2O Molecule](https://algomaster.io/learn/concurrency-interview/building-h2o)
+- [Design Thread-Safe Cache with TTL](https://algomaster.io/learn/concurrency-interview/design-thread-safe-cache-with-ttl)
+- [Design Concurrent HashMap](https://algomaster.io/learn/concurrency-interview/design-concurrent-hashmap)
+- [Design Thread-Safe Blocking Queue](https://algomaster.io/learn/concurrency-interview/design-thread-safe-blocking-queue)
+- [Design Concurrent Bloom Filter](https://algomaster.io/learn/concurrency-interview/design-concurrent-bloom-filter)
+- [Multi-threaded Merge Sort](https://algomaster.io/learn/concurrency-interview/multi-threaded-merge-sort)
 
 ## 📇 Courses
 - [Master LLD Interviews - AlgoMaster.io](https://algomaster.io/learn/lld/course-introduction)
