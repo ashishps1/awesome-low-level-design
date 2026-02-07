@@ -9,6 +9,10 @@ authors = ["Your Name <your.email@example.com>"]
 # that are located outside the standard 'src/bin' directory.
 
 [[bin]]
+name = "classesAndobjects"
+path = "classesAndobjects/main.rs"
+
+[[bin]]
 name = "abstraction"
 path = "abstraction/main.rs"
 
