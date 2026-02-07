@@ -1,0 +1,18 @@
+[package]
+name = "rust_oop_concepts"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+
+# BINARY TARGETS
+# According to Cargo docs, we can explicitly define binaries 
+# that are located outside the standard 'src/bin' directory.
+
+[[bin]]
+name = "abstraction"
+path = "abstraction/main.rs"
+
+# Future entries will look like this:
+# [[bin]]
+# name = "encapsulation"
+# path = "encapsulation/main.rs"
