@@ -13,6 +13,10 @@ name = "classesAndobjects"
 path = "classesAndobjects/main.rs"
 
 [[bin]]
+name = "interfaces"
+path = "interfaces/main.rs"
+
+[[bin]]
 name = "abstraction"
 path = "abstraction/main.rs"
 
