@@ -20,7 +20,7 @@ path = "interfaces/main.rs"
 name = "abstraction"
 path = "abstraction/main.rs"
 
-# Future entries will look like this:
-# [[bin]]
-# name = "encapsulation"
-# path = "encapsulation/main.rs"
+
+[[bin]]
+name = "inheritance"
+path = "inheritance/main.rs"
