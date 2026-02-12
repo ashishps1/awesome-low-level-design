@@ -6,4 +6,4 @@ class Dice:
         self.max_value = max_value
 
     def roll(self) -> int:
-        return int(random.random() * (self.max_value - self.min_value + 1) + self.min_value)
+        return random.randint(self.min_value,self.max_value)
