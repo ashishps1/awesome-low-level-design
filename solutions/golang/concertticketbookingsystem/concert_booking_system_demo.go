@@ -31,6 +31,7 @@ func Run() {
 	for _, concert := range searchResults {
 		fmt.Printf("Concert: %s at %s\n", concert.Artist, concert.Venue)
 	}
+	bookingSystem.StartLockReleaser(concert1.ID)
 
 	// Book tickets
 	selectedSeats1 := concert1.Seats[:3] // Select first 3 seats
