@@ -13,14 +13,13 @@ private:
     std::string name;
     LogLevel minLevel;
     std::vector<std::shared_ptr<LogAppender>> appenders;
-
+    void log(LogLevel level, const std::string& message);
 public:
     Logger(const std::string& name, LogLevel minLevel = LogLevel::INFO);
     
     void addAppender(std::shared_ptr<LogAppender> appender);
     void setMinLevel(LogLevel level);
     
-    void log(LogLevel level, const std::string& message);
     void trace(const std::string& message);
     void debug(const std::string& message);
     void info(const std::string& message);
