@@ -28,7 +28,7 @@ To understand Aggregation, you must understand Rust's memory model:
 
 ## **2. The "Lifetime" Problem (`'a`)**
 
-This is the most unique part of Rust. If a struct holds a reference, the compiler panics:
+This is the most unique part of Rust. If a struct holds a reference, the borrow checker will reject invalid lifetimes at compile time:
 > *"What if the University holds a pointer to a Professor, but the Professor has already been deleted? The University would be pointing to garbage memory!"*
 
 To prevent this, we use **Lifetime Annotations (`'a`)**.
@@ -139,5 +139,6 @@ struct Company {
 | **Borrow Checker** | The part of the Rust compiler that enforces Aggregation rules. It ensures the "Child" lives longer than the "Parent". |
 | **Dangling Pointer** | A pointer that points to invalid memory. Rust's Aggregation rules exist specifically to prevent this. |
 | **`Vec<&T>`** | A Vector that stores *addresses* of objects, not the objects themselves. |
+
 
 

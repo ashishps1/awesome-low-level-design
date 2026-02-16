@@ -143,3 +143,4 @@ Since you are moving from Java to Rust, here are the specific new terms introduc
 | **VTable** | Virtual Method Table | A hidden table of function pointers used to look up methods at runtime for dynamic dispatch. |
 
 ---
+

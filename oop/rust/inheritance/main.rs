@@ -132,3 +132,4 @@ fn main() {
     let user = User::new(101, "Alice");
     user.save_user();
 }
+

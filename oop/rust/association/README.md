@@ -57,7 +57,7 @@ To fix this, the Child (Book) must hold a **Weak Reference** to the Parent (Libr
 ## **3. Implementation Details (RefCell)**
 
 In Association, we often need to modify an object (like adding a student to a teacher) even though it is shared. Rust doesn't allow mutating `Rc` data directly.
-We use **`RefCell<T>`** to trick the compiler. It checks borrowing rules at **runtime** instead of compile time, allowing us to mutate data inside an immutable reference.
+We use **`RefCell<T>`** for interior mutability. It enforces borrowing rules at **runtime**, which allows mutation through shared references but can panic if you violate the rules.
 
 ### **The Pattern for Bidirectional Association**
 
@@ -74,3 +74,4 @@ We use **`RefCell<T>`** to trick the compiler. It checks borrowing rules at **ru
 | **`Weak<T>`** | Weak Reference | A pointer that does *not* increase the reference count. Used to break infinite loops (cycles) in bidirectional relationships. |
 | **`RefCell<T>`** | N/A (Magic) | "Interior Mutability". Allows you to modify data even if you only have an immutable reference to it. Essential for linked data structures. |
 | **`upgrade()`** | Checking for null | The method used to convert a `Weak` pointer into a real `Rc`. It returns `None` if the parent object has already been destroyed. |
+

@@ -256,3 +256,4 @@ impl Dog {
 | **Overriding** | `@Override` | `impl Trait` block |
 | **Philosophy** | **Is-a** relationship | **Has-a** & **Can-do** relationship |
 
+

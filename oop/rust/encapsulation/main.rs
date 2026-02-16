@@ -53,7 +53,7 @@ mod hr {
         }
 
         // Getter (Rust style: no 'get_' prefix)
-        pub fn name(&self) -> &String {
+        pub fn name(&self) -> &str {
             &self.name
         }
 

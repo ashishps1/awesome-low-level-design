@@ -139,3 +139,4 @@ fn main() {
     process(&cc, 100.50);
     process(&pp, 200.75);
 }
+

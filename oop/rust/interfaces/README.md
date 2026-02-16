@@ -282,3 +282,4 @@ Since you are moving from Java to Rust, here are the specific new terms introduc
 | **`&self`** | `this` | In Java, `this` is hidden/implicit. In Rust, you must **explicitly** pass `&self` as the first argument to any method that works on an instance. If you forget `&self`, Rust thinks it is a static method. |
 | **Associated Function** | `static` method | A function defined inside a trait/struct that does **not** have `&self`. It is called using `::` (e.g., `Calculator::add`) instead of `.` (dot). |
 | **`dyn Trait`** | Polymorphism | Short for "Dynamic Dispatch". It tells the compiler: "I don't know the exact size of this object at compile time, but I know it implements this Trait." Used when storing different types in the same list (like `Vec<&dyn Payment>`). |
+

@@ -14,8 +14,8 @@ categories = ["development-tools", "algorithms"]
 # that are located outside the standard 'src/bin' directory.
 
 [[bin]]
-name = "classesAndobjects"
-path = "classesAndobjects/main.rs"
+name = "classes_and_objects"
+path = "classes_and_objects/main.rs"
 
 [[bin]]
 name = "interfaces"

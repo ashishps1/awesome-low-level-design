@@ -127,10 +127,11 @@ In languages like C++, allowing a class to inherit from two parents leads to con
 
 ### 3. Better Memory Control
 * **Classes** (in Java/Python) are usually references (pointers) to memory on the Heap. This is slower and causes "Garbage Collection" pauses.
-* **Structs** (in Rust) are stored on the Stack by default. They are exactly the size of their data—no overhead, no hidden pointers. This makes Rust significantly faster.
+* **Structs** in Rust are values; they can live on the stack or heap depending on how you store them (`Box`, `Rc`, etc.). Some fields (like `String`) include heap pointers, so layout depends on the data you put inside.
 
 ### Summary
 Rust replaces **"Is-A"** relationships (Inheritance) with **"Has-A"** and **"Can-Do"** relationships (Composition and Traits).
 
 * **Bad (OOP):** A `Car` **is a** `Vehicle`. (Forces rigid hierarchy)
 * **Good (Rust):** A `Car` **has** `Engine` data (Struct) and **can** `drive` (Trait).
+

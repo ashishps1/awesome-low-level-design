@@ -96,3 +96,4 @@ The most important detail in Rust is **Lifecycle**.
 | **Delegate** | A pattern where the wrapper struct (Car) calls a method on the inner struct (Engine). `car.start()` simply calls `self.engine.start()`. |
 
 
+
