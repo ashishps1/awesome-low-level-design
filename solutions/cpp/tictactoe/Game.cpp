@@ -108,7 +108,7 @@ std::pair<int, int> Game::findBestMove() const {
                 Board tempBoard = board;  // Create a copy
                 tempBoard.makeMove(i, j, player2->getSymbol());
                 
-                int score = minimax(false, 0);
+                int score = minimax(tempBoard, false, 0);  //pass the temporary boardState
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = {i, j};
@@ -120,20 +120,20 @@ std::pair<int, int> Game::findBestMove() const {
     return bestMove;
 }
 
-int Game::minimax(bool isMax, int depth) const {
-    if (board.checkWin(player2->getSymbol())) return 10 - depth;
-    if (board.checkWin(player1->getSymbol())) return depth - 10;
-    if (board.isFull()) return 0;
+int Game::minimax(Board boardState, bool isMax, int depth) const {
+    if (boardState.checkWin(player2->getSymbol())) return 10 - depth;
+    if (boardState.checkWin(player1->getSymbol())) return depth - 10;
+    if (boardState.isFull()) return 0;
     
     int bestScore = isMax ? std::numeric_limits<int>::min() : std::numeric_limits<int>::max();
     
-    for (int i = 0; i < board.getSize(); i++) {
-        for (int j = 0; j < board.getSize(); j++) {
-            if (board.isEmpty(i, j)) {
-                Board tempBoard = board;  // Create a copy
+    for (int i = 0; i < boardState.getSize(); i++) {
+        for (int j = 0; j < boardState.getSize(); j++) {
+            if (boardState.isEmpty(i, j)) {
+                Board tempBoard = boardState;  // Create a copy
                 tempBoard.makeMove(i, j, isMax ? player2->getSymbol() : player1->getSymbol());
                 
-                int score = minimax(!isMax, depth + 1);
+                int score = minimax(tempBoard, !isMax, depth + 1);    // pass the temporary boardState recursively
                 bestScore = isMax ? std::max(score, bestScore) : std::min(score, bestScore);
             }
         }
