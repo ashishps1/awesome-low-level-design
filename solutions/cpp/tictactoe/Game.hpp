@@ -27,7 +27,7 @@ public:
 private:
     void computerMove();
     std::pair<int, int> findBestMove() const;
-    int minimax(bool isMax, int depth) const;
+    int minimax(Board boardState, bool isMax, int depth) const;  // pass the board state
 };
 
 #endif 
