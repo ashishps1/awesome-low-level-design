@@ -2,7 +2,7 @@
 
 ## Problem Statement
 
-Design and implement an Elevator System that can handle multiple requests, move between floors, and manage direction and vendingMachineState efficiently.
+Design and implement an Elevator System that can handle multiple requests, move between floors, and manage direction and elevatorState efficiently.
 
 ---
 
@@ -19,7 +19,7 @@ Design and implement an Elevator System that can handle multiple requests, move 
 
 ## Core Entities
 
-- **Elevator:** Represents the elevator, manages its vendingMachineState, direction, and request queue.
+- **Elevator:** Represents the elevator, manages its elevatorState, direction, and request queue.
 - **ElevatorController:** Handles incoming requests and delegates them to the elevator.
 - **Request:** Represents a request to move to a specific floor in a given direction.
 - **Direction (enum):** UP, DOWN, IDLE.
