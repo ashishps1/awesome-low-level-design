@@ -2,12 +2,6 @@
 name = "rust_oop_concepts"
 version = "0.1.0"
 edition = "2021"
-authors = ["Anil Kumar Singh <anilkumarsingh5698@gmail.com>"]
-description = "A collection of Low-Level Design (LLD) and Object-Oriented Programming (OOP) examples implemented in Rust."
-repository = "https://github.com/AnilKumarSingh9856/awesome-low-level-design"
-license = "MIT"
-keywords = ["rust", "oop", "design-patterns", "lld"]
-categories = ["development-tools", "algorithms"]
 
 # BINARY TARGETS
 # According to Cargo docs, we can explicitly define binaries 
