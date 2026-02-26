@@ -1,0 +1,45 @@
+[package]
+name = "rust_oop_concepts"
+version = "0.1.0"
+edition = "2021"
+
+# BINARY TARGETS
+# According to Cargo docs, we can explicitly define binaries 
+# that are located outside the standard 'src/bin' directory.
+
+[[bin]]
+name = "classes_and_objects"
+path = "classes_and_objects/main.rs"
+
+[[bin]]
+name = "interfaces"
+path = "interfaces/main.rs"
+
+[[bin]]
+name = "abstraction"
+path = "abstraction/main.rs"
+
+
+[[bin]]
+name = "inheritance"
+path = "inheritance/main.rs"
+
+[[bin]]
+name = "polymorphism"
+path = "polymorphism/main.rs"
+
+[[bin]]
+name = "encapsulation"
+path = "encapsulation/main.rs"
+
+[[bin]]
+name = "aggregation"
+path = "aggregation/main.rs"
+
+[[bin]]
+name = "composition"
+path = "composition/main.rs"
+
+[[bin]]
+name = "association"
+path = "association/main.rs"
