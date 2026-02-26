@@ -98,6 +98,47 @@ public class FlyingCar implements Flyable, Drivable {
 }
 ```
 
+
+
+## **Case 1: Inheritance with 2 interfaces have the same ABSTRACT METHODS**
+
+interface A {
+    void show();
+}
+
+interface B {
+    void show();
+}
+
+class Test implements A, B {
+    public void show() {
+        System.out.println("Implemented once");
+    }
+}
+
+
+## **Case 2: Inheritance with 2 interfaces have the same DEFAULT METHODS -- [Diamond Problem (Interface Version)]**
+
+interface A {
+    void show();
+}
+
+interface B {
+    void show();
+}
+
+class Test implements A, B {
+    public void show() {
+        A.super.show();
+        B.super.show();
+    }
+}
+
+// Diamond Problem (Interface Version) solved.
+
+
+
+
 ### **Usage**
 ```java
 public class Main {
