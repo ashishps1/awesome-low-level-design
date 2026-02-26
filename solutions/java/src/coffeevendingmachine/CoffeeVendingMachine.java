@@ -63,4 +63,8 @@ public class CoffeeVendingMachine {
         this.selectedCoffee = null;
         this.moneyInserted = 0;
     }
+
+    public Map<String, Integer> showIngredientsMap() {
+        return ingredientStore.getAllIngredients();
+    }
 }
