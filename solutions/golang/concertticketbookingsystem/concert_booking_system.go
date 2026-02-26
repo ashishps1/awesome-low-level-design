@@ -65,9 +65,9 @@ func (bs *ConcertTicketBookingSystem) BookTickets(user *User, concert *Concert, 
 		}
 	}
 
-	// Book seats
+	// Hold seats for the user
 	for _, seat := range seats {
-		if err := seat.Book(); err != nil {
+		if err := seat.Hold(); err != nil {
 			// Rollback previous bookings
 			for _, s := range seats {
 				if s == seat {
@@ -77,6 +77,7 @@ func (bs *ConcertTicketBookingSystem) BookTickets(user *User, concert *Concert, 
 			}
 			return nil, err
 		}
+		concert.LockManager.AddSeatLock(seat, 5*time.Minute)
 	}
 
 	// Create booking
@@ -87,7 +88,15 @@ func (bs *ConcertTicketBookingSystem) BookTickets(user *User, concert *Concert, 
 	bs.processPayment(booking)
 
 	// Confirm booking
-	booking.ConfirmBooking()
+	err := booking.ConfirmBooking()
+	if err != nil {
+		// Rollback seat bookings to reserved, ensuring failures do not free seats, so they can be retried
+		for _, seat := range seats {
+			seat.status = StatusReserved
+		}
+		return nil, err
+	}
+
 	bs.bookings[bookingID] = booking
 
 	fmt.Printf("Booking %s - %d seats booked\n", booking.ID, len(booking.Seats))
@@ -107,4 +116,16 @@ func (bs *ConcertTicketBookingSystem) CancelBooking(bookingID string) {
 
 func (bs *ConcertTicketBookingSystem) processPayment(booking *Booking) {
 	// Mock payment processing
+}
+
+func (bs *ConcertTicketBookingSystem) StartLockReleaser(concertId string) {
+	go func() {
+		ticker := time.NewTicker(time.Second)
+		for range ticker.C {
+			concert := bs.concerts[concertId]
+			if concert != nil {
+				concert.LockManager.ReleaseExpiredLocks()
+			}
+		}
+	}()
 }
