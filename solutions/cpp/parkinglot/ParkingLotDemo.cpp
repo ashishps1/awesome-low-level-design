@@ -3,7 +3,8 @@
 
 int main() {
     // Create parking lot with different types of spots
-    ParkingLot parkingLot(2, 3, 2);  // 2 compact, 3 regular, 2 large spots
+    FeeStrategy* feeStrategy = new FeeVehicleBased(); // create fee strategy, you want to apply for fee calculation
+    ParkingLot parkingLot(2, 3, 2, feeStrategy);  // 2 compact, 3 regular, 2 large spots , fee strategy
     
     std::cout << "Initial parking lot status:" << std::endl;
     parkingLot.displayInfo();

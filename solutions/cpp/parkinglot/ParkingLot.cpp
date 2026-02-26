@@ -1,8 +1,9 @@
 #include "ParkingLot.hpp"
 #include <iostream>
-
-ParkingLot::ParkingLot(int numCompact, int numRegular, int numLarge) 
-    : capacity(numCompact + numRegular + numLarge), availableSpots(capacity) {
+#include <chrono>
+#include <thread>
+ParkingLot::ParkingLot(int numCompact, int numRegular, int numLarge, FeeStrategy* feeStrategy) 
+    : capacity(numCompact + numRegular + numLarge), availableSpots(capacity), feeStrategy(feeStrategy) {
     
     int spotNumber = 1;
     
@@ -31,6 +32,12 @@ ParkingLot::~ParkingLot() {
 int ParkingLot::getCapacity() const { return capacity; }
 int ParkingLot::getAvailableSpots() const { return availableSpots; }
 
+void ParkingLot:: displayFee(ParkingTicket* ticket) {
+    // sleep the main thread to compute some fee based on duration
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::cout << "Amount Payable(Rs): " << feeStrategy->calculateFee(ticket) << std::endl;
+}
+
 bool ParkingLot::parkVehicle(Vehicle* vehicle) {
     if (!vehicle) return false;
     
@@ -44,7 +51,9 @@ bool ParkingLot::parkVehicle(Vehicle* vehicle) {
     
     if (spot->parkVehicle(vehicle)) {
         occupiedSpots[vehicle->getLicensePlate()] = spot;
+        activeTickets[spot] = new ParkingTicket(spot);
         availableSpots--;
+        activeTickets[spot]->printTicket();
         return true;
     }
     return false;
@@ -60,6 +69,9 @@ Vehicle* ParkingLot::removeVehicle(const std::string& licensePlate) {
         occupiedSpots.erase(it);
         availableSpots++;
     }
+
+    displayFee(activeTickets[spot]); // use active ticket for that spot
+
     return vehicle;
 }
 
