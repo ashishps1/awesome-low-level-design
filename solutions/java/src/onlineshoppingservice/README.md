@@ -36,7 +36,7 @@ Design and implement an Online Shopping Service that allows users to browse prod
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/OnlineShoppingService-class-diagram.png)
+![](../../../../class-diagrams/OnlineShoppingService-class-diagram.png)
 
 ### 1. OnlineShoppingService
 - **Fields:** List<User> users, List<Product> products, List<Order> orders, PaymentProcessor paymentProcessor

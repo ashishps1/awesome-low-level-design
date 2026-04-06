@@ -79,7 +79,7 @@ Design and implement a Hotel Management System that manages hotel rooms, reserva
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/HotelManagementSystem-class-diagram.png)
+![](../../../../class-diagrams/HotelManagementSystem-class-diagram.png)
 
 ---
 

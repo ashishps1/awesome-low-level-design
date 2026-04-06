@@ -99,7 +99,7 @@ Design and implement an Online Stock Brokerage System that allows users to buy a
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/onlineStockBrokerageSystem-class-diagram.png)
+![](../../../../class-diagrams/onlineStockBrokerageSystem-class-diagram.png)
 ---
 
 ## Example Usage

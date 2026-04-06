@@ -75,7 +75,7 @@ Design and implement a Movie Ticket Booking System that allows users to book mov
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/MovieTicketBookingSystem-class-diagram.png)
+![](../../../../class-diagrams/MovieTicketBookingSystem-class-diagram.png)
 ---
 
 ## Example Usage

@@ -39,7 +39,7 @@ Design and implement a Restaurant Management System that allows customers to mak
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/RestaurantManagementSystem-class-diagram.png)
+![](../../../../class-diagrams/RestaurantManagementSystem-class-diagram.png)
 
 ### 1. RestaurantManagementSystem
 - **Fields:** List<Table> tables, List<Reservation> reservations, List<MenuItem> menu, List<Order> orders, List<Bill> bills, List<Staff> staff, PaymentProcessor paymentProcessor

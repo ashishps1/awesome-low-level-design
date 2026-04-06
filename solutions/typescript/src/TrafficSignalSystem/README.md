@@ -33,7 +33,7 @@ Design and implement a Traffic Signal System to manage the traffic lights at an 
 
 ### UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/trafficsignalsystem-class-diagram.png)
+![](../../../../class-diagrams/trafficsignalsystem-class-diagram.png)
 
 ### 1. Direction
 - Enum: NORTH, SOUTH, EAST, WEST

@@ -30,7 +30,7 @@ Design and implement a Voting System that allows voters to cast votes for candid
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/votingsystem-class-diagram.png)
+![](../../../../class-diagrams/votingsystem-class-diagram.png)
 
 ### 1. VotingSystem
 

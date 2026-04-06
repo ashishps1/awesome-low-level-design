@@ -34,7 +34,7 @@ Design and implement a Food Delivery Service system that allows customers to pla
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/fooddeliveryservice-class-diagram.png)
+![](../../../../class-diagrams/fooddeliveryservice-class-diagram.png)
 
 ### 1. FoodDeliveryService
 - **Fields:** List<Customer> customers, List<Restaurant> restaurants, List<DeliveryAgent> agents, List<Order> orders

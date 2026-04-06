@@ -37,7 +37,7 @@ Design and implement a Ride Sharing Service that allows riders to request rides,
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/RideSharingService-class-diagram.png)
+![](../../../../class-diagrams/RideSharingService-class-diagram.png)
 
 ### 1. RideSharingService
 - **Fields:** List<Rider> riders, List<Driver> drivers, List<Trip> trips, PaymentProcessor paymentProcessor

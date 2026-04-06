@@ -21,7 +21,7 @@ Design and implement a Course Registration System that allows students to regist
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/CourseRegistrationSystem-class-diagram.png)
+![](../../../../class-diagrams/CourseRegistrationSystem-class-diagram.png)
 
 - **CourseRegistrationSystem:** Main class that manages students, courses, and registrations.
 - **Student:** Represents a student with a unique ID and name.

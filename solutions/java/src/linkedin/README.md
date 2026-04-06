@@ -38,7 +38,7 @@ Design and implement a LinkedIn-like professional networking platform that allow
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/linkedin-class-diagram.png)
+![](../../../../class-diagrams/linkedin-class-diagram.png)
 
 ### 1. LinkedInService
 - **Fields:** List<User> users, List<JobPosting> jobPostings, List<Connection> connections, List<Notification> notifications

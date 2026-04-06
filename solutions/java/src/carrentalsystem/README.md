@@ -12,7 +12,7 @@
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/carrentalsystem-class-diagram.png)
+![](../../../../class-diagrams/carrentalsystem-class-diagram.png)
 
 ## Classes, Interfaces and Enumerations
 1. The **Car** class represents a car in the rental system, with properties such as make, model, year, license plate number, rental price per day, and availability status.

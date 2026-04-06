@@ -32,7 +32,7 @@ Design and implement a Library Management System that allows members to borrow a
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/LibraryManagementSystem-class-diagram.png)
+![](../../../../class-diagrams/LibraryManagementSystem-class-diagram.png)
 
 ### 1. LibraryManagementSystem
 - **Fields:** List<Book> books, List<Member> members, List<Loan> loans, Catalog catalog
