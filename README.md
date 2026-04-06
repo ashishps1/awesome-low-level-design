@@ -86,7 +86,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Design Parking Lot](problems/parking-lot.md) 🟢
 - [Design Stack Overflow](problems/stack-overflow.md) 🟢
 - [Design a Vending Machine](problems/vending-machine.md) 🟢
-- [Design Logging Framework](problems/logging-framework.md)
+- [Design Logging Framework](problems/logging-framework.md) 🟢
 - [Design Traffic Signal Control System](problems/traffic-signal.md)
 - [Design Coffee Vending Machine](problems/coffee-vending-machine.md)
 - [Design a Task Management System](problems/task-management-system.md)
