@@ -18,6 +18,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Inheritance](https://algomaster.io/learn/lld/inheritance)
 - [Polymorphism](https://algomaster.io/learn/lld/polymorphism)
 
+- [Gitstar](https://gitstar.ai?utm_medium=github_readme&utm_source=awesome_list&utm_campaign=ashishps1_awesome-low-level-design) - Social feed for GitHub. Follow devs you admire, see what they star, discover repos worth learning from.
 ## 🔗 Class Relationships
 - [Association](https://algomaster.io/learn/lld/association)
 - [Aggregation](https://algomaster.io/learn/lld/aggregation)
