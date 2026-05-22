@@ -138,6 +138,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 ## 📇 Courses
 - [Master LLD Interviews - AlgoMaster.io](https://algomaster.io/learn/lld/course-introduction)
 - [Master Concurrency Interviews - AlgoMaster.io](https://algomaster.io/learn/concurrency-interview)
+- [TutorialSearch](https://tutorialsearch.io/) - Free cross-platform search engine indexing 50,000+ tutorials from Udemy, Skillshare, Pluralsight, and other major learning platforms across 45+ categories.
 
 ## 📚 Books
 - [Head First Design Patterns](https://www.amazon.in/dp/9385889753)
