@@ -8,7 +8,7 @@ class ParkingLot {
   name : string;
   protected carSpotMap: Record<string,ParkingSpot> 
 
-  constructor(name: string){
+  private constructor(name: string){
     this.name = name
     this.floors = []
     this.carSpotMap = {}
@@ -26,6 +26,7 @@ class ParkingLot {
       const availableSpot = floor.findAvailableSpot(vehicle)
       if(availableSpot){
         availableSpot.parkCar(vehicle)
+        this.carSpotMap[vehicle.getNumber()] = availableSpot
         console.log(`${vehicle.getNumber()} parked on ${availableSpot.spotName}`)
         return 
       }
