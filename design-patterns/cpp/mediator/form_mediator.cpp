@@ -1,4 +1,7 @@
 #include "form_mediator.h"
+#include "text_field.h"
+#include "button.h"
+#include "label.h"
 #include <iostream>
 
 void FormMediator::setUsernameField(TextField* field) {
