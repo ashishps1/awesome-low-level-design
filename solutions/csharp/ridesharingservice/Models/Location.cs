@@ -1,14 +1,5 @@
-class Location
+class Location(double latitude, double longitude)
 {
-    private readonly double latitude;
-    private readonly double longitude;
-
-    public Location(double lat, double lng)
-    {
-        latitude = lat;
-        longitude = lng;
-    }
-
     public double DistanceTo(Location other)
     {
         double dx = latitude - other.latitude;
