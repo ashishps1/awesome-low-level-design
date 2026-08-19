@@ -15,6 +15,7 @@ import hotelmanagementsystem.specification.RoomTypeSpecification;
 import hotelmanagementsystem.specification.Specification;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class HotelManagerFacade {
             Booking booking = bookingService.createBooking(guest, room, start, end);
 
             // 3. Use Decorator pattern to calculate total cost with amenities
-            Bookable bookable = new RoomBooking(room);
+            Bookable bookable = new RoomBooking(room, (int) ChronoUnit.DAYS.between(start, end));
             for (String amenity : amenities) {
                 if ("breakfast".equalsIgnoreCase(amenity)) {
                     bookable = new BreakfastDecorator(bookable);
