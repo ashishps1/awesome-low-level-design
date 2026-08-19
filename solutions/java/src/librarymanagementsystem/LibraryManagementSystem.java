@@ -20,7 +20,6 @@ public class LibraryManagementSystem {
 
     private LibraryManagementSystem() {}
     public static LibraryManagementSystem getInstance() { return INSTANCE; }
-
     // --- Item Management ---
     public List<BookCopy> addItem(ItemType type, String id, String title, String author, int numCopies) {
         List<BookCopy> bookCopies = new ArrayList<>();
@@ -29,20 +28,18 @@ public class LibraryManagementSystem {
         for (int i = 0; i < numCopies; i++) {
             String copyId = id + "-c" + (i + 1);
             BookCopy copy = new BookCopy(copyId, item);
-            copies.put(copyId, new BookCopy(copyId, item));
+            copies.put(copyId, copy);
             bookCopies.add(copy);
         }
         System.out.println("Added " + numCopies + " copies of '" + title + "'");
         return bookCopies;
     }
-
     // --- User Management ---
     public Member addMember(String id, String name) {
         Member member = new Member(id, name);
         members.put(id, member);
         return member;
     }
-
     // --- Core Actions ---
     public void checkout(String memberId, String copyId) {
         Member member = members.get(memberId);
