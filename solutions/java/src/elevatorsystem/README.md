@@ -37,7 +37,7 @@ Design and implement an Elevator System that can handle multiple requests, move 
 - **Methods:** requestElevator(int floor, Direction direction), step(), etc.
 
 ### 3. Request
-- **Fields:** int floor, Direction direction
+- **Fields:** int sourceFloor, int destinationFloor
 
 ### 4. Direction (enum)
 - Values: UP, DOWN, IDLE
