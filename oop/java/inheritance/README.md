@@ -2,7 +2,7 @@
 
 ## Introduction
 
-**Inheritance** is one of the core principles of Object-Oriented Programming (OOP). It allows a class (subclass or child class) to acquire the properties and behaviors of another class (superclass or parent class). This promotes **code reuse**, **scalability**, and **maintainability**.
+**Inheritance** is one of the core principles of Object-Oriented Programming (OOP). It allows a class (subclass or child class or derived class) to acquire the properties and behaviors of another class (superclass or parent class or base class). This promotes **code reuse**, **scalability**, and **maintainability**.
 
 ## **What is Inheritance?**
 
