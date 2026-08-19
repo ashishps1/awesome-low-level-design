@@ -7,7 +7,9 @@
 
 This repository contains resources to learn Low Level Design (LLD) / Object Oriented Design (OOD) and prepare for interviews. It covers OOP fundamentals, design patterns, UML, concurrency and commonly asked interview questions.
 
-👉 For a better and more comprehensive experience, checkout the [LLD page at AlgoMaster.io](https://algomaster.io/learn/lld)
+## 🏁 Start Here
+- [How to Learn LLD](https://algomaster.io/learn/lld/how-to-learn-lld)
+- [15 Must-Know OOP Concepts](https://algomaster.io/learn/lld/15-must-know-oop-concepts)
 
 ## 🧱 OOP Fundamentals
 - [Classes and Objects](https://algomaster.io/learn/lld/classes-and-objects)
