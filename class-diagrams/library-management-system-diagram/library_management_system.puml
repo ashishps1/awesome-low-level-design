@@ -1,0 +1,213 @@
+@startuml Library Management System Class Diagram
+
+!define SINGLETON_STYLE class<<Singleton>>
+
+title Library Management System - Class Diagram
+
+' ============================================
+' Enumerations
+' ============================================
+enum ItemType {
+  BOOK
+  MAGAZINE
+}
+
+' ============================================
+' Interfaces
+' ============================================
+interface ItemState {
+  + checkout(bookCopy: BookCopy, member: Member): void
+  + returnItem(bookCopy: BookCopy): void
+  + placeHold(bookCopy: BookCopy, member: Member): void
+}
+
+interface SearchStrategy {
+  + search(query: String, items: List<LibraryItem>): List<LibraryItem>
+}
+
+' ============================================
+' Abstract Classes
+' ============================================
+abstract class LibraryItem {
+  - id: String
+  - title: String
+  - copies: List<BookCopy>
+  - observers: List<Member>
+  + addCopy(bookCopy: BookCopy): void
+  + addObserver(member: Member): void
+  + removeObserver(member: Member): void
+  + notifyObservers(): void
+  + getAvailableCopy(): BookCopy
+  + getAvailableCopyCount(): int
+  + hasObservers(): boolean
+  + isObserver(member: Member): boolean
+  + getAuthorOrPublisher(): String {abstract}
+  + getCopies(): List<BookCopy>
+  + getId(): String
+  + getTitle(): String
+}
+
+' ============================================
+' Concrete Classes - Item Types
+' ============================================
+class Book {
+  - author: String
+  + getAuthorOrPublisher(): String
+}
+
+class Magazine {
+  - publisher: String
+  + getAuthorOrPublisher(): String
+}
+
+' ============================================
+' State Pattern - Concrete States
+' ============================================
+class AvailableState {
+  + checkout(bookCopy: BookCopy, member: Member): void
+  + returnItem(bookCopy: BookCopy): void
+  + placeHold(bookCopy: BookCopy, member: Member): void
+}
+
+class CheckedOutState {
+  + checkout(bookCopy: BookCopy, member: Member): void
+  + returnItem(bookCopy: BookCopy): void
+  + placeHold(bookCopy: BookCopy, member: Member): void
+}
+
+class OnHoldState {
+  + checkout(bookCopy: BookCopy, member: Member): void
+  + returnItem(bookCopy: BookCopy): void
+  + placeHold(bookCopy: BookCopy, member: Member): void
+}
+
+' ============================================
+' Strategy Pattern - Search Strategies
+' ============================================
+class SearchByTitleStrategy {
+  + search(query: String, items: List<LibraryItem>): List<LibraryItem>
+}
+
+class SearchByAuthorStrategy {
+  + search(query: String, items: List<LibraryItem>): List<LibraryItem>
+}
+
+' ============================================
+' Core Classes
+' ============================================
+SINGLETON_STYLE LibraryManagementSystem {
+  - catalog: Map<String, LibraryItem>
+  - members: Map<String, Member>
+  - copies: Map<String, BookCopy>
+  - {static} _instance: LibraryManagementSystem
+  + {static} getInstance(): LibraryManagementSystem
+  + addItem(itemType: ItemType, itemId: String, title: String, author: String, numCopies: int): List<BookCopy>
+  + addMember(memberId: String, name: String): Member
+  + checkout(memberId: String, copyId: String): void
+  + returnItem(copyId: String): void
+  + placeHold(memberId: String, itemId: String): void
+  + search(query: String, strategy: SearchStrategy): List<LibraryItem>
+  + printCatalog(): void
+}
+
+class BookCopy {
+  - id: String
+  - item: LibraryItem
+  - currentState: ItemState
+  + checkout(member: Member): void
+  + returnItem(): void
+  + placeHold(member: Member): void
+  + setState(state: ItemState): void
+  + isAvailable(): boolean
+  + getId(): String
+  + getItem(): LibraryItem
+}
+
+class ItemFactory {
+  + {static} createItem(itemType: ItemType, itemId: String, title: String, author: String): LibraryItem
+}
+
+class Member {
+  - id: String
+  - name: String
+  - loans: List<Loan>
+  + update(item: LibraryItem): void
+  + addLoan(loan: Loan): void
+  + removeLoan(loan: Loan): void
+  + getId(): String
+  + getName(): String
+  + getLoans(): List<Loan>
+}
+
+class Loan {
+  - copy: BookCopy
+  - member: Member
+  - checkoutDate: LocalDate
+  + getCopy(): BookCopy
+  + getMember(): Member
+}
+
+SINGLETON_STYLE TransactionService {
+  - activeLoans: Map<String, Loan>
+  - {static} _instance: TransactionService
+  + {static} getInstance(): TransactionService
+  + createLoan(bookCopy: BookCopy, member: Member): void
+  + endLoan(bookCopy: BookCopy): void
+}
+
+' ============================================
+' Demo/Entry Point
+' ============================================
+class LibraryManagementDemo {
+  + {static} main(): void
+}
+
+' ============================================
+' Relationships - Inheritance
+' ============================================
+LibraryItem <|-- Book
+LibraryItem <|-- Magazine
+ItemState <|.. AvailableState
+ItemState <|.. CheckedOutState
+ItemState <|.. OnHoldState
+SearchStrategy <|.. SearchByTitleStrategy
+SearchStrategy <|.. SearchByAuthorStrategy
+
+' ============================================
+' Relationships - Composition
+' ============================================
+LibraryItem *-- BookCopy : copies
+BookCopy *-- ItemState : currentState
+Member *-- Loan : loans
+
+' ============================================
+' Relationships - Association
+' ============================================
+LibraryManagementSystem --> BookCopy : copies
+LibraryManagementSystem --> LibraryItem : catalog
+LibraryManagementSystem --> Member : members
+LibraryManagementSystem ..> ItemFactory : uses
+LibraryManagementSystem ..> SearchStrategy : uses
+LibraryManagementSystem ..> TransactionService : uses
+
+BookCopy --> LibraryItem : item
+LibraryItem --> Member : observers
+Loan --> BookCopy : copy
+Loan --> Member : member
+TransactionService --> Loan : activeLoans
+
+' ============================================
+' Relationships - Dependencies
+' ============================================
+LibraryManagementDemo ..> LibraryManagementSystem : uses
+ItemFactory ..> ItemType : uses
+ItemFactory ..> LibraryItem : creates
+
+' ============================================
+' Observer Pattern Relationship
+' ============================================
+LibraryItem ..> Member : notifies
+Member ..> LibraryItem : observes
+
+@enduml
+

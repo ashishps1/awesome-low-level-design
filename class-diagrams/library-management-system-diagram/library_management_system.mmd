@@ -1,0 +1,186 @@
+%% Library Management System - Class Diagram
+%% Mermaid format for easier viewing
+
+classDiagram
+    direction TB
+    
+    %% Enumerations
+    class ItemType {
+        <<enumeration>>
+        BOOK
+        MAGAZINE
+    }
+    
+    %% Interfaces
+    class ItemState {
+        <<interface>>
+        +checkout(BookCopy, Member) void
+        +returnItem(BookCopy) void
+        +placeHold(BookCopy, Member) void
+    }
+    
+    class SearchStrategy {
+        <<interface>>
+        +search(String, List~LibraryItem~) List~LibraryItem~
+    }
+    
+    %% Abstract Classes
+    class LibraryItem {
+        <<abstract>>
+        -String id
+        -String title
+        -List~BookCopy~ copies
+        -List~Member~ observers
+        +addCopy(BookCopy) void
+        +addObserver(Member) void
+        +removeObserver(Member) void
+        +notifyObservers() void
+        +getAvailableCopy() BookCopy
+        +getAvailableCopyCount() int
+        +hasObservers() boolean
+        +isObserver(Member) boolean
+        +getAuthorOrPublisher()* String
+        +getCopies() List~BookCopy~
+        +getId() String
+        +getTitle() String
+    }
+    
+    %% Concrete Classes - Item Types
+    class Book {
+        -String author
+        +getAuthorOrPublisher() String
+    }
+    
+    class Magazine {
+        -String publisher
+        +getAuthorOrPublisher() String
+    }
+    
+    %% State Pattern Classes
+    class AvailableState {
+        +checkout(BookCopy, Member) void
+        +returnItem(BookCopy) void
+        +placeHold(BookCopy, Member) void
+    }
+    
+    class CheckedOutState {
+        +checkout(BookCopy, Member) void
+        +returnItem(BookCopy) void
+        +placeHold(BookCopy, Member) void
+    }
+    
+    class OnHoldState {
+        +checkout(BookCopy, Member) void
+        +returnItem(BookCopy) void
+        +placeHold(BookCopy, Member) void
+    }
+    
+    %% Strategy Pattern Classes
+    class SearchByTitleStrategy {
+        +search(String, List~LibraryItem~) List~LibraryItem~
+    }
+    
+    class SearchByAuthorStrategy {
+        +search(String, List~LibraryItem~) List~LibraryItem~
+    }
+    
+    %% Core Classes
+    class LibraryManagementSystem {
+        <<Singleton>>
+        -Map~String,LibraryItem~ catalog
+        -Map~String,Member~ members
+        -Map~String,BookCopy~ copies
+        -{static}LibraryManagementSystem _instance
+        +{static}getInstance() LibraryManagementSystem
+        +addItem(ItemType, String, String, String, int) List~BookCopy~
+        +addMember(String, String) Member
+        +checkout(String, String) void
+        +returnItem(String) void
+        +placeHold(String, String) void
+        +search(String, SearchStrategy) List~LibraryItem~
+        +printCatalog() void
+    }
+    
+    class BookCopy {
+        -String id
+        -LibraryItem item
+        -ItemState currentState
+        +checkout(Member) void
+        +returnItem() void
+        +placeHold(Member) void
+        +setState(ItemState) void
+        +isAvailable() boolean
+        +getId() String
+        +getItem() LibraryItem
+    }
+    
+    class ItemFactory {
+        +{static}createItem(ItemType, String, String, String) LibraryItem
+    }
+    
+    class Member {
+        -String id
+        -String name
+        -List~Loan~ loans
+        +update(LibraryItem) void
+        +addLoan(Loan) void
+        +removeLoan(Loan) void
+        +getId() String
+        +getName() String
+        +getLoans() List~Loan~
+    }
+    
+    class Loan {
+        -BookCopy copy
+        -Member member
+        -LocalDate checkoutDate
+        +getCopy() BookCopy
+        +getMember() Member
+    }
+    
+    class TransactionService {
+        <<Singleton>>
+        -Map~String,Loan~ activeLoans
+        -{static}TransactionService _instance
+        +{static}getInstance() TransactionService
+        +createLoan(BookCopy, Member) void
+        +endLoan(BookCopy) void
+    }
+    
+    class LibraryManagementDemo {
+        +{static}main() void
+    }
+    
+    %% Inheritance Relationships
+    LibraryItem <|-- Book : extends
+    LibraryItem <|-- Magazine : extends
+    ItemState <|.. AvailableState : implements
+    ItemState <|.. CheckedOutState : implements
+    ItemState <|.. OnHoldState : implements
+    SearchStrategy <|.. SearchByTitleStrategy : implements
+    SearchStrategy <|.. SearchByAuthorStrategy : implements
+    
+    %% Composition Relationships
+    LibraryItem *-- BookCopy : contains
+    BookCopy *-- ItemState : has
+    Member *-- Loan : has
+    
+    %% Association Relationships
+    LibraryManagementSystem --> BookCopy : manages
+    LibraryManagementSystem --> LibraryItem : manages
+    LibraryManagementSystem --> Member : manages
+    BookCopy --> LibraryItem : references
+    LibraryItem --> Member : observers
+    Loan --> BookCopy : references
+    Loan --> Member : references
+    TransactionService --> Loan : manages
+    
+    %% Dependency Relationships
+    LibraryManagementSystem ..> ItemFactory : uses
+    LibraryManagementSystem ..> SearchStrategy : uses
+    LibraryManagementSystem ..> TransactionService : uses
+    LibraryManagementDemo ..> LibraryManagementSystem : uses
+    ItemFactory ..> ItemType : uses
+    ItemFactory ..> LibraryItem : creates
+    Member ..> LibraryItem : observes
+
