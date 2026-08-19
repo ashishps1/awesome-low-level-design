@@ -1,8 +1,10 @@
+git add design-patterns/cpp/mediator/form_mediator.h design-patterns/cpp/mediator/form_mediator.cpp
 #pragma once
 #include "ui_mediator.h"
-#include "text_field.h"
-#include "button.h"
-#include "label.h"
+
+class TextField;
+class Button;
+class Label;
 
 class FormMediator : public UIMediator {
 public:
