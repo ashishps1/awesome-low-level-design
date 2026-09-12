@@ -6,6 +6,7 @@ import movieticketbookingsystem.strategy.payment.PaymentStrategy;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class BookingManager {
     private final SeatLockManager seatLockManager;
@@ -27,6 +28,7 @@ public class BookingManager {
         // 4. If payment is successful, create the booking
         if (payment.getStatus() == PaymentStatus.SUCCESS) {
             Booking booking = new Booking.BookingBuilder()
+                    .setId(UUID.randomUUID().toString())
                     .setUser(user)
                     .setShow(show)
                     .setSeats(seats)
