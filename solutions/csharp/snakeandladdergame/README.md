@@ -16,6 +16,6 @@
 3. The **Snake** class represents a snake on the board, with properties for the start and end positions.
 4. The **Ladder** class represents a ladder on the board, with properties for the start and end positions.
 5. The **Dice** class represents a dice used in the game, with a method to roll the dice and return a random value between 1 and 6.
-6. The **SnakeAndLadderGame** class represents a single game session. It initializes the game with a board, a list of players, and a dice. The play method handles the game loop, where players take turns rolling the dice and moving their positions on the board. It checks for snakes and ladders and updates the player's position accordingly. The game continues until a player reaches the final position on the board.
-7. The **GameManager** class is a singleton that manages multiple game sessions. It maintains a list of active games and provides a method to start a new game with a list of player names. Each game is started in a separate thread to allow concurrent game sessions.
-8. The **SnakeAndLadderDemo** class demonstrates the usage of the game by creating an instance of the GameManager and starting two separate game sessions with different sets of players.
+6. The **Game** class represents a single game session. It initializes the game with a board, a list of players, and a dice. The play method handles the game loop, where players take turns rolling the dice and moving their positions on the board. It checks for snakes and ladders and updates the player's position accordingly. The game continues until a player reaches the final position on the board.
+7. The **GameBuilder** class configures the board, players, and dice and builds a **Game** instance.
+8. The **SnakeAndLadderDemo** class builds one game with Alice, Bob, and Charlie and calls its play method.

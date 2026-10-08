@@ -26,7 +26,7 @@ Design and implement an LRU (Least Recently Used) Cache with a fixed capacity. T
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/lrucache-class-diagram.png)
+![](../../../../class-diagrams/lrucache-class-diagram.png)
 
 ### 1. LRUCache
 - **Fields:** capacity, Map<K, Node<K, V>>, head/tail pointers for the doubly-linked list

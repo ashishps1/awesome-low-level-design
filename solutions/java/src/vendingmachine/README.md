@@ -33,7 +33,7 @@ Design and implement a Vending Machine system that allows users to select produc
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/vendingmachine-class-diagram.png)
+![](../../../../class-diagrams/vendingmachine-class-diagram.png)
 
 ### 1. VendingMachine
 - **Fields:** Inventory inventory, VendingMachineState idleState, readyState, dispenseState, returnChangeState, currentState, Product selectedProduct, double totalPayment

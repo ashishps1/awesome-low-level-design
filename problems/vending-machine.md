@@ -18,7 +18,7 @@
 #### [Python Implementation](../solutions/python/vendingmachine/)
 #### [C++ Implementation](../solutions/cpp/vendingmachine/)
 #### [C# Implementation](../solutions/csharp/vendingmachine/)
-#### [Go Implementation](../solutions/golang/vending_machine/)
+#### [Go Implementation](../solutions/golang/vendingmachine/)
 #### [TypeScript Implementation](../solutions/typescript/src/VendingMachine/)
 
 ## Classes, Interfaces and Enumerations

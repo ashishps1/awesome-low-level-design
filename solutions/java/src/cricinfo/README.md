@@ -72,7 +72,7 @@ Design and implement a Cricket Information System similar to CricInfo that provi
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/cricinfo-class-diagram.png)
+![](../../../../class-diagrams/cricinfo-class-diagram.png)
 
 ---
 

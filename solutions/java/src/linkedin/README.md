@@ -18,100 +18,35 @@ Design and implement a LinkedIn-like professional networking platform that allow
 
 ---
 
-## Core Entities
+## Implemented Classes and Services
 
-- **LinkedInService:** Main class that manages users, connections, job postings, messages, and notifications.
-- **User:** Represents a user with profile, connections, messages, and notifications.
-- **Profile:** Represents a user's professional profile, including education, experience, and skills.
-- **Connection:** Represents a connection between two users.
-- **JobPosting:** Represents a job posted by a user or company.
-- **Message:** Represents a direct message between users.
-- **Notification:** Represents a notification sent to a user.
-- **NotificationType (enum):** Types of notifications (e.g., CONNECTION_REQUEST, JOB_MATCH, MESSAGE).
-- **Skill:** Represents a skill in a user's profile.
-- **Education:** Represents an education entry in a user's profile.
-- **Experience:** Represents a work experience entry in a user's profile.
+- `LinkedInSystem` is the singleton facade. It registers and searches `Member` objects, manages connection requests, creates posts, and displays news feeds.
+- `Member` is built with `Member.Builder` and contains a `Profile`, connections, and notifications. `Education` and `Experience` are profile entries.
+- `ConnectionService` manages request IDs and acceptance; `NotificationService` delivers notifications.
+- `Post`, `Like`, and `Comment` model news-feed content and interactions. `NewsFeedService` displays posts using a `FeedSortingStrategy`; the demo uses `ChronologicalSortStrategy`.
+- `SearchService` searches registered members by name.
 
----
-
-## Class Design
+Login, job posting, and direct-message APIs are not implemented in this example; the requirements above describe the broader design goals.
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/linkedin-class-diagram.png)
-
-### 1. LinkedInService
-- **Fields:** List<User> users, List<JobPosting> jobPostings, List<Connection> connections, List<Notification> notifications
-- **Methods:** registerUser(User), addConnection(User, User), postJob(JobPosting), sendMessage(User, User, String), sendNotification(Notification), searchUsers(String), searchJobs(String), etc.
-
-### 2. User
-- **Fields:** int id, String name, Profile profile, List<Connection> connections, List<Message> messages, List<Notification> notifications
-- **Methods:** sendConnectionRequest(User), acceptConnection(Connection), sendMessage(User, String), addSkill(Skill), addEducation(Education), addExperience(Experience), etc.
-
-### 3. Profile
-- **Fields:** List<Skill> skills, List<Education> education, List<Experience> experience
-
-### 4. Connection
-- **Fields:** int id, User user1, User user2, boolean isAccepted
-
-### 5. JobPosting
-- **Fields:** int id, String title, String description, User postedBy
-
-### 6. Message
-- **Fields:** int id, User sender, User receiver, String content
-
-### 7. Notification
-- **Fields:** int id, User recipient, String message, NotificationType type
-
-### 8. NotificationType (enum)
-- Values: CONNECTION_REQUEST, JOB_MATCH, MESSAGE, etc.
-
-### 9. Skill
-- **Fields:** String name
-
-### 10. Education
-- **Fields:** String institution, String degree, String fieldOfStudy, int startYear, int endYear
-
-### 11. Experience
-- **Fields:** String company, String title, int startYear, int endYear
-
----
+![](../../../../class-diagrams/linkedin-class-diagram.png)
 
 ## Example Usage
 
 ```java
-LinkedInService service = new LinkedInService();
-User alice = new User(1, "Alice");
-User bob = new User(2, "Bob");
-service.registerUser(alice);
-service.registerUser(bob);
+import linkedin.LinkedInSystem;
+import linkedin.entities.Member;
 
-alice.sendConnectionRequest(bob);
-service.addConnection(alice, bob);
-
-Profile profile = alice.getProfile();
-profile.addSkill(new Skill("Java"));
-profile.addEducation(new Education("MIT", "BSc", "CS", 2010, 2014));
-profile.addExperience(new Experience("Google", "Software Engineer", 2014, 2018));
-
-JobPosting job = new JobPosting(1, "Backend Developer", "Work on scalable systems", alice);
-service.postJob(job);
-
-service.sendMessage(alice, bob, "Hi Bob, let's connect!");
+LinkedInSystem system = LinkedInSystem.getInstance();
+Member alice = new Member.Builder("Alice", "alice@example.com").build();
+Member bob = new Member.Builder("Bob", "bob@example.com").build();
+system.registerMember(alice);
+system.registerMember(bob);
+String requestId = system.sendConnectionRequest(alice, bob);
+system.acceptConnectionRequest(requestId);
+system.createPost(bob.getId(), "Hello from Bob!");
+system.viewNewsFeed(alice.getId());
 ```
 
----
-
-## Demo
-
-See `LinkedInDemo.java` for a sample usage and simulation of the LinkedIn system.
-
----
-
-## Extending the Framework
-
-- **Add endorsements:** Allow users to endorse each other's skills.
-- **Add recommendations:** Support written recommendations for users.
-- **Add company pages:** Allow companies to create and manage their own pages.
-
----
+This fragment belongs inside a method. See `LinkedInDemo.java` for the complete demonstration, including profile construction, post interactions, notifications, and member search.

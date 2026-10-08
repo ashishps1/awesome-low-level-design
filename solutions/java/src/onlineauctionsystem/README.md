@@ -33,7 +33,7 @@ Design and implement an Online Auction System that allows users to create auctio
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/onlineauctionsystem-class-diagram.png)
+![](../../../../class-diagrams/onlineauctionsystem-class-diagram.png)
 
 ### 1. AuctionSystem
 - **Fields:** List<User> users, List<Item> items, List<Auction> auctions

@@ -1,3 +1,3 @@
-### Airline Management System
+# Voting System
 
-This is a simple airline management system that allows you to manage flights, passengers, and bookings.
+This directory currently contains documentation only; a Voting System implementation is not present here.

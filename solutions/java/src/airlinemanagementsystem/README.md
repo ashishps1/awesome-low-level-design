@@ -34,7 +34,7 @@ Design and implement an Airline Management System that allows users to book flig
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/airlinemanagementsystem-class-diagram.png)
+![](../../../../class-diagrams/airlinemanagementsystem-class-diagram.png)
 
 ### 1. AirlineManagementSystem
 

@@ -36,7 +36,7 @@ Design and implement a simplified StackOverflow-like Q&A platform. The system sh
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/stackoverflow-class-diagram.png)
+![](../../../../class-diagrams/stackoverflow-class-diagram.png)
 
 ### 1. User
 - **Fields:** id, name, reputation, etc.

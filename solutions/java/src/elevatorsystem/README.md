@@ -44,7 +44,7 @@ Design and implement an Elevator System that can handle multiple requests, move 
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/elevatorsystem-class-diagram.png)
+![](../../../../class-diagrams/elevatorsystem-class-diagram.png)
 
 ---
 

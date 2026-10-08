@@ -80,7 +80,7 @@ Design and implement a Splitwise System that allows users to split expenses amon
 
 ## UML Class Diagram
 
-![](../../../../uml-diagrams/class-diagrams/splitwise-class-diagram.png)
+![](../../../../class-diagrams/splitwise-class-diagram.png)
 
 ---
 

@@ -16,7 +16,7 @@
 
 ## Implementations
 #### [Java Implementation](../solutions/java/src/concertticketbookingsystem/) 
-#### [Python Implementation](../solutions/python/concertticketbookingsystem/)
+#### [Python Implementation](../solutions/python/concertbookingsystem/)
 #### [C++ Implementation](../solutions/cpp/concertticketbookingsystem/)
 #### [C# Implementation](../solutions/csharp/concertticketbookingsystem/)
 #### [Go Implementation](../solutions/golang/concertticketbookingsystem/)
