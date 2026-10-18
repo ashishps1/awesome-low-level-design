@@ -55,9 +55,6 @@ func (s *LinkedInService) UpdateUserProfile(user *User) {
 }
 
 func (s *LinkedInService) SendConnectionRequest(sender, receiver *User) {
-	connection := NewConnection(sender)
-	receiver.AddConnection(connection)
-
 	notification := NewNotification(
 		fmt.Sprintf("NOTIF-%d", time.Now().UnixNano()),
 		receiver,
@@ -68,7 +65,10 @@ func (s *LinkedInService) SendConnectionRequest(sender, receiver *User) {
 }
 
 func (s *LinkedInService) AcceptConnectionRequest(user, connectionUser *User) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	user.AddConnection(NewConnection(connectionUser))
+	connectionUser.AddConnection(NewConnection(user))
 }
 
 func (s *LinkedInService) SearchUsers(keyword string) []*User {
@@ -89,10 +89,14 @@ func (s *LinkedInService) SearchUsers(keyword string) []*User {
 func (s *LinkedInService) PostJobListing(jobPosting *JobPosting) {
 	s.mu.Lock()
 	s.jobPostings[jobPosting.ID] = jobPosting
+	users := make([]*User, 0, len(s.users))
+	for _, user := range s.users {
+		users = append(users, user)
+	}
 	s.mu.Unlock()
 
 	// Notify all users about new job posting
-	for _, user := range s.users {
+	for _, user := range users {
 		notification := NewNotification(
 			fmt.Sprintf("NOTIF-%d", time.Now().UnixNano()),
 			user,
