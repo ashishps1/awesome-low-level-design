@@ -47,7 +47,7 @@ public class ParkingSpot {
 
         switch (vehicle.getSize()) {
             case SMALL:
-                return spotSize == VehicleSize.SMALL;
+                return true;
             case MEDIUM:
                 return spotSize == VehicleSize.MEDIUM || spotSize == VehicleSize.LARGE;
             case LARGE:
