@@ -153,6 +153,7 @@ This repository contains resources to learn Low Level Design (LLD) / Object Orie
 - [Coursera - Object-Oriented Design](https://www.coursera.org/learn/object-oriented-design)
 - [Coursera - Design Patterns](https://www.coursera.org/learn/design-patterns)
 - [Github - Awesome Design Patterns](https://github.com/DovAmir/awesome-design-patterns)
+- [Practick - Free LLD mock interviews with a peer](https://practick.io/lld-mock-interview)
 
 ## 🤝 Contributing
 Contributions are welcome! If you'd like to add a new problem, improve existing content, or fix errors:
